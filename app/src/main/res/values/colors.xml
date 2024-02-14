@@ -2,4 +2,18 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="paraHeading">#0E0D1D</color>
+    <color name="error_color_orange">#FA4616</color>
+    <color name="orange">#FA4616</color>
+    <color name="input_border">#DAD4F4</color>
+    <color name="text_parra">#6A6D79</color>
+    <color name="check_box">#E4E4E4</color>
+    <color name="secondary">#7559F8</color>
+    <color name="purple">#7559F8</color>
+    <color name="tv_do_not_have_acc">#979797</color>
+    <color name="button_orange">#F87559</color>
+    <color name="border">#E6E8EC</color>
+    <color name="para_text">#6A6D79</color>
+    <color name="light_grey">#979797</color>
+    <color name="input_number_black">#000000</color>
 </resources>

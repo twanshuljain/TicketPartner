@@ -1,7 +1,10 @@
 package com.example.ticketpartner
 
+import android.annotation.SuppressLint
+import android.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+
 
 class SplashActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

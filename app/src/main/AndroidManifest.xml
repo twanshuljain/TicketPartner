@@ -17,8 +17,9 @@
         <activity
             android:name=".SplashActivity"
             android:exported="false" />
+
         <activity
-            android:name=".MainActivity"
+            android:name=".feature_login.LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
