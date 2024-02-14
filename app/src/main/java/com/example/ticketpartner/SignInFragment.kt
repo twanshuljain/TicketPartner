@@ -15,15 +15,14 @@ class SignInFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        binding = FragmentSignInBinding.inflate(layoutInflater,container,false)
-        //val view =  inflater.inflate(R.layout.fragment_sign_in, container, false)
-
+        binding = FragmentSignInBinding.inflate(layoutInflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        /** Show email/phone layout based on radio button click */
         binding.radioGroup.setOnCheckedChangeListener { _, checkedId ->
             if (checkedId != -1) {
                 when (checkedId) {
@@ -40,6 +39,11 @@ class SignInFragment : Fragment() {
                     }
                 }
             }
+        }
+
+        /** Redirect on previous page on back icon click */
+        binding.ivBack.setOnClickListener {
+            requireActivity().onBackPressedDispatcher.onBackPressed()
         }
     }
 }

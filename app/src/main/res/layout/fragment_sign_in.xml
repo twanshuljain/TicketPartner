@@ -1,408 +1,308 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-<androidx.core.widget.NestedScrollView
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/white"
-    app:layout_constraintTop_toTopOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintBottom_toTopOf="@id/clBottomLayout"
-    tools:context=".SignInFragment">
-
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        app:layout_constraintBottom_toTopOf="@id/clBottomLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:context=".SignInFragment">
 
-        <RelativeLayout
-            android:id="@+id/titleBar"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_15"
-            android:orientation="horizontal"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            android:layout_height="match_parent">
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/back_arrow"
-                android:layout_width="wrap_content"
+            <RelativeLayout
+                android:id="@+id/titleBar"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/margin_15"
-                android:src="@drawable/ic_back_arrow" />
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/start"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:src="@drawable/ic_project_name_title" />
-
-        </RelativeLayout>
-
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guidelineStart"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintGuide_begin="15dp"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guidelineEnd"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintGuide_end="@dimen/margin_15" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvSignIn"
-            style="@style/boldParaHeading24"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/size_40"
-            android:text="@string/sign_in"
-            app:layout_constraintStart_toStartOf="@id/guidelineStart"
-            app:layout_constraintTop_toBottomOf="@id/titleBar" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvWelcomeBack"
-            style="@style/regularParaText16"
-            android:layout_width="@dimen/margin_0"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_20"
-            android:text="@string/welcome_back_sign_in"
-            app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
-            app:layout_constraintStart_toStartOf="@id/guidelineStart"
-            app:layout_constraintTop_toBottomOf="@id/tvSignIn" />
-
-        <RadioGroup
-            android:id="@+id/radioGroup"
-            android:layout_width="@dimen/margin_0"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_12"
-            android:orientation="horizontal"
-            app:layout_constraintStart_toStartOf="@id/guidelineStart"
-            app:layout_constraintTop_toBottomOf="@id/tvWelcomeBack">
-
-            <RadioButton
-                android:id="@+id/radioEmail"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/margin_16"
-                android:checked="true"
-                android:buttonTint="@color/secondary"
-                android:text="@string/email" />
-
-            <RadioButton
-                android:id="@+id/radioPhone"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:buttonTint="@color/secondary"
-                android:layout_marginStart="@dimen/margin_30"
-                android:text="@string/mobile_number" />
-        </RadioGroup>
-
-
-        <!--<androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvEmail"
-            style="@style/regularParaHeading12"
-            android:layout_width="@dimen/margin_0"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_15"
-            android:drawablePadding="@dimen/margin_2"
-            android:text="@string/email_address"
-            app:layout_constraintStart_toStartOf="@id/guidelineStart"
-            app:layout_constraintTop_toBottomOf="@id/radioGroup" />
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/starMandatory"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="@dimen/margin_16"
-            android:src="@drawable/ic_mandatory_star"
-            app:layout_constraintStart_toEndOf="@id/tvEmail"
-            app:layout_constraintTop_toBottomOf="@id/radioGroup" />
-
-        <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/etEmail"
-            android:layout_width="@dimen/margin_0"
-            android:layout_height="@dimen/size_48"
-            android:layout_marginTop="@dimen/margin_5"
-            android:background="@drawable/edit_text_design"
-            android:textSize="@dimen/text_16"
-            app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
-            app:layout_constraintStart_toStartOf="@id/guidelineStart"
-            app:layout_constraintTop_toBottomOf="@id/tvEmail" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvPass"
-            style="@style/regularParaHeading12"
-            android:layout_width="@dimen/margin_0"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_25"
-            android:text="@string/password"
-            app:layout_constraintStart_toStartOf="@id/guidelineStart"
-            app:layout_constraintTop_toBottomOf="@id/etEmail" />
-
-        <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/etPassword"
-            android:layout_width="@dimen/margin_0"
-            android:layout_height="@dimen/size_48"
-            android:layout_marginTop="@dimen/margin_5"
-            android:background="@drawable/edit_text_design"
-            android:textSize="@dimen/text_16"
-            app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
-            app:layout_constraintStart_toStartOf="@id/guidelineStart"
-            app:layout_constraintTop_toBottomOf="@id/tvPass" />
-
-        <RelativeLayout
-            android:id="@+id/rlForgotPass"
-            android:layout_width="@dimen/margin_0"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
-            app:layout_constraintStart_toStartOf="@id/guidelineStart"
-            app:layout_constraintTop_toBottomOf="@id/etPassword">
-
-            <androidx.appcompat.widget.AppCompatCheckBox
-                android:id="@+id/checkboxIncludeAllOrder"
-                style="@style/regularParaHeading12"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/remember_me"
-                app:layout_constraintStart_toStartOf="parent" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvForgotPassword"
-                style="@style/regularParaHeading12"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
                 android:layout_marginTop="@dimen/margin_15"
-                android:drawablePadding="@dimen/margin_2"
-                android:text="@string/forgot_password"
-                android:textColor="@color/secondary" />
-
-        </RelativeLayout>-->
-
-
-        <!--<include
-            android:id="@+id/emailLoginLayout"
-            layout="@layout/login_email_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_16"
-            android:visibility="visible"
-            app:layout_constraintTop_toBottomOf="@id/radioGroup"
-            app:layout_constraintStart_toStartOf="@id/guidelineStart"
-            app:layout_constraintEnd_toEndOf="@id/guidelineEnd"/>-->
-
-        <LinearLayout
-            android:id="@+id/loginLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/radioGroup"
-            app:layout_constraintStart_toStartOf="@id/guidelineStart"
-            app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
-            android:orientation="vertical">
-
-            <include
-                android:id="@+id/emailLoginLayout"
-                layout="@layout/login_email_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="visible"/>
-
-            <include
-                android:id="@+id/phoneLoginLayout"
-                layout="@layout/login_mobile_number"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="gone" />
-
-        </LinearLayout>
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnSignIn"
-            style="@style/boldWhiteText16"
-            android:layout_width="@dimen/margin_0"
-            android:layout_height="@dimen/size_48"
-            android:layout_marginTop="@dimen/margin_20"
-            android:background="@drawable/btn_design_sign_in"
-            android:text="@string/sign_in"
-            android:textAllCaps="false"
-            app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
-            app:layout_constraintStart_toStartOf="@id/guidelineStart"
-            app:layout_constraintTop_toBottomOf="@+id/loginLayout" />
-
-
-
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/clOrSignInWith"
-            android:layout_width="@dimen/margin_0"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_30"
-            app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
-            app:layout_constraintStart_toStartOf="@id/guidelineStart"
-            app:layout_constraintTop_toBottomOf="@+id/btnSignIn">
-
-            <View
-                android:layout_width="@dimen/margin_0"
-                android:layout_height="@dimen/margin_2"
-                android:background="@color/border"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/text"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/text"
-                style="@style/regularParaText12"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/size_5"
-                android:drawablePadding="@dimen/margin_2"
-                android:paddingStart="@dimen/margin_10"
-                android:paddingEnd="@dimen/margin_10"
-                android:text="@string/or_sign_in_with"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent">
 
-            <View
-                android:layout_width="@dimen/margin_0"
-                android:layout_height="@dimen/size_1"
-                android:background="@color/border"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/text"
-                app:layout_constraintTop_toTopOf="parent" />
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/ivBack"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_15"
+                    android:src="@drawable/ic_back_arrow" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/start"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:src="@drawable/ic_project_name_title" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/clSocialLogin"
-            android:layout_width="@dimen/margin_0"
-            android:layout_height="@dimen/size_48"
-            android:layout_marginTop="@dimen/margin_20"
-            app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
-            app:layout_constraintStart_toStartOf="@id/guidelineStart"
-            app:layout_constraintTop_toBottomOf="@+id/clOrSignInWith">
+            </RelativeLayout>
 
             <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guidelineVerticalCenter"
+                android:id="@+id/guidelineStart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_begin="15dp"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guidelineEnd"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintGuide_end="@dimen/margin_15"
-                app:layout_constraintGuide_percent="0.5" />
+                app:layout_constraintGuide_end="@dimen/margin_15" />
 
-            <RelativeLayout
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvSignIn"
+                style="@style/boldParaHeading24"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size_40"
+                android:text="@string/sign_in"
+                app:layout_constraintStart_toStartOf="@id/guidelineStart"
+                app:layout_constraintTop_toBottomOf="@id/titleBar" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvWelcomeBack"
+                style="@style/regularParaText16"
                 android:layout_width="@dimen/margin_0"
-                android:layout_height="match_parent"
-                android:layout_marginEnd="@dimen/size_5"
-                android:background="@drawable/btn_google_login_design"
-                android:gravity="center"
-                app:layout_constraintEnd_toEndOf="@id/guidelineVerticalCenter"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_20"
+                android:text="@string/welcome_back_sign_in"
+                app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
+                app:layout_constraintStart_toStartOf="@id/guidelineStart"
+                app:layout_constraintTop_toBottomOf="@id/tvSignIn" />
 
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/ic_google"
+            <RadioGroup
+                android:id="@+id/radioGroup"
+                android:layout_width="@dimen/margin_0"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_12"
+                android:orientation="horizontal"
+                app:layout_constraintStart_toStartOf="@id/guidelineStart"
+                app:layout_constraintTop_toBottomOf="@id/tvWelcomeBack">
+
+                <RadioButton
+                    android:id="@+id/radioEmail"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/margin_15"
-                    android:src="@drawable/ic_google" />
+                    android:layout_marginEnd="@dimen/margin_16"
+                    android:buttonTint="@color/secondary"
+                    android:checked="true"
+                    android:text="@string/email" />
+
+                <RadioButton
+                    android:id="@+id/radioPhone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_30"
+                    android:buttonTint="@color/secondary"
+                    android:text="@string/mobile_number" />
+            </RadioGroup>
+
+            <LinearLayout
+                android:id="@+id/loginLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
+                app:layout_constraintStart_toStartOf="@id/guidelineStart"
+                app:layout_constraintTop_toBottomOf="@id/radioGroup">
+
+                <include
+                    android:id="@+id/emailLoginLayout"
+                    layout="@layout/login_email_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="visible" />
+
+                <include
+                    android:id="@+id/phoneLoginLayout"
+                    layout="@layout/login_mobile_number"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone" />
+
+            </LinearLayout>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnSignIn"
+                style="@style/boldWhiteText16"
+                android:layout_width="@dimen/margin_0"
+                android:layout_height="@dimen/size_48"
+                android:layout_marginTop="@dimen/margin_20"
+                android:background="@drawable/btn_design_sign_in"
+                android:text="@string/sign_in"
+                android:textAllCaps="false"
+                app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
+                app:layout_constraintStart_toStartOf="@id/guidelineStart"
+                app:layout_constraintTop_toBottomOf="@+id/loginLayout" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/clOrSignInWith"
+                android:layout_width="@dimen/margin_0"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_30"
+                app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
+                app:layout_constraintStart_toStartOf="@id/guidelineStart"
+                app:layout_constraintTop_toBottomOf="@+id/btnSignIn">
+
+                <View
+                    android:layout_width="@dimen/margin_0"
+                    android:layout_height="@dimen/margin_2"
+                    android:background="@color/border"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/text"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tvGoogle"
-                    style="@style/boldParaHeading16"
+                    android:id="@+id/text"
+                    style="@style/regularParaText12"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignTop="@id/ic_google"
-                    android:layout_alignBottom="@id/ic_google"
-                    android:layout_toRightOf="@id/ic_google"
-                    android:gravity="center_vertical"
-                    android:text="@string/google" />
+                    android:layout_marginStart="@dimen/size_5"
+                    android:drawablePadding="@dimen/margin_2"
+                    android:paddingStart="@dimen/margin_10"
+                    android:paddingEnd="@dimen/margin_10"
+                    android:text="@string/or_sign_in_with"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-            </RelativeLayout>
+                <View
+                    android:layout_width="@dimen/margin_0"
+                    android:layout_height="@dimen/size_1"
+                    android:background="@color/border"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/text"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/clSocialLogin"
+                android:layout_width="@dimen/margin_0"
+                android:layout_height="@dimen/size_48"
+                android:layout_marginTop="@dimen/margin_20"
+                app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
+                app:layout_constraintStart_toStartOf="@id/guidelineStart"
+                app:layout_constraintTop_toBottomOf="@+id/clOrSignInWith">
+
+                <androidx.constraintlayout.widget.Guideline
+                    android:id="@+id/guidelineVerticalCenter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintGuide_end="@dimen/margin_15"
+                    app:layout_constraintGuide_percent="0.5" />
+
+                <RelativeLayout
+                    android:layout_width="@dimen/margin_0"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="@dimen/size_5"
+                    android:background="@drawable/btn_google_login_design"
+                    android:gravity="center"
+                    app:layout_constraintEnd_toEndOf="@id/guidelineVerticalCenter"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ic_google"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/margin_15"
+                        android:src="@drawable/ic_google" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvGoogle"
+                        style="@style/boldParaHeading16"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignTop="@id/ic_google"
+                        android:layout_alignBottom="@id/ic_google"
+                        android:layout_toRightOf="@id/ic_google"
+                        android:gravity="center_vertical"
+                        android:text="@string/google" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="@dimen/margin_0"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="@dimen/size_5"
+                    android:background="@drawable/btn_google_login_design"
+                    android:gravity="center"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@id/guidelineVerticalCenter"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ic_apple"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="@dimen/margin_15"
+                        android:src="@drawable/ic_apple" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvApple"
+                        style="@style/boldParaHeading16"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignTop="@id/ic_apple"
+                        android:layout_alignBottom="@id/ic_apple"
+                        android:layout_toRightOf="@id/ic_apple"
+                        android:gravity="center_vertical"
+                        android:text="@string/apple" />
+
+                </RelativeLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <RelativeLayout
+                android:id="@+id/rlSignUp"
                 android:layout_width="@dimen/margin_0"
-                android:layout_height="match_parent"
-                android:layout_marginStart="@dimen/size_5"
-                android:background="@drawable/btn_google_login_design"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_25"
                 android:gravity="center"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@id/guidelineVerticalCenter"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/ic_apple"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="@dimen/margin_15"
-                    android:src="@drawable/ic_apple" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/clSocialLogin">
 
                 <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tvApple"
-                    style="@style/boldParaHeading16"
+                    android:id="@+id/tvDoNotHaveAcc"
+                    style="@style/regularLightGrey14"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignTop="@id/ic_apple"
-                    android:layout_alignBottom="@id/ic_apple"
-                    android:layout_toRightOf="@id/ic_apple"
-                    android:gravity="center_vertical"
-                    android:text="@string/apple" />
+                    android:layout_marginEnd="@dimen/margin_10"
+                    android:text="@string/don_not_have_account" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvSignUp"
+                    style="@style/boldPurple14"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/tvDoNotHaveAcc"
+                    android:text="@string/sign_up" />
 
             </RelativeLayout>
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <RelativeLayout
-            android:id="@+id/rlSignUp"
-            android:layout_width="@dimen/margin_0"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_25"
-            android:gravity="center"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/clSocialLogin">
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvDoNotHaveAcc"
-                style="@style/regularLightGrey14"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/margin_10"
-                android:text="@string/don_not_have_account" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvSignUp"
-                style="@style/boldPurple14"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toRightOf="@id/tvDoNotHaveAcc"
-                android:text="@string/sign_up" />
-
-        </RelativeLayout>
-
-
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-</androidx.core.widget.NestedScrollView>
+    </androidx.core.widget.NestedScrollView>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/clBottomLayout"
@@ -412,9 +312,9 @@
         android:background="@color/border"
         android:gravity="center_horizontal"
         android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent">
+        app:layout_constraintStart_toStartOf="parent">
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/joinAsAdministrator"

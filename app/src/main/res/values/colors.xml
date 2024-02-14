@@ -16,4 +16,6 @@
     <color name="para_text">#6A6D79</color>
     <color name="light_grey">#979797</color>
     <color name="input_number_black">#000000</color>
+    <color name="placeholder">#BDBDBD</color>
+    <color name="blue">#2F80ED</color>
 </resources>

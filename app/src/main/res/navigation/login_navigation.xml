@@ -10,12 +10,6 @@
         android:name="com.example.ticketpartner.SignInFragment"
         android:label="fragment_sign_in"
         tools:layout="@layout/fragment_sign_in" >
-        <action
-            android:id="@+id/action_signInFragment_to_forgotPasswordFragment"
-            app:destination="@id/forgotPasswordFragment" />
-        <action
-            android:id="@+id/action_signInFragment_to_signUpEmailFragment"
-            app:destination="@id/signUpEmailFragment" />
     </fragment>
 
     <fragment
@@ -23,12 +17,6 @@
         android:name="com.example.ticketpartner.SignUpEmailFragment"
         android:label="fragment_sign_up_email"
         tools:layout="@layout/fragment_sign_up_email" >
-        <action
-            android:id="@+id/action_signUpEmailFragment_to_signInFragment"
-            app:destination="@id/signInFragment" />
-        <action
-            android:id="@+id/action_signUpEmailFragment_to_signUpDetailsFragment"
-            app:destination="@id/signUpDetailsFragment" />
     </fragment>
 
     <fragment
@@ -36,9 +24,6 @@
         android:name="com.example.ticketpartner.SignUpDetailsFragment"
         android:label="fragment_sign_up_details"
         tools:layout="@layout/fragment_sign_up_details" >
-        <action
-            android:id="@+id/action_signUpDetailsFragment_to_signInFragment"
-            app:destination="@id/signInFragment" />
     </fragment>
 
     <fragment
@@ -52,12 +37,7 @@
         android:name="com.example.ticketpartner.SplashLandingFragment"
         android:label="fragment_splash_landing"
         tools:layout="@layout/fragment_splash_landing" >
-        <action
-            android:id="@+id/action_splashLandingFragment_to_signUpEmailFragment"
-            app:destination="@id/signUpEmailFragment" />
-        <action
-            android:id="@+id/action_splashLandingFragment_to_signInFragment"
-            app:destination="@id/signInFragment" />
+
     </fragment>
 
 </navigation>
