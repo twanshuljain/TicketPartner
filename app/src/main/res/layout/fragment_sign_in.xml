@@ -233,7 +233,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignTop="@id/ic_google"
                         android:layout_alignBottom="@id/ic_google"
-                        android:layout_toRightOf="@id/ic_google"
+                        android:layout_toEndOf="@id/ic_google"
                         android:gravity="center_vertical"
                         android:text="@string/google" />
 
@@ -263,7 +263,7 @@
                         android:layout_height="wrap_content"
                         android:layout_alignTop="@id/ic_apple"
                         android:layout_alignBottom="@id/ic_apple"
-                        android:layout_toRightOf="@id/ic_apple"
+                        android:layout_toEndOf="@id/ic_apple"
                         android:gravity="center_vertical"
                         android:text="@string/apple" />
 
@@ -294,7 +294,7 @@
                     style="@style/boldPurple14"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_toRightOf="@id/tvDoNotHaveAcc"
+                    android:layout_toEndOf="@id/tvDoNotHaveAcc"
                     android:text="@string/sign_up" />
 
             </RelativeLayout>
