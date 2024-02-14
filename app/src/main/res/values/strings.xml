@@ -16,8 +16,10 @@
     <string name="or_sign_in_with">Or Sign in with</string>
     <string name="or_sign_up_with">Or Sign up with</string>
     <string name="google">Google</string>
+    <string name="welcome_to_event_com">Welcome to event.com</string>
     <string name="apple">Apple</string>
     <string name="verify">Verify</string>
+    <string name="elevate_your_events">Elevate Your Events, Effortlessly Organized!</string>
     <string name="don_not_have_account">Don’t have an account?</string>
     <string name="already_have_account">Already have an account?</string>
     <string name="sign_up">Sign up</string>
@@ -28,4 +30,7 @@
     <string name="create_your_account">Create your account.</string>
     <string name="create_account">Create account</string>
     <string name="choose_an_option_below">Choose an option below to begin managing events with the TicketSpark platform!</string>
+    <string name="lorem_ipsum_dolor">Lorem ipsum dolor sit amet consectetur. Consequat pretium feugiat dui vitae.</string>
+    <string name="next">Next</string>
+
 </resources>

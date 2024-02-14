@@ -1,12 +1,107 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:background="@color/white"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".SplashLandingFragment">
 
-    <androidx.appcompat.widget.AppCompatButton
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="@dimen/margin_25">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guidelineStart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="15dp"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guidelineEnd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintGuide_end="@dimen/margin_15" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivProjectName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/margin_15"
+            android:src="@drawable/ic_project_name_title"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivBanner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+           android:layout_marginTop="@dimen/size_80"
+            android:scaleType="fitXY"
+            android:src="@drawable/splash_banner_image"
+            app:layout_constraintTop_toBottomOf="@id/ivProjectName" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvWelcomeToEvent"
+            style="@style/regularParaText14"
+            android:layout_width="@dimen/margin_0"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:layout_marginTop="@dimen/size_80"
+            android:text="@string/welcome_to_event_com"
+            app:layout_constraintTop_toBottomOf="@id/ivBanner"
+            app:layout_constraintStart_toStartOf="@id/guidelineStart"
+            app:layout_constraintEnd_toEndOf="@id/guidelineEnd" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvElevateYourEvents"
+            style="@style/BoldParaHeadingText14"
+            android:layout_width="@dimen/margin_0"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:layout_marginTop="@dimen/margin_10"
+            android:text="@string/elevate_your_events"
+            app:layout_constraintTop_toBottomOf="@id/tvWelcomeToEvent"
+            app:layout_constraintStart_toStartOf="@id/guidelineStart"
+            app:layout_constraintEnd_toEndOf="@id/guidelineEnd" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvLoremIpsumDolor"
+            style="@style/regularParaText16"
+            android:layout_width="@dimen/margin_0"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:layout_marginTop="@dimen/margin_20"
+            android:text="@string/lorem_ipsum_dolor"
+            app:layout_constraintTop_toBottomOf="@id/tvElevateYourEvents"
+            app:layout_constraintStart_toStartOf="@id/guidelineStart"
+            app:layout_constraintEnd_toEndOf="@id/guidelineEnd" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnNext"
+            style="@style/boldWhiteText16"
+            android:layout_width="@dimen/margin_0"
+            android:layout_height="@dimen/size_48"
+            android:layout_marginTop="@dimen/margin_25"
+            android:background="@drawable/btn_design_sign_in"
+            android:text="@string/next"
+            android:textAllCaps="false"
+            app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
+            app:layout_constraintStart_toStartOf="@id/guidelineStart"
+            app:layout_constraintTop_toBottomOf="@+id/tvLoremIpsumDolor" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+   <!-- <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnNext"
         android:layout_width="0dp"
         android:layout_height="@dimen/margin_40"
@@ -17,8 +112,8 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent" />-->
 
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>

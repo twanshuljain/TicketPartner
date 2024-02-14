@@ -23,7 +23,7 @@ class SplashLandingFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.btnNext.setOnClickListener {
-            findNavController().navigate(R.id.signUpEmailFragment)
+            findNavController().navigate(R.id.signInFragment)
         }
     }
 }

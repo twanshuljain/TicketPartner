@@ -49,12 +49,12 @@
             android:id="@+id/ivProjectName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_15"
             android:layout_centerHorizontal="true"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="@dimen/margin_15"
+            android:src="@drawable/ic_project_name_title"
             app:layout_constraintEnd_toEndOf="parent"
-            android:src="@drawable/ic_project_name_title" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvSignIn"
@@ -82,51 +82,60 @@
             style="@style/regularParaHeading12"
             android:layout_width="@dimen/margin_0"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_20"
+            android:layout_marginTop="@dimen/margin_30"
             android:drawablePadding="@dimen/margin_2"
             android:text="@string/email_address"
-            app:layout_constraintTop_toBottomOf="@id/tvWelcomeBack"
-            app:layout_constraintStart_toStartOf="@id/guidelineStart"/>
+            app:layout_constraintStart_toStartOf="@id/guidelineStart"
+            app:layout_constraintTop_toBottomOf="@id/tvWelcomeBack" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/starMandatory"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="@dimen/margin_20"
+            android:layout_marginTop="@dimen/margin_30"
             android:src="@drawable/ic_mandatory_star"
-            app:layout_constraintTop_toBottomOf="@id/tvWelcomeBack"
-            app:layout_constraintStart_toEndOf="@id/tvEmail" />
-        
+            app:layout_constraintStart_toEndOf="@id/tvEmail"
+            app:layout_constraintTop_toBottomOf="@id/tvWelcomeBack" />
+
         <RelativeLayout
-            android:id="@+id/etEmail"
+            android:id="@+id/emailLayout"
             android:layout_width="@dimen/margin_0"
             android:layout_height="@dimen/size_48"
-            app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
-            app:layout_constraintStart_toStartOf="@id/guidelineStart"
-            app:layout_constraintTop_toBottomOf="@id/tvEmail"
             android:layout_marginTop="@dimen/size_5"
             android:background="@drawable/edit_text_design"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
+            app:layout_constraintStart_toStartOf="@id/guidelineStart"
+            app:layout_constraintTop_toBottomOf="@id/tvEmail">
 
             <androidx.appcompat.widget.AppCompatEditText
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:paddingStart="@dimen/margin_10"
-                android:background="@drawable/no_undreline_et_design"
                 android:layout_toLeftOf="@id/tvVerify"
-                android:textSize="@dimen/text_16"/>
+                android:background="@drawable/no_undreline_et_design"
+                android:paddingStart="@dimen/margin_10"
+                android:textSize="@dimen/text_16" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvVerify"
+                style="@style/mediumPurple12"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
-                style="@style/mediumPurple12"
                 android:paddingEnd="@dimen/margin_10"
-                android:text="@string/verify"/>
+                android:text="@string/verify" />
+        </RelativeLayout>
 
+        <RelativeLayout
+            android:id="@+id/otpLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@id/emailLayout">
+
+            <include layout="@layout/otp_layout" />
         </RelativeLayout>
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -134,32 +143,32 @@
             style="@style/regularParaHeading12"
             android:layout_width="@dimen/margin_0"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_15"
+            android:layout_marginTop="@dimen/margin_25"
             android:drawablePadding="@dimen/margin_2"
             android:text="@string/first_name"
-            app:layout_constraintTop_toBottomOf="@id/etEmail"
-            app:layout_constraintStart_toStartOf="@id/guidelineStart"/>
+            app:layout_constraintStart_toStartOf="@id/guidelineStart"
+            app:layout_constraintTop_toBottomOf="@id/otpLayout" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/starMandatoryName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="@dimen/margin_16"
+            android:layout_marginTop="@dimen/margin_25"
             android:src="@drawable/ic_mandatory_star"
-            app:layout_constraintTop_toBottomOf="@id/etEmail"
-            app:layout_constraintStart_toEndOf="@id/tvFirstName" />
+            app:layout_constraintStart_toEndOf="@id/tvFirstName"
+            app:layout_constraintTop_toBottomOf="@id/otpLayout" />
 
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/etFirstName"
+            style="@style/mediumPlaceHolderText14"
             android:layout_width="@dimen/margin_0"
             android:layout_height="@dimen/size_48"
             android:layout_marginTop="@dimen/margin_5"
+            android:layout_marginEnd="@dimen/margin_4"
             android:background="@drawable/edit_text_design"
-            style="@style/mediumPlaceHolderText14"
             android:hint="@string/first_name"
             android:paddingStart="@dimen/margin_10"
-            android:layout_marginEnd="@dimen/margin_4"
             app:layout_constraintEnd_toEndOf="@id/guidelineVerticalCenter"
             app:layout_constraintStart_toStartOf="@id/guidelineStart"
             app:layout_constraintTop_toBottomOf="@id/tvFirstName" />
@@ -169,33 +178,33 @@
             style="@style/regularParaHeading12"
             android:layout_width="@dimen/margin_0"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_15"
-            android:drawablePadding="@dimen/margin_2"
             android:layout_marginStart="@dimen/margin_3"
+            android:layout_marginTop="@dimen/margin_25"
+            android:drawablePadding="@dimen/margin_2"
             android:text="@string/last_name"
-            app:layout_constraintTop_toBottomOf="@id/etEmail"
-            app:layout_constraintStart_toStartOf="@id/guidelineVerticalCenter"/>
+            app:layout_constraintStart_toStartOf="@id/guidelineVerticalCenter"
+            app:layout_constraintTop_toBottomOf="@id/otpLayout" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/starMandatoryLastName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="@dimen/margin_16"
+            android:layout_marginTop="@dimen/margin_25"
             android:src="@drawable/ic_mandatory_star"
-            app:layout_constraintTop_toBottomOf="@id/etEmail"
-            app:layout_constraintStart_toEndOf="@id/tvLastName" />
+            app:layout_constraintStart_toEndOf="@id/tvLastName"
+            app:layout_constraintTop_toBottomOf="@id/otpLayout" />
 
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/etLastName"
+            style="@style/mediumPlaceHolderText14"
             android:layout_width="@dimen/margin_0"
             android:layout_height="@dimen/size_48"
+            android:layout_marginStart="@dimen/margin_4"
             android:layout_marginTop="@dimen/margin_5"
             android:background="@drawable/edit_text_design"
-            style="@style/mediumPlaceHolderText14"
             android:hint="@string/last_name"
             android:paddingStart="@dimen/margin_10"
-            android:layout_marginStart="@dimen/margin_4"
             app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
             app:layout_constraintStart_toStartOf="@id/guidelineVerticalCenter"
             app:layout_constraintTop_toBottomOf="@id/tvLastName" />
@@ -204,48 +213,78 @@
             android:id="@+id/etCountryPicker"
             android:layout_width="@dimen/margin_0"
             android:layout_height="@dimen/size_48"
-            android:layout_marginTop="@dimen/margin_15"
+            android:layout_marginTop="@dimen/margin_25"
             android:background="@drawable/edit_text_design"
-            android:src="@drawable/countrycode"
             android:scaleType="fitXY"
+            android:src="@drawable/countrycode"
             app:layout_constraintEnd_toEndOf="@id/guidelineStartCenter"
             app:layout_constraintStart_toStartOf="@id/guidelineStart"
             app:layout_constraintTop_toBottomOf="@id/etFirstName" />
 
-        <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/etPhoneNumer"
+        <RelativeLayout
+            android:id="@+id/etPhoneNumber"
             android:layout_width="@dimen/margin_0"
             android:layout_height="@dimen/size_48"
-            android:layout_marginTop="@dimen/margin_15"
-            android:background="@drawable/edit_text_design"
-            style="@style/mediumPlaceHolderText14"
-            android:hint="@string/mobile_number"
-            android:paddingStart="@dimen/margin_10"
             android:layout_marginStart="@dimen/margin_8"
+            android:layout_marginTop="@dimen/margin_25"
+            android:background="@drawable/edit_text_design"
+            android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
             app:layout_constraintStart_toStartOf="@id/guidelineStartCenter"
-            app:layout_constraintTop_toBottomOf="@id/etLastName" />
+            app:layout_constraintTop_toBottomOf="@id/etLastName">
+
+            <androidx.appcompat.widget.AppCompatEditText
+                style="@style/mediumPlaceHolderText14"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_toLeftOf="@id/tvVerifyMobile"
+                android:background="@drawable/no_undreline_et_design"
+                android:hint="@string/mobile_number"
+                android:paddingStart="@dimen/margin_10"
+                android:textSize="@dimen/text_16" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvVerifyMobile"
+                style="@style/mediumPurple12"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:paddingEnd="@dimen/margin_10"
+                android:text="@string/verify" />
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:id="@+id/otpLayoutPhone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@id/etPhoneNumber">
+
+            <include layout="@layout/otp_layout" />
+        </RelativeLayout>
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvPassword"
             style="@style/regularParaHeading12"
             android:layout_width="@dimen/margin_0"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_15"
+            android:layout_marginTop="@dimen/margin_25"
             android:drawablePadding="@dimen/margin_2"
             android:text="@string/password"
-            app:layout_constraintTop_toBottomOf="@id/etCountryPicker"
-            app:layout_constraintStart_toStartOf="@id/guidelineStart"/>
+            app:layout_constraintStart_toStartOf="@id/guidelineStart"
+            app:layout_constraintTop_toBottomOf="@id/otpLayoutPhone" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/starMandatoryPass"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="@dimen/margin_16"
+            android:layout_marginTop="@dimen/margin_25"
             android:src="@drawable/ic_mandatory_star"
-            app:layout_constraintTop_toBottomOf="@id/etCountryPicker"
-            app:layout_constraintStart_toEndOf="@id/tvPassword" />
+            app:layout_constraintStart_toEndOf="@id/tvPassword"
+            app:layout_constraintTop_toBottomOf="@id/otpLayoutPhone" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/passwordLayout"
@@ -253,23 +292,23 @@
             android:layout_height="@dimen/size_48"
             android:layout_marginTop="@dimen/margin_5"
             app:hintEnabled="false"
-            app:passwordToggleDrawable="@drawable/ic_password_drawable"
-            app:passwordToggleEnabled="true"
+            app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
             app:layout_constraintStart_toStartOf="@id/guidelineStart"
             app:layout_constraintTop_toBottomOf="@id/tvPassword"
-            app:layout_constraintEnd_toEndOf="@id/guidelineEnd">
+            app:passwordToggleDrawable="@drawable/ic_password_drawable"
+            app:passwordToggleEnabled="true">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etPassword"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:background="@drawable/edit_text_design"
                 android:fontFamily="@font/lato_regular"
                 android:gravity="center_vertical"
                 android:hint="@string/enter_password"
-                android:padding="@dimen/margin_5"
-                android:background="@drawable/edit_text_design"
                 android:imeOptions="actionDone"
                 android:inputType="textPassword"
+                android:padding="@dimen/margin_5"
                 android:textSize="@dimen/text_16" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -278,7 +317,7 @@
             style="@style/boldWhiteText16"
             android:layout_width="@dimen/margin_0"
             android:layout_height="@dimen/size_48"
-            android:layout_marginTop="@dimen/margin_20"
+            android:layout_marginTop="@dimen/margin_25"
             android:background="@drawable/btn_design_sign_in"
             android:text="@string/create_account"
             android:textAllCaps="false"
@@ -416,6 +455,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_25"
             android:gravity="center"
+            android:paddingBottom="@dimen/size_100"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/clSocialLogin">
@@ -430,10 +470,10 @@
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvSignInText"
                 style="@style/boldBlue14"
-                android:paddingStart="@dimen/margin_10"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_toRightOf="@id/tvAlreadyHaveAccount"
+                android:paddingStart="@dimen/margin_10"
                 android:text="@string/sign_in" />
 
         </RelativeLayout>
