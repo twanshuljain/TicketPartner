@@ -1,3 +1,22 @@
 <resources>
     <string name="app_name">TicketPartner</string>
+    <string name="hello_blank_fragment">TicketPartner</string>
+    <string name="sign_in">Sign In</string>
+    <string name="welcome_back_sign_in">Welcome back, Sign In with your credentials below Sign In with your credentials below Sign In with your credentials below</string>
+    <string name="email">Email</string>
+    <string name="mobile_number">Mobile Number</string>
+    <string name="email_address">Email Address</string>
+    <string name="enter_your_email">Enter your email</string>
+    <string name="password">Password</string>
+    <string name="remember_me">Remember me</string>
+    <string name="forgot_password">Forgot password?</string>
+    <string name="or_sign_in_with">Or Sign in with</string>
+    <string name="google">Google</string>
+    <string name="apple">Apple</string>
+    <string name="don_not_have_account">Don’t have an account?</string>
+    <string name="sign_up">Sign up</string>
+    <string name="join_as_administrator">Join as a Admission Staff</string>
+    <string name="otp">OTP</string>
+    <string name="you_will_receive_otp_in">You will receive OTP in 4:00s</string>
+
 </resources>

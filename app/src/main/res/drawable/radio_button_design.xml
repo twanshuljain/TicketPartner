@@ -1,0 +1,19 @@
+<!-- res/drawable/custom_radio_button.xml -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_checked="true">
+        <shape android:shape="oval">
+            <!-- Set the size of the circle -->
+            <size android:width="24dp" android:height="24dp"/>
+            <!-- Set the color of the circle when checked -->
+            <solid android:color="#FF0000"/>
+        </shape>
+    </item>
+    <item>
+        <shape android:shape="oval">
+            <!-- Set the size of the circle -->
+            <size android:width="24dp" android:height="24dp"/>
+            <!-- Set the color of the circle when unchecked -->
+            <stroke android:color="#000000" android:width="2dp"/>
+        </shape>
+    </item>
+</selector>

@@ -2,7 +2,17 @@
     <!-- Base application theme. -->
     <style name="Base.Theme.TicketPartner" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+       <!-- <item name="colorPrimary">@color/white</item>
+        <item name="colorPrimaryDark">@color/white</item>
+
+        &lt;!&ndash; Text color for icons in the status bar &ndash;&gt;
+        <item name="android:windowLightStatusBar">true</item>
+
+        &lt;!&ndash; Color of the icons in the status bar &ndash;&gt;
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+
+        &lt;!&ndash; Set the status bar background color &ndash;&gt;
+        <item name="android:statusBarColor">@color/white</item>-->
     </style>
 
     <style name="Theme.TicketPartner" parent="Base.Theme.TicketPartner" />

@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/contain_mobile_login"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/white">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineStart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="15dp"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineEnd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintGuide_end="@dimen/margin_15" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvPhone"
+        style="@style/regularParaHeading12"
+        android:layout_width="@dimen/margin_0"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_15"
+        android:drawablePadding="@dimen/margin_2"
+        android:text="@string/mobile_number"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="@id/guidelineStart"/>
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/starMandatory"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/margin_16"
+        android:src="@drawable/ic_mandatory_star"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="@id/tvPhone" />
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/etPhone"
+        android:layout_width="@dimen/margin_0"
+        android:layout_height="@dimen/size_48"
+        android:layout_marginTop="@dimen/margin_5"
+        android:background="@drawable/edit_text_design"
+        android:textSize="@dimen/text_16"
+        app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
+        app:layout_constraintStart_toStartOf="@id/guidelineStart"
+        app:layout_constraintTop_toBottomOf="@id/tvPhone" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvOtp"
+        style="@style/regularParaHeading12"
+        android:layout_width="@dimen/margin_0"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_15"
+        android:drawablePadding="@dimen/margin_2"
+        android:text="@string/otp"
+        app:layout_constraintTop_toBottomOf="@id/etPhone"
+        app:layout_constraintStart_toStartOf="@id/guidelineStart"/>
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/starMandatoryOtp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/margin_16"
+        android:src="@drawable/ic_mandatory_star"
+        app:layout_constraintTop_toBottomOf="@id/etPhone"
+        app:layout_constraintStart_toEndOf="@id/tvOtp" />
+
+    <LinearLayout
+        android:id="@+id/llOtp"
+        android:layout_width="@dimen/margin_0"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:layout_marginTop="@dimen/size_5"
+        app:layout_constraintStart_toStartOf="@id/guidelineStart"
+        app:layout_constraintTop_toBottomOf="@id/tvOtp">
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/otp1"
+            style="@style/OtpEditTextStyle"
+            android:layout_marginEnd="@dimen/margin_15"
+            android:background="@drawable/edit_text_design" />
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/otp2"
+            style="@style/OtpEditTextStyle"
+            android:layout_marginEnd="@dimen/margin_15"
+            android:background="@drawable/edit_text_design" />
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/otp3"
+            style="@style/OtpEditTextStyle"
+            android:layout_marginEnd="@dimen/margin_15"
+            android:background="@drawable/edit_text_design" />
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/otp4"
+            style="@style/OtpEditTextStyle"
+            android:background="@drawable/edit_text_design" />
+
+    </LinearLayout>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvCountDown"
+        style="@style/regularParaText14"
+        android:layout_width="@dimen/margin_0"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_15"
+        android:drawablePadding="@dimen/margin_2"
+        android:text="@string/you_will_receive_otp_in"
+        app:layout_constraintTop_toBottomOf="@id/llOtp"
+        app:layout_constraintStart_toStartOf="@id/guidelineStart"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
