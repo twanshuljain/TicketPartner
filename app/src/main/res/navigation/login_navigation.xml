@@ -39,6 +39,7 @@
         tools:layout="@layout/fragment_splash_landing" >
 
     </fragment>
+
     <fragment
         android:id="@+id/resetPasswordFragment"
         android:name="com.example.ticketpartner.feature_login.ResetPasswordFragment"
