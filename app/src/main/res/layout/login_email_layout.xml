@@ -90,6 +90,7 @@
             style="@style/regularParaHeading12"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
             android:text="@string/remember_me"
             app:layout_constraintStart_toStartOf="parent" />
 
@@ -99,8 +100,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:layout_marginEnd="@dimen/margin_15"
-            android:layout_marginTop="@dimen/margin_15"
+            android:paddingTop="@dimen/margin_15"
+            android:paddingEnd="@dimen/margin_15"
+            android:paddingStart="@dimen/margin_15"
+            android:paddingBottom="@dimen/margin_15"
             android:drawablePadding="@dimen/margin_2"
             android:text="@string/forgot_password"
             android:textColor="@color/secondary" />

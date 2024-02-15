@@ -25,6 +25,12 @@
     <string name="sign_up">Sign up</string>
     <string name="join_as_administrator">Join as a Admission Staff</string>
     <string name="otp">OTP</string>
+    <string name="Continue">Continue</string>
+    <string name="remember_it">Remember it?</string>
+    <string name="new_password">New Password</string>
+    <string name="reset">Reset</string>
+    <string name="reset_password">Reset Password</string>
+    <string name="confirm_password">Confirm Password</string>
     <string name="you_will_receive_otp_in">You will receive OTP in 4:00s</string>
     <string name="privacy_policy">By signing up, I agree to the TicketPartner Terms of Service and Privacy Policy.</string>
     <string name="create_your_account">Create your account.</string>
@@ -32,5 +38,8 @@
     <string name="choose_an_option_below">Choose an option below to begin managing events with the TicketSpark platform!</string>
     <string name="lorem_ipsum_dolor">Lorem ipsum dolor sit amet consectetur. Consequat pretium feugiat dui vitae.</string>
     <string name="next">Next</string>
+    <string name="forgot_your_password">Forgot Your Password?</string>
+    <string name="we_will_share_you_default_password">We will share you the default password, so please enter your email address below.</string>
+
 
 </resources>

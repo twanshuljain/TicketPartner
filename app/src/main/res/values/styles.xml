@@ -31,6 +31,15 @@
     <item name="android:fontFamily" tools:targetApi="o">@font/lato_bold</item>
   </style>
 
+  <style name="editTextStyle" parent="Widget.AppCompat.TextView">
+    <item name="android:textColor">@color/paraHeading</item>
+    <item name="android:textSize">@dimen/text_16</item>
+    <item name="hintTextColor">@color/placeholder</item>
+    <item name="android:paddingStart">@dimen/margin_10</item>
+    <item name="android:fontFamily" tools:targetApi="o">@font/lato_regular</item>
+  </style>
+
+
   <style name="regularParaText14" parent="Widget.AppCompat.TextView">
     <item name="android:textColor">@color/para_text</item>
     <item name="android:textSize">@dimen/text_14</item>

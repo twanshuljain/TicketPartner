@@ -1,4 +1,4 @@
-package com.example.ticketpartner
+package com.example.ticketpartner.feature_signup
 
 import android.os.Bundle
 import android.view.LayoutInflater

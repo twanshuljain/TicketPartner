@@ -7,37 +7,42 @@
 
     <fragment
         android:id="@+id/signInFragment"
-        android:name="com.example.ticketpartner.SignInFragment"
+        android:name="com.example.ticketpartner.feature_login.SignInFragment"
         android:label="fragment_sign_in"
         tools:layout="@layout/fragment_sign_in" >
     </fragment>
 
     <fragment
         android:id="@+id/signUpEmailFragment"
-        android:name="com.example.ticketpartner.SignUpEmailFragment"
+        android:name="com.example.ticketpartner.feature_signup.SignUpEmailFragment"
         android:label="fragment_sign_up_email"
         tools:layout="@layout/fragment_sign_up_email" >
     </fragment>
 
     <fragment
         android:id="@+id/signUpDetailsFragment"
-        android:name="com.example.ticketpartner.SignUpDetailsFragment"
+        android:name="com.example.ticketpartner.feature_signup.SignUpDetailsFragment"
         android:label="fragment_sign_up_details"
         tools:layout="@layout/fragment_sign_up_details" >
     </fragment>
 
     <fragment
         android:id="@+id/forgotPasswordFragment"
-        android:name="com.example.ticketpartner.ForgotPasswordFragment"
+        android:name="com.example.ticketpartner.feature_login.ForgotPasswordFragment"
         android:label="fragment_forgot_password"
         tools:layout="@layout/fragment_forgot_password" />
 
     <fragment
         android:id="@+id/splashLandingFragment"
-        android:name="com.example.ticketpartner.SplashLandingFragment"
+        android:name="com.example.ticketpartner.feature_login.SplashLandingFragment"
         android:label="fragment_splash_landing"
         tools:layout="@layout/fragment_splash_landing" >
 
     </fragment>
+    <fragment
+        android:id="@+id/resetPasswordFragment"
+        android:name="com.example.ticketpartner.feature_login.ResetPasswordFragment"
+        android:label="fragment_reset_password"
+        tools:layout="@layout/fragment_reset_password" />
 
 </navigation>
