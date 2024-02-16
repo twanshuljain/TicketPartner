@@ -40,6 +40,7 @@
     <string name="next">Next</string>
     <string name="forgot_your_password">Forgot Your Password?</string>
     <string name="we_will_share_you_default_password">We will share you the default password, so please enter your email address below.</string>
+    <string name="your_password_link_has_been_sent">Your reset password link has been sent to your registered email address. Please check your email.</string>
 
 
 </resources>

@@ -5,6 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
+import com.example.ticketpartner.R
 import com.example.ticketpartner.databinding.FragmentSignUpDetailsBinding
 
 class SignUpDetailsFragment : Fragment() {
@@ -34,6 +36,10 @@ class SignUpDetailsFragment : Fragment() {
             verifyMobile = !verifyMobile
             if (verifyMobile) binding.otpLayoutPhone.visibility =
                 View.VISIBLE else binding.otpLayoutPhone.visibility = View.GONE
+        }
+
+        binding.tvSignInText.setOnClickListener {
+            findNavController().navigate(R.id.signInFragment)
         }
     }
 

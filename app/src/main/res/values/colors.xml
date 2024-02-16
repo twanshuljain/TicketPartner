@@ -18,4 +18,6 @@
     <color name="input_number_black">#000000</color>
     <color name="placeholder">#BDBDBD</color>
     <color name="blue">#2F80ED</color>
+    <color name="green">#21BE79</color>
+    <color name="dark_transparency">#80000000</color>
 </resources>
