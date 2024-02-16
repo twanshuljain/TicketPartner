@@ -103,4 +103,8 @@
     <dimen name="text_22">22sp</dimen>
     <dimen name="text_24">24sp</dimen>
     <dimen name="text_30">30sp</dimen>
+
+    <dimen name="dialog_vertical_margin">16dp</dimen>
+    <dimen name="dialog_horizontal_margin">16dp</dimen>
+
 </resources>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- fragment_full_screen_dialog.xml -->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_marginTop="@dimen/margin_20"
+    android:background="@color/green"
+    android:gravity="top">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/icon_correct"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_19"
+        android:layout_marginStart="@dimen/margin_20"
+        android:src="@drawable/ic_circle_correct"/>
+
+    <TextView
+        android:id="@+id/titleTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/your_password_link_has_been_sent"
+        style="@style/regularWhite14"
+        android:layout_toRightOf="@id/icon_correct"
+        android:padding="16dp"/>
+
+    <TextView
+        android:id="@+id/messageTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/regularWhite14"
+        android:padding="16dp"/>
+
+    <!-- Add other views as needed -->
+
+</RelativeLayout>

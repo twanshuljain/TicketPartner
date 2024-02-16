@@ -1,9 +1,8 @@
-package com.example.ticketpartner
+package com.example.ticketpartner.feature_login
 
-import android.annotation.SuppressLint
-import android.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.example.ticketpartner.R
 
 
 class SplashActivity : AppCompatActivity() {
