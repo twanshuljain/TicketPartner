@@ -1,4 +1,4 @@
-package com.example.ticketpartner.feature_login
+package com.example.ticketpartner.feature_login.presentation
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,7 +8,9 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.ticketpartner.R
 import com.example.ticketpartner.databinding.FragmentSplashLandingBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SplashLandingFragment : Fragment() {
     private lateinit var binding: FragmentSplashLandingBinding
     override fun onCreateView(

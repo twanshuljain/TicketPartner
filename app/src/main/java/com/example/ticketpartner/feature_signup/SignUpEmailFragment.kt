@@ -8,7 +8,9 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.ticketpartner.R
 import com.example.ticketpartner.databinding.FragmentSignUpEmailBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SignUpEmailFragment : Fragment() {
     private lateinit var binding: FragmentSignUpEmailBinding
     override fun onCreateView(
@@ -27,7 +29,9 @@ class SignUpEmailFragment : Fragment() {
 
         /** navigate user to signIn page */
         binding.tvSignIn.setOnClickListener {
-            findNavController().navigate(R.id.signInFragment, bundle)
+            //findNavController().navigate(R.id.signInFragment, bundle)
+            val destinationIdToClearTo = R.id.signInFragment
+            findNavController().popBackStack(destinationIdToClearTo, false)
         }
 
         binding.btnSignUp.setOnClickListener {

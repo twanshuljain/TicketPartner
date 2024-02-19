@@ -1,4 +1,4 @@
-package com.example.ticketpartner.feature_login
+package com.example.ticketpartner.feature_login.presentation
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,7 +7,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.ticketpartner.databinding.FragmentForgotPasswordBinding
 import com.example.ticketpartner.utils.FullScreenDialogFragment
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ForgotPasswordFragment : Fragment() {
     private lateinit var binding: FragmentForgotPasswordBinding
 

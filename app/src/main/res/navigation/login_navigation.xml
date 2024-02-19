@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/signInFragment"
-        android:name="com.example.ticketpartner.feature_login.SignInFragment"
+        android:name="com.example.ticketpartner.feature_login.presentation.SignInFragment"
         android:label="fragment_sign_in"
         tools:layout="@layout/fragment_sign_in" >
     </fragment>
@@ -28,13 +28,13 @@
 
     <fragment
         android:id="@+id/forgotPasswordFragment"
-        android:name="com.example.ticketpartner.feature_login.ForgotPasswordFragment"
+        android:name="com.example.ticketpartner.feature_login.presentation.ForgotPasswordFragment"
         android:label="fragment_forgot_password"
         tools:layout="@layout/fragment_forgot_password" />
 
     <fragment
         android:id="@+id/splashLandingFragment"
-        android:name="com.example.ticketpartner.feature_login.SplashLandingFragment"
+        android:name="com.example.ticketpartner.feature_login.presentation.SplashLandingFragment"
         android:label="fragment_splash_landing"
         tools:layout="@layout/fragment_splash_landing" >
 
@@ -42,7 +42,7 @@
 
     <fragment
         android:id="@+id/resetPasswordFragment"
-        android:name="com.example.ticketpartner.feature_login.ResetPasswordFragment"
+        android:name="com.example.ticketpartner.feature_login.presentation.ResetPasswordFragment"
         android:label="fragment_reset_password"
         tools:layout="@layout/fragment_reset_password" />
 

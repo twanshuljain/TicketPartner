@@ -1,4 +1,4 @@
-package com.example.ticketpartner.feature_login
+package com.example.ticketpartner.feature_login.presentation
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -8,7 +8,9 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.example.ticketpartner.R
 import com.example.ticketpartner.databinding.FragmentResetPasswordBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ResetPasswordFragment : Fragment() {
   private lateinit var binding: FragmentResetPasswordBinding
     override fun onCreateView(

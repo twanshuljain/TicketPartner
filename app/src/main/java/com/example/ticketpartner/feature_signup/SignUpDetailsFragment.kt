@@ -8,7 +8,9 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.ticketpartner.R
 import com.example.ticketpartner.databinding.FragmentSignUpDetailsBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SignUpDetailsFragment : Fragment() {
     private lateinit var binding: FragmentSignUpDetailsBinding
     private var verifyEmail = false
