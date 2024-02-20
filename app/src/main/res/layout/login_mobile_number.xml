@@ -44,31 +44,27 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toEndOf="@id/tvPhone" />
 
-<!--    <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/etPhone"
+    <com.hbb20.CountryCodePicker
+        android:id="@+id/countryPicker"
         android:layout_width="@dimen/margin_0"
         android:layout_height="@dimen/size_48"
-        android:layout_marginTop="@dimen/margin_5"
-        android:inputType="number"
-        android:maxLines="1"
-        android:paddingStart="@dimen/margin_10"
-        android:paddingEnd="@dimen/margin_0"
-        android:gravity="center_vertical"
         android:background="@drawable/edit_text_design"
-        android:textSize="@dimen/text_16"
-        app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
+        android:gravity="center_vertical"
+        android:layout_marginTop="@dimen/margin_5"
+        app:ccp_showNameCode="false"
         app:layout_constraintStart_toStartOf="@id/guidelineStart"
-        app:layout_constraintTop_toBottomOf="@id/tvPhone" />-->
+        app:layout_constraintTop_toBottomOf="@id/tvPhone" />
 
     <RelativeLayout
         android:id="@+id/phoneLayout"
         android:layout_width="@dimen/margin_0"
         android:layout_height="@dimen/size_48"
         android:layout_marginTop="@dimen/size_5"
+        android:layout_marginStart="@dimen/margin_8"
         android:background="@drawable/edit_text_design"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
-        app:layout_constraintStart_toStartOf="@id/guidelineStart"
+        app:layout_constraintStart_toEndOf="@id/countryPicker"
         app:layout_constraintTop_toBottomOf="@id/tvPhone">
 
         <androidx.appcompat.widget.AppCompatEditText
@@ -79,6 +75,7 @@
             android:maxLines="1"
             android:inputType="number"
             android:gravity="center_vertical"
+            android:imeOptions="actionDone"
             android:background="@drawable/no_undreline_et_design"
             android:paddingStart="@dimen/margin_10"
             android:paddingEnd="@dimen/margin_0"
@@ -86,11 +83,25 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvVerify"
-            style="@style/mediumPurple12"
+            style="@style/regularPurple12"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:gravity="center_vertical"
             android:padding="@dimen/margin_10"
+            android:visibility="gone"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:paddingEnd="@dimen/margin_10"
+            android:text="@string/verify" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvVerifyDisable"
+            style="@style/regularGreyDisable12"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:padding="@dimen/margin_10"
+            android:visibility="visible"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:paddingEnd="@dimen/margin_10"
@@ -179,5 +190,18 @@
         android:text="@string/you_will_receive_otp_in"
         app:layout_constraintTop_toBottomOf="@id/llOtp"
         app:layout_constraintStart_toStartOf="@id/guidelineStart"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnSignInMobile"
+        style="@style/boldWhiteText16"
+        android:layout_width="@dimen/margin_0"
+        android:layout_height="@dimen/size_48"
+        android:layout_marginTop="@dimen/margin_20"
+        android:background="@drawable/btn_design_sign_in"
+        android:text="@string/sign_in"
+        android:textAllCaps="false"
+        app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
+        app:layout_constraintStart_toStartOf="@id/guidelineStart"
+        app:layout_constraintTop_toBottomOf="@+id/tvCountDown" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

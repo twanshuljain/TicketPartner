@@ -19,5 +19,9 @@
     <color name="placeholder">#BDBDBD</color>
     <color name="blue">#2F80ED</color>
     <color name="green">#21BE79</color>
+    <color name="red">#FF0000</color>
+    <color name="light_red">#FF474C</color>
     <color name="dark_transparency">#80000000</color>
+    <color name="link_color">#147BD1</color>
+    <color name="grey_disable">#D2D4DC</color>
 </resources>

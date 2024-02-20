@@ -22,11 +22,9 @@ const val USER_ID= "user_id"
 const val USER_NAME = "username"
 const val PASSWORD = "password"
 
-/**
- * constant to handle loader view
- */
-const val RECYCLERVIEW_LOADER: Int = 1
-
+const val PLUS = "+"
+const val IndianCountryCode = "+91"
+const val ZERO = 0
 
 //Database keys
 const val DATABASE_VERSION = 1

@@ -87,6 +87,9 @@ dependencies {
     implementation("androidx.navigation:navigation-fragment-ktx:$navVersion")
     implementation("androidx.navigation:navigation-ui-ktx:$navVersion")
 
+    //countryCode picker
+    implementation ("com.hbb20:ccp:2.5.2")
+
 
 }
 

@@ -117,4 +117,17 @@
 
     </RelativeLayout>
 
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnSignIn"
+        style="@style/boldWhiteText16"
+        android:layout_width="@dimen/margin_0"
+        android:layout_height="@dimen/size_48"
+        android:layout_marginTop="@dimen/margin_20"
+        android:background="@drawable/btn_design_sign_in"
+        android:text="@string/sign_in"
+        android:textAllCaps="false"
+        app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
+        app:layout_constraintStart_toStartOf="@id/guidelineStart"
+        app:layout_constraintTop_toBottomOf="@+id/rlForgotPass" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

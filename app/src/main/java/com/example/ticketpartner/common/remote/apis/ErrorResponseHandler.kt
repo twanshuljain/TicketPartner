@@ -24,20 +24,22 @@ class ErrorResponseHandler constructor(it: Throwable) {
         var errorCode = ErrorResponse()
         when (it) {
             is HttpException -> {
-                if (it.code() == HTTP_SERVICE_UNAVAILABLE)
-                    errorCode = ErrorResponse(
-                        SERVICE_NOT_AVAILABLE_MSG,
-                        SERVICE_NOT_AVAILABLE_MSG,
-                        HTTP_SERVICE_UNAVAILABLE
-                    )
-                else
-                    it.response()?.let {
-                        errorCode = createErrorResponse(it.errorBody(), it.code())
-                    }
-            }
-            is UnknownHostException -> errorCode = ErrorResponse(errorCode = UNKNOWN_HOST_EXCEPTION)
+                    if (it.code() == HTTP_SERVICE_UNAVAILABLE)
+                        errorCode = ErrorResponse(
+                            SERVICE_NOT_AVAILABLE_MSG,
+                            SERVICE_NOT_AVAILABLE_MSG,
+                            HTTP_SERVICE_UNAVAILABLE
+                        )
+                    else
+                        it.response()?.let {
+                            errorCode = createErrorResponse(it.errorBody(), it.code())
+                        }
+                }
+                is UnknownHostException -> errorCode = ErrorResponse(errorCode = UNKNOWN_HOST_EXCEPTION)
         }
-        return errorCode
+
+            return errorCode
+
     }
 
     /**

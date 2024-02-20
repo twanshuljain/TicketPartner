@@ -16,7 +16,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_begin="15dp"
+            app:layout_constraintGuide_begin="@dimen/size_15"
             app:layout_constraintStart_toStartOf="parent" />
 
         <androidx.constraintlayout.widget.Guideline
@@ -112,8 +112,11 @@
             <androidx.appcompat.widget.AppCompatEditText
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_toLeftOf="@id/tvVerify"
+                android:layout_toStartOf="@id/tvVerify"
                 android:background="@drawable/no_undreline_et_design"
+                android:maxLines="1"
+                android:inputType="textEmailAddress"
+                android:gravity="center_vertical"
                 android:paddingStart="@dimen/margin_10"
                 android:textSize="@dimen/text_16" />
 
@@ -169,6 +172,9 @@
             android:background="@drawable/edit_text_design"
             android:hint="@string/first_name"
             android:paddingStart="@dimen/margin_10"
+            android:inputType="text"
+            android:gravity="center_vertical"
+            android:maxLines="1"
             app:layout_constraintEnd_toEndOf="@id/guidelineVerticalCenter"
             app:layout_constraintStart_toStartOf="@id/guidelineStart"
             app:layout_constraintTop_toBottomOf="@id/tvFirstName" />
@@ -205,21 +211,24 @@
             android:background="@drawable/edit_text_design"
             android:hint="@string/last_name"
             android:paddingStart="@dimen/margin_10"
+            android:maxLines="1"
+            android:inputType="text"
+            android:gravity="center_vertical"
             app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
             app:layout_constraintStart_toStartOf="@id/guidelineVerticalCenter"
             app:layout_constraintTop_toBottomOf="@id/tvLastName" />
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/etCountryPicker"
+        <com.hbb20.CountryCodePicker
+            android:id="@+id/countryPicker"
             android:layout_width="@dimen/margin_0"
             android:layout_height="@dimen/size_48"
-            android:layout_marginTop="@dimen/margin_25"
             android:background="@drawable/edit_text_design"
-            android:scaleType="fitXY"
-            android:src="@drawable/countrycode"
-            app:layout_constraintEnd_toEndOf="@id/guidelineStartCenter"
+            android:gravity="center_vertical"
+            android:layout_marginTop="@dimen/margin_25"
+            app:ccp_showNameCode="false"
             app:layout_constraintStart_toStartOf="@id/guidelineStart"
             app:layout_constraintTop_toBottomOf="@id/etFirstName" />
+
 
         <RelativeLayout
             android:id="@+id/etPhoneNumber"
@@ -230,18 +239,22 @@
             android:background="@drawable/edit_text_design"
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
-            app:layout_constraintStart_toStartOf="@id/guidelineStartCenter"
+            app:layout_constraintStart_toEndOf="@id/countryPicker"
             app:layout_constraintTop_toBottomOf="@id/etLastName">
 
             <androidx.appcompat.widget.AppCompatEditText
                 style="@style/mediumPlaceHolderText14"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_toLeftOf="@id/tvVerifyMobile"
+                android:layout_toStartOf="@id/tvVerifyMobile"
                 android:background="@drawable/no_undreline_et_design"
                 android:hint="@string/mobile_number"
                 android:paddingStart="@dimen/margin_10"
-                android:textSize="@dimen/text_16" />
+                android:maxLines="1"
+                android:inputType="number"
+                android:gravity="center_vertical"
+                android:textSize="@dimen/text_16"
+                tools:ignore="RtlSymmetry" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvVerifyMobile"
@@ -251,7 +264,8 @@
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:paddingEnd="@dimen/margin_10"
-                android:text="@string/verify" />
+                android:text="@string/verify"
+                tools:ignore="RtlSymmetry" />
         </RelativeLayout>
 
 
@@ -308,6 +322,9 @@
                 android:hint="@string/enter_password"
                 android:imeOptions="actionDone"
                 android:inputType="textPassword"
+                android:paddingStart="@dimen/size_10"
+                android:maxLines="1"
+                android:layout_gravity="center_vertical"
                 android:padding="@dimen/margin_5"
                 android:textSize="@dimen/text_16" />
         </com.google.android.material.textfield.TextInputLayout>
