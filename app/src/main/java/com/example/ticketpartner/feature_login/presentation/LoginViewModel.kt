@@ -14,6 +14,7 @@ import com.example.ticketpartner.feature_login.domain.model.ValidationMobileLogi
 import com.example.ticketpartner.feature_login.domain.usecase.GetEmailLoginUseCase
 import com.example.ticketpartner.feature_login.domain.usecase.GetPhoneLoginUseCase
 import com.example.ticketpartner.feature_login.domain.usecase.GetSendOtpLoginUseCase
+import com.technotoil.tglivescan.common.retrofit.apis.ErrorResponseHandler
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.onCompletion
@@ -43,7 +44,7 @@ class LoginViewModel @Inject constructor(
     val getResponseSendOtpMobile: LiveData<SendMobileOtpUIState> = _sendMobileOtpState
 
     private val _mobileLoginState: MutableLiveData<MobileLoginUIState> = MutableLiveData()
-    val mobileLoginState: LiveData<MobileLoginUIState> = _mobileLoginState
+    val getMobileLoginResponse: LiveData<MobileLoginUIState> = _mobileLoginState
 
 
     /*
@@ -62,9 +63,8 @@ class LoginViewModel @Inject constructor(
         viewModelScope.launch {
             getEmailLoginUseCase.invoke(email, password).catch {
                 logUtil.log(TAG, "onError${it.message.toString()}")
-                _emailLoginState.value = EmailLoginUIState.OnFailure(it.message.toString())
-            }.onCompletion {
-                logUtil.log(TAG, it?.message.toString())
+                val error = ErrorResponseHandler(it)
+                _emailLoginState.value = EmailLoginUIState.OnFailure(error.getErrors().message.toString())
             }.collect {
                 logUtil.log(TAG, "onCollect${it}")
                 _emailLoginState.value = EmailLoginUIState.OnSuccess(it)
@@ -76,11 +76,10 @@ class LoginViewModel @Inject constructor(
         _sendMobileOtpState.value = SendMobileOtpUIState.IsLoading(true)
         viewModelScope.launch {
             getSendOtpLoginUseCase.invoke(countryCode, number).catch {
+                val error = ErrorResponseHandler(it)
                 _sendMobileOtpState.value =
-                    SendMobileOtpUIState.OnFailure(it.message.toString())
+                    SendMobileOtpUIState.OnFailure(error.getErrors().message.toString())
                 logUtil.log(TAG, "onError: ${it.message}")
-            }.onCompletion {
-                logUtil.log(TAG, "onCompletion ${it?.message.toString()}")
             }.collect {
                 logUtil.log(TAG, "onResponse: $it")
                 _sendMobileOtpState.value = SendMobileOtpUIState.OnSuccess(it)
@@ -89,14 +88,13 @@ class LoginViewModel @Inject constructor(
     }
 
     fun loginWithMobileNumber(countryCode: String, number: String, otp: String) {
-        _mobileLoginState.value = MobileLoginUIState.OnLoading(true)
+        _mobileLoginState.value = MobileLoginUIState.IsLoading(true)
         viewModelScope.launch {
-            getPhoneLoginUseCase.invoke(countryCode, number, otp).onCompletion {
-                logUtil.log(TAG, "onCompletion ${it?.message.toString()}")
-            }.catch {
+            getPhoneLoginUseCase.invoke(countryCode, number, otp).catch {
                 logUtil.log(TAG, "onError: ${it.message}")
+                val error = ErrorResponseHandler(it)
                 _mobileLoginState.value =
-                    MobileLoginUIState.OnFailure(it.message.toString())
+                    MobileLoginUIState.OnFailure(error.getErrors().message.toString())
             }.collect {
                 logUtil.log(TAG, "onResponse: $it")
                 _mobileLoginState.value = MobileLoginUIState.OnSuccess(it)

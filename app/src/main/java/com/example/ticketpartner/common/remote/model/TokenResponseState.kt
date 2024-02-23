@@ -1,5 +1,7 @@
 package com.example.ticketpartner.common.remote.model
 
+import com.technotoil.tglivescan.common.retrofit.model.ErrorResponse
+
 
 /**
  * This class is used to handle refresh token and access token fail and success case

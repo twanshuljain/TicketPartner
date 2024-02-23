@@ -32,7 +32,7 @@
     <string name="reset">Reset</string>
     <string name="reset_password">Reset Password</string>
     <string name="confirm_password">Confirm Password</string>
-    <string name="you_will_receive_otp_in">You will receive OTP in 4:00s</string>
+    <string name="you_will_receive_otp_in">You will receive OTP in</string>
     <string name="privacy_policy">By signing up, I agree to the TicketPartner Terms of Service and Privacy Policy.</string>
     <string name="create_your_account">Create your account.</string>
     <string name="create_account">Create account</string>
@@ -48,6 +48,9 @@
     <string name="please_enter_valid_email">Please enter valid email address</string>
     <string name="please_enter_password">Please enter password</string>
     <string name="please_enter_mobile">Please enter mobile number</string>
+    <string name="otp_is_required">OTP is required</string>
+    <string name="please_verify_your_email">Please verify your email</string>
+    <string name="please_verify_your_phone">Please verify your phone number</string>
 
 
 

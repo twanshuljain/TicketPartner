@@ -12,19 +12,26 @@ const val SPACE = " "
 const val EMPTY_STRING = ""
 const val HYPHEN_CHAR = "-"
 const val UNDERSCORE_CHAR = "_"
+const val DELAY_TWO_SEC = 2000L
 
 /*
 don't move or replace the values of constants it might affect the functionality
 add additional constants below this
 * */
 const val USER_PREFERENCE_NAME = "user_preferences"
-const val USER_ID= "user_id"
+const val USER_ID = "user_id"
 const val USER_NAME = "username"
 const val PASSWORD = "password"
 
 const val PLUS = "+"
 const val IndianCountryCode = "+91"
 const val ZERO = 0
+
+
+/**Key constants*/
+const val EMAIL_KEY = "email"
+const val RESET_TOKEN = "reset_token"
+
 
 //Database keys
 const val DATABASE_VERSION = 1

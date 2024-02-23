@@ -16,4 +16,7 @@
     </style>
 
     <style name="Theme.TicketPartner" parent="Base.Theme.TicketPartner" />
+    <style name="MainAlertDialog" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:windowBackground">@drawable/bg_alert_dialog</item>
+    </style>
 </resources>

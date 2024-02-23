@@ -5,6 +5,7 @@ plugins {
     kotlin("kapt")
     id("com.google.dagger.hilt.android")
     id ("kotlin-parcelize")
+    id("androidx.navigation.safeargs.kotlin")
 
 }
 
@@ -83,9 +84,12 @@ dependencies {
     implementation ("androidx.room:room-ktx:2.6.1")
     kapt ("androidx.room:room-compiler:2.6.1")
 
-    //navigation
+   /* //navigation
     implementation("androidx.navigation:navigation-fragment-ktx:$navVersion")
-    implementation("androidx.navigation:navigation-ui-ktx:$navVersion")
+    implementation("androidx.navigation:navigation-ui-ktx:$navVersion")*/
+
+    implementation("androidx.navigation:navigation-fragment-ktx:2.5.3")
+    implementation("androidx.navigation:navigation-ui-ktx:2.5.3")
 
     //countryCode picker
     implementation ("com.hbb20:ccp:2.5.2")
@@ -96,3 +100,4 @@ dependencies {
 kapt {
     correctErrorTypes = true
 }
+

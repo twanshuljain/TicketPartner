@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/contain_mobile_login"
@@ -105,7 +106,7 @@
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:paddingEnd="@dimen/margin_10"
-            android:text="@string/verify" />
+            android:text="@string/send_otp" />
     </RelativeLayout>
 
     <androidx.appcompat.widget.AppCompatTextView
@@ -190,6 +191,17 @@
         android:text="@string/you_will_receive_otp_in"
         app:layout_constraintTop_toBottomOf="@id/llOtp"
         app:layout_constraintStart_toStartOf="@id/guidelineStart"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvCountDownTime"
+        style="@style/regularParaText14"
+        android:layout_width="@dimen/margin_0"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_15"
+        android:paddingStart="@dimen/margin_5"
+        app:layout_constraintTop_toBottomOf="@id/llOtp"
+        app:layout_constraintStart_toEndOf="@id/tvCountDown"
+        tools:ignore="RtlSymmetry" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnSignInMobile"

@@ -9,6 +9,8 @@
         android:id="@+id/signInFragment"
         android:name="com.example.ticketpartner.feature_login.presentation.SignInFragment"
         android:label="fragment_sign_in"
+        app:popUpTo="@id/login_navigation"
+        app:popUpToInclusive="true"
         tools:layout="@layout/fragment_sign_in" >
     </fragment>
 
@@ -17,6 +19,7 @@
         android:name="com.example.ticketpartner.feature_signup.SignUpEmailFragment"
         android:label="fragment_sign_up_email"
         tools:layout="@layout/fragment_sign_up_email" >
+
     </fragment>
 
     <fragment
@@ -24,6 +27,7 @@
         android:name="com.example.ticketpartner.feature_signup.SignUpDetailsFragment"
         android:label="fragment_sign_up_details"
         tools:layout="@layout/fragment_sign_up_details" >
+
     </fragment>
 
     <fragment

@@ -1,5 +1,6 @@
 package com.example.ticketpartner.common.di
 
+import android.os.CountDownTimer
 import com.example.ticketpartner.common.LogUtil
 import dagger.Module
 import dagger.Provides
@@ -16,4 +17,5 @@ object AppModule {
     @Singleton
     @Provides
     fun provideLog(): LogUtil = LogUtil()
+
 }

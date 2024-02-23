@@ -1,7 +1,11 @@
-package com.example.ticketpartner.common.remote.apis
+package com.technotoil.tglivescan.common.retrofit.apis
 
-import com.example.ticketpartner.common.remote.model.ErrorResponse
+import com.example.ticketpartner.common.remote.apis.BAD_REQUEST
+import com.example.ticketpartner.common.remote.apis.HTTP_SERVICE_UNAVAILABLE
+import com.example.ticketpartner.common.remote.apis.PARSING_ERROR_MSG
+import com.example.ticketpartner.common.remote.apis.SERVICE_NOT_AVAILABLE_MSG
 import com.google.gson.Gson
+import com.technotoil.tglivescan.common.retrofit.model.ErrorResponse
 import okhttp3.ResponseBody
 import retrofit2.HttpException
 import java.net.UnknownHostException
@@ -24,22 +28,20 @@ class ErrorResponseHandler constructor(it: Throwable) {
         var errorCode = ErrorResponse()
         when (it) {
             is HttpException -> {
-                    if (it.code() == HTTP_SERVICE_UNAVAILABLE)
-                        errorCode = ErrorResponse(
-                            SERVICE_NOT_AVAILABLE_MSG,
-                            SERVICE_NOT_AVAILABLE_MSG,
-                            HTTP_SERVICE_UNAVAILABLE
-                        )
-                    else
-                        it.response()?.let {
-                            errorCode = createErrorResponse(it.errorBody(), it.code())
-                        }
-                }
-                is UnknownHostException -> errorCode = ErrorResponse(errorCode = UNKNOWN_HOST_EXCEPTION)
+                if (it.code() == HTTP_SERVICE_UNAVAILABLE)
+                    errorCode = ErrorResponse(
+                        BAD_REQUEST.toString(),
+                        SERVICE_NOT_AVAILABLE_MSG
+                    )
+                else
+                    it.response()?.let {
+                        errorCode = createErrorResponse(it.errorBody(), it.code())
+                    }
+            }
+
+            is UnknownHostException -> errorCode = ErrorResponse()
         }
-
-            return errorCode
-
+        return errorCode
     }
 
     /**
@@ -49,14 +51,13 @@ class ErrorResponseHandler constructor(it: Throwable) {
      */
     private fun createErrorResponse(errorBody: ResponseBody?, errorCode: Int): ErrorResponse {
         return try {
-            var errorResponse = ErrorResponse(errorCode = errorCode)
+            var errorResponse = ErrorResponse()
             errorBody?.let {
                 errorResponse = Gson().fromJson(it.string(), ErrorResponse::class.java)
-                errorResponse.errorCode = errorCode
             }
             errorResponse
         } catch (e: Exception) {
-            ErrorResponse(PARSING_ERROR_MSG, PARSING_ERROR_MSG, HTTP_PARSE_RESPONSE)
+            ErrorResponse(status_code = errorCode.toString(), message = PARSING_ERROR_MSG)
         }
     }
 

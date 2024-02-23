@@ -47,24 +47,40 @@
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/otp1"
             style="@style/OtpEditTextStyle"
+            android:maxLength="1"
+            android:maxLines="1"
+            android:gravity="center"
+            android:imeOptions="actionNext"
             android:layout_marginEnd="@dimen/margin_15"
             android:background="@drawable/edit_text_design" />
 
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/otp2"
             style="@style/OtpEditTextStyle"
+            android:maxLength="1"
+            android:maxLines="1"
+            android:gravity="center"
+            android:imeOptions="actionNext"
             android:layout_marginEnd="@dimen/margin_15"
             android:background="@drawable/edit_text_design" />
 
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/otp3"
             style="@style/OtpEditTextStyle"
+            android:maxLength="1"
+            android:maxLines="1"
+            android:gravity="center"
+            android:imeOptions="actionNext"
             android:layout_marginEnd="@dimen/margin_15"
             android:background="@drawable/edit_text_design" />
 
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/otp4"
             style="@style/OtpEditTextStyle"
+            android:maxLength="1"
+            android:maxLines="1"
+            android:gravity="center"
+            android:imeOptions="actionDone"
             android:background="@drawable/edit_text_design" />
 
     </LinearLayout>
