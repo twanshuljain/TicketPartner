@@ -6,6 +6,8 @@ import com.example.ticketpartner.feature_login.domain.model.CreateUserAccountReq
 import com.example.ticketpartner.feature_login.domain.model.CreateUserAccountResponse
 import com.example.ticketpartner.feature_login.domain.model.ForgotPassSendEmailRequest
 import com.example.ticketpartner.feature_login.domain.model.ForgotPassSendEmailResponse
+import com.example.ticketpartner.feature_login.domain.model.ResetPasswordRequest
+import com.example.ticketpartner.feature_login.domain.model.ResetPasswordResponse
 import com.example.ticketpartner.feature_login.domain.model.SendEmailOtpResponseSignUp
 import com.example.ticketpartner.feature_login.domain.model.SendEmailOtpSignUpRequest
 import com.example.ticketpartner.feature_login.domain.model.SendEmailOtpVerifyRequest
@@ -92,7 +94,13 @@ class LoginDataSourceImpl @Inject constructor(private val restApiService: RestAp
         phoneNumber: String,
         otp: String
     ): SendPhoneSignUpOtpVerifyResponse {
-        return restApiService.sendPhoneOtpVerifySignUp(SendPhoneSignUpOtpVerifyRequest(countryCode,phoneNumber,otp))
+        return restApiService.sendPhoneOtpVerifySignUp(
+            SendPhoneSignUpOtpVerifyRequest(
+                countryCode,
+                phoneNumber,
+                otp
+            )
+        )
     }
 
     override suspend fun createUserAccount(createUserAccountRequest: CreateUserAccountRequest): CreateUserAccountResponse {
@@ -109,5 +117,15 @@ class LoginDataSourceImpl @Inject constructor(private val restApiService: RestAp
     ): VerifyEmailForgotPassResponse {
         return restApiService.verifyEmailForgotPass(VerifyEmailForgotPassRequest(email, otp))
     }
+
+    override suspend fun resetPassword(
+        newPassword: String,
+        conPassword: String
+    ): ResetPasswordResponse {
+        return restApiService.resetPassword(
+            ResetPasswordRequest(newPassword, conPassword)
+        )
+    }
+
 
 }

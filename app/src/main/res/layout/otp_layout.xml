@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/white"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
@@ -85,16 +85,68 @@
 
     </LinearLayout>
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvCountDown"
-        style="@style/regularParaHeading12"
+    <LinearLayout
+        android:id="@+id/tvCountDownLayout"
         android:layout_width="@dimen/margin_0"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_10"
-        android:drawablePadding="@dimen/margin_2"
-        android:textColor="@color/button_orange"
-        android:text="@string/you_will_receive_otp_in"
+        android:orientation="vertical"
+        android:layout_marginTop="@dimen/margin_15"
         app:layout_constraintTop_toBottomOf="@id/llOtp"
-        app:layout_constraintStart_toStartOf="@id/guidelineStart"/>
+        app:layout_constraintStart_toStartOf="@id/guidelineStart">
+
+        <RelativeLayout
+            android:id="@+id/layoutOtpCount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="visible">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvCountDown"
+                style="@style/regularParaText14"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/orange"
+                android:visibility="gone"
+                android:drawablePadding="@dimen/margin_2"
+                android:text="@string/you_will_receive_otp_in" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvCountDownTime"
+                style="@style/regularParaText14"
+                android:layout_width="wrap_content"
+                android:layout_toEndOf="@id/tvCountDown"
+                android:textColor="@color/orange"
+                android:layout_height="wrap_content"
+                android:paddingStart="@dimen/margin_5"
+                tools:ignore="RtlSymmetry" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/tvResendLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvNotYetRecieved"
+                style="@style/regularParaText14"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawablePadding="@dimen/margin_2"
+                android:text="@string/not_yet_received" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvResendBtn"
+                style="@style/regularParaText14"
+                android:layout_width="wrap_content"
+                android:text="@string/resend"
+                android:textColor="@color/secondary"
+                android:layout_toEndOf="@id/tvNotYetRecieved"
+                android:layout_height="wrap_content"
+                android:paddingStart="@dimen/margin_5"
+                tools:ignore="RtlSymmetry" />
+        </RelativeLayout>
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

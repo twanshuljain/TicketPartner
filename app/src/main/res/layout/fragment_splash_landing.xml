@@ -69,10 +69,11 @@
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
             android:layout_marginTop="@dimen/margin_10"
-            android:text="@string/elevate_your_events"
             app:layout_constraintTop_toBottomOf="@id/tvWelcomeToEvent"
             app:layout_constraintStart_toStartOf="@id/guidelineStart"
             app:layout_constraintEnd_toEndOf="@id/guidelineEnd" />
+
+        <!--android:text="@string/elevate_your_events"-->
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvLoremIpsumDolor"

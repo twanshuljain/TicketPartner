@@ -43,7 +43,6 @@ class CountdownTimerUtil @Inject constructor(
         val secondsRemaining = millisUntilFinished / 1000
         val minutes = secondsRemaining / 60
         val seconds = secondsRemaining % 60
-
         callback.onTick(minutes, seconds)
 
         countdownTextView.text = String.format("%02d:%02d", minutes, seconds)+"s"

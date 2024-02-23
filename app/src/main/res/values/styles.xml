@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
 
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize other attributes as needed -->
+        <item name="colorPrimary">@color/white</item>
+        <item name="colorPrimaryDark">@color/white</item>
+        <item name="colorAccent">@color/white</item>
+    </style>
+
     <style name="boldParaHeading24" parent="Widget.AppCompat.TextView">
         <item name="android:textColor">@color/paraHeading</item>
         <item name="android:textSize">@dimen/text_24</item>
@@ -56,6 +63,13 @@
         <item name="android:textColor">@color/paraHeading</item>
         <item name="hintTextColor">@color/placeholder</item>
         <item name="android:textSize">@dimen/text_14</item>
+        <item name="android:fontFamily" tools:targetApi="o">@font/lato_medium</item>
+    </style>
+
+    <style name="mediumPlaceHolderText16" parent="Widget.AppCompat.TextView">
+        <item name="android:textColor">@color/paraHeading</item>
+        <item name="hintTextColor">@color/placeholder</item>
+        <item name="android:textSize">@dimen/text_16</item>
         <item name="android:fontFamily" tools:targetApi="o">@font/lato_medium</item>
     </style>
 
@@ -124,6 +138,7 @@
         <item name="android:textSize">@dimen/text_12</item>
         <item name="android:fontFamily" tools:targetApi="o">@font/lato_regular</item>
     </style>
+
 
     //set snackBar background for success
 

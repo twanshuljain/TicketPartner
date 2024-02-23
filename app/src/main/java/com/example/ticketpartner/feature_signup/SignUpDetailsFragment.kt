@@ -1,5 +1,6 @@
 package com.example.ticketpartner.feature_signup
 
+import android.content.DialogInterface
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -28,17 +29,22 @@ import com.example.ticketpartner.feature_login.domain.model.SendEmailOtpSignUpUI
 import com.example.ticketpartner.feature_login.domain.model.SendEmailOtpVerifyUIState
 import com.example.ticketpartner.feature_login.domain.model.SendPhoneOtpSignUpUIState
 import com.example.ticketpartner.feature_login.domain.model.SendPhoneOtpVerifyUIState
+import com.example.ticketpartner.utils.CountdownTimerCallback
+import com.example.ticketpartner.utils.CountdownTimerUtil
 import com.example.ticketpartner.utils.DialogProgressUtil
+import com.example.ticketpartner.utils.FullScreenDialogFragment
 import com.example.ticketpartner.utils.NavigateFragmentUtil.clearBackStackToDestination
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class SignUpDetailsFragment : Fragment() {
+class SignUpDetailsFragment : Fragment(), CountdownTimerCallback {
     private lateinit var binding: FragmentSignUpDetailsBinding
     private val viewModel: SignUpViewModel by activityViewModels()
-
+    private lateinit var countdownTimerUtil: CountdownTimerUtil
     private var isEmailVerify = false
-    private var isPhoneVerify = true
+    private var isPhoneVerify = false
+    private var clickedOnEmailButton = false
+    private var clickedOnPhoneButton = false
 
     private var etEmail: String = ""
     private var etPassword: String = ""
@@ -80,12 +86,12 @@ class SignUpDetailsFragment : Fragment() {
 
         /** get email text from user */
         binding.etEmail.doAfterTextChanged {
-            etEmail = it.toString()
+            etEmail = it.toString().trim()
             disableSendOtpButtonEmail(it.toString())
         }
 
         binding.etPhoneNumber.doAfterTextChanged {
-            etPhone = it.toString()
+            etPhone = it.toString().trim()
             enableSendOtpButtonPhone(it.toString())
         }
 
@@ -109,24 +115,30 @@ class SignUpDetailsFragment : Fragment() {
             }
         }
 
+        binding.emailOtp.tvResendBtn.setOnClickListener {
+            clickedOnEmailButton = true
+            clickedOnPhoneButton = false
+            initialiseEmailCounter()
+            sendEmailOtp()
+        }
+
         binding.tvVerify.setOnClickListener {
-            if (etEmail.isNotEmpty()) {
-                if (!ContactUsInputFieldValidator.isEmailValidPattern(etEmail)) {
-                    SnackBarUtil.showErrorSnackBar(
-                        binding.root, getString(R.string.please_enter_valid_email)
-                    )
-                } else {
-                    viewModel.sendEmailOtp(etEmail)
-                    observeSendEmailOtpResponse()
-                }
-            } else {
-                SnackBarUtil.showErrorSnackBar(
-                    binding.root, getString(R.string.please_enter_email)
-                )
+            initialiseEmailCounter()
+            sendEmailOtp()
+        }
+
+        binding.includeOtpPhone.tvResendBtn.setOnClickListener {
+            clickedOnEmailButton = false
+            clickedOnPhoneButton = true
+            intialiseMobileOtpCounter()
+            if (etPhone.isNotEmpty()) {
+                viewModel.sendPhoneOtpSignUp(countryCode, etPhone)
+                observeSendPhoneOtpResponse()
             }
         }
 
         binding.tvVerifyMobile.setOnClickListener {
+            intialiseMobileOtpCounter()
             if (etPhone.isNotEmpty()) {
                 viewModel.sendPhoneOtpSignUp(countryCode, etPhone)
                 observeSendPhoneOtpResponse()
@@ -157,7 +169,7 @@ class SignUpDetailsFragment : Fragment() {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
 
             override fun afterTextChanged(s: Editable?) {
-                etFirstName = s.toString()
+                etFirstName = s.toString().trim()
                 enableCreateAccountButton()
             }
         })
@@ -168,7 +180,7 @@ class SignUpDetailsFragment : Fragment() {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
 
             override fun afterTextChanged(s: Editable?) {
-                etLastName = s.toString()
+                etLastName = s.toString().trim()
                 enableCreateAccountButton()
             }
         })
@@ -179,7 +191,7 @@ class SignUpDetailsFragment : Fragment() {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
 
             override fun afterTextChanged(s: Editable?) {
-                etPassword = s.toString()
+                etPassword = s.toString().trim()
                 enableCreateAccountButton()
             }
         })
@@ -200,6 +212,41 @@ class SignUpDetailsFragment : Fragment() {
         }
     }
 
+    private fun intialiseMobileOtpCounter() {
+        countdownTimerUtil = CountdownTimerUtil(
+            binding.includeOtpPhone.tvCountDownTime,
+            totalTimeMillis = 2 * 60 * 1000,  // 4 minutes
+            intervalMillis = 1000,
+            callback = this
+        )
+    }
+
+    private fun initialiseEmailCounter() {
+        countdownTimerUtil = CountdownTimerUtil(
+            binding.emailOtp.tvCountDownTime,
+            totalTimeMillis = 2 * 60 * 1000,  // 2 minutes
+            intervalMillis = 1000,
+            callback = this
+        )
+    }
+
+    private fun sendEmailOtp() {
+        if (etEmail.isNotEmpty()) {
+            if (!ContactUsInputFieldValidator.isEmailValidPattern(etEmail)) {
+                SnackBarUtil.showErrorSnackBar(
+                    binding.root, getString(R.string.please_enter_valid_email)
+                )
+            } else {
+                viewModel.sendEmailOtp(etEmail)
+                observeSendEmailOtpResponse()
+            }
+        } else {
+            SnackBarUtil.showErrorSnackBar(
+                binding.root, getString(R.string.please_enter_email)
+            )
+        }
+    }
+
     private fun observeCreateUserAccountResponse() {
         viewModel.getCreateAccountResponse.observe(viewLifecycleOwner) {
             when (it) {
@@ -210,11 +257,11 @@ class SignUpDetailsFragment : Fragment() {
                 is CreateUserAccountUIState.OnSuccess -> {
                     DialogProgressUtil.dismiss()
                     SnackBarUtil.showSuccessSnackBar(binding.root, it.result.message.toString())
+                    val signIn = R.id.signInFragment
+                    findNavController().clearBackStackToDestination(signIn)
                     // Adding a delay of 2000 milliseconds (2 seconds)
                     Handler(Looper.getMainLooper()).postDelayed({
                         binding.btnCreateAccount.isClickable = false
-                        val signIn = R.id.signInFragment
-                        findNavController().clearBackStackToDestination(signIn)
                     }, DELAY_TWO_SEC)
                     binding.btnCreateAccount.isClickable = true
                 }
@@ -224,6 +271,18 @@ class SignUpDetailsFragment : Fragment() {
                     SnackBarUtil.showErrorSnackBar(binding.root, it.onFailure)
                 }
             }
+        }
+    }
+
+    private fun navigateToAnotherScreen() {
+        val dialog = FullScreenDialogFragment.newInstance(
+            "",
+            getString(R.string.account_has_been_created_successfully)
+        )
+        dialog.onStart()
+        val signIn = R.id.signInFragment
+        if (dialog.hasDialogDismissed()) {
+            findNavController().clearBackStackToDestination(signIn)
         }
     }
 
@@ -322,15 +381,15 @@ class SignUpDetailsFragment : Fragment() {
                     DialogProgressUtil.dismiss()
                     SnackBarUtil.showSuccessSnackBar(binding.root, it.result.message.toString())
                     makeNonEditableEditText(binding.etPhoneNumber)
-                    binding.tvVerify.visibility = View.GONE
-                    binding.ivEmailVerify.visibility = View.VISIBLE
-                    binding.emailOtpLayout.visibility = View.GONE
+                    binding.tvVerifyMobile.visibility = View.GONE
+                    binding.ivMobileVerified.visibility = View.VISIBLE
+                    binding.otpLayoutPhone.visibility = View.GONE
                     isPhoneVerify = true
                     enableCreateAccountButton()
                 }
 
                 is SendPhoneOtpVerifyUIState.OnFailure -> {
-                    //isPhoneVerify = false
+                    isPhoneVerify = false
                     DialogProgressUtil.dismiss()
                     SnackBarUtil.showErrorSnackBar(binding.root, it.onFailure)
                 }
@@ -389,6 +448,12 @@ class SignUpDetailsFragment : Fragment() {
                     DialogProgressUtil.dismiss()
                     SnackBarUtil.showSuccessSnackBar(binding.root, it.result.message.toString())
                     binding.otpLayoutPhone.visibility = View.VISIBLE
+                    clickedOnEmailButton = false
+                    clickedOnPhoneButton = true
+                    startCountDown()
+                    binding.includeOtpPhone.tvResendLayout.visibility = View.GONE
+                    binding.includeOtpPhone.layoutOtpCount.visibility = View.VISIBLE
+                    binding.includeOtpPhone.tvCountDown.visibility = View.VISIBLE
                 }
 
                 is SendPhoneOtpSignUpUIState.OnFailure -> {
@@ -411,6 +476,12 @@ class SignUpDetailsFragment : Fragment() {
                     DialogProgressUtil.dismiss()
                     SnackBarUtil.showSuccessSnackBar(binding.root, it.result.message.toString())
                     binding.emailOtpLayout.visibility = View.VISIBLE
+                    clickedOnEmailButton = true
+                    clickedOnPhoneButton = false
+                    startCountDown()
+                    binding.emailOtp.tvResendLayout.visibility = View.GONE
+                    binding.emailOtp.tvCountDown.visibility = View.VISIBLE
+                    binding.emailOtp.layoutOtpCount.visibility = View.VISIBLE
                 }
 
                 is SendEmailOtpSignUpUIState.OnFailure -> {
@@ -460,6 +531,48 @@ class SignUpDetailsFragment : Fragment() {
             return false
         }
         return isAllValid
+    }
+
+    private fun disableSendOtpButton(value: Boolean) {
+        if (value) {
+            binding.tvVerify.visibility = View.VISIBLE
+            binding.tvVerifyDisable.visibility = View.GONE
+        } else {
+            binding.tvVerify.visibility = View.GONE
+            binding.tvVerifyDisable.visibility = View.VISIBLE
+        }
+    }
+
+
+    private fun startCountDown() {
+        disableSendOtpButton(false)
+        disablePhoneSendOtpButton(false)
+        countdownTimerUtil.start()
+    }
+
+    override fun onTick(minutes: Long, seconds: Long) {
+    }
+
+    override fun onFinish() {
+        if (clickedOnEmailButton) {
+            //email
+            binding.emailOtp.tvResendLayout.visibility = View.VISIBLE
+            binding.emailOtp.layoutOtpCount.visibility = View.GONE
+            binding.emailOtp.tvCountDown.visibility = View.GONE
+            disableSendOtpButton(true)
+        }
+        if (clickedOnPhoneButton) {
+            //phone
+            disablePhoneSendOtpButton(true)
+            binding.includeOtpPhone.tvResendLayout.visibility = View.VISIBLE
+            binding.includeOtpPhone.layoutOtpCount.visibility = View.GONE
+            binding.includeOtpPhone.tvCountDown.visibility = View.GONE
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        countdownTimerUtil.stop()
     }
 
 

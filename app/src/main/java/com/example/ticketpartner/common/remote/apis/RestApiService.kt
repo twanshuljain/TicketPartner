@@ -4,6 +4,8 @@ import com.example.ticketpartner.feature_login.domain.model.CreateUserAccountReq
 import com.example.ticketpartner.feature_login.domain.model.CreateUserAccountResponse
 import com.example.ticketpartner.feature_login.domain.model.ForgotPassSendEmailRequest
 import com.example.ticketpartner.feature_login.domain.model.ForgotPassSendEmailResponse
+import com.example.ticketpartner.feature_login.domain.model.ResetPasswordRequest
+import com.example.ticketpartner.feature_login.domain.model.ResetPasswordResponse
 import com.example.ticketpartner.feature_login.domain.model.SendEmailOtpResponseSignUp
 import com.example.ticketpartner.feature_login.domain.model.SendEmailOtpSignUpRequest
 import com.example.ticketpartner.feature_login.domain.model.SendEmailOtpVerifyRequest
@@ -21,6 +23,8 @@ import com.example.ticketpartner.feature_login.domain.model.VerifyEmailForgotPas
 import com.example.ticketpartner.feature_login.domain.model.VerifyMobileOtpRequest
 import com.example.ticketpartner.feature_login.domain.model.VerifyMobileOtpResponse
 import retrofit2.http.Body
+import retrofit2.http.Header
+import retrofit2.http.Headers
 import retrofit2.http.POST
 
 /**
@@ -58,44 +62,10 @@ interface RestApiService {
     @POST(verifyEmailForgotPass)
     suspend fun verifyEmailForgotPass(@Body verifyEmailForgotPassRequest: VerifyEmailForgotPassRequest): VerifyEmailForgotPassResponse
 
+    //@Headers("Content-Type: application/json")
+    @POST(resetPassword)
+    suspend fun resetPassword(
+        @Body resetPasswordRequest: ResetPasswordRequest
+    ): ResetPasswordResponse
 
-    /* @GET("/us/{pin}")
-     suspend fun getAddressData(@Path("pin") pinCode: String): AddressData
-
-
-     @GET(GET_BRANCH_BY_ID)
-     suspend fun getBranchById(
-         @Query(CURRENT_PAGE) currentPage: Int,
-         @Query(FIELDS) fields: String?,
-         @Query(JOB_ID) jobID: String?,
-         @Query(PAGE_SIZE) pageSize: Int,
-         @Query(SORT) sort: String? = null,
-     ): BranchListResponse
-
-
-     @POST(POST_WISH_LIST)
-     suspend fun addToList(
-         @Query(PRODUCT_CODE) code: String?,
-         @Query(PRODUCT_QUANTITY) quantity: String?,
-         @Query(UOM) uom: String?,
-         @Query(LIST_CART_CODES, encoded = true) listCartCode: String
-     ): ResponseBody
-
-
-     @FormUrlEncoded
-     @POST(ADD_TO_CART_MY_LIST)
-     suspend fun addToCartMyList(
-         @Path(value = "cardId", encoded = true) listCode: String?,
-         @Field("preventSaveActiveCart") isPreventSaveActiveCart: Boolean?,
-         @Field("keepRestoredCart") isKeepRestoredCart: Boolean?,
-         @Field("cartName") cartName: String?,
-     ): Response<Unit>
-
-     @Multipart
-     @POST(CREATE_JOB)
-     suspend fun createJob(
-         @Part file: MultipartBody.Part?,
-         @Part("jobData") createJobRequest: CreateJobRequest?
-     ): Response<Unit>
-     */
 }

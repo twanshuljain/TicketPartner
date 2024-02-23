@@ -21,15 +21,19 @@ import com.example.ticketpartner.databinding.FragmentForgotPasswordBinding
 import com.example.ticketpartner.feature_login.domain.model.ForgotPassSendEmailUIState
 import com.example.ticketpartner.feature_login.domain.model.ForgotPassVerifyEmailUIState
 import com.example.ticketpartner.feature_signup.SignUpViewModel
+import com.example.ticketpartner.utils.CountdownTimerCallback
+import com.example.ticketpartner.utils.CountdownTimerUtil
 import com.example.ticketpartner.utils.DialogProgressUtil
 import com.example.ticketpartner.utils.NavigateFragmentUtil.clearBackStackToDestination
 import dagger.hilt.android.AndroidEntryPoint
 import kotlin.math.log
 
 @AndroidEntryPoint
-class ForgotPasswordFragment : Fragment() {
+class ForgotPasswordFragment : Fragment(), CountdownTimerCallback {
     private lateinit var binding: FragmentForgotPasswordBinding
     private val viewModel: SignUpViewModel by activityViewModels()
+    private lateinit var countdownTimerUtil: CountdownTimerUtil
+
     private var etEmail: String = ""
     private var token: String = ""
 
@@ -38,6 +42,7 @@ class ForgotPasswordFragment : Fragment() {
     private var otpThird: String = ""
     private var otpFourth: String = ""
     private var isEmailVerify = false
+    private var combinedOTP = ""
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -54,15 +59,21 @@ class ForgotPasswordFragment : Fragment() {
     }
 
     private fun initView() {
+        countdownTimerUtil = CountdownTimerUtil(
+            binding.includeOtpEmail.tvCountDownTime,
+            totalTimeMillis = 2 * 60 * 1000,  // 2 minutes
+            intervalMillis = 1000,
+            callback = this
+        )
 
         binding.etEmail.doAfterTextChanged {
-            etEmail = it.toString()
+            etEmail = it.toString().trim()
             if (it.toString().isEmpty()) {
-                binding.tvVerify.visibility = View.GONE
-                binding.tvVerifyDisable.visibility = View.VISIBLE
+                disableSendOtpButton(false)
+                enableCreateAccountButton(false)
             } else {
-                binding.tvVerify.visibility = View.VISIBLE
-                binding.tvVerifyDisable.visibility = View.GONE
+                disableSendOtpButton(true)
+                enableCreateAccountButton(true)
             }
         }
 
@@ -85,6 +96,17 @@ class ForgotPasswordFragment : Fragment() {
             }
         }
 
+        binding.includeOtpEmail.tvResendBtn.setOnClickListener {
+            if (!ContactUsInputFieldValidator.isEmailValidPattern(etEmail)) {
+                SnackBarUtil.showErrorSnackBar(
+                    binding.root, getString(R.string.please_enter_valid_email)
+                )
+            } else {
+                viewModel.sendEmailForgotPassword(etEmail)
+                observeSendEmailResponse()
+            }
+        }
+
         /** get phone number from user */
         binding.includeOtpEmail.apply {
             otp1.addTextChangedListener(createTextWatcherEmail())
@@ -94,9 +116,13 @@ class ForgotPasswordFragment : Fragment() {
         }
 
         binding.btnContinue.setOnClickListener {
-            val bundle = Bundle()
-            bundle.putString(RESET_TOKEN, token)
-            findNavController().navigate(R.id.resetPasswordFragment, bundle)
+                if (combinedOTP.length == 4){
+                    viewModel.verifyEmailForgotPass(etEmail, combinedOTP)
+                    observeEmailVerifyResponse()
+                }else{
+                    SnackBarUtil.showErrorSnackBar(binding.root, getString(R.string.otp_is_required))
+                }
+
         }
     }
 
@@ -115,60 +141,79 @@ class ForgotPasswordFragment : Fragment() {
 
                 // Trigger the API call when the total length is greater than 4
                 if (totalLength > 4) {
-                    val combinedOTP =
+                     combinedOTP =
                         "${emailOtp.otp1.text}${emailOtp.otp2.text}${emailOtp.otp3.text}${emailOtp.otp4.text}"
-                    makeEmailOtpVerifyCall(combinedOTP)
+                  //  makeEmailOtpVerifyCall(combinedOTP)
                 }
             }
         }
     }
 
     private fun makeEmailOtpVerifyCall(combinedOTP: String) {
-        if (combinedOTP.length == 4) {
+        if ( combinedOTP.length == 4) {
             viewModel.verifyEmailForgotPass(etEmail, combinedOTP)
+        }
+        observeEmailVerifyResponse()
+    }
 
-            viewModel.getForgotPassVerifyEmailResponse.observe(viewLifecycleOwner) {
-                when (it) {
-                    is ForgotPassVerifyEmailUIState.IsLoading -> {
-                        DialogProgressUtil.show(childFragmentManager)
-                    }
+    private fun observeEmailVerifyResponse() {
+        viewModel.getForgotPassVerifyEmailResponse.observe(viewLifecycleOwner) {
+            when (it) {
+                is ForgotPassVerifyEmailUIState.IsLoading -> {
+                    DialogProgressUtil.show(childFragmentManager)
+                }
 
-                    is ForgotPassVerifyEmailUIState.OnSuccess -> {
-                         token = it.result.data?.reset_token.toString()
-                        isEmailVerify = true
-                        enableCreateAccountButton()
-                        DialogProgressUtil.dismiss()
-                        SnackBarUtil.showSuccessSnackBar(binding.root, it.result.message.toString())
-                        binding.otpLayoutEmail.visibility = View.GONE
-                        makeNonEditableEditText(binding.etEmail)
-                        binding.tvVerify.visibility = View.GONE
-                        binding.ivEmailVerify.visibility = View.VISIBLE
+                is ForgotPassVerifyEmailUIState.OnSuccess -> {
+                    token = it.result.data?.reset_token.toString()
+                    isEmailVerify = true
 
-                    }
+                    DialogProgressUtil.dismiss()
+                    SnackBarUtil.showSuccessSnackBar(binding.root, it.result.message.toString())
 
-                    is ForgotPassVerifyEmailUIState.OnFailure -> {
-                        isEmailVerify = false
-                        enableCreateAccountButton()
-                        DialogProgressUtil.dismiss()
-                        SnackBarUtil.showErrorSnackBar(binding.root, it.onFailure)
-                    }
+                    val bundle = Bundle()
+                    bundle.putString(RESET_TOKEN, it.result.data?.reset_token.toString())
+                    findNavController().navigate(R.id.resetPasswordFragment, bundle)
+
+                    binding.otpLayoutEmail.visibility = View.GONE
+                    makeNonEditableEditText(binding.etEmail)
+                    binding.tvVerify.visibility = View.GONE
+                    binding.ivEmailVerify.visibility = View.VISIBLE
+
+                }
+
+                is ForgotPassVerifyEmailUIState.OnFailure -> {
+                    isEmailVerify = false
+                    DialogProgressUtil.dismiss()
+                    SnackBarUtil.showErrorSnackBar(binding.root, it.onFailure)
                 }
             }
+
         }
     }
+
     private fun makeNonEditableEditText(view: AppCompatEditText) {
         view.isEnabled = false
         view.isFocusable = false
         view.isCursorVisible = false
     }
 
-    private fun enableCreateAccountButton() {
-        if (isEmailVerify) {
+    private fun enableCreateAccountButton(value: Boolean) {
+        if (value) {
             binding.btnContinue.visibility = View.VISIBLE
             binding.btnContinueDisable.visibility = View.GONE
         } else {
             binding.btnContinue.visibility = View.GONE
             binding.btnContinueDisable.visibility = View.VISIBLE
+        }
+    }
+
+    private fun disableSendOtpButton(value: Boolean) {
+        if (value) {
+            binding.tvVerify.visibility = View.VISIBLE
+            binding.tvVerifyDisable.visibility = View.GONE
+        } else {
+            binding.tvVerify.visibility = View.GONE
+            binding.tvVerifyDisable.visibility = View.VISIBLE
         }
     }
 
@@ -181,6 +226,12 @@ class ForgotPasswordFragment : Fragment() {
 
                 is ForgotPassSendEmailUIState.OnSuccess -> {
                     DialogProgressUtil.dismiss()
+
+                    startCountDown()
+                    binding.includeOtpEmail.tvResendLayout.visibility = View.GONE
+                    binding.includeOtpEmail.layoutOtpCount.visibility = View.VISIBLE
+                    binding.includeOtpEmail.tvCountDown.visibility = View.VISIBLE
+
                     SnackBarUtil.showSuccessSnackBar(binding.root, it.result.message.toString())
                     binding.otpLayoutEmail.visibility = View.VISIBLE
                 }
@@ -192,4 +243,21 @@ class ForgotPasswordFragment : Fragment() {
             }
         }
     }
+
+
+    private fun startCountDown() {
+        disableSendOtpButton(false)
+        countdownTimerUtil.start()
+    }
+    override fun onTick(minutes: Long, seconds: Long) {
+
+    }
+
+    override fun onFinish() {
+        disableSendOtpButton(true)
+        binding.includeOtpEmail.tvResendLayout.visibility = View.VISIBLE
+        binding.includeOtpEmail.layoutOtpCount.visibility = View.GONE
+        binding.includeOtpEmail.tvCountDown.visibility = View.GONE
+    }
+
 }

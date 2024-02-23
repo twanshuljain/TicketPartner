@@ -4,6 +4,7 @@ import com.example.ticketpartner.feature_login.domain.datasource.LoginDataSource
 import com.example.ticketpartner.feature_login.domain.model.CreateUserAccountRequest
 import com.example.ticketpartner.feature_login.domain.model.CreateUserAccountResponse
 import com.example.ticketpartner.feature_login.domain.model.ForgotPassSendEmailResponse
+import com.example.ticketpartner.feature_login.domain.model.ResetPasswordResponse
 import com.example.ticketpartner.feature_login.domain.model.SendEmailOtpResponseSignUp
 import com.example.ticketpartner.feature_login.domain.model.SendEmailOtpVerifyResponse
 import com.example.ticketpartner.feature_login.domain.model.SendPhoneSignUpOtpResponse
@@ -82,6 +83,13 @@ class LoginRepositoryImpl @Inject constructor(private val loginDataSource: Login
         otp: String
     ): VerifyEmailForgotPassResponse {
         return loginDataSource.verifyEmailForgotPass(email, otp)
+    }
+
+    override suspend fun resetPassword(
+        newPassword: String,
+        conPassword: String
+    ): ResetPasswordResponse {
+        return loginDataSource.resetPassword(newPassword, conPassword)
     }
 
 }

@@ -31,6 +31,8 @@
     <string name="new_password">New Password</string>
     <string name="reset">Reset</string>
     <string name="reset_password">Reset Password</string>
+    <string name="not_yet_received">Not received yet?</string>
+    <string name="resend">Resend</string>
     <string name="confirm_password">Confirm Password</string>
     <string name="you_will_receive_otp_in">You will receive OTP in</string>
     <string name="privacy_policy">By signing up, I agree to the TicketPartner Terms of Service and Privacy Policy.</string>
@@ -51,6 +53,11 @@
     <string name="otp_is_required">OTP is required</string>
     <string name="please_verify_your_email">Please verify your email</string>
     <string name="please_verify_your_phone">Please verify your phone number</string>
+    <string name="enter_phone_number">Enter phone number</string>
+    <string name="please_enter_new_pass">Please enter new password</string>
+    <string name="please_enter_con_pass">Please enter confirm password</string>
+    <string name="new_password_and_confirm_password_should_same">New password and confirm password should be same</string>
+    <string name="account_has_been_created_successfully">Congratulations! Your account has been created successfully.</string>
 
 
 

@@ -52,6 +52,7 @@
         android:background="@drawable/edit_text_design"
         android:gravity="center_vertical"
         android:layout_marginTop="@dimen/margin_5"
+        app:ccp_textSize="@dimen/text_16"
         app:ccp_showNameCode="false"
         app:layout_constraintStart_toStartOf="@id/guidelineStart"
         app:layout_constraintTop_toBottomOf="@id/tvPhone" />
@@ -75,12 +76,13 @@
             android:layout_toStartOf="@id/tvVerify"
             android:maxLines="1"
             android:inputType="number"
+            android:hint="@string/enter_phone_number"
             android:gravity="center_vertical"
             android:imeOptions="actionDone"
             android:background="@drawable/no_undreline_et_design"
             android:paddingStart="@dimen/margin_10"
             android:paddingEnd="@dimen/margin_0"
-            android:textSize="@dimen/text_16" />
+            style="@style/mediumPlaceHolderText16"/>
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvVerify"
@@ -181,27 +183,69 @@
 
     </LinearLayout>
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvCountDown"
-        style="@style/regularParaText14"
+    <LinearLayout
+        android:id="@+id/tvCountDownLayout"
         android:layout_width="@dimen/margin_0"
         android:layout_height="wrap_content"
+        android:orientation="vertical"
         android:layout_marginTop="@dimen/margin_15"
-        android:drawablePadding="@dimen/margin_2"
-        android:text="@string/you_will_receive_otp_in"
         app:layout_constraintTop_toBottomOf="@id/llOtp"
-        app:layout_constraintStart_toStartOf="@id/guidelineStart"/>
+        app:layout_constraintStart_toStartOf="@id/guidelineStart">
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvCountDownTime"
-        style="@style/regularParaText14"
-        android:layout_width="@dimen/margin_0"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_15"
-        android:paddingStart="@dimen/margin_5"
-        app:layout_constraintTop_toBottomOf="@id/llOtp"
-        app:layout_constraintStart_toEndOf="@id/tvCountDown"
-        tools:ignore="RtlSymmetry" />
+        <RelativeLayout
+            android:id="@+id/layoutOtpCount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="visible">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvCountDown"
+                style="@style/regularParaText14"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/orange"
+                android:visibility="gone"
+                android:drawablePadding="@dimen/margin_2"
+                android:text="@string/you_will_receive_otp_in" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvCountDownTime"
+                style="@style/regularParaText14"
+                android:layout_width="wrap_content"
+                android:layout_toEndOf="@id/tvCountDown"
+                android:textColor="@color/orange"
+                android:layout_height="wrap_content"
+                android:paddingStart="@dimen/margin_5"
+                tools:ignore="RtlSymmetry" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/tvResendLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvNotYetRecieved"
+                style="@style/regularParaText14"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawablePadding="@dimen/margin_2"
+                android:text="@string/not_yet_received" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvResendBtn"
+                style="@style/regularParaText14"
+                android:layout_width="wrap_content"
+                android:text="@string/resend"
+                android:textColor="@color/secondary"
+                android:layout_toEndOf="@id/tvNotYetRecieved"
+                android:layout_height="wrap_content"
+                android:paddingStart="@dimen/margin_5"
+                tools:ignore="RtlSymmetry" />
+        </RelativeLayout>
+
+    </LinearLayout>
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnSignInMobile"
@@ -214,6 +258,6 @@
         android:textAllCaps="false"
         app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
         app:layout_constraintStart_toStartOf="@id/guidelineStart"
-        app:layout_constraintTop_toBottomOf="@+id/tvCountDown" />
+        app:layout_constraintTop_toBottomOf="@+id/tvCountDownLayout" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

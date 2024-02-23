@@ -89,7 +89,7 @@ class SignInFragment : Fragment(), CountdownTimerCallback {
     private fun initView() {
         countdownTimerUtil = CountdownTimerUtil(
             binding.phoneLoginLayout.tvCountDownTime,
-            totalTimeMillis = 4 * 60 * 1000,  // 4 minutes
+            totalTimeMillis = 2 * 60 * 1000,  // 2 minutes
             intervalMillis = 1000,
             callback = this
         )
@@ -97,12 +97,12 @@ class SignInFragment : Fragment(), CountdownTimerCallback {
 
         /** get email text from user */
         binding.emailLoginLayout.etEmail.doAfterTextChanged {
-            etEmail = it.toString()
+            etEmail = it.toString().trim()
         }
 
         /** get password text from user */
         binding.emailLoginLayout.etPassword.doAfterTextChanged {
-            etPassword = it.toString()
+            etPassword = it.toString().trim()
         }
 
 
@@ -112,12 +112,12 @@ class SignInFragment : Fragment(), CountdownTimerCallback {
 
         /** get phone number from user */
         mobileLayout.etPhone.doAfterTextChanged {
-            etPhone = it.toString()
+            etPhone = it.toString().trim()
             enableVerifyButton(mobileLayout, it.toString())
         }
 
         mobileLayout.otp1.doAfterTextChanged {
-            otoFirst = it.toString()
+            otoFirst = it.toString().trim()
             if (otoFirst.isNotEmpty()) {
                 mobileLayout.otp2.requestFocus()
             }
@@ -125,7 +125,7 @@ class SignInFragment : Fragment(), CountdownTimerCallback {
         }
 
         mobileLayout.otp2.doAfterTextChanged {
-            otpSec = it.toString()
+            otpSec = it.toString().trim()
             if (otpSec.isNotEmpty()) {
                 mobileLayout.otp3.requestFocus()
             }
@@ -133,18 +133,29 @@ class SignInFragment : Fragment(), CountdownTimerCallback {
         }
 
         mobileLayout.otp3.doAfterTextChanged {
-            otpThird = it.toString()
+            otpThird = it.toString().trim()
             if (otpThird.isNotEmpty()) {
                 mobileLayout.otp4.requestFocus()
             }
         }
 
         mobileLayout.otp4.doAfterTextChanged {
-            otpFourth = it.toString()
+            otpFourth = it.toString().trim()
         }
 
         /** send otp on button verify for mobile login */
         mobileLayout.tvVerify.setOnClickListener {
+            if (countryCode.isNotEmpty() || etPhone.isNotEmpty()) {
+                viewModel.sendOtpLogin(countryCode, etPhone)
+                observeSendOtoMobileResponse()
+            } else {
+                SnackBarUtil.showErrorSnackBar(
+                    binding.root,
+                    getString(R.string.please_enter_mobile)
+                )
+            }
+        }
+        mobileLayout.tvResendBtn.setOnClickListener {
             if (countryCode.isNotEmpty() || etPhone.isNotEmpty()) {
                 viewModel.sendOtpLogin(countryCode, etPhone)
                 observeSendOtoMobileResponse()
@@ -223,6 +234,10 @@ class SignInFragment : Fragment(), CountdownTimerCallback {
                 is SendMobileOtpUIState.OnSuccess -> {
                     DialogProgressUtil.dismiss()
                     startCountDown()
+                    binding.phoneLoginLayout.tvResendLayout.visibility = View.GONE
+                    binding.phoneLoginLayout.tvCountDown.visibility = View.VISIBLE
+                    binding.phoneLoginLayout.layoutOtpCount.visibility = View.VISIBLE
+
                     SnackBarUtil.showSuccessSnackBar(binding.root, it.onSuccess.message.toString())
                 }
 
@@ -339,7 +354,6 @@ class SignInFragment : Fragment(), CountdownTimerCallback {
 
     private fun startCountDown() {
         disableSendOtpButton(false)
-
         countdownTimerUtil.start()
     }
 
@@ -347,6 +361,9 @@ class SignInFragment : Fragment(), CountdownTimerCallback {
 
     override fun onFinish() {
         disableSendOtpButton(true)
+        binding.phoneLoginLayout.tvResendLayout.visibility = View.VISIBLE
+        binding.phoneLoginLayout.layoutOtpCount.visibility = View.GONE
+        binding.phoneLoginLayout.tvCountDown.visibility = View.GONE
     }
 
     override fun onDestroy() {
