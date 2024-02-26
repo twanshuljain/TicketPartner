@@ -66,6 +66,40 @@
         <item name="android:fontFamily" tools:targetApi="o">@font/lato_medium</item>
     </style>
 
+    <style name="mediumDarkPrimaryText14" parent="Widget.AppCompat.TextView">
+        <item name="android:textColor">@color/dark_primary</item>
+        <item name="hintTextColor">@color/placeholder</item>
+        <item name="android:textSize">@dimen/text_14</item>
+        <item name="android:fontFamily" tools:targetApi="o">@font/lato_medium</item>
+    </style>
+
+    <style name="mediumDarkPrimaryText18" parent="Widget.AppCompat.TextView">
+        <item name="android:textColor">@color/dark_primary</item>
+        <item name="hintTextColor">@color/placeholder</item>
+        <item name="android:textSize">@dimen/text_18</item>
+        <item name="android:fontFamily" tools:targetApi="o">@font/lato_medium</item>
+    </style>
+
+    <style name="regularParagraph14" parent="Widget.AppCompat.TextView">
+        <item name="android:textColor">@color/para_text</item>
+        <item name="android:textSize">@dimen/text_14</item>
+        <item name="android:fontFamily" tools:targetApi="o">@font/lato_regular</item>
+    </style>
+
+    <style name="boldParaHeadingText18" parent="Widget.AppCompat.TextView">
+        <item name="android:textColor">@color/paraHeading</item>
+        <item name="hintTextColor">@color/placeholder</item>
+        <item name="android:textSize">@dimen/text_18</item>
+        <item name="android:fontFamily" tools:targetApi="o">@font/lato_bold</item>
+    </style>
+
+    <style name="boldDarkPrimaryText18" parent="Widget.AppCompat.TextView">
+        <item name="android:textColor">@color/dark_primary</item>
+        <item name="hintTextColor">@color/placeholder</item>
+        <item name="android:textSize">@dimen/text_18</item>
+        <item name="android:fontFamily" tools:targetApi="o">@font/lato_bold</item>
+    </style>
+
     <style name="mediumPlaceHolderText16" parent="Widget.AppCompat.TextView">
         <item name="android:textColor">@color/paraHeading</item>
         <item name="hintTextColor">@color/placeholder</item>
@@ -118,6 +152,13 @@
     <style name="regularLightGrey14" parent="Widget.AppCompat.TextView">
         <item name="android:textColor">@color/light_grey</item>
         <item name="android:textSize">@dimen/text_14</item>
+        <item name="android:fontFamily" tools:targetApi="o">@font/lato_regular</item>
+    </style>
+
+    <style name="regularDarkPrimary14" parent="Widget.AppCompat.TextView">
+        <item name="android:textColor">@color/dark_primary</item>
+        <item name="android:textSize">@dimen/text_14</item>
+        <item name="hintTextColor">@color/placeholder</item>
         <item name="android:fontFamily" tools:targetApi="o">@font/lato_regular</item>
     </style>
 

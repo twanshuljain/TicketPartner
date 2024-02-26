@@ -1,12 +1,10 @@
 package com.example.ticketpartner.feature_signup
 
-import android.content.DialogInterface
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -215,7 +213,7 @@ class SignUpDetailsFragment : Fragment(), CountdownTimerCallback {
     private fun intialiseMobileOtpCounter() {
         countdownTimerUtil = CountdownTimerUtil(
             binding.includeOtpPhone.tvCountDownTime,
-            totalTimeMillis = 2 * 60 * 1000,  // 4 minutes
+            totalTimeMillis = 2 * 60 * 1000,  // 2 minutes
             intervalMillis = 1000,
             callback = this
         )
@@ -379,9 +377,11 @@ class SignUpDetailsFragment : Fragment(), CountdownTimerCallback {
 
                 is SendPhoneOtpVerifyUIState.OnSuccess -> {
                     DialogProgressUtil.dismiss()
+                    invalidOtpEditTextPhone(false)
                     SnackBarUtil.showSuccessSnackBar(binding.root, it.result.message.toString())
                     makeNonEditableEditText(binding.etPhoneNumber)
                     binding.tvVerifyMobile.visibility = View.GONE
+                    binding.tvVerifyDisableMobile.visibility = View.GONE
                     binding.ivMobileVerified.visibility = View.VISIBLE
                     binding.otpLayoutPhone.visibility = View.GONE
                     isPhoneVerify = true
@@ -390,6 +390,7 @@ class SignUpDetailsFragment : Fragment(), CountdownTimerCallback {
 
                 is SendPhoneOtpVerifyUIState.OnFailure -> {
                     isPhoneVerify = false
+                    invalidOtpEditTextPhone(true)
                     DialogProgressUtil.dismiss()
                     SnackBarUtil.showErrorSnackBar(binding.root, it.onFailure)
                 }
@@ -420,8 +421,10 @@ class SignUpDetailsFragment : Fragment(), CountdownTimerCallback {
                 is SendEmailOtpVerifyUIState.OnSuccess -> {
                     DialogProgressUtil.dismiss()
                     SnackBarUtil.showSuccessSnackBar(binding.root, it.result.message.toString())
+                    invalidOtpEditTextEmail(false)
                     makeNonEditableEditText(binding.etEmail)
                     binding.tvVerify.visibility = View.GONE
+                    binding.tvVerifyDisable.visibility = View.GONE
                     binding.ivEmailVerify.visibility = View.VISIBLE
                     binding.emailOtpLayout.visibility = View.GONE
                     isEmailVerify = true
@@ -431,6 +434,7 @@ class SignUpDetailsFragment : Fragment(), CountdownTimerCallback {
                 is SendEmailOtpVerifyUIState.OnFailure -> {
                     isEmailVerify = false
                     DialogProgressUtil.dismiss()
+                    invalidOtpEditTextEmail(true)
                     SnackBarUtil.showErrorSnackBar(binding.root, it.onFailure)
                 }
             }
@@ -543,14 +547,49 @@ class SignUpDetailsFragment : Fragment(), CountdownTimerCallback {
         }
     }
 
+    private fun invalidOtpEditTextEmail(value: Boolean) {
+        if (value) {
+            binding.emailOtp.apply {
+                otp1.setBackgroundResource(R.drawable.invalid_otp_design)
+                otp2.setBackgroundResource(R.drawable.invalid_otp_design)
+                otp3.setBackgroundResource(R.drawable.invalid_otp_design)
+                otp4.setBackgroundResource(R.drawable.invalid_otp_design)
+            }
+        } else {
+            binding.emailOtp.apply {
+                otp1.setBackgroundResource(R.drawable.edit_text_design)
+                otp2.setBackgroundResource(R.drawable.edit_text_design)
+                otp3.setBackgroundResource(R.drawable.edit_text_design)
+                otp4.setBackgroundResource(R.drawable.edit_text_design)
+            }
+        }
+    }
+
+    private fun invalidOtpEditTextPhone(value: Boolean) {
+        if (value) {
+            binding.includeOtpPhone.apply {
+                otp1.setBackgroundResource(R.drawable.invalid_otp_design)
+                otp2.setBackgroundResource(R.drawable.invalid_otp_design)
+                otp3.setBackgroundResource(R.drawable.invalid_otp_design)
+                otp4.setBackgroundResource(R.drawable.invalid_otp_design)
+            }
+        } else {
+            binding.emailOtp.apply {
+                otp1.setBackgroundResource(R.drawable.edit_text_design)
+                otp2.setBackgroundResource(R.drawable.edit_text_design)
+                otp3.setBackgroundResource(R.drawable.edit_text_design)
+                otp4.setBackgroundResource(R.drawable.edit_text_design)
+            }
+        }
+    }
+
+    override fun onTick(minutes: Long, seconds: Long) {}
 
     private fun startCountDown() {
+        countdownTimerUtil.stop()
         disableSendOtpButton(false)
         disablePhoneSendOtpButton(false)
         countdownTimerUtil.start()
-    }
-
-    override fun onTick(minutes: Long, seconds: Long) {
     }
 
     override fun onFinish() {
@@ -574,6 +613,4 @@ class SignUpDetailsFragment : Fragment(), CountdownTimerCallback {
         super.onDestroy()
         countdownTimerUtil.stop()
     }
-
-
 }

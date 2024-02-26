@@ -49,5 +49,15 @@
         android:name="com.example.ticketpartner.feature_login.presentation.ResetPasswordFragment"
         android:label="fragment_reset_password"
         tools:layout="@layout/fragment_reset_password" />
+    <fragment
+        android:id="@+id/addOrganizationSocialFragment"
+        android:name="com.example.ticketpartner.feature_add_organization.AddOrganizationSocialFragment"
+        android:label="fragment_add_organization_social"
+        tools:layout="@layout/fragment_add_organization_social" />
+    <fragment
+        android:id="@+id/addOrganizationChangeLogoFragment"
+        android:name="com.example.ticketpartner.AddOrganizationChangeLogoFragment"
+        android:label="fragment_add_organization_change_logo"
+        tools:layout="@layout/fragment_add_organization_change_logo" />
 
 </navigation>

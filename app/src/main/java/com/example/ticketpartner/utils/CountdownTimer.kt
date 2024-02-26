@@ -39,6 +39,10 @@ class CountdownTimerUtil @Inject constructor(
         countdownTimer?.cancel()
     }
 
+    fun finish(){
+        callback.onFinish()
+    }
+
     private fun updateTextView(millisUntilFinished: Long) {
         val secondsRemaining = millisUntilFinished / 1000
         val minutes = secondsRemaining / 60

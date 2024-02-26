@@ -3,7 +3,6 @@ package com.example.ticketpartner.feature_login.presentation
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,7 +13,6 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.ticketpartner.R
 import com.example.ticketpartner.common.ContactUsInputFieldValidator
-import com.example.ticketpartner.common.EMAIL_KEY
 import com.example.ticketpartner.common.RESET_TOKEN
 import com.example.ticketpartner.common.SnackBarUtil
 import com.example.ticketpartner.databinding.FragmentForgotPasswordBinding
@@ -26,7 +24,6 @@ import com.example.ticketpartner.utils.CountdownTimerUtil
 import com.example.ticketpartner.utils.DialogProgressUtil
 import com.example.ticketpartner.utils.NavigateFragmentUtil.clearBackStackToDestination
 import dagger.hilt.android.AndroidEntryPoint
-import kotlin.math.log
 
 @AndroidEntryPoint
 class ForgotPasswordFragment : Fragment(), CountdownTimerCallback {
@@ -116,12 +113,12 @@ class ForgotPasswordFragment : Fragment(), CountdownTimerCallback {
         }
 
         binding.btnContinue.setOnClickListener {
-                if (combinedOTP.length == 4){
-                    viewModel.verifyEmailForgotPass(etEmail, combinedOTP)
-                    observeEmailVerifyResponse()
-                }else{
-                    SnackBarUtil.showErrorSnackBar(binding.root, getString(R.string.otp_is_required))
-                }
+            if (combinedOTP.length == 4) {
+                viewModel.verifyEmailForgotPass(etEmail, combinedOTP)
+                observeEmailVerifyResponse()
+            } else {
+                SnackBarUtil.showErrorSnackBar(binding.root, getString(R.string.otp_is_required))
+            }
 
         }
     }
@@ -141,16 +138,16 @@ class ForgotPasswordFragment : Fragment(), CountdownTimerCallback {
 
                 // Trigger the API call when the total length is greater than 4
                 if (totalLength > 4) {
-                     combinedOTP =
+                    combinedOTP =
                         "${emailOtp.otp1.text}${emailOtp.otp2.text}${emailOtp.otp3.text}${emailOtp.otp4.text}"
-                  //  makeEmailOtpVerifyCall(combinedOTP)
+                    //  makeEmailOtpVerifyCall(combinedOTP)
                 }
             }
         }
     }
 
     private fun makeEmailOtpVerifyCall(combinedOTP: String) {
-        if ( combinedOTP.length == 4) {
+        if (combinedOTP.length == 4) {
             viewModel.verifyEmailForgotPass(etEmail, combinedOTP)
         }
         observeEmailVerifyResponse()
@@ -246,9 +243,11 @@ class ForgotPasswordFragment : Fragment(), CountdownTimerCallback {
 
 
     private fun startCountDown() {
+        countdownTimerUtil.stop()
         disableSendOtpButton(false)
         countdownTimerUtil.start()
     }
+
     override fun onTick(minutes: Long, seconds: Long) {
 
     }

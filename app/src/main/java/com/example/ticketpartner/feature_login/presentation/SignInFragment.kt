@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.example.ticketpartner.R
 import com.example.ticketpartner.common.ContactUsInputFieldValidator
@@ -155,6 +156,7 @@ class SignInFragment : Fragment(), CountdownTimerCallback {
                 )
             }
         }
+
         mobileLayout.tvResendBtn.setOnClickListener {
             if (countryCode.isNotEmpty() || etPhone.isNotEmpty()) {
                 viewModel.sendOtpLogin(countryCode, etPhone)
@@ -166,7 +168,6 @@ class SignInFragment : Fragment(), CountdownTimerCallback {
                 )
             }
         }
-
 
         binding.emailLoginLayout.btnSignIn.setOnClickListener {
             val isValid = checkValidationForEmailLogin(etEmail, etPassword)
@@ -193,6 +194,8 @@ class SignInFragment : Fragment(), CountdownTimerCallback {
                     getString(R.string.please_enter_mobile)
                 )
             }
+
+           // view?.findNavController()?.navigate(R.id.addOrganizationChangeLogoFragment)
         }
     }
     private fun checkValidationForEmailLogin(username: String, password: String): Boolean {
@@ -271,10 +274,12 @@ class SignInFragment : Fragment(), CountdownTimerCallback {
                 }
                 is MobileLoginUIState.OnSuccess -> {
                     DialogProgressUtil.dismiss()
+                    invalidOtpEditText(false)
                     SnackBarUtil.showSuccessSnackBar(binding.root, it.onSuccess.message.toString())
                 }
 
                 is MobileLoginUIState.OnFailure -> {
+                    invalidOtpEditText(true)
                     DialogProgressUtil.dismiss()
                     SnackBarUtil.showErrorSnackBar(binding.root, it.onFailure)
                 }
@@ -339,6 +344,24 @@ class SignInFragment : Fragment(), CountdownTimerCallback {
         viewModel.emailUserLogin(etEmail, etPassword)
     }
 
+    private fun invalidOtpEditText(value: Boolean){
+        if (value){
+            binding.phoneLoginLayout.apply {
+                otp1.setBackgroundResource(R.drawable.invalid_otp_design)
+                otp2.setBackgroundResource(R.drawable.invalid_otp_design)
+                otp3.setBackgroundResource(R.drawable.invalid_otp_design)
+                otp4.setBackgroundResource(R.drawable.invalid_otp_design)
+            }
+        }else{
+            binding.phoneLoginLayout.apply {
+                otp1.setBackgroundResource(R.drawable.edit_text_design)
+                otp2.setBackgroundResource(R.drawable.edit_text_design)
+                otp3.setBackgroundResource(R.drawable.edit_text_design)
+                otp4.setBackgroundResource(R.drawable.edit_text_design)
+            }
+        }
+    }
+
 
     /** false -> to show disable sendOtp button
      * true -> to enable send otp button */
@@ -353,6 +376,7 @@ class SignInFragment : Fragment(), CountdownTimerCallback {
     }
 
     private fun startCountDown() {
+        countdownTimerUtil.stop()
         disableSendOtpButton(false)
         countdownTimerUtil.start()
     }

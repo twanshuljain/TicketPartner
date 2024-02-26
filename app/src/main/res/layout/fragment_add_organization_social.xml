@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/orange_light_back"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".feature_add_organization.AddOrganizationSocialFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineStart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="@dimen/size_15"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineEnd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintGuide_end="@dimen/margin_15" />
+
+    <include
+        android:id="@+id/titleName"
+        layout="@layout/layout_title_name"
+        app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
+        app:layout_constraintStart_toStartOf="@id/guidelineStart"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvAddOrganization"
+        style="@style/boldParaHeadingText18"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:drawablePadding="@dimen/margin_2"
+        android:gravity="center_horizontal"
+        android:paddingStart="@dimen/margin_15"
+        android:paddingEnd="@dimen/margin_15"
+        android:paddingBottom="@dimen/size_10"
+        android:text="@string/organization_name"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/guidelineStart"
+        app:layout_constraintTop_toBottomOf="@id/titleName" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvTellUs"
+        style="@style/boldDarkPrimaryText18"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_15"
+        android:drawablePadding="@dimen/margin_2"
+        android:gravity="center_horizontal"
+        android:text="@string/tell_us_about_your_organization"
+        app:layout_constraintStart_toStartOf="@id/guidelineStart"
+        app:layout_constraintTop_toBottomOf="@id/tvAddOrganization" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvWebsite"
+            style="@style/mediumDarkPrimaryText14"
+            android:layout_width="@dimen/margin_0"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_20"
+            android:drawablePadding="@dimen/margin_2"
+            android:text="@string/organization_name"
+            app:layout_constraintStart_toStartOf="@id/guidelineStart"
+            app:layout_constraintTop_toBottomOf="@id/tvTellUs" />
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/etOrganizationName"
+            style="@style/regularDarkPrimary14"
+            android:layout_width="@dimen/margin_0"
+            android:layout_height="@dimen/size_48"
+            android:layout_marginTop="@dimen/margin_5"
+            android:background="@drawable/edit_text_design"
+            android:hint="@string/website_hint"
+            android:inputType="textEmailAddress"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:imeOptions="actionNext"
+            android:paddingStart="@dimen/margin_10"
+            android:paddingEnd="@dimen/margin_0"
+            app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
+            app:layout_constraintStart_toStartOf="@id/guidelineStart"
+            app:layout_constraintTop_toBottomOf="@id/tvWebsite" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvSocialNetworkFeeds"
+            style="@style/mediumDarkPrimaryText18"
+            android:layout_width="@dimen/margin_0"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_20"
+            android:drawablePadding="@dimen/margin_2"
+            android:text="@string/social_network_feeds"
+            app:layout_constraintStart_toStartOf="@id/guidelineStart"
+            app:layout_constraintTop_toBottomOf="@id/etOrganizationName" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvFaceBook"
+            style="@style/mediumDarkPrimaryText14"
+            android:layout_width="@dimen/margin_0"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_20"
+            android:drawablePadding="@dimen/margin_2"
+            android:text="@string/facebook_page"
+            app:layout_constraintStart_toStartOf="@id/guidelineStart"
+            app:layout_constraintTop_toBottomOf="@id/tvSocialNetworkFeeds" />
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/etFacebook"
+            style="@style/regularDarkPrimary14"
+            android:layout_width="@dimen/margin_0"
+            android:layout_height="@dimen/size_48"
+            android:layout_marginTop="@dimen/margin_5"
+            android:background="@drawable/edit_text_design"
+            android:hint="@string/facebook_hint_ink"
+            android:inputType="textEmailAddress"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:imeOptions="actionNext"
+            android:paddingStart="@dimen/margin_10"
+            android:paddingEnd="@dimen/margin_0"
+            app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
+            app:layout_constraintStart_toStartOf="@id/guidelineStart"
+            app:layout_constraintTop_toBottomOf="@id/tvFaceBook" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvTwitter"
+            style="@style/mediumDarkPrimaryText14"
+            android:layout_width="@dimen/margin_0"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_20"
+            android:drawablePadding="@dimen/margin_2"
+            android:text="@string/twitter"
+            app:layout_constraintStart_toStartOf="@id/guidelineStart"
+            app:layout_constraintTop_toBottomOf="@id/etFacebook" />
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/etTwitter"
+            style="@style/regularDarkPrimary14"
+            android:layout_width="@dimen/margin_0"
+            android:layout_height="@dimen/size_48"
+            android:layout_marginTop="@dimen/margin_5"
+            android:background="@drawable/edit_text_design"
+            android:hint="@string/twitter_hint_link"
+            android:inputType="textEmailAddress"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:imeOptions="actionNext"
+            android:paddingStart="@dimen/margin_10"
+            android:paddingEnd="@dimen/margin_0"
+            app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
+            app:layout_constraintStart_toStartOf="@id/guidelineStart"
+            app:layout_constraintTop_toBottomOf="@id/tvTwitter" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvLinkedIn"
+            style="@style/mediumDarkPrimaryText14"
+            android:layout_width="@dimen/margin_0"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_20"
+            android:drawablePadding="@dimen/margin_2"
+            android:text="@string/linked_in"
+            app:layout_constraintStart_toStartOf="@id/guidelineStart"
+            app:layout_constraintTop_toBottomOf="@id/etTwitter" />
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/etLinkedIn"
+            style="@style/regularDarkPrimary14"
+            android:layout_width="@dimen/margin_0"
+            android:layout_height="@dimen/size_48"
+            android:layout_marginTop="@dimen/margin_5"
+            android:background="@drawable/edit_text_design"
+            android:hint="@string/facebook_hint_ink"
+            android:inputType="textEmailAddress"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:imeOptions="actionDone"
+            android:paddingStart="@dimen/margin_10"
+            android:paddingEnd="@dimen/margin_0"
+            app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
+            app:layout_constraintStart_toStartOf="@id/guidelineStart"
+            app:layout_constraintTop_toBottomOf="@id/tvLinkedIn" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnSignIn"
+            style="@style/boldWhiteText16"
+            android:layout_width="@dimen/margin_0"
+            android:layout_height="@dimen/size_48"
+            android:layout_marginTop="@dimen/margin_30"
+            android:background="@drawable/btn_design_sign_in"
+            android:text="@string/save_and_continue"
+            android:textAllCaps="false"
+            app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
+            app:layout_constraintStart_toStartOf="@id/guidelineStart"
+            app:layout_constraintTop_toBottomOf="@+id/etLinkedIn" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.core.widget.NestedScrollView>

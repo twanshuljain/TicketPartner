@@ -16,12 +16,14 @@
     <color name="para_text">#6A6D79</color>
     <color name="light_grey">#979797</color>
     <color name="input_number_black">#000000</color>
+    <color name="dark_primary">#15171F</color>
     <color name="placeholder">#BDBDBD</color>
+    <color name="orange_light_back">#FEF7F2</color>
     <color name="blue">#2F80ED</color>
     <color name="green">#21BE79</color>
     <color name="red">#FF0000</color>
-    <color name="light_red">#FF474C</color>
     <color name="dark_transparency">#80000000</color>
     <color name="link_color">#147BD1</color>
     <color name="grey_disable">#D2D4DC</color>
+    <color name="red_light">#EB5757</color>
 </resources>

@@ -53,7 +53,9 @@
         android:gravity="center_vertical"
         android:layout_marginTop="@dimen/margin_5"
         app:ccp_textSize="@dimen/text_16"
-        app:ccp_showNameCode="false"
+        app:ccp_showFullName="false"
+        app:ccp_showPhoneCode="false"
+        app:ccp_showNameCode="true"
         app:layout_constraintStart_toStartOf="@id/guidelineStart"
         app:layout_constraintTop_toBottomOf="@id/tvPhone" />
 
@@ -95,7 +97,7 @@
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:paddingEnd="@dimen/margin_10"
-            android:text="@string/verify" />
+            android:text="@string/send_otp" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvVerifyDisable"
@@ -178,7 +180,7 @@
             android:maxLength="1"
             android:maxLines="1"
             android:gravity="center"
-            android:imeOptions="actionNext"
+            android:imeOptions="actionDone"
             android:background="@drawable/edit_text_design" />
 
     </LinearLayout>

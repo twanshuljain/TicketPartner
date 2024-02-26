@@ -59,6 +59,21 @@
     <string name="new_password_and_confirm_password_should_same">New password and confirm password should be same</string>
     <string name="account_has_been_created_successfully">Congratulations! Your account has been created successfully.</string>
 
+    //add organization
+    <string name="organization_name">Organization Name</string>
+    <string name="country">Country</string>
+    <string name="organization_logo">Organization Logo</string>
+    <string name="change_logo">Change Logo</string>
+    <string name="tell_us_about_your_organization">Tell us about your Organization</string>
+    <string name="website_hint">"e.g.www.myticketpartner.com"</string>
+    <string name="social_network_feeds">"Social Network Feeds"</string>
+    <string name="facebook_page">"Facebook Page"</string>
+    <string name="twitter">"Twitter"</string>
+    <string name="linked_in">"LinkedIn"</string>
+    <string name="facebook_hint_ink">"e.g.www.facebook.com"</string>
+    <string name="twitter_hint_link">"e.g.www.twitter.com"</string>
+    <string name="linked_in_hint_link">"e.g.www.linkedin.com"</string>
+    <string name="save_and_continue">"Save &amp; Continue"</string>
 
 
 </resources>

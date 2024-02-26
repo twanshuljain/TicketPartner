@@ -1,26 +1,20 @@
 package com.example.ticketpartner.feature_signup
 
 import android.os.Bundle
-import android.provider.SyncStateContract.Constants
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.OnBackPressedCallback
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
-import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import com.example.ticketpartner.R
 import com.example.ticketpartner.common.ContactUsInputFieldValidator
 import com.example.ticketpartner.common.EMAIL_KEY
-import com.example.ticketpartner.common.PLUS
 import com.example.ticketpartner.common.SnackBarUtil
 import com.example.ticketpartner.databinding.FragmentSignUpEmailBinding
 import com.example.ticketpartner.utils.NavigateFragmentUtil.clearBackStackToDestination
 import com.example.ticketpartner.utils.Utility
 import dagger.hilt.android.AndroidEntryPoint
-import kotlin.math.log
 
 @AndroidEntryPoint
 class SignUpEmailFragment : Fragment() {
@@ -39,21 +33,21 @@ class SignUpEmailFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         initView()
-        // Set up back press callback
-        requireActivity().onBackPressedDispatcher.addCallback(
-            viewLifecycleOwner,
-            onBackPressedCallback
-        )
+
+        /* // Set up back press callback
+         requireActivity().onBackPressedDispatcher.addCallback(
+             viewLifecycleOwner,
+             onBackPressedCallback
+         )*/
 
         binding.etEmail.doAfterTextChanged {
-            if (it.toString().isNotEmpty()){
+            if (it.toString().isNotEmpty()) {
                 etEmail = it.toString().trim()
                 enableCreateAccountButton(true)
-            }else{
+            } else {
                 enableCreateAccountButton(false)
             }
         }
-
 
 
         /** navigate user to signIn page */
@@ -89,6 +83,7 @@ class SignUpEmailFragment : Fragment() {
         }
     }
 
+
     private fun changeTextColor() {
         val originalText = getString(R.string.privacy_policy)
         val wordsToColor = listOf("Terms of Service", "Privacy Policy.")
@@ -96,11 +91,11 @@ class SignUpEmailFragment : Fragment() {
         binding.tvPolicy.text = changedString
     }
 
-    private val onBackPressedCallback = object : OnBackPressedCallback(true) {
-        override fun handleOnBackPressed() {
-            // If you don't want to handle the back press in this fragment, let the activity handle it
-            isEnabled = false
-            activity?.finish()
-        }
-    }
+    /*  private val onBackPressedCallback = object : OnBackPressedCallback(true) {
+          override fun handleOnBackPressed() {
+              // If you don't want to handle the back press in this fragment, let the activity handle it
+              isEnabled = false
+              activity?.finish()
+          }
+      }*/
 }
