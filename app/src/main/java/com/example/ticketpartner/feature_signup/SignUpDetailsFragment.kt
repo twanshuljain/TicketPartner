@@ -5,6 +5,7 @@ import android.os.Handler
 import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -128,7 +129,7 @@ class SignUpDetailsFragment : Fragment(), CountdownTimerCallback {
         binding.includeOtpPhone.tvResendBtn.setOnClickListener {
             clickedOnEmailButton = false
             clickedOnPhoneButton = true
-            intialiseMobileOtpCounter()
+            initialiseMobileOtpCounter()
             if (etPhone.isNotEmpty()) {
                 viewModel.sendPhoneOtpSignUp(countryCode, etPhone)
                 observeSendPhoneOtpResponse()
@@ -136,7 +137,7 @@ class SignUpDetailsFragment : Fragment(), CountdownTimerCallback {
         }
 
         binding.tvVerifyMobile.setOnClickListener {
-            intialiseMobileOtpCounter()
+            initialiseMobileOtpCounter()
             if (etPhone.isNotEmpty()) {
                 viewModel.sendPhoneOtpSignUp(countryCode, etPhone)
                 observeSendPhoneOtpResponse()
@@ -210,7 +211,7 @@ class SignUpDetailsFragment : Fragment(), CountdownTimerCallback {
         }
     }
 
-    private fun intialiseMobileOtpCounter() {
+    private fun initialiseMobileOtpCounter() {
         countdownTimerUtil = CountdownTimerUtil(
             binding.includeOtpPhone.tvCountDownTime,
             totalTimeMillis = 2 * 60 * 1000,  // 2 minutes
@@ -583,7 +584,9 @@ class SignUpDetailsFragment : Fragment(), CountdownTimerCallback {
         }
     }
 
-    override fun onTick(minutes: Long, seconds: Long) {}
+    override fun onTick(minutes: Long, seconds: Long) {
+        Log.e("TAG", "onTick: ")
+    }
 
     private fun startCountDown() {
         countdownTimerUtil.stop()
@@ -611,6 +614,7 @@ class SignUpDetailsFragment : Fragment(), CountdownTimerCallback {
 
     override fun onDestroy() {
         super.onDestroy()
+        // countdownTimerUtil.finish()
         countdownTimerUtil.stop()
     }
 }

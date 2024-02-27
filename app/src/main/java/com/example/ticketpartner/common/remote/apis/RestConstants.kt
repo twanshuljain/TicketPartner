@@ -14,6 +14,8 @@ const val createUserAccount = "auth/user/sign-up/"
 const val forgotPassSendEmail = "auth/user/forgot-password/send/email/otp/"
 const val verifyEmailForgotPass = "auth/user/forgot-password/verify/email/otp/"
 const val resetPassword = "auth/user/forgot-password/"
+const val addOrganization = "organization/create/organization/"
+const val addOrganizationSocial = "organization/about/info/organization/"
 
 /**
  * Https status code

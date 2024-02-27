@@ -1,5 +1,8 @@
 package com.example.ticketpartner.common.remote.apis
 
+import com.example.ticketpartner.feature_add_organization.domain.model.AddOrgSocialRequest
+import com.example.ticketpartner.feature_add_organization.domain.model.AddOrgSocialResponse
+import com.example.ticketpartner.feature_add_organization.domain.model.AddOrganizationResponse
 import com.example.ticketpartner.feature_login.domain.model.CreateUserAccountRequest
 import com.example.ticketpartner.feature_login.domain.model.CreateUserAccountResponse
 import com.example.ticketpartner.feature_login.domain.model.ForgotPassSendEmailRequest
@@ -23,8 +26,6 @@ import com.example.ticketpartner.feature_login.domain.model.VerifyEmailForgotPas
 import com.example.ticketpartner.feature_login.domain.model.VerifyMobileOtpRequest
 import com.example.ticketpartner.feature_login.domain.model.VerifyMobileOtpResponse
 import retrofit2.http.Body
-import retrofit2.http.Header
-import retrofit2.http.Headers
 import retrofit2.http.POST
 
 /**
@@ -62,10 +63,15 @@ interface RestApiService {
     @POST(verifyEmailForgotPass)
     suspend fun verifyEmailForgotPass(@Body verifyEmailForgotPassRequest: VerifyEmailForgotPassRequest): VerifyEmailForgotPassResponse
 
-    //@Headers("Content-Type: application/json")
     @POST(resetPassword)
     suspend fun resetPassword(
         @Body resetPasswordRequest: ResetPasswordRequest
     ): ResetPasswordResponse
+
+    @POST(addOrganization)
+    suspend fun addOrganization(): AddOrganizationResponse
+
+    @POST(addOrganizationSocial)
+    suspend fun addOrganizationSocial(@Body addOrgSocialRequest: AddOrgSocialRequest): AddOrgSocialResponse
 
 }

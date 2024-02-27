@@ -51,7 +51,7 @@
         tools:layout="@layout/fragment_reset_password" />
     <fragment
         android:id="@+id/addOrganizationSocialFragment"
-        android:name="com.example.ticketpartner.feature_add_organization.AddOrganizationSocialFragment"
+        android:name="com.example.ticketpartner.feature_add_organization.presentation.AddOrganizationSocialFragment"
         android:label="fragment_add_organization_social"
         tools:layout="@layout/fragment_add_organization_social" />
     <fragment

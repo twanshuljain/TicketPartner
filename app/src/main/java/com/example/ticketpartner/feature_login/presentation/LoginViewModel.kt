@@ -17,7 +17,6 @@ import com.example.ticketpartner.feature_login.domain.usecase.GetSendOtpLoginUse
 import com.technotoil.tglivescan.common.retrofit.apis.ErrorResponseHandler
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -64,7 +63,8 @@ class LoginViewModel @Inject constructor(
             getEmailLoginUseCase.invoke(email, password).catch {
                 logUtil.log(TAG, "onError${it.message.toString()}")
                 val error = ErrorResponseHandler(it)
-                _emailLoginState.value = EmailLoginUIState.OnFailure(error.getErrors().message.toString())
+                _emailLoginState.value =
+                    EmailLoginUIState.OnFailure(error.getErrors().message.toString())
             }.collect {
                 logUtil.log(TAG, "onCollect${it}")
                 _emailLoginState.value = EmailLoginUIState.OnSuccess(it)

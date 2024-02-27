@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/orange_light_back"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".feature_add_organization.AddOrganizationSocialFragment">
+    tools:context=".feature_add_organization.presentation.AddOrganizationSocialFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

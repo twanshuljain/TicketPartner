@@ -1,4 +1,4 @@
-package com.example.ticketpartner.feature_add_organization
+package com.example.ticketpartner.feature_add_organization.presentation
 
 import android.os.Bundle
 import android.view.LayoutInflater
