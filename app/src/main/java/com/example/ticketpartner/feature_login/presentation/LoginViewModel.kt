@@ -6,6 +6,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.ticketpartner.common.ContactUsInputFieldValidator
 import com.example.ticketpartner.common.LogUtil
+import com.example.ticketpartner.common.storage.MyPreferences
+import com.example.ticketpartner.common.storage.PrefConstants
 import com.example.ticketpartner.feature_login.domain.model.EmailLoginUIState
 import com.example.ticketpartner.feature_login.domain.model.MobileLoginUIState
 import com.example.ticketpartner.feature_login.domain.model.SendMobileOtpUIState
@@ -67,6 +69,11 @@ class LoginViewModel @Inject constructor(
                     EmailLoginUIState.OnFailure(error.getErrors().message.toString())
             }.collect {
                 logUtil.log(TAG, "onCollect${it}")
+                it.data?.access_token?.let {accessToken ->
+                    MyPreferences.putString(
+                        PrefConstants.ACCESS_TOKEN,accessToken.toString()
+                    )
+                }
                 _emailLoginState.value = EmailLoginUIState.OnSuccess(it)
             }
         }

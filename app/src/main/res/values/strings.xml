@@ -74,6 +74,8 @@
     <string name="twitter_hint_link">"e.g.www.twitter.com"</string>
     <string name="linked_in_hint_link">"e.g.www.linkedin.com"</string>
     <string name="save_and_continue">"Save &amp; Continue"</string>
+    <string name="enter_organization_name">"Enter Organization name"</string>
+    <string name="select_country">"Select country"</string>
 
 
 </resources>

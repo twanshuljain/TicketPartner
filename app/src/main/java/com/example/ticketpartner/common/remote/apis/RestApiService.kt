@@ -25,8 +25,13 @@ import com.example.ticketpartner.feature_login.domain.model.VerifyEmailForgotPas
 import com.example.ticketpartner.feature_login.domain.model.VerifyEmailForgotPassResponse
 import com.example.ticketpartner.feature_login.domain.model.VerifyMobileOtpRequest
 import com.example.ticketpartner.feature_login.domain.model.VerifyMobileOtpResponse
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.http.Body
+import retrofit2.http.Multipart
 import retrofit2.http.POST
+import retrofit2.http.Part
+import retrofit2.http.PartMap
 
 /**
  *  Rest API
@@ -68,8 +73,12 @@ interface RestApiService {
         @Body resetPasswordRequest: ResetPasswordRequest
     ): ResetPasswordResponse
 
+    @Multipart
     @POST(addOrganization)
-    suspend fun addOrganization(): AddOrganizationResponse
+    suspend fun addOrganization(
+        @Part file: MultipartBody.Part?,
+        @PartMap textData: Map<String, @JvmSuppressWildcards RequestBody>
+    ): AddOrganizationResponse
 
     @POST(addOrganizationSocial)
     suspend fun addOrganizationSocial(@Body addOrgSocialRequest: AddOrgSocialRequest): AddOrgSocialResponse

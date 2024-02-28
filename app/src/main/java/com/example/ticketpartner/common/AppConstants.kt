@@ -25,6 +25,9 @@ const val PASSWORD = "password"
 
 const val PLUS = "+"
 const val IndianCountryCode = "+91"
+const val FILE = "file"
+const val IMAGE_EXTENSION = ".jpg"
+const val MIME_IMAGE_TYPE = "image/jpeg"
 const val ZERO = 0
 
 

@@ -18,6 +18,14 @@ const val addOrganization = "organization/create/organization/"
 const val addOrganizationSocial = "organization/about/info/organization/"
 
 /**
+ * Multipart API parameter key
+ */
+
+const val NAME = "name"
+const val COUNTRY_ID = "country_id"
+
+
+/**
  * Https status code
  */
 const val BAD_REQUEST = 400

@@ -15,6 +15,7 @@ import com.technotoil.tglivescan.common.retrofit.apis.ErrorResponseHandler
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
+import java.io.File
 import javax.inject.Inject
 
 @HiltViewModel
@@ -31,16 +32,16 @@ class AddOrganizationViewModel @Inject constructor(
         MutableLiveData()
     val getAddOrganizationSocial: LiveData<AddOrganizationSocialUIState> = _addOrganizationSocial
 
-    fun addOrganization() {
+    fun addOrganization(file: File,name: String,CountryId: String) {
         _addOrganization.value = AddOrganizationUIState.IsLoading(true)
         viewModelScope.launch {
-            getAddOrgUseCase.invoke("", "", "").catch {
-                logUtil.log(LoginViewModel.TAG, "onError${it.message.toString()}")
+            getAddOrgUseCase.invoke(file,name, CountryId).catch {
+                logUtil.log(LoginViewModel.TAG, "AddOrganizatioin -> onError${it.message.toString()}")
                 val error = ErrorResponseHandler(it)
                 _addOrganization.value =
                     AddOrganizationUIState.OnFailure(error.getErrors().message.toString())
             }.collect {
-                logUtil.log(LoginViewModel.TAG, "onCollect${it}")
+                logUtil.log(LoginViewModel.TAG, "AddOrganizatioin ->onCollect${it}")
                 _addOrganization.value = AddOrganizationUIState.OnSuccess(it)
             }
         }

@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.example.ticketpartner.R
 import com.example.ticketpartner.common.ContactUsInputFieldValidator
@@ -195,9 +194,10 @@ class SignInFragment : Fragment(), CountdownTimerCallback {
                 )
             }
 
-           // view?.findNavController()?.navigate(R.id.addOrganizationChangeLogoFragment)
+            // view?.findNavController()?.navigate(R.id.addOrganizationChangeLogoFragment)
         }
     }
+
     private fun checkValidationForEmailLogin(username: String, password: String): Boolean {
         val isAllValid =
             ContactUsInputFieldValidator.isEmailValidPattern(username) && password.isNotEmpty()
@@ -272,6 +272,7 @@ class SignInFragment : Fragment(), CountdownTimerCallback {
                 is MobileLoginUIState.IsLoading -> {
                     DialogProgressUtil.show(childFragmentManager)
                 }
+
                 is MobileLoginUIState.OnSuccess -> {
                     DialogProgressUtil.dismiss()
                     invalidOtpEditText(false)
@@ -329,7 +330,8 @@ class SignInFragment : Fragment(), CountdownTimerCallback {
                 is EmailLoginUIState.OnSuccess -> {
                     DialogProgressUtil.dismiss()
                     SnackBarUtil.showSuccessSnackBar(binding.root, it.result.message.toString())
-                   // viewModel.getEmailLoginResponse
+                    findNavController().navigate(R.id.addOrganizationChangeLogoFragment)
+                    // viewModel.getEmailLoginResponse
                 }
 
                 is EmailLoginUIState.OnFailure -> {
@@ -344,15 +346,15 @@ class SignInFragment : Fragment(), CountdownTimerCallback {
         viewModel.emailUserLogin(etEmail, etPassword)
     }
 
-    private fun invalidOtpEditText(value: Boolean){
-        if (value){
+    private fun invalidOtpEditText(value: Boolean) {
+        if (value) {
             binding.phoneLoginLayout.apply {
                 otp1.setBackgroundResource(R.drawable.invalid_otp_design)
                 otp2.setBackgroundResource(R.drawable.invalid_otp_design)
                 otp3.setBackgroundResource(R.drawable.invalid_otp_design)
                 otp4.setBackgroundResource(R.drawable.invalid_otp_design)
             }
-        }else{
+        } else {
             binding.phoneLoginLayout.apply {
                 otp1.setBackgroundResource(R.drawable.edit_text_design)
                 otp2.setBackgroundResource(R.drawable.edit_text_design)

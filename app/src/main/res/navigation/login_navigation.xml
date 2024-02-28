@@ -56,7 +56,7 @@
         tools:layout="@layout/fragment_add_organization_social" />
     <fragment
         android:id="@+id/addOrganizationChangeLogoFragment"
-        android:name="com.example.ticketpartner.AddOrganizationChangeLogoFragment"
+        android:name="com.example.ticketpartner.feature_add_organization.presentation.AddOrganizationChangeLogoFragment"
         android:label="fragment_add_organization_change_logo"
         tools:layout="@layout/fragment_add_organization_change_logo" />
 
