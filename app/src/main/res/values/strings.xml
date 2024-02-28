@@ -76,6 +76,9 @@
     <string name="save_and_continue">"Save &amp; Continue"</string>
     <string name="enter_organization_name">"Enter Organization name"</string>
     <string name="select_country">"Select country"</string>
+    <string name="please_enter_organization_name">"Please enter organization name"</string>
+    <string name="please_select_country">"Please select country"</string>
+    <string name="select_change_logo_image">"Please select change logo image"</string>
 
 
 </resources>

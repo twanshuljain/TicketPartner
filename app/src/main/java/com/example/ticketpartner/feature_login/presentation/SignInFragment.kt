@@ -19,7 +19,6 @@ import com.example.ticketpartner.databinding.LoginMobileNumberBinding
 import com.example.ticketpartner.feature_login.domain.model.EmailLoginUIState
 import com.example.ticketpartner.feature_login.domain.model.MobileLoginUIState
 import com.example.ticketpartner.feature_login.domain.model.SendMobileOtpUIState
-import com.example.ticketpartner.feature_login.domain.model.ValidationEmailLoginUIState
 import com.example.ticketpartner.utils.CountdownTimerCallback
 import com.example.ticketpartner.utils.CountdownTimerUtil
 import com.example.ticketpartner.utils.DialogProgressUtil
@@ -175,11 +174,13 @@ class SignInFragment : Fragment(), CountdownTimerCallback {
 
         /** email login button */
         binding.emailLoginLayout.btnSignIn.setOnClickListener {
-            val isValid = checkValidationForEmailLogin(etEmail, etPassword)
+           /* val isValid = checkValidationForEmailLogin(etEmail, etPassword)
             if (isValid) {
                 makeEmailLoginApiCall()
                 observeEmailLoginResponse()
-            }
+            }*/
+
+            findNavController().navigate(R.id.AddOrgCountrySearchFragment)
         }
 
         /** make phone login API call on sign-in button click */

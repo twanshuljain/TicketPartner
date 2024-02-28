@@ -8,6 +8,7 @@ import com.example.ticketpartner.feature_add_organization.domain.datasource.AddO
 import com.example.ticketpartner.feature_add_organization.domain.model.AddOrgSocialRequest
 import com.example.ticketpartner.feature_add_organization.domain.model.AddOrgSocialResponse
 import com.example.ticketpartner.feature_add_organization.domain.model.AddOrganizationResponse
+import com.example.ticketpartner.feature_add_organization.domain.model.SearchCountryResponse
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -41,5 +42,9 @@ class AddOrganizationDataSourceImpl @Inject constructor(private val restApiServi
 
     override suspend fun addOrganizationSocial(addOrgSocialRequest: AddOrgSocialRequest): AddOrgSocialResponse {
         return restApiService.addOrganizationSocial(addOrgSocialRequest)
+    }
+
+    override suspend fun searchCountry(): SearchCountryResponse {
+        return restApiService.searchCountry()
     }
 }

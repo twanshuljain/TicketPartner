@@ -3,6 +3,7 @@ package com.example.ticketpartner.common.remote.apis
 import com.example.ticketpartner.feature_add_organization.domain.model.AddOrgSocialRequest
 import com.example.ticketpartner.feature_add_organization.domain.model.AddOrgSocialResponse
 import com.example.ticketpartner.feature_add_organization.domain.model.AddOrganizationResponse
+import com.example.ticketpartner.feature_add_organization.domain.model.SearchCountryResponse
 import com.example.ticketpartner.feature_login.domain.model.CreateUserAccountRequest
 import com.example.ticketpartner.feature_login.domain.model.CreateUserAccountResponse
 import com.example.ticketpartner.feature_login.domain.model.ForgotPassSendEmailRequest
@@ -28,6 +29,7 @@ import com.example.ticketpartner.feature_login.domain.model.VerifyMobileOtpRespo
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.http.Body
+import retrofit2.http.GET
 import retrofit2.http.Multipart
 import retrofit2.http.POST
 import retrofit2.http.Part
@@ -82,5 +84,8 @@ interface RestApiService {
 
     @POST(addOrganizationSocial)
     suspend fun addOrganizationSocial(@Body addOrgSocialRequest: AddOrgSocialRequest): AddOrgSocialResponse
+
+    @GET(searchCountry)
+    suspend fun searchCountry(): SearchCountryResponse
 
 }

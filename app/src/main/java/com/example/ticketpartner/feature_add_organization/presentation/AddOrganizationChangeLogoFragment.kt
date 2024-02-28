@@ -10,17 +10,22 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.widget.doAfterTextChanged
+import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.example.ticketpartner.R
+import com.example.ticketpartner.common.EMAIL_KEY
 import com.example.ticketpartner.common.IMAGE_EXTENSION
 import com.example.ticketpartner.common.MIME_IMAGE_TYPE
 import com.example.ticketpartner.common.SnackBarUtil
+import com.example.ticketpartner.common.ZERO
 import com.example.ticketpartner.databinding.FragmentAddOrganizationChangeLogoBinding
 import com.example.ticketpartner.utils.Utility.getFile
 import java.io.File
@@ -30,7 +35,11 @@ class AddOrganizationChangeLogoFragment : Fragment() {
     private val viewModel: AddOrganizationViewModel by activityViewModels()
     private val requestCodeCameraPermission = 1001
     private var selectedFile: File? = null
+    private var selectedFileUri: String = ""
     private var mimeType: String? = null
+    private var organizationName: String = ""
+    private var countryId: String = ""
+    private var countryN: String = ""
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -43,14 +52,35 @@ class AddOrganizationChangeLogoFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initView()
+
+        arguments?.let {
+           // countryId = it.getString("countryId", "")
+            countryN = it.getString("countryName","")
+        }
+
+        binding.etCountry.setText(countryN)
     }
 
     private fun initView() {
 
+
+
+        /** get organization name from user */
+        binding.etOrganizationName.doAfterTextChanged {
+            organizationName = it.toString().trim()
+        }
+
+        /** get country id from selected country name */
+        binding.etCountry.doAfterTextChanged {
+           findNavController().navigate(R.id.AddOrgCountrySearchFragment)
+        }
+
+        /** Redirect on add organization social link page */
         binding.btnNext.setOnClickListener {
             findNavController().navigate(R.id.addOrganizationSocialFragment)
         }
 
+        /** ask permission and launch gallery on button click */
         binding.llChangeLogoBtn.setOnClickListener {
             if (ContextCompat.checkSelfPermission(
                     requireActivity(), CAMERA
@@ -58,11 +88,43 @@ class AddOrganizationChangeLogoFragment : Fragment() {
             ) askForGalleryPermission() else launchImagePicker()
         }
 
+        /***/
         binding.btnNext.setOnClickListener {
-            selectedFile?.let {file ->
-                viewModel.addOrganization(file,"raj","8")
+            if (checkValidation()) {
+                Toast.makeText(requireContext(), "validate", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(requireContext(), "failed", Toast.LENGTH_SHORT).show()
             }
+            /*      selectedFile?.let { file ->
+                      viewModel.addOrganization(file, "raj", "8")
+                  }*/
         }
+    }
+
+    private fun checkValidation(): Boolean {
+        var isValid = true
+        if (organizationName.isEmpty()) {
+            SnackBarUtil.showErrorSnackBar(
+                binding.root,
+                getString(R.string.please_enter_organization_name)
+            )
+            return false
+        }
+        if (countryId.isEmpty()) {
+            SnackBarUtil.showErrorSnackBar(
+                binding.root,
+                getString(R.string.please_select_country)
+            )
+            return false
+        }
+        if (selectedFileUri.isEmpty()) {
+            SnackBarUtil.showErrorSnackBar(
+                binding.root,
+                getString(R.string.select_change_logo_image)
+            )
+            return false
+        }
+        return isValid
     }
 
     private fun launchImagePicker() {
@@ -76,7 +138,7 @@ class AddOrganizationChangeLogoFragment : Fragment() {
             if (result.resultCode == Activity.RESULT_OK) {
                 result.data?.let {
                     it.data?.let {
-                        setSelectedFile(it,IMAGE_EXTENSION)
+                        setSelectedFile(it, IMAGE_EXTENSION)
                     }
                 }
                 val data: Intent? = result.data
@@ -88,7 +150,8 @@ class AddOrganizationChangeLogoFragment : Fragment() {
 
     private fun setSelectedFile(uri: Uri, fileExtension: String) {
         selectedFile = getFile(requireContext(), uri, fileExtension)
-            mimeType = MIME_IMAGE_TYPE
+        selectedFileUri = getFile(requireContext(), uri, fileExtension).toString()
+        mimeType = MIME_IMAGE_TYPE
     }
 
 

@@ -124,7 +124,7 @@
             app:layout_constraintStart_toEndOf="@id/tvCountry"
             app:layout_constraintTop_toBottomOf="@id/etOrganizationName" />
 
-        <androidx.appcompat.widget.AppCompatEditText
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/etCountry"
             style="@style/regularDarkPrimary14"
             android:layout_width="@dimen/margin_0"
@@ -132,10 +132,8 @@
             android:layout_marginTop="@dimen/margin_5"
             android:background="@drawable/edit_text_design"
             android:hint="@string/select_country"
-            android:inputType="textEmailAddress"
-            android:maxLines="1"
-            android:singleLine="true"
             android:paddingStart="@dimen/margin_10"
+            android:gravity="center_vertical"
             android:paddingEnd="@dimen/margin_0"
             app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
             app:layout_constraintStart_toStartOf="@id/guidelineStart"

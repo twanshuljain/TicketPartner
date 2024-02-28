@@ -3,6 +3,7 @@ package com.example.ticketpartner.feature_add_organization.domain.repository
 import com.example.ticketpartner.feature_add_organization.domain.model.AddOrgSocialRequest
 import com.example.ticketpartner.feature_add_organization.domain.model.AddOrgSocialResponse
 import com.example.ticketpartner.feature_add_organization.domain.model.AddOrganizationResponse
+import com.example.ticketpartner.feature_add_organization.domain.model.SearchCountryResponse
 import java.io.File
 
 interface AddOrganizationRepository {
@@ -13,4 +14,5 @@ interface AddOrganizationRepository {
     ): AddOrganizationResponse
 
     suspend fun addOrganizationSocial(addOrgSocialRequest: AddOrgSocialRequest): AddOrgSocialResponse
+    suspend fun searchCountry(): SearchCountryResponse
 }

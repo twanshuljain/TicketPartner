@@ -16,6 +16,7 @@ const val verifyEmailForgotPass = "auth/user/forgot-password/verify/email/otp/"
 const val resetPassword = "auth/user/forgot-password/"
 const val addOrganization = "organization/create/organization/"
 const val addOrganizationSocial = "organization/about/info/organization/"
+const val searchCountry = "default/data/all/country/"
 
 /**
  * Multipart API parameter key

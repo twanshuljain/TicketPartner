@@ -4,6 +4,7 @@ import com.example.ticketpartner.feature_add_organization.domain.datasource.AddO
 import com.example.ticketpartner.feature_add_organization.domain.model.AddOrgSocialRequest
 import com.example.ticketpartner.feature_add_organization.domain.model.AddOrgSocialResponse
 import com.example.ticketpartner.feature_add_organization.domain.model.AddOrganizationResponse
+import com.example.ticketpartner.feature_add_organization.domain.model.SearchCountryResponse
 import com.example.ticketpartner.feature_add_organization.domain.repository.AddOrganizationRepository
 import java.io.File
 import javax.inject.Inject
@@ -20,5 +21,9 @@ class AddOrganizationRepositoryImpl @Inject constructor(private val addOrganizat
 
     override suspend fun addOrganizationSocial(addOrgSocialRequest: AddOrgSocialRequest): AddOrgSocialResponse {
         return addOrganizationDataSource.addOrganizationSocial(addOrgSocialRequest)
+    }
+
+    override suspend fun searchCountry(): SearchCountryResponse {
+        return addOrganizationDataSource.searchCountry()
     }
 }
