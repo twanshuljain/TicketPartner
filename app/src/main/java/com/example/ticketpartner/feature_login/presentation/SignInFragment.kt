@@ -54,7 +54,7 @@ class SignInFragment : Fragment(), CountdownTimerCallback {
 
         initView()
 
-        /** Show email/phone layout based on radio button click */
+        /** Switch email/phone layout based on radio button click */
         binding.radioGroup.setOnCheckedChangeListener { _, checkedId ->
             if (checkedId != -1) {
                 when (checkedId) {
@@ -76,10 +76,12 @@ class SignInFragment : Fragment(), CountdownTimerCallback {
             requireActivity().onBackPressedDispatcher.onBackPressed()
         }
 
+        /** Redirect on sign-Up page */
         binding.tvSignUp.setOnClickListener {
             findNavController().navigate(R.id.signUpEmailFragment)
         }
 
+        /** Redirect on forgot page */
         binding.emailLoginLayout.tvForgotPassword.setOnClickListener {
             findNavController().navigate(R.id.forgotPasswordFragment)
         }
@@ -87,12 +89,14 @@ class SignInFragment : Fragment(), CountdownTimerCallback {
 
 
     private fun initView() {
+        /** initialize countDown with 2 min. */
         countdownTimerUtil = CountdownTimerUtil(
             binding.phoneLoginLayout.tvCountDownTime,
             totalTimeMillis = 2 * 60 * 1000,  // 2 minutes
             intervalMillis = 1000,
             callback = this
         )
+
         val mobileLayout = binding.phoneLoginLayout
 
         /** get email text from user */
@@ -105,7 +109,7 @@ class SignInFragment : Fragment(), CountdownTimerCallback {
             etPassword = it.toString().trim()
         }
 
-
+        /** get country code from country picker */
         mobileLayout.countryPicker.setOnCountryChangeListener {
             countryCode = PLUS + mobileLayout.countryPicker.selectedCountryCode
         }
@@ -156,6 +160,7 @@ class SignInFragment : Fragment(), CountdownTimerCallback {
             }
         }
 
+        /** resend otp button */
         mobileLayout.tvResendBtn.setOnClickListener {
             if (countryCode.isNotEmpty() || etPhone.isNotEmpty()) {
                 viewModel.sendOtpLogin(countryCode, etPhone)
@@ -168,6 +173,7 @@ class SignInFragment : Fragment(), CountdownTimerCallback {
             }
         }
 
+        /** email login button */
         binding.emailLoginLayout.btnSignIn.setOnClickListener {
             val isValid = checkValidationForEmailLogin(etEmail, etPassword)
             if (isValid) {
@@ -176,6 +182,7 @@ class SignInFragment : Fragment(), CountdownTimerCallback {
             }
         }
 
+        /** make phone login API call on sign-in button click */
         mobileLayout.btnSignInMobile.setOnClickListener {
             if (countryCode.isNotEmpty() && etPhone.isNotEmpty()) {
                 val otpNumber = otoFirst + otpSec + otpThird + otpFourth
@@ -193,11 +200,10 @@ class SignInFragment : Fragment(), CountdownTimerCallback {
                     getString(R.string.please_enter_mobile)
                 )
             }
-
-            // view?.findNavController()?.navigate(R.id.addOrganizationChangeLogoFragment)
         }
     }
 
+    /** validation for email login API */
     private fun checkValidationForEmailLogin(username: String, password: String): Boolean {
         val isAllValid =
             ContactUsInputFieldValidator.isEmailValidPattern(username) && password.isNotEmpty()
@@ -226,8 +232,8 @@ class SignInFragment : Fragment(), CountdownTimerCallback {
         return isAllValid
     }
 
+    /** observe send otp response for mobile*/
     private fun observeSendOtoMobileResponse() {
-        /** observe send otp response for mobile*/
         viewModel.getResponseSendOtpMobile.observe(viewLifecycleOwner) {
             when (it) {
                 is SendMobileOtpUIState.IsLoading -> {
@@ -240,7 +246,6 @@ class SignInFragment : Fragment(), CountdownTimerCallback {
                     binding.phoneLoginLayout.tvResendLayout.visibility = View.GONE
                     binding.phoneLoginLayout.tvCountDown.visibility = View.VISIBLE
                     binding.phoneLoginLayout.layoutOtpCount.visibility = View.VISIBLE
-
                     SnackBarUtil.showSuccessSnackBar(binding.root, it.onSuccess.message.toString())
                 }
 
@@ -260,13 +265,14 @@ class SignInFragment : Fragment(), CountdownTimerCallback {
         }
     }
 
+    /** Phone number login API calling */
     private fun makePhoneLoginApiCall(countryCode: String, otp: String, phoneNumber: String) {
         viewModel.loginWithMobileNumber(countryCode, phoneNumber, otp)
         observeMobileLoginResponse()
     }
 
+    /** observe login with mobile API response */
     private fun observeMobileLoginResponse() {
-        /** observe login with mobile API response */
         viewModel.getMobileLoginResponse.observe(viewLifecycleOwner) {
             when (it) {
                 is MobileLoginUIState.IsLoading -> {
@@ -288,39 +294,9 @@ class SignInFragment : Fragment(), CountdownTimerCallback {
         }
     }
 
-    private fun setValidationStateObserver() {
-        /** observe login validation*/
-        viewModel.getEmailLoginValidation.observe(viewLifecycleOwner) {
-            when (it) {
-                is ValidationEmailLoginUIState.IsEmailEmpty -> {
-                    SnackBarUtil.showErrorSnackBar(
-                        binding.root,
-                        getString(R.string.please_enter_email)
-                    )
-                }
 
-                is ValidationEmailLoginUIState.EmailIsNotValid -> {
-                    SnackBarUtil.showErrorSnackBar(
-                        binding.root,
-                        getString(R.string.please_enter_valid_email)
-                    )
-                }
-
-                is ValidationEmailLoginUIState.IsPasswordEmpty -> {
-                    SnackBarUtil.showErrorSnackBar(
-                        binding.root,
-                        getString(R.string.please_enter_password)
-                    )
-                }
-
-                is ValidationEmailLoginUIState.OnAllDataValid -> {
-                }
-            }
-        }
-    }
-
+    /** observe Email login API response*/
     private fun observeEmailLoginResponse() {
-        /** observe Email login API response*/
         viewModel.getEmailLoginResponse.observe(viewLifecycleOwner) {
             when (it) {
                 is EmailLoginUIState.IsLoading -> {
@@ -330,8 +306,8 @@ class SignInFragment : Fragment(), CountdownTimerCallback {
                 is EmailLoginUIState.OnSuccess -> {
                     DialogProgressUtil.dismiss()
                     SnackBarUtil.showSuccessSnackBar(binding.root, it.result.message.toString())
+
                     findNavController().navigate(R.id.addOrganizationChangeLogoFragment)
-                    // viewModel.getEmailLoginResponse
                 }
 
                 is EmailLoginUIState.OnFailure -> {
@@ -342,10 +318,12 @@ class SignInFragment : Fragment(), CountdownTimerCallback {
         }
     }
 
+    /** Email login API calling */
     private fun makeEmailLoginApiCall() {
         viewModel.emailUserLogin(etEmail, etPassword)
     }
 
+    /** show edit text in red color while invalid otp */
     private fun invalidOtpEditText(value: Boolean) {
         if (value) {
             binding.phoneLoginLayout.apply {
@@ -377,14 +355,17 @@ class SignInFragment : Fragment(), CountdownTimerCallback {
         }
     }
 
+    /** start countDown through call this function */
     private fun startCountDown() {
         countdownTimerUtil.stop()
         disableSendOtpButton(false)
         countdownTimerUtil.start()
     }
 
+    /** if you want condition on every count */
     override fun onTick(minutes: Long, seconds: Long) {}
 
+    /** add condition on counter finish */
     override fun onFinish() {
         disableSendOtpButton(true)
         binding.phoneLoginLayout.tvResendLayout.visibility = View.VISIBLE
@@ -392,6 +373,7 @@ class SignInFragment : Fragment(), CountdownTimerCallback {
         binding.phoneLoginLayout.tvCountDown.visibility = View.GONE
     }
 
+    /** stop countDown on destroy current activity/fragment */
     override fun onDestroy() {
         super.onDestroy()
         countdownTimerUtil.stop()

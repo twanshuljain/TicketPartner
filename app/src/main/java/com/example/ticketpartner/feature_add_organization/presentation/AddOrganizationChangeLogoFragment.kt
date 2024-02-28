@@ -80,9 +80,7 @@ class AddOrganizationChangeLogoFragment : Fragment() {
                     }
                 }
                 val data: Intent? = result.data
-
                 handleImageResult(data)
-
             } else {
                 SnackBarUtil.showErrorSnackBar(binding.root, "Image picking cancelled")
             }
@@ -94,6 +92,7 @@ class AddOrganizationChangeLogoFragment : Fragment() {
     }
 
 
+    /** set image into imageView by using Glide */
     private fun handleImageResult(data: Intent?) {
         val image = data?.data
         if (image != null) {
@@ -103,6 +102,7 @@ class AddOrganizationChangeLogoFragment : Fragment() {
         }
     }
 
+    /** ask gallery access permission */
     private fun askForGalleryPermission() {
         ActivityCompat.requestPermissions(
             requireActivity(),
