@@ -2,21 +2,13 @@ package com.example.ticketpartner.feature_login.data.datasource
 
 import com.example.ticketpartner.common.remote.apis.RestApiService
 import com.example.ticketpartner.feature_login.domain.datasource.LoginDataSource
-import com.example.ticketpartner.feature_login.domain.model.CreateUserAccountRequest
-import com.example.ticketpartner.feature_login.domain.model.CreateUserAccountResponse
 import com.example.ticketpartner.feature_login.domain.model.ForgotPassSendEmailRequest
 import com.example.ticketpartner.feature_login.domain.model.ForgotPassSendEmailResponse
 import com.example.ticketpartner.feature_login.domain.model.ResetPasswordRequest
 import com.example.ticketpartner.feature_login.domain.model.ResetPasswordResponse
-import com.example.ticketpartner.feature_login.domain.model.SendEmailOtpResponseSignUp
-import com.example.ticketpartner.feature_login.domain.model.SendEmailOtpSignUpRequest
-import com.example.ticketpartner.feature_login.domain.model.SendEmailOtpVerifyRequest
-import com.example.ticketpartner.feature_login.domain.model.SendEmailOtpVerifyResponse
-import com.example.ticketpartner.feature_login.domain.model.SendPhoneSignUpOtpResponse
-import com.example.ticketpartner.feature_login.domain.model.SendPhoneSignUpOtpVerifyRequest
-import com.example.ticketpartner.feature_login.domain.model.SendPhoneSignUpOtpVerifyResponse
-import com.example.ticketpartner.feature_login.domain.model.SendSignUpPhoneOtpRequest
-import com.example.ticketpartner.feature_login.domain.model.UserLoginEmailRequest
+import com.example.ticketpartner.feature_login.domain.model.SendEmailLinkForgotPasswordRequest
+import com.example.ticketpartner.feature_login.domain.model.SendEmailLinkForgotPasswordResponse
+import com.example.ticketpartner.feature_login.domain.model.UserEmailLoginRequest
 import com.example.ticketpartner.feature_login.domain.model.UserLoginPhoneRequest
 import com.example.ticketpartner.feature_login.domain.model.UserLoginPhoneResponse
 import com.example.ticketpartner.feature_login.domain.model.UserLoginResponse
@@ -33,7 +25,7 @@ class LoginDataSourceImpl @Inject constructor(private val restApiService: RestAp
     LoginDataSource {
 
     override suspend fun loginUserEmail(email: String, password: String): UserLoginResponse {
-        return restApiService.loginUserEmail(UserLoginEmailRequest(email, password))
+        return restApiService.loginUserEmail(UserEmailLoginRequest(email, password))
     }
 
     override suspend fun sendOtpLogin(
@@ -57,54 +49,8 @@ class LoginDataSourceImpl @Inject constructor(private val restApiService: RestAp
         )
     }
 
-    override suspend fun sendEmailOtpSignUp(email: String): SendEmailOtpResponseSignUp {
-        return restApiService.sendEmailOtpSingUp(
-            SendEmailOtpSignUpRequest(
-                email = email
-            )
-        )
-    }
-
-    override suspend fun sendEmailOtpVerify(
-        email: String,
-        otpNumber: String
-    ): SendEmailOtpVerifyResponse {
-        return restApiService.sendEmailOtpVerify(
-            SendEmailOtpVerifyRequest(
-                email = email,
-                otp = otpNumber
-            )
-        )
-    }
-
-    override suspend fun sendPhoneOtpSignUp(
-        countryCode: String,
-        phoneNumber: String
-    ): SendPhoneSignUpOtpResponse {
-        return restApiService.sendPhoneOtpSignUp(
-            SendSignUpPhoneOtpRequest(
-                countryCode,
-                phoneNumber
-            )
-        )
-    }
-
-    override suspend fun sendPhoneOtpVerifySignUp(
-        countryCode: String,
-        phoneNumber: String,
-        otp: String
-    ): SendPhoneSignUpOtpVerifyResponse {
-        return restApiService.sendPhoneOtpVerifySignUp(
-            SendPhoneSignUpOtpVerifyRequest(
-                countryCode,
-                phoneNumber,
-                otp
-            )
-        )
-    }
-
-    override suspend fun createUserAccount(createUserAccountRequest: CreateUserAccountRequest): CreateUserAccountResponse {
-        return restApiService.createUserAccount(createUserAccountRequest)
+    override suspend fun forgotPasswordSendEmailLink(email: String): SendEmailLinkForgotPasswordResponse {
+        return restApiService.sendEmailLinkForgotPassword(SendEmailLinkForgotPasswordRequest(email))
     }
 
     override suspend fun forgotPasswordSendEmail(email: String): ForgotPassSendEmailResponse {

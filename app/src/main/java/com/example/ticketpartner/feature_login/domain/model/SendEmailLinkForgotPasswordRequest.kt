@@ -1,5 +1,5 @@
 package com.example.ticketpartner.feature_login.domain.model
 
-data class SendEmailOtpSignUpRequest(
+data class SendEmailLinkForgotPasswordRequest(
     val email: String?
 )

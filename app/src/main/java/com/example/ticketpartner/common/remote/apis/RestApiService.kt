@@ -4,21 +4,23 @@ import com.example.ticketpartner.feature_add_organization.domain.model.AddOrgSoc
 import com.example.ticketpartner.feature_add_organization.domain.model.AddOrgSocialResponse
 import com.example.ticketpartner.feature_add_organization.domain.model.AddOrganizationResponse
 import com.example.ticketpartner.feature_add_organization.domain.model.SearchCountryResponse
-import com.example.ticketpartner.feature_login.domain.model.CreateUserAccountRequest
-import com.example.ticketpartner.feature_login.domain.model.CreateUserAccountResponse
+import com.example.ticketpartner.feature_signup.domain.model.CreateUserAccountRequest
+import com.example.ticketpartner.feature_signup.domain.model.CreateUserAccountResponse
 import com.example.ticketpartner.feature_login.domain.model.ForgotPassSendEmailRequest
 import com.example.ticketpartner.feature_login.domain.model.ForgotPassSendEmailResponse
 import com.example.ticketpartner.feature_login.domain.model.ResetPasswordRequest
 import com.example.ticketpartner.feature_login.domain.model.ResetPasswordResponse
-import com.example.ticketpartner.feature_login.domain.model.SendEmailOtpResponseSignUp
-import com.example.ticketpartner.feature_login.domain.model.SendEmailOtpSignUpRequest
-import com.example.ticketpartner.feature_login.domain.model.SendEmailOtpVerifyRequest
-import com.example.ticketpartner.feature_login.domain.model.SendEmailOtpVerifyResponse
-import com.example.ticketpartner.feature_login.domain.model.SendPhoneSignUpOtpResponse
-import com.example.ticketpartner.feature_login.domain.model.SendPhoneSignUpOtpVerifyRequest
-import com.example.ticketpartner.feature_login.domain.model.SendPhoneSignUpOtpVerifyResponse
-import com.example.ticketpartner.feature_login.domain.model.SendSignUpPhoneOtpRequest
-import com.example.ticketpartner.feature_login.domain.model.UserLoginEmailRequest
+import com.example.ticketpartner.feature_login.domain.model.SendEmailLinkForgotPasswordRequest
+import com.example.ticketpartner.feature_login.domain.model.SendEmailLinkForgotPasswordResponse
+import com.example.ticketpartner.feature_signup.domain.model.SendEmailOtpSignUpResponse
+import com.example.ticketpartner.feature_signup.domain.model.SendEmailOtpSignUpRequest
+import com.example.ticketpartner.feature_signup.domain.model.SendEmailOtpVerifyRequest
+import com.example.ticketpartner.feature_signup.domain.model.SendEmailOtpVerifyResponse
+import com.example.ticketpartner.feature_signup.domain.model.SendPhoneSignUpOtpResponse
+import com.example.ticketpartner.feature_signup.domain.model.SendPhoneSignUpOtpVerifyRequest
+import com.example.ticketpartner.feature_signup.domain.model.SendPhoneSignUpOtpVerifyResponse
+import com.example.ticketpartner.feature_signup.domain.model.SendSignUpPhoneOtpRequest
+import com.example.ticketpartner.feature_login.domain.model.UserEmailLoginRequest
 import com.example.ticketpartner.feature_login.domain.model.UserLoginPhoneRequest
 import com.example.ticketpartner.feature_login.domain.model.UserLoginPhoneResponse
 import com.example.ticketpartner.feature_login.domain.model.UserLoginResponse
@@ -41,7 +43,7 @@ import retrofit2.http.PartMap
 interface RestApiService {
 
     @POST(loginWithEmail)
-    suspend fun loginUserEmail(@Body loginRequest: UserLoginEmailRequest): UserLoginResponse
+    suspend fun loginUserEmail(@Body loginRequest: UserEmailLoginRequest): UserLoginResponse
 
     @POST(otpVerifyMobile)
     suspend fun sendOtpLogin(@Body verifyMobileOtpRequest: VerifyMobileOtpRequest): VerifyMobileOtpResponse
@@ -49,8 +51,11 @@ interface RestApiService {
     @POST(loginWithMobile)
     suspend fun loginUserByPhone(@Body loginPhoneRequest: UserLoginPhoneRequest): UserLoginPhoneResponse
 
+    @POST(sendEmailLinkForgotPassword)
+    suspend fun sendEmailLinkForgotPassword(@Body sendEmailLinkForgotPasswordRequest: SendEmailLinkForgotPasswordRequest): SendEmailLinkForgotPasswordResponse
+
     @POST(sendOtpEmailSignUp)
-    suspend fun sendEmailOtpSingUp(@Body sendEmailOtpSignUpRequest: SendEmailOtpSignUpRequest): SendEmailOtpResponseSignUp
+    suspend fun sendEmailOtpSingUp(@Body sendEmailOtpSignUpRequest: SendEmailOtpSignUpRequest): SendEmailOtpSignUpResponse
 
     @POST(sendOtpEmailVerifySignUp)
     suspend fun sendEmailOtpVerify(@Body sendEmailOtpVerifyRequest: SendEmailOtpVerifyRequest): SendEmailOtpVerifyResponse

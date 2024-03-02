@@ -1,14 +1,9 @@
 package com.example.ticketpartner.feature_login.data.repository
 
 import com.example.ticketpartner.feature_login.domain.datasource.LoginDataSource
-import com.example.ticketpartner.feature_login.domain.model.CreateUserAccountRequest
-import com.example.ticketpartner.feature_login.domain.model.CreateUserAccountResponse
 import com.example.ticketpartner.feature_login.domain.model.ForgotPassSendEmailResponse
 import com.example.ticketpartner.feature_login.domain.model.ResetPasswordResponse
-import com.example.ticketpartner.feature_login.domain.model.SendEmailOtpResponseSignUp
-import com.example.ticketpartner.feature_login.domain.model.SendEmailOtpVerifyResponse
-import com.example.ticketpartner.feature_login.domain.model.SendPhoneSignUpOtpResponse
-import com.example.ticketpartner.feature_login.domain.model.SendPhoneSignUpOtpVerifyResponse
+import com.example.ticketpartner.feature_login.domain.model.SendEmailLinkForgotPasswordResponse
 import com.example.ticketpartner.feature_login.domain.model.UserLoginPhoneResponse
 import com.example.ticketpartner.feature_login.domain.model.UserLoginResponse
 import com.example.ticketpartner.feature_login.domain.model.VerifyEmailForgotPassResponse
@@ -42,37 +37,10 @@ class LoginRepositoryImpl @Inject constructor(private val loginDataSource: Login
         return loginDataSource.loginUserByPhone(countryCode, number, otp)
     }
 
-    override suspend fun sendEmailOtpSignUp(
-        email: String
-    ): SendEmailOtpResponseSignUp {
-        return loginDataSource.sendEmailOtpSignUp(email)
+    override suspend fun forgotPasswordSendEmailLink(email: String): SendEmailLinkForgotPasswordResponse {
+        return loginDataSource.forgotPasswordSendEmailLink(email)
     }
 
-    override suspend fun sendEmailOtpVerify(
-        email: String,
-        otpNumber: String
-    ): SendEmailOtpVerifyResponse {
-        return loginDataSource.sendEmailOtpVerify(email, otpNumber)
-    }
-
-    override suspend fun sendPhoneOtpSignUp(
-        countryCode: String,
-        phoneNumber: String
-    ): SendPhoneSignUpOtpResponse {
-        return loginDataSource.sendPhoneOtpSignUp(countryCode, phoneNumber)
-    }
-
-    override suspend fun sendPhoneOtpVerifySignUp(
-        countryCode: String,
-        phoneNumber: String,
-        otp: String
-    ): SendPhoneSignUpOtpVerifyResponse {
-        return loginDataSource.sendPhoneOtpVerifySignUp(countryCode, phoneNumber, otp)
-    }
-
-    override suspend fun createUserAccount(createUserAccountRequest: CreateUserAccountRequest): CreateUserAccountResponse {
-        return loginDataSource.createUserAccount(createUserAccountRequest)
-    }
 
     override suspend fun forgotPasswordSendEmail(email: String): ForgotPassSendEmailResponse {
         return loginDataSource.forgotPasswordSendEmail(email)

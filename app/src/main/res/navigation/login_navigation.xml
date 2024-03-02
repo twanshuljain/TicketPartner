@@ -16,7 +16,7 @@
 
     <fragment
         android:id="@+id/signUpEmailFragment"
-        android:name="com.example.ticketpartner.feature_signup.SignUpEmailFragment"
+        android:name="com.example.ticketpartner.feature_signup.presentation.SignUpEmailFragment"
         android:label="fragment_sign_up_email"
         tools:layout="@layout/fragment_sign_up_email" >
 
@@ -24,7 +24,7 @@
 
     <fragment
         android:id="@+id/signUpDetailsFragment"
-        android:name="com.example.ticketpartner.feature_signup.SignUpDetailsFragment"
+        android:name="com.example.ticketpartner.feature_signup.presentation.SignUpDetailsFragment"
         android:label="fragment_sign_up_details"
         tools:layout="@layout/fragment_sign_up_details" >
 

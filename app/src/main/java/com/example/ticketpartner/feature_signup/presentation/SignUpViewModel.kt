@@ -1,27 +1,21 @@
-package com.example.ticketpartner.feature_signup
+package com.example.ticketpartner.feature_signup.presentation
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.ticketpartner.common.LogUtil
-import com.example.ticketpartner.feature_login.domain.model.CreateUserAccountRequest
-import com.example.ticketpartner.feature_login.domain.model.CreateUserAccountUIState
-import com.example.ticketpartner.feature_login.domain.model.ForgotPassSendEmailUIState
-import com.example.ticketpartner.feature_login.domain.model.ForgotPassVerifyEmailUIState
-import com.example.ticketpartner.feature_login.domain.model.ResetPasswordUIState
-import com.example.ticketpartner.feature_login.domain.model.SendEmailOtpSignUpUIState
-import com.example.ticketpartner.feature_login.domain.model.SendEmailOtpVerifyUIState
-import com.example.ticketpartner.feature_login.domain.model.SendPhoneOtpSignUpUIState
-import com.example.ticketpartner.feature_login.domain.model.SendPhoneOtpVerifyUIState
-import com.example.ticketpartner.feature_login.domain.usecase.GetCreateUserAccountUseCase
-import com.example.ticketpartner.feature_login.domain.usecase.GetForgotPassSendEmailUseCase
-import com.example.ticketpartner.feature_login.domain.usecase.GetResetPasswordUseCase
-import com.example.ticketpartner.feature_login.domain.usecase.GetSendOtpEmailSignUpUseCase
+import com.example.ticketpartner.feature_signup.domain.model.CreateUserAccountRequest
+import com.example.ticketpartner.feature_signup.domain.model.CreateUserAccountUIState
+import com.example.ticketpartner.feature_signup.domain.model.SendEmailOtpSignUpUIState
+import com.example.ticketpartner.feature_signup.domain.model.SendEmailOtpVerifyUIState
+import com.example.ticketpartner.feature_signup.domain.model.SendPhoneOtpSignUpUIState
+import com.example.ticketpartner.feature_signup.domain.model.SendPhoneOtpVerifyUIState
+import com.example.ticketpartner.feature_signup.domain.usecase.GetCreateUserAccountUseCase
+import com.example.ticketpartner.feature_signup.domain.usecase.GetSendOtpEmailSignUpUseCase
 import com.example.ticketpartner.feature_login.domain.usecase.GetSendOtpEmailVerifyUseCase
 import com.example.ticketpartner.feature_login.domain.usecase.GetSendOtpPhoneSignUpUseCase
-import com.example.ticketpartner.feature_login.domain.usecase.GetSendOtpPhoneVerifySignUpUseCase
-import com.example.ticketpartner.feature_login.domain.usecase.GetVerifyEmailForgotPassUseCase
+import com.example.ticketpartner.feature_signup.domain.usecase.GetSendOtpPhoneVerifySignUpUseCase
 import com.example.ticketpartner.feature_login.presentation.LoginViewModel
 import com.technotoil.tglivescan.common.retrofit.apis.ErrorResponseHandler
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -36,9 +30,6 @@ class SignUpViewModel @Inject constructor(
     private val getSendOtpPhoneSignUpUseCase: GetSendOtpPhoneSignUpUseCase,
     private val getSendOtpPhoneVerifySignUpUseCase: GetSendOtpPhoneVerifySignUpUseCase,
     private val getCreateUserAccountUseCase: GetCreateUserAccountUseCase,
-    private val getForgotPassSendEmailUseCase: GetForgotPassSendEmailUseCase,
-    private val getVerifyEmailForgotPassUseCase: GetVerifyEmailForgotPassUseCase,
-    private val getResetPasswordUseCase: GetResetPasswordUseCase,
     private val logUtil: LogUtil
 ) : ViewModel() {
 
@@ -57,19 +48,6 @@ class SignUpViewModel @Inject constructor(
     private val _createAccountResponse: MutableLiveData<CreateUserAccountUIState> =
         MutableLiveData()
     val getCreateAccountResponse: LiveData<CreateUserAccountUIState> = _createAccountResponse
-
-    private val _forgotPasswordSendEmail: MutableLiveData<ForgotPassSendEmailUIState> =
-        MutableLiveData()
-    val getForgotPasswordSendEmailResponse: LiveData<ForgotPassSendEmailUIState> =
-        _forgotPasswordSendEmail
-
-    private val _forgotPasswordVerifyEmail: MutableLiveData<ForgotPassVerifyEmailUIState> =
-        MutableLiveData()
-    val getForgotPassVerifyEmailResponse: LiveData<ForgotPassVerifyEmailUIState> =
-        _forgotPasswordVerifyEmail
-
-    private val _resetPassword: MutableLiveData<ResetPasswordUIState> = MutableLiveData()
-    val getResetPassword: LiveData<ResetPasswordUIState> = _resetPassword
 
 
     fun sendEmailOtp(email: String) {
@@ -143,53 +121,6 @@ class SignUpViewModel @Inject constructor(
             }.collect {
                 logUtil.log(LoginViewModel.TAG, "onCollect${it}")
                 _createAccountResponse.value = CreateUserAccountUIState.OnSuccess(it)
-            }
-        }
-    }
-
-    fun sendEmailForgotPassword(email: String) {
-        _forgotPasswordSendEmail.value = ForgotPassSendEmailUIState.IsLoading(true)
-        viewModelScope.launch {
-            getForgotPassSendEmailUseCase.invoke(email).catch {
-                logUtil.log(LoginViewModel.TAG, "onError${it.message.toString()}")
-                val error = ErrorResponseHandler(it)
-                _forgotPasswordSendEmail.value =
-                    ForgotPassSendEmailUIState.OnFailure(error.getErrors().message.toString())
-            }.collect {
-                logUtil.log(LoginViewModel.TAG, "onCollect${it}")
-                _forgotPasswordSendEmail.value = ForgotPassSendEmailUIState.OnSuccess(it)
-            }
-        }
-    }
-
-    fun verifyEmailForgotPass(email: String, otpNumber: String) {
-        _forgotPasswordVerifyEmail.value = ForgotPassVerifyEmailUIState.IsLoading(true)
-        viewModelScope.launch {
-            getVerifyEmailForgotPassUseCase.invoke(email, otpNumber).catch {
-                logUtil.log(LoginViewModel.TAG, "onError${it.message.toString()}")
-                val error = ErrorResponseHandler(it)
-                _forgotPasswordVerifyEmail.value =
-                    ForgotPassVerifyEmailUIState.OnFailure(error.getErrors().message.toString())
-            }.collect {
-                logUtil.log(LoginViewModel.TAG, "onCollect${it}")
-                /*  MyPreferences.putString(
-                      PrefConstants.ACCESS_TOKEN, it.data?.reset_token.toString()
-                  )*/
-                _forgotPasswordVerifyEmail.value = ForgotPassVerifyEmailUIState.OnSuccess(it)
-            }
-        }
-    }
-
-    fun resetPassword(newPassword: String, conPassword: String) {
-        _resetPassword.value = ResetPasswordUIState.IsLoading(true)
-        viewModelScope.launch {
-            getResetPasswordUseCase.invoke(newPassword, conPassword).catch {
-                val error = ErrorResponseHandler(it)
-                _resetPassword.value =
-                    ResetPasswordUIState.OnFailure(error.getErrors().message.toString())
-            }.collect {
-                logUtil.log(LoginViewModel.TAG, "onCollect${it}")
-                _resetPassword.value = ResetPasswordUIState.OnSuccess(it)
             }
         }
     }

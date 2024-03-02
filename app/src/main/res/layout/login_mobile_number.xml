@@ -211,6 +211,15 @@
                 android:text="@string/you_will_receive_otp_in" />
 
             <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvCountDownBlack"
+                style="@style/regularParaText14"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="visible"
+                android:drawablePadding="@dimen/margin_2"
+                android:text="@string/you_will_receive_otp_in_2_min" />
+
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvCountDownTime"
                 style="@style/regularParaText14"
                 android:layout_width="wrap_content"

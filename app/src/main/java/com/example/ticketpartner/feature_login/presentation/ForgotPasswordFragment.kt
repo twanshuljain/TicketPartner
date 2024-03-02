@@ -18,7 +18,7 @@ import com.example.ticketpartner.common.SnackBarUtil
 import com.example.ticketpartner.databinding.FragmentForgotPasswordBinding
 import com.example.ticketpartner.feature_login.domain.model.ForgotPassSendEmailUIState
 import com.example.ticketpartner.feature_login.domain.model.ForgotPassVerifyEmailUIState
-import com.example.ticketpartner.feature_signup.SignUpViewModel
+import com.example.ticketpartner.feature_login.domain.model.ForgotPasswordSendEmailLinkUIState
 import com.example.ticketpartner.utils.CountdownTimerCallback
 import com.example.ticketpartner.utils.CountdownTimerUtil
 import com.example.ticketpartner.utils.DialogProgressUtil
@@ -28,7 +28,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class ForgotPasswordFragment : Fragment(), CountdownTimerCallback {
     private lateinit var binding: FragmentForgotPasswordBinding
-    private val viewModel: SignUpViewModel by activityViewModels()
+    private val viewModel: LoginViewModel by activityViewModels()
     private lateinit var countdownTimerUtil: CountdownTimerUtil
 
     private var etEmail: String = ""
@@ -66,11 +66,10 @@ class ForgotPasswordFragment : Fragment(), CountdownTimerCallback {
         binding.etEmail.doAfterTextChanged {
             etEmail = it.toString().trim()
             if (it.toString().isEmpty()) {
-                disableSendOtpButton(false)
-                enableCreateAccountButton(false)
+                enableContinueButton(false)
             } else {
-                disableSendOtpButton(true)
-                enableCreateAccountButton(true)
+                // disableSendOtpButton(true)
+                enableContinueButton(true)
             }
         }
 
@@ -113,13 +112,42 @@ class ForgotPasswordFragment : Fragment(), CountdownTimerCallback {
         }
 
         binding.btnContinue.setOnClickListener {
-            if (combinedOTP.length == 4) {
+            if (!ContactUsInputFieldValidator.isEmailValidPattern(etEmail)) {
+                SnackBarUtil.showErrorSnackBar(
+                    binding.root, getString(R.string.please_enter_valid_email)
+                )
+            } else {
+                viewModel.sendEmailLinkForgotPassword(etEmail)
+                observeSendEmailLinkResponse()
+            }
+            /*if (combinedOTP.length == 4) {
                 viewModel.verifyEmailForgotPass(etEmail, combinedOTP)
                 observeEmailVerifyResponse()
             } else {
                 SnackBarUtil.showErrorSnackBar(binding.root, getString(R.string.otp_is_required))
-            }
+            }*/
 
+        }
+    }
+
+    private fun observeSendEmailLinkResponse() {
+        viewModel.getSendEmailLinkForgotPasswordResponse.observe(viewLifecycleOwner) {
+            when (it) {
+                is ForgotPasswordSendEmailLinkUIState.IsLoading -> {
+                    DialogProgressUtil.show(childFragmentManager)
+                }
+
+                is ForgotPasswordSendEmailLinkUIState.OnSuccess -> {
+                    DialogProgressUtil.dismiss()
+                    SnackBarUtil.showSuccessSnackBar(binding.root, it.onSuccess.message.toString())
+                    requireActivity().onBackPressedDispatcher.onBackPressed()
+                }
+
+                is ForgotPasswordSendEmailLinkUIState.OnFailure -> {
+                    DialogProgressUtil.dismiss()
+                    SnackBarUtil.showErrorSnackBar(binding.root, it.onFailure)
+                }
+            }
         }
     }
 
@@ -194,7 +222,7 @@ class ForgotPasswordFragment : Fragment(), CountdownTimerCallback {
         view.isCursorVisible = false
     }
 
-    private fun enableCreateAccountButton(value: Boolean) {
+    private fun enableContinueButton(value: Boolean) {
         if (value) {
             binding.btnContinue.visibility = View.VISIBLE
             binding.btnContinueDisable.visibility = View.GONE

@@ -9,12 +9,10 @@ import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.ticketpartner.R
-import com.example.ticketpartner.common.EMAIL_KEY
 import com.example.ticketpartner.common.RESET_TOKEN
 import com.example.ticketpartner.common.SnackBarUtil
 import com.example.ticketpartner.databinding.FragmentResetPasswordBinding
 import com.example.ticketpartner.feature_login.domain.model.ResetPasswordUIState
-import com.example.ticketpartner.feature_signup.SignUpViewModel
 import com.example.ticketpartner.utils.DialogProgressUtil
 import com.example.ticketpartner.utils.NavigateFragmentUtil.clearBackStackToDestination
 import dagger.hilt.android.AndroidEntryPoint
@@ -23,7 +21,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class ResetPasswordFragment : Fragment() {
     private lateinit var binding: FragmentResetPasswordBinding
     private var resetToken = ""
-    private val viewModel: SignUpViewModel by activityViewModels()
+    private val viewModel: LoginViewModel by activityViewModels()
 
     private var newPassword= ""
     private var conPassword= ""

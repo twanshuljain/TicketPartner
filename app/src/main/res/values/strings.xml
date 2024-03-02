@@ -35,6 +35,7 @@
     <string name="resend">Resend</string>
     <string name="confirm_password">Confirm Password</string>
     <string name="you_will_receive_otp_in">You will receive OTP in</string>
+    <string name="you_will_receive_otp_in_2_min">You will receive OTP in 2:00s</string>
     <string name="privacy_policy">By signing up, I agree to the TicketPartner Terms of Service and Privacy Policy.</string>
     <string name="create_your_account">Create your account.</string>
     <string name="create_account">Create account</string>

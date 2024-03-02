@@ -1,6 +1,6 @@
 package com.example.ticketpartner.feature_login.domain.model
 
-data class SendEmailOtpVerifyRequest(
+data class UserEmailLoginRequest(
     val email: String?,
-    val otp: String?
+    val password: String?
 )

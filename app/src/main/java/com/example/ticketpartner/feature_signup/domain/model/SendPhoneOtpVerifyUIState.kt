@@ -1,4 +1,4 @@
-package com.example.ticketpartner.feature_login.domain.model
+package com.example.ticketpartner.feature_signup.domain.model
 
 sealed class SendPhoneOtpVerifyUIState {
     data class IsLoading(val isLoading: Boolean = false) : SendPhoneOtpVerifyUIState()

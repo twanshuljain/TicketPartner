@@ -6,6 +6,7 @@ package com.example.ticketpartner.common.remote.apis
 const val loginWithEmail = "auth/user/login/"
 const val otpVerifyMobile = "auth/user/mobile-login/send-otp/"
 const val loginWithMobile = "auth/user/mobile-login/"
+const val sendEmailLinkForgotPassword = "auth/user/forgot-password/send-link/"
 const val sendOtpEmailSignUp = "auth/user/sign-up/send/email/otp/"
 const val sendOtpEmailVerifySignUp = "auth/user/sign-up/verify/email/otp/"
 const val sendPhoneOtpSignUp = "auth/user/sign-up/send/mobile/otp/"

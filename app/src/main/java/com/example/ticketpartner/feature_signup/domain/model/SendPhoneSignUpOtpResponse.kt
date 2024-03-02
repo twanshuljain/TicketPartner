@@ -1,4 +1,4 @@
-package com.example.ticketpartner.feature_login.domain.model
+package com.example.ticketpartner.feature_signup.domain.model
 
 data class SendPhoneSignUpOtpResponse(
     val data: Any?,

@@ -2,6 +2,7 @@ package com.example.ticketpartner.feature_login.presentation
 
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -245,6 +246,7 @@ class SignInFragment : Fragment(), CountdownTimerCallback {
                     DialogProgressUtil.dismiss()
                     startCountDown()
                     binding.phoneLoginLayout.tvResendLayout.visibility = View.GONE
+                    binding.phoneLoginLayout.tvCountDownBlack.visibility = View.GONE
                     binding.phoneLoginLayout.tvCountDown.visibility = View.VISIBLE
                     binding.phoneLoginLayout.layoutOtpCount.visibility = View.VISIBLE
                     SnackBarUtil.showSuccessSnackBar(binding.root, it.onSuccess.message.toString())
@@ -283,6 +285,7 @@ class SignInFragment : Fragment(), CountdownTimerCallback {
                 is MobileLoginUIState.OnSuccess -> {
                     DialogProgressUtil.dismiss()
                     invalidOtpEditText(false)
+                    countdownTimerUtil.stop()
                     SnackBarUtil.showSuccessSnackBar(binding.root, it.onSuccess.message.toString())
                 }
 
@@ -363,7 +366,9 @@ class SignInFragment : Fragment(), CountdownTimerCallback {
     }
 
     /** if you want condition on every count */
-    override fun onTick(minutes: Long, seconds: Long) {}
+    override fun onTick(minutes: Long, seconds: Long) {
+        Log.e("TAG", "onTick: $seconds", )
+    }
 
     /** add condition on counter finish */
     override fun onFinish() {

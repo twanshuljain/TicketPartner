@@ -1,4 +1,4 @@
-package com.example.ticketpartner.feature_signup
+package com.example.ticketpartner.feature_signup.presentation
 
 import android.os.Bundle
 import android.os.Handler
@@ -22,12 +22,12 @@ import com.example.ticketpartner.common.IndianCountryCode
 import com.example.ticketpartner.common.PLUS
 import com.example.ticketpartner.common.SnackBarUtil
 import com.example.ticketpartner.databinding.FragmentSignUpDetailsBinding
-import com.example.ticketpartner.feature_login.domain.model.CreateUserAccountRequest
-import com.example.ticketpartner.feature_login.domain.model.CreateUserAccountUIState
-import com.example.ticketpartner.feature_login.domain.model.SendEmailOtpSignUpUIState
-import com.example.ticketpartner.feature_login.domain.model.SendEmailOtpVerifyUIState
-import com.example.ticketpartner.feature_login.domain.model.SendPhoneOtpSignUpUIState
-import com.example.ticketpartner.feature_login.domain.model.SendPhoneOtpVerifyUIState
+import com.example.ticketpartner.feature_signup.domain.model.CreateUserAccountRequest
+import com.example.ticketpartner.feature_signup.domain.model.CreateUserAccountUIState
+import com.example.ticketpartner.feature_signup.domain.model.SendEmailOtpSignUpUIState
+import com.example.ticketpartner.feature_signup.domain.model.SendEmailOtpVerifyUIState
+import com.example.ticketpartner.feature_signup.domain.model.SendPhoneOtpSignUpUIState
+import com.example.ticketpartner.feature_signup.domain.model.SendPhoneOtpVerifyUIState
 import com.example.ticketpartner.utils.CountdownTimerCallback
 import com.example.ticketpartner.utils.CountdownTimerUtil
 import com.example.ticketpartner.utils.DialogProgressUtil
@@ -381,6 +381,7 @@ class SignUpDetailsFragment : Fragment(), CountdownTimerCallback {
                     invalidOtpEditTextPhone(false)
                     SnackBarUtil.showSuccessSnackBar(binding.root, it.result.message.toString())
                     makeNonEditableEditText(binding.etPhoneNumber)
+                    countdownTimerUtil.stop()
                     binding.tvVerifyMobile.visibility = View.GONE
                     binding.tvVerifyDisableMobile.visibility = View.GONE
                     binding.ivMobileVerified.visibility = View.VISIBLE
@@ -424,6 +425,7 @@ class SignUpDetailsFragment : Fragment(), CountdownTimerCallback {
                     SnackBarUtil.showSuccessSnackBar(binding.root, it.result.message.toString())
                     invalidOtpEditTextEmail(false)
                     makeNonEditableEditText(binding.etEmail)
+                    countdownTimerUtil.stop()
                     binding.tvVerify.visibility = View.GONE
                     binding.tvVerifyDisable.visibility = View.GONE
                     binding.ivEmailVerify.visibility = View.VISIBLE
