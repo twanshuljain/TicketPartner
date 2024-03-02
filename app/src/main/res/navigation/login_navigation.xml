@@ -63,9 +63,15 @@
         tools:layout="@layout/fragment_add_organization_change_logo" />
 
     <fragment
-        android:id="@+id/AddOrgCountrySearchFragment"
+        android:id="@+id/addOrgCountrySearchFragment"
         android:name="com.example.ticketpartner.feature_add_organization.presentation.AddOrgCountrySearchFragment"
         android:label="fragment_add_organization_country_search_fragment"
         tools:layout="@layout/fragment_add_org_country_search" />
+
+    <fragment
+        android:id="@+id/createEventBasicDetaills"
+        android:name="com.example.ticketpartner.feature_create_event.presentation.CreateEventBasicDetailsFragment"
+        android:label="fragment_create_event_basic_details"
+        tools:layout="@layout/fragment_create_event_basic_details" />
 
 </navigation>

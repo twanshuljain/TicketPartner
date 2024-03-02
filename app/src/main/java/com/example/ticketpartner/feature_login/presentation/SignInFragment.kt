@@ -174,13 +174,13 @@ class SignInFragment : Fragment(), CountdownTimerCallback {
 
         /** email login button */
         binding.emailLoginLayout.btnSignIn.setOnClickListener {
-           /* val isValid = checkValidationForEmailLogin(etEmail, etPassword)
+          /*  val isValid = checkValidationForEmailLogin(etEmail, etPassword)
             if (isValid) {
                 makeEmailLoginApiCall()
                 observeEmailLoginResponse()
             }*/
 
-            findNavController().navigate(R.id.AddOrgCountrySearchFragment)
+            findNavController().navigate(R.id.createEventBasicDetaills)
         }
 
         /** make phone login API call on sign-in button click */
@@ -307,7 +307,6 @@ class SignInFragment : Fragment(), CountdownTimerCallback {
                 is EmailLoginUIState.OnSuccess -> {
                     DialogProgressUtil.dismiss()
                     SnackBarUtil.showSuccessSnackBar(binding.root, it.result.message.toString())
-
                     findNavController().navigate(R.id.addOrganizationChangeLogoFragment)
                 }
 

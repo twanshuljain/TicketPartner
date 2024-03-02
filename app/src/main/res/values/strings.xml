@@ -66,6 +66,7 @@
     <string name="change_logo">Change Logo</string>
     <string name="tell_us_about_your_organization">Tell us about your Organization</string>
     <string name="website_hint">"e.g.www.myticketpartner.com"</string>
+    <string name="website">"Website"</string>
     <string name="social_network_feeds">"Social Network Feeds"</string>
     <string name="facebook_page">"Facebook Page"</string>
     <string name="twitter">"Twitter"</string>
@@ -75,10 +76,38 @@
     <string name="linked_in_hint_link">"e.g.www.linkedin.com"</string>
     <string name="save_and_continue">"Save &amp; Continue"</string>
     <string name="enter_organization_name">"Enter Organization name"</string>
-    <string name="select_country">"Select country"</string>
+    <string name="select_country">"Select Country"</string>
     <string name="please_enter_organization_name">"Please enter organization name"</string>
     <string name="please_select_country">"Please select country"</string>
     <string name="select_change_logo_image">"Please select change logo image"</string>
+    <string name="search_country">"Search Country..."</string>
+    <string name="empty_organization_id">"Empty organization Id"</string>
+    <string name="camera">"Camera"</string>
+    <string name="gallery">"Gallery"</string>
+    <string name="cancel">"Cancel"</string>
+
+    //create event
+    <string name="basic_details">"Basic Details"</string>
+    <string name="tickets">"Tickets"</string>
+    <string name="event_setup">"Event Setup"</string>
+    <string name="event_name">"Event Name"</string>
+    <string name="description">"Description"</string>
+    <string name="event_cover">"Event Cover"</string>
+    <string name="choose_file_upload">"Choose file to upload"</string>
+    <string name="max_size_10">"Maximum size 10 MB"</string>
+    <string name="add_more_image">"Add more images"</string>
+    <string name="media_from_past_event">"Media from past event"</string>
+    <string name="add_images">"Add images"</string>
+    <string name="date_time">"Date / Time"</string>
+    <string name="timezone">"Timezone"</string>
+    <string name="event_start_end">"Event Start &amp; End"</string>
+    <string name="door_open_at">"Door Open at"</string>
+    <string name="location">"Location"</string>
+    <string name="create_event">"Create Event"</string>
+    <string name="venue">"Venue"</string>
+    <string name="online">"Online"</string>
+    <string name="to_be_announced">"To be announced"</string>
+
 
 
 </resources>

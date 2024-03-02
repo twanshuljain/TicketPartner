@@ -40,19 +40,34 @@ class AddOrganizationViewModel @Inject constructor(
         MutableLiveData()
     val getSearchCountry: LiveData<SearchCountryUIState> = _searchCountry
 
+    private val _addCountryName = MutableLiveData<String>()
+    val getCountyName: LiveData<String> = _addCountryName
+
+    private val _addCountryId = MutableLiveData<String>()
+    val getCountyId: LiveData<String> = _addCountryId
+
+    fun updateSearchCountryName(newValue: String) {
+        _addCountryName.value = newValue
+    }
+
+    fun updateSearchCountryId(newValue: String) {
+        _addCountryId.value = newValue
+    }
+
+
     fun addOrganization(file: File, name: String, CountryId: String) {
         _addOrganization.value = AddOrganizationUIState.IsLoading(true)
         viewModelScope.launch {
             getAddOrgUseCase.invoke(file, name, CountryId).catch {
                 logUtil.log(
                     LoginViewModel.TAG,
-                    "AddOrganizatioin -> onError${it.message.toString()}"
+                    "onError${it.message.toString()}"
                 )
                 val error = ErrorResponseHandler(it)
                 _addOrganization.value =
                     AddOrganizationUIState.OnFailure(error.getErrors().message.toString())
             }.collect {
-                logUtil.log(LoginViewModel.TAG, "AddOrganizatioin ->onCollect${it}")
+                logUtil.log(LoginViewModel.TAG, "onCollect${it}")
                 _addOrganization.value = AddOrganizationUIState.OnSuccess(it)
             }
         }
@@ -79,7 +94,8 @@ class AddOrganizationViewModel @Inject constructor(
             getSearchCountryUseCase.invoke().catch {
                 logUtil.log(LoginViewModel.TAG, "onError${it.message.toString()}")
                 val error = ErrorResponseHandler(it)
-                _searchCountry.value = SearchCountryUIState.OnFailure(error.getErrors().message.toString())
+                _searchCountry.value =
+                    SearchCountryUIState.OnFailure(error.getErrors().message.toString())
             }.collect {
                 logUtil.log(LoginViewModel.TAG, "onSuccess: $it")
                 _searchCountry.value = SearchCountryUIState.OnSuccess(it)

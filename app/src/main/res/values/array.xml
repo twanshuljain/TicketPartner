@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+    <resources>
+        <string-array name="planets_array">
+            <item>Mercury</item>
+            <item>Venus</item>
+            <item>Earth</item>
+            <item>Mars</item>
+            <item>Jupiter</item>
+            <item>Saturn</item>
+            <item>Uranus</item>
+            <item>Neptune</item>
+        </string-array>
+
+    <array name="tab_create_event">
+        <item>@string/venue</item>
+        <item>@string/online</item>
+        <item>@string/to_be_announced</item>
+    </array>
+</resources>

@@ -29,7 +29,7 @@
 
         <include
             android:id="@+id/titleName"
-            layout="@layout/layout_title_name"
+            layout="@layout/layout_app_name_img"
             app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
             app:layout_constraintStart_toStartOf="@id/guidelineStart"
             app:layout_constraintTop_toTopOf="parent" />
@@ -61,8 +61,6 @@
             android:text="@string/tell_us_about_your_organization"
             app:layout_constraintStart_toStartOf="@id/guidelineStart"
             app:layout_constraintTop_toBottomOf="@id/tvAddOrganization" />
-
-
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvOrganizationName"
@@ -125,7 +123,7 @@
             app:layout_constraintTop_toBottomOf="@id/etOrganizationName" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/etCountry"
+            android:id="@+id/tvSearchCountryBtn"
             style="@style/regularDarkPrimary14"
             android:layout_width="@dimen/margin_0"
             android:layout_height="@dimen/size_48"
@@ -148,7 +146,7 @@
             android:drawablePadding="@dimen/margin_2"
             android:text="@string/organization_logo"
             app:layout_constraintStart_toStartOf="@id/guidelineStart"
-            app:layout_constraintTop_toBottomOf="@id/etCountry" />
+            app:layout_constraintTop_toBottomOf="@id/tvSearchCountryBtn" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/starOrganizationLogo"
@@ -158,7 +156,7 @@
             android:layout_marginTop="@dimen/margin_22"
             android:src="@drawable/ic_mandatory_star"
             app:layout_constraintStart_toEndOf="@id/tvOrganizationLogo"
-            app:layout_constraintTop_toBottomOf="@id/etCountry" />
+            app:layout_constraintTop_toBottomOf="@id/tvSearchCountryBtn" />
         
         <LinearLayout
             android:id="@+id/llChangeLogo"

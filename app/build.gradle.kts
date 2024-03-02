@@ -93,6 +93,9 @@ dependencies {
     //glide for set image into imageview
     implementation("com.github.bumptech.glide:glide:4.15.0")
     annotationProcessor("com.github.bumptech.glide:compiler:4.15.0")
+
+    //cardView
+    implementation("androidx.cardview:cardview:1.0.0")
 }
 
 kapt {

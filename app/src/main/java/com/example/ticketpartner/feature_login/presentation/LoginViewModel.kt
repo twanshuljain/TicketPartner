@@ -47,13 +47,6 @@ class LoginViewModel @Inject constructor(
     private val _mobileLoginState: MutableLiveData<MobileLoginUIState> = MutableLiveData()
     val getMobileLoginResponse: LiveData<MobileLoginUIState> = _mobileLoginState
 
-
-    /*
-        fun isUserNameValid(username: String) {
-            val result = ContactUsInputFieldValidator.isEmailValidPattern(username)
-            updateLoginState(EmailLoginUiState.OnEmailEnter(result))
-        }*/
-
     private fun updateLoginState(newState: EmailLoginUIState) {
         _emailLoginState.value = newState
     }
@@ -104,6 +97,11 @@ class LoginViewModel @Inject constructor(
                     MobileLoginUIState.OnFailure(error.getErrors().message.toString())
             }.collect {
                 logUtil.log(TAG, "onResponse: $it")
+                it.data?.access_token?.let {accessToken ->
+                    MyPreferences.putString(
+                        PrefConstants.ACCESS_TOKEN,accessToken.toString()
+                    )
+                }
                 _mobileLoginState.value = MobileLoginUIState.OnSuccess(it)
             }
         }

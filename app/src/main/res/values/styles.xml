@@ -73,6 +73,13 @@
         <item name="android:fontFamily" tools:targetApi="o">@font/lato_medium</item>
     </style>
 
+    <style name="mediumDarkPrimaryText16" parent="Widget.AppCompat.TextView">
+        <item name="android:textColor">@color/dark_primary</item>
+        <item name="hintTextColor">@color/placeholder</item>
+        <item name="android:textSize">@dimen/text_16</item>
+        <item name="android:fontFamily" tools:targetApi="o">@font/lato_medium</item>
+    </style>
+
     <style name="mediumDarkPrimaryText18" parent="Widget.AppCompat.TextView">
         <item name="android:textColor">@color/dark_primary</item>
         <item name="hintTextColor">@color/placeholder</item>
@@ -91,6 +98,20 @@
         <item name="hintTextColor">@color/placeholder</item>
         <item name="android:textSize">@dimen/text_18</item>
         <item name="android:fontFamily" tools:targetApi="o">@font/lato_bold</item>
+    </style>
+
+    <style name="semiBoldParaHeadingText18" parent="Widget.AppCompat.TextView">
+        <item name="android:textColor">@color/paraHeading</item>
+        <item name="hintTextColor">@color/placeholder</item>
+        <item name="android:textSize">@dimen/text_18</item>
+        <item name="android:fontFamily" tools:targetApi="o">@font/lato_semi_bold</item>
+    </style>
+
+    <style name="semiBoldParaHeadingText14" parent="Widget.AppCompat.TextView">
+        <item name="android:textColor">@color/paraHeading</item>
+        <item name="hintTextColor">@color/placeholder</item>
+        <item name="android:textSize">@dimen/text_14</item>
+        <item name="android:fontFamily" tools:targetApi="o">@font/lato_semi_bold</item>
     </style>
 
     <style name="boldDarkPrimaryText18" parent="Widget.AppCompat.TextView">
@@ -129,6 +150,12 @@
         <item name="android:textColor">@color/purple</item>
         <item name="android:textSize">@dimen/text_12</item>
         <item name="android:fontFamily" tools:targetApi="o">@font/lato_medium</item>
+    </style>
+
+    <style name="boldSecondary12" parent="Widget.AppCompat.TextView">
+        <item name="android:textColor">@color/secondary</item>
+        <item name="android:textSize">@dimen/text_12</item>
+        <item name="android:fontFamily" tools:targetApi="o">@font/lato_bold</item>
     </style>
 
     <style name="regularPurple12" parent="Widget.AppCompat.TextView">
@@ -192,13 +219,18 @@
     </style>
 
     //set snackBar background for error
-
     <style name="CustomSnackBarErrorTheme">
         <item name="snackbarStyle">@style/MySnackBarErrorStyle</item>
     </style>
 
     <style name="MySnackBarErrorStyle" parent="Widget.MaterialComponents.Snackbar">
         <item name="android:background">@color/red</item>
+    </style>
+
+    //tab text font
+    <style name="tab_text_font" parent="@android:style/TextAppearance.Widget.TabWidget">
+        <item name="android:fontFamily">@font/lato_medium</item>
+        <item name="android:textSize">@dimen/text_14</item>
     </style>
 
 
@@ -219,6 +251,20 @@
 
         <!-- Set padding to provide some spacing -->
         <item name="android:padding">8dp</item>
+    </style>
+
+    //cardView
+    <style name="CardViewImagePicker" parent="@style/Widget.MaterialComponents.CardView">
+        <item name="shapeAppearanceOverlay">@style/ShapeAppearanceOverlay.MaterialCardView.Cut
+        </item>
+    </style>
+
+    <style name="ShapeAppearanceOverlay.MaterialCardView.Cut" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSizeTopRight">@dimen/margin_15</item>
+        <item name="cornerSizeTopLeft">@dimen/margin_15</item>
+        <item name="cornerSizeBottomRight">0dp</item>
+        <item name="cornerSizeBottomLeft">0dp</item>
     </style>
 
 </resources>

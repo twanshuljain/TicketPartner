@@ -30,7 +30,7 @@
 
     <include
         android:id="@+id/titleName"
-        layout="@layout/layout_title_name"
+        layout="@layout/layout_app_name_img"
         app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
         app:layout_constraintStart_toStartOf="@id/guidelineStart"
         app:layout_constraintTop_toTopOf="parent" />
@@ -70,12 +70,12 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_20"
             android:drawablePadding="@dimen/margin_2"
-            android:text="@string/organization_name"
+            android:text="@string/website"
             app:layout_constraintStart_toStartOf="@id/guidelineStart"
             app:layout_constraintTop_toBottomOf="@id/tvTellUs" />
 
         <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/etOrganizationName"
+            android:id="@+id/etWebSite"
             style="@style/regularDarkPrimary14"
             android:layout_width="@dimen/margin_0"
             android:layout_height="@dimen/size_48"
@@ -101,7 +101,7 @@
             android:drawablePadding="@dimen/margin_2"
             android:text="@string/social_network_feeds"
             app:layout_constraintStart_toStartOf="@id/guidelineStart"
-            app:layout_constraintTop_toBottomOf="@id/etOrganizationName" />
+            app:layout_constraintTop_toBottomOf="@id/etWebSite" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvFaceBook"
@@ -191,7 +191,7 @@
             app:layout_constraintTop_toBottomOf="@id/tvLinkedIn" />
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnSignIn"
+            android:id="@+id/btnSaaveAndContinue"
             style="@style/boldWhiteText16"
             android:layout_width="@dimen/margin_0"
             android:layout_height="@dimen/size_48"

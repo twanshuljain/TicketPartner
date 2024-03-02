@@ -2,33 +2,39 @@ package com.example.ticketpartner.feature_add_organization.presentation
 
 import android.Manifest.permission.CAMERA
 import android.Manifest.permission.READ_EXTERNAL_STORAGE
+import android.Manifest.permission.WRITE_EXTERNAL_STORAGE
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.widget.doAfterTextChanged
-import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.example.ticketpartner.R
-import com.example.ticketpartner.common.EMAIL_KEY
 import com.example.ticketpartner.common.IMAGE_EXTENSION
 import com.example.ticketpartner.common.MIME_IMAGE_TYPE
+import com.example.ticketpartner.common.ORGANIZATION_ID
 import com.example.ticketpartner.common.SnackBarUtil
-import com.example.ticketpartner.common.ZERO
 import com.example.ticketpartner.databinding.FragmentAddOrganizationChangeLogoBinding
+import com.example.ticketpartner.databinding.LayoutBottomSheetImagePickerBinding
+import com.example.ticketpartner.feature_add_organization.domain.model.AddOrganizationUIState
+import com.example.ticketpartner.utils.DialogProgressUtil
 import com.example.ticketpartner.utils.Utility.getFile
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import java.io.File
+
 
 class AddOrganizationChangeLogoFragment : Fragment() {
     private lateinit var binding: FragmentAddOrganizationChangeLogoBinding
@@ -39,7 +45,18 @@ class AddOrganizationChangeLogoFragment : Fragment() {
     private var mimeType: String? = null
     private var organizationName: String = ""
     private var countryId: String = ""
-    private var countryN: String = ""
+    private var countryName: String = ""
+    private var imageUri: String = ""
+
+    private var imageUriS: Uri? = null
+
+    private lateinit var requestPermissionLauncher: ActivityResultLauncher<String>
+    private val permissions = arrayOf(
+        CAMERA,
+        WRITE_EXTERNAL_STORAGE
+    )
+
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -53,26 +70,63 @@ class AddOrganizationChangeLogoFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         initView()
 
-        arguments?.let {
-           // countryId = it.getString("countryId", "")
-            countryN = it.getString("countryName","")
-        }
+        requestPermissionLauncher =
+            registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
+                if (isGranted) {
+                    openImagePickerBottomSheet()
+                } else {
+                    askForGalleryPermission()
+                }
+            }
+    }
 
-        binding.etCountry.setText(countryN)
+    private fun observeResponseData() {
+        viewModel.getAddOrganization.observe(viewLifecycleOwner) {
+            when (it) {
+                is AddOrganizationUIState.IsLoading -> {
+                    DialogProgressUtil.show(childFragmentManager)
+                }
+
+                is AddOrganizationUIState.OnSuccess -> {
+                    DialogProgressUtil.dismiss()
+                    SnackBarUtil.showSuccessSnackBar(binding.root, it.result.message.toString())
+                    val bundle = Bundle()
+                    bundle.putString(ORGANIZATION_ID, it.result.data?.id.toString())
+                    findNavController().navigate(R.id.addOrganizationSocialFragment, bundle)
+                }
+
+                is AddOrganizationUIState.OnFailure -> {
+                    DialogProgressUtil.dismiss()
+                    SnackBarUtil.showErrorSnackBar(binding.root, it.onFailure)
+                }
+            }
+        }
     }
 
     private fun initView() {
+        handleImageResult()
 
+        viewModel.getCountyName.observe(viewLifecycleOwner) {
+            countryName = it
+            binding.tvSearchCountryBtn.setText(it)
+        }
 
+        /** get country id from selected country name */
+        viewModel.getCountyId.observe(viewLifecycleOwner) {
+            countryId = it
+        }
+
+        binding.titleName.ivBack.setOnClickListener {
+            requireActivity().onBackPressedDispatcher.onBackPressed()
+        }
 
         /** get organization name from user */
         binding.etOrganizationName.doAfterTextChanged {
             organizationName = it.toString().trim()
         }
 
-        /** get country id from selected country name */
-        binding.etCountry.doAfterTextChanged {
-           findNavController().navigate(R.id.AddOrgCountrySearchFragment)
+        binding.tvSearchCountryBtn.setOnClickListener {
+            findNavController().navigate(R.id.addOrgCountrySearchFragment)
         }
 
         /** Redirect on add organization social link page */
@@ -82,22 +136,51 @@ class AddOrganizationChangeLogoFragment : Fragment() {
 
         /** ask permission and launch gallery on button click */
         binding.llChangeLogoBtn.setOnClickListener {
-            if (ContextCompat.checkSelfPermission(
-                    requireActivity(), CAMERA
-                ) != PackageManager.PERMISSION_GRANTED
-            ) askForGalleryPermission() else launchImagePicker()
+            checkIsPermissionGranted()
+
         }
 
         /***/
         binding.btnNext.setOnClickListener {
             if (checkValidation()) {
-                Toast.makeText(requireContext(), "validate", Toast.LENGTH_SHORT).show()
-            } else {
-                Toast.makeText(requireContext(), "failed", Toast.LENGTH_SHORT).show()
+                selectedFile?.let { file ->
+                    viewModel.addOrganization(file, organizationName, countryId)
+                    observeResponseData()
+                }
             }
-            /*      selectedFile?.let { file ->
-                      viewModel.addOrganization(file, "raj", "8")
-                  }*/
+        }
+    }
+
+
+    private fun openImagePickerBottomSheet() {
+        val dialog = BottomSheetDialog(requireContext())
+        val dialogView = LayoutBottomSheetImagePickerBinding.inflate(layoutInflater)
+        dialogView.btnGallery.setOnClickListener {
+            launchImagePicker()
+            dialog.dismiss()
+        }
+        dialogView.btnCamera.setOnClickListener {
+            captureImage()
+            dialog.dismiss()
+        }
+        dialogView.btnCancel.setOnClickListener {
+            dialog.dismiss()
+        }
+        dialog.setCanceledOnTouchOutside(true)
+        dialog.setContentView(dialogView.root)
+        dialog.show()
+    }
+
+
+    private fun checkIsPermissionGranted() {
+        permissions.forEach { permission ->
+            if (ContextCompat.checkSelfPermission(requireContext(), permission) !=
+                PackageManager.PERMISSION_GRANTED
+            ) {
+                requestPermissionLauncher.launch(permission)
+            } else {
+                openImagePickerBottomSheet()
+            }
         }
     }
 
@@ -133,6 +216,12 @@ class AddOrganizationChangeLogoFragment : Fragment() {
         pickImageLauncher.launch(pickImageIntent)
     }
 
+    private fun captureImage() {
+        val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        pickImageLauncher.launch(cameraIntent)
+    }
+
+
     private val pickImageLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
@@ -142,9 +231,8 @@ class AddOrganizationChangeLogoFragment : Fragment() {
                     }
                 }
                 val data: Intent? = result.data
-                handleImageResult(data)
-            } else {
-                SnackBarUtil.showErrorSnackBar(binding.root, "Image picking cancelled")
+                imageUri = data?.data!!.toString()
+                handleImageResult()
             }
         }
 
@@ -156,11 +244,10 @@ class AddOrganizationChangeLogoFragment : Fragment() {
 
 
     /** set image into imageView by using Glide */
-    private fun handleImageResult(data: Intent?) {
-        val image = data?.data
-        if (image != null) {
+    private fun handleImageResult() {
+        if (imageUri != null) {
             Glide.with(this)
-                .load(image)
+                .load(imageUri)
                 .into(binding.ivImage)
         }
     }
@@ -172,6 +259,13 @@ class AddOrganizationChangeLogoFragment : Fragment() {
             arrayOf(CAMERA, READ_EXTERNAL_STORAGE),
             requestCodeCameraPermission
         )
+    }
+
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        viewModel.updateSearchCountryName("")
+        viewModel.updateSearchCountryId("")
     }
 
 }

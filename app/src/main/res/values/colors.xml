@@ -26,4 +26,6 @@
     <color name="link_color">#147BD1</color>
     <color name="grey_disable">#D2D4DC</color>
     <color name="red_light">#EB5757</color>
+    <color name="tab_back">#E7ECEE</color>
+    <color name="tab_text_color">#878899</color>
 </resources>

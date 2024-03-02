@@ -34,6 +34,7 @@ const val ZERO = 0
 /**Key constants*/
 const val EMAIL_KEY = "email"
 const val RESET_TOKEN = "reset_token"
+const val ORGANIZATION_ID = "organization_id"
 
 
 //Database keys

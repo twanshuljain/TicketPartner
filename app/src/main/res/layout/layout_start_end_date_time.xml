@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineVerticalCenter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintGuide_end="@dimen/margin_15"
+        app:layout_constraintGuide_percent="0.5" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvEventStartEndDate"
+        style="@style/mediumDarkPrimaryText14"
+        android:layout_width="@dimen/margin_0"
+        android:layout_height="wrap_content"
+        android:drawablePadding="@dimen/margin_2"
+        android:text="@string/event_start_end"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <include android:id="@+id/startDate"
+        android:layout_width="@dimen/margin_0"
+        android:layout_height="@dimen/margin_58"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginEnd="@dimen/size_8"
+        android:layout_marginTop="@dimen/size_5"
+        app:layout_constraintTop_toBottomOf="@id/tvEventStartEndDate"
+        app:layout_constraintEnd_toEndOf="@id/guidelineVerticalCenter"
+        layout="@layout/item_create_event_start_end_date"/>
+
+    <include android:id="@+id/endDate"
+        android:layout_width="@dimen/margin_0"
+        android:layout_height="@dimen/margin_58"
+        app:layout_constraintStart_toStartOf="@id/guidelineVerticalCenter"
+        app:layout_constraintTop_toTopOf="@id/startDate"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="@dimen/size_8"
+        layout="@layout/item_create_event_start_end_date"/>
+
+    <include android:id="@+id/startTime"
+        android:layout_width="@dimen/margin_0"
+        android:layout_height="@dimen/margin_58"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/guidelineVerticalCenter"
+        android:layout_marginTop="@dimen/margin_10"
+        android:layout_marginEnd="@dimen/size_8"
+        app:layout_constraintTop_toBottomOf="@id/startDate"
+        layout="@layout/item_create_event_start_end_date"/>
+
+    <include android:id="@+id/endTime"
+        android:layout_width="@dimen/margin_0"
+        android:layout_height="@dimen/margin_58"
+        app:layout_constraintStart_toStartOf="@id/guidelineVerticalCenter"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="@dimen/margin_10"
+        android:layout_marginStart="@dimen/size_8"
+        app:layout_constraintTop_toBottomOf="@id/endDate"
+        layout="@layout/item_create_event_start_end_date"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvStartEndDateDoorOpen"
+        style="@style/mediumDarkPrimaryText14"
+        android:layout_width="@dimen/margin_0"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_20"
+        android:drawablePadding="@dimen/margin_2"
+        android:text="@string/door_open_at"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/startTime" />
+
+    <include android:id="@+id/startDateDoorOpen"
+        android:layout_width="@dimen/margin_0"
+        android:layout_height="@dimen/margin_58"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="@dimen/size_5"
+        android:layout_marginEnd="@dimen/size_8"
+        app:layout_constraintEnd_toEndOf="@id/guidelineVerticalCenter"
+        app:layout_constraintTop_toBottomOf="@id/tvStartEndDateDoorOpen"
+        layout="@layout/item_create_event_start_end_date"/>
+
+    <include android:id="@+id/endDateDoorOpen"
+        android:layout_width="@dimen/margin_0"
+        android:layout_height="@dimen/margin_58"
+        app:layout_constraintStart_toStartOf="@id/guidelineVerticalCenter"
+        android:layout_marginTop="@dimen/size_5"
+        android:layout_marginStart="@dimen/size_8"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvStartEndDateDoorOpen"
+        layout="@layout/item_create_event_start_end_date"/>
+
+    <include android:id="@+id/startTimeDoorOpen"
+        android:layout_width="@dimen/margin_0"
+        android:layout_height="@dimen/margin_58"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="@dimen/margin_10"
+        android:layout_marginEnd="@dimen/size_8"
+        app:layout_constraintEnd_toEndOf="@id/guidelineVerticalCenter"
+        app:layout_constraintTop_toBottomOf="@id/startDateDoorOpen"
+        layout="@layout/item_create_event_start_end_date"/>
+
+    <include android:id="@+id/endTimeDoorOpen"
+        android:layout_width="@dimen/margin_0"
+        android:layout_height="@dimen/margin_58"
+        app:layout_constraintStart_toStartOf="@id/guidelineVerticalCenter"
+        android:layout_marginTop="@dimen/margin_10"
+        android:layout_marginStart="@dimen/size_8"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/startDateDoorOpen"
+        layout="@layout/item_create_event_start_end_date"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
