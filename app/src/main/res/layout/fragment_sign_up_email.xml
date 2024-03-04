@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".feature_signup.SignUpEmailFragment">
+    tools:context=".feature_signup.presentation.SignUpEmailFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -82,13 +82,16 @@
 
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/etEmail"
-            style="@style/boldPlaceholder14"
+            style="@style/mediumPlaceHolderText14"
             android:layout_width="@dimen/margin_0"
             android:layout_height="@dimen/size_48"
             android:layout_marginTop="@dimen/margin_5"
             android:background="@drawable/edit_text_design"
             android:hint="@string/enter_your_email"
             android:paddingStart="@dimen/margin_10"
+            android:maxLines="1"
+            android:imeOptions="actionDone"
+            android:singleLine="true"
             android:textSize="@dimen/text_16"
             app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
             app:layout_constraintStart_toStartOf="@id/guidelineStart"
@@ -105,18 +108,34 @@
             app:layout_constraintStart_toStartOf="@id/guidelineStart"
             app:layout_constraintTop_toBottomOf="@id/etEmail" />
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnSignUp"
-            style="@style/boldWhiteText16"
+        <RelativeLayout
+            android:id="@+id/btnSignUpLayout"
             android:layout_width="@dimen/margin_0"
-            android:layout_height="@dimen/size_48"
+            android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_30"
-            android:background="@drawable/btn_design_sign_in"
-            android:text="@string/sign_up"
-            android:textAllCaps="false"
             app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
             app:layout_constraintStart_toStartOf="@id/guidelineStart"
-            app:layout_constraintTop_toBottomOf="@+id/tvPolicy" />
+            app:layout_constraintTop_toBottomOf="@+id/tvPolicy">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnSignUp"
+                style="@style/boldWhiteText16"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/btn_design_sign_in"
+                android:text="@string/sign_up"
+                android:textAllCaps="false"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnSignUpDisable"
+                style="@style/boldWhiteText16"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/disable_continue_btn_design"
+                android:text="@string/sign_up"
+                android:textAllCaps="false"/>
+
+        </RelativeLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/clOrSignInWith"
@@ -125,7 +144,7 @@
             android:layout_marginTop="@dimen/margin_30"
             app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
             app:layout_constraintStart_toStartOf="@id/guidelineStart"
-            app:layout_constraintTop_toBottomOf="@+id/btnSignUp">
+            app:layout_constraintTop_toBottomOf="@+id/btnSignUpLayout">
 
             <View
                 android:layout_width="@dimen/margin_0"

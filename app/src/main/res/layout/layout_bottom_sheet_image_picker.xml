@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardElevation="@dimen/margin_4"
+    app:cardBackgroundColor="@color/white"
+    style="@style/CardViewImagePicker">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_margin="2dp">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnCamera"
+            style="@style/boldWhiteText16"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_48"
+            android:layout_marginTop="@dimen/margin_20"
+            android:background="@drawable/btn_design_image_picker"
+            android:text="@string/camera"
+            android:textAllCaps="false" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnGallery"
+            style="@style/boldWhiteText16"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_48"
+            android:layout_marginTop="@dimen/margin_20"
+            android:background="@drawable/btn_design_image_picker"
+            android:text="@string/gallery"
+            android:textAllCaps="false" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnCancel"
+            style="@style/boldWhiteText16"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_48"
+            android:layout_marginTop="@dimen/margin_20"
+            android:layout_marginBottom="@dimen/margin_12"
+            android:background="@drawable/cancel_btn_design_image_picker"
+            android:text="@string/cancel"
+            android:textAllCaps="false" />
+
+
+    </LinearLayout>
+
+</com.google.android.material.card.MaterialCardView>

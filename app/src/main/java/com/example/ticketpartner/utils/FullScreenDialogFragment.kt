@@ -42,14 +42,13 @@ class FullScreenDialogFragment : DialogFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        /*
                 // Retrieve custom strings from arguments
                 title = arguments?.getString("title")
                 message = arguments?.getString("message")
 
                 // Set custom strings in your dialog layout
                binding.titleTextView.text = title
-                binding.messageTextView.text = message*/
+                binding.messageTextView.text = message
     }
 
     override fun onStart() {
@@ -58,18 +57,10 @@ class FullScreenDialogFragment : DialogFragment() {
         //setDialogMargins()
         val window: Window? = dialog?.window
         val params: WindowManager.LayoutParams? = window?.attributes
-        // Set top margin (adjust value as needed)
+
         params?.dimAmount = 0.7f // Adjust dim amount if needed
-        // params?.verticalMargin = resources.getDimensionPixelSize(R.dimen.margin_1).toFloat()
-        // window?.decorView?.top = 100
-
         window?.attributes = params
-
-
-        // Set a semi-transparent background
         dialog?.window?.setBackgroundDrawableResource(R.drawable.full_screen_dialog_design)
-
-        //set gravity at top
         dialog?.window?.attributes?.gravity = Gravity.TOP
         dialog?.setCanceledOnTouchOutside(true)
 
@@ -87,17 +78,18 @@ class FullScreenDialogFragment : DialogFragment() {
 
     }
 
-    fun dialog(): DialogInterface? {
-        return dialog
-    }
-
     override fun onDismiss(dialog: DialogInterface) {
         super.onDismiss(dialog)
         mDialogInterface = dialog
+        hasDialogDismissed(true)
        // findNavController().navigate(R.id.resetPasswordFragment)
         // Perform actions on dialog dismiss (outer click)
         // This code will be executed when the dialog is dismissed, including outer clicks
         // Add your desired logic here
         findNavController().navigate(R.id.resetPasswordFragment)
+    }
+
+     fun hasDialogDismissed(value: Boolean = false):Boolean{
+        return value
     }
 }

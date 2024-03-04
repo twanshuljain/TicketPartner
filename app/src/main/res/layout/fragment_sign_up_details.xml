@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".feature_signup.SignUpDetailsFragment">
+    tools:context=".feature_signup.presentation.SignUpDetailsFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -16,7 +16,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_begin="15dp"
+            app:layout_constraintGuide_begin="@dimen/size_15"
             app:layout_constraintStart_toStartOf="parent" />
 
         <androidx.constraintlayout.widget.Guideline
@@ -110,32 +110,72 @@
             app:layout_constraintTop_toBottomOf="@id/tvEmail">
 
             <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/etEmail"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_toLeftOf="@id/tvVerify"
+                android:layout_toStartOf="@id/tvVerify"
                 android:background="@drawable/no_undreline_et_design"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:hint="@string/enter_your_email"
+                android:inputType="textEmailAddress"
+                android:gravity="center_vertical"
                 android:paddingStart="@dimen/margin_10"
-                android:textSize="@dimen/text_16" />
+                style="@style/mediumPlaceHolderText14"/>
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvVerify"
-                style="@style/mediumPurple12"
+                style="@style/regularPurple12"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentEnd="true"
+                android:layout_centerInParent="true"
+                android:visibility="gone"
+                android:gravity="center_vertical"
+                android:paddingStart="@dimen/margin_5"
+                android:paddingEnd="@dimen/margin_10"
+                android:text="@string/send_otp" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvVerifyDisable"
+                style="@style/regularGreyDisable12"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:padding="@dimen/margin_10"
+                android:visibility="visible"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
+                android:paddingStart="@dimen/margin_5"
                 android:paddingEnd="@dimen/margin_10"
-                android:text="@string/verify" />
+                android:text="@string/send_otp" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivEmailVerify"
+                style="@style/regularGreyDisable12"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:padding="@dimen/margin_10"
+                android:visibility="gone"
+                android:src="@drawable/ic_verified"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:paddingStart="@dimen/margin_5"
+                android:paddingEnd="@dimen/margin_10"/>
+
+
         </RelativeLayout>
 
         <RelativeLayout
-            android:id="@+id/otpLayout"
+            android:id="@+id/emailOtpLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:visibility="gone"
             app:layout_constraintTop_toBottomOf="@id/emailLayout">
-
-            <include layout="@layout/otp_layout" />
+            <include
+                android:id="@+id/emailOtp"
+                layout="@layout/otp_layout" />
         </RelativeLayout>
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -147,7 +187,7 @@
             android:drawablePadding="@dimen/margin_2"
             android:text="@string/first_name"
             app:layout_constraintStart_toStartOf="@id/guidelineStart"
-            app:layout_constraintTop_toBottomOf="@id/otpLayout" />
+            app:layout_constraintTop_toBottomOf="@id/emailOtpLayout" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/starMandatoryName"
@@ -157,7 +197,7 @@
             android:layout_marginTop="@dimen/margin_25"
             android:src="@drawable/ic_mandatory_star"
             app:layout_constraintStart_toEndOf="@id/tvFirstName"
-            app:layout_constraintTop_toBottomOf="@id/otpLayout" />
+            app:layout_constraintTop_toBottomOf="@id/emailOtpLayout" />
 
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/etFirstName"
@@ -169,6 +209,10 @@
             android:background="@drawable/edit_text_design"
             android:hint="@string/first_name"
             android:paddingStart="@dimen/margin_10"
+            android:inputType="text"
+            android:gravity="center_vertical"
+            android:maxLines="1"
+            android:singleLine="true"
             app:layout_constraintEnd_toEndOf="@id/guidelineVerticalCenter"
             app:layout_constraintStart_toStartOf="@id/guidelineStart"
             app:layout_constraintTop_toBottomOf="@id/tvFirstName" />
@@ -183,7 +227,7 @@
             android:drawablePadding="@dimen/margin_2"
             android:text="@string/last_name"
             app:layout_constraintStart_toStartOf="@id/guidelineVerticalCenter"
-            app:layout_constraintTop_toBottomOf="@id/otpLayout" />
+            app:layout_constraintTop_toBottomOf="@id/emailOtpLayout" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/starMandatoryLastName"
@@ -193,7 +237,7 @@
             android:layout_marginTop="@dimen/margin_25"
             android:src="@drawable/ic_mandatory_star"
             app:layout_constraintStart_toEndOf="@id/tvLastName"
-            app:layout_constraintTop_toBottomOf="@id/otpLayout" />
+            app:layout_constraintTop_toBottomOf="@id/emailOtpLayout" />
 
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/etLastName"
@@ -205,24 +249,30 @@
             android:background="@drawable/edit_text_design"
             android:hint="@string/last_name"
             android:paddingStart="@dimen/margin_10"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:inputType="text"
+            android:gravity="center_vertical"
             app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
             app:layout_constraintStart_toStartOf="@id/guidelineVerticalCenter"
             app:layout_constraintTop_toBottomOf="@id/tvLastName" />
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/etCountryPicker"
+        <com.hbb20.CountryCodePicker
+            android:id="@+id/countryPicker"
             android:layout_width="@dimen/margin_0"
             android:layout_height="@dimen/size_48"
-            android:layout_marginTop="@dimen/margin_25"
             android:background="@drawable/edit_text_design"
-            android:scaleType="fitXY"
-            android:src="@drawable/countrycode"
-            app:layout_constraintEnd_toEndOf="@id/guidelineStartCenter"
+            android:gravity="center_vertical"
+            android:layout_marginTop="@dimen/margin_25"
+            app:ccp_textSize="@dimen/text_14"
+            app:ccp_showFullName="false"
+            app:ccp_showPhoneCode="false"
+            app:ccp_showNameCode="true"
             app:layout_constraintStart_toStartOf="@id/guidelineStart"
             app:layout_constraintTop_toBottomOf="@id/etFirstName" />
 
         <RelativeLayout
-            android:id="@+id/etPhoneNumber"
+            android:id="@+id/rlPhoneNumber"
             android:layout_width="@dimen/margin_0"
             android:layout_height="@dimen/size_48"
             android:layout_marginStart="@dimen/margin_8"
@@ -230,39 +280,77 @@
             android:background="@drawable/edit_text_design"
             android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
-            app:layout_constraintStart_toStartOf="@id/guidelineStartCenter"
+            app:layout_constraintStart_toEndOf="@id/countryPicker"
             app:layout_constraintTop_toBottomOf="@id/etLastName">
 
             <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/etPhoneNumber"
                 style="@style/mediumPlaceHolderText14"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_toLeftOf="@id/tvVerifyMobile"
+                android:layout_toStartOf="@id/tvVerifyMobile"
                 android:background="@drawable/no_undreline_et_design"
                 android:hint="@string/mobile_number"
                 android:paddingStart="@dimen/margin_10"
-                android:textSize="@dimen/text_16" />
+                android:maxLines="1"
+                android:singleLine="true"
+                android:inputType="number"
+                android:gravity="center_vertical"
+                android:textSize="@dimen/text_16"
+                tools:ignore="RtlSymmetry" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvVerifyMobile"
-                style="@style/mediumPurple12"
+                style="@style/regularPurple12"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentEnd="true"
+                android:gravity="center_vertical"
+                android:visibility="gone"
+                android:paddingStart="@dimen/margin_5"
+                android:paddingEnd="@dimen/margin_10"
+                android:text="@string/send_otp"
+                tools:ignore="RtlSymmetry" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvVerifyDisableMobile"
+                style="@style/regularGreyDisable12"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:padding="@dimen/margin_10"
+                android:visibility="visible"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
+                android:paddingStart="@dimen/margin_5"
                 android:paddingEnd="@dimen/margin_10"
-                android:text="@string/verify" />
-        </RelativeLayout>
+                android:text="@string/send_otp" />
 
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivMobileVerified"
+                style="@style/regularGreyDisable12"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:padding="@dimen/margin_10"
+                android:src="@drawable/ic_verified"
+                android:visibility="gone"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:paddingStart="@dimen/margin_5"
+                android:paddingEnd="@dimen/margin_10" />
+        </RelativeLayout>
 
         <RelativeLayout
             android:id="@+id/otpLayoutPhone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:visibility="gone"
-            app:layout_constraintTop_toBottomOf="@id/etPhoneNumber">
+            app:layout_constraintTop_toBottomOf="@id/rlPhoneNumber">
 
-            <include layout="@layout/otp_layout" />
+            <include android:id="@+id/includeOtpPhone"
+                layout="@layout/otp_layout" />
+
         </RelativeLayout>
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -308,22 +396,43 @@
                 android:hint="@string/enter_password"
                 android:imeOptions="actionDone"
                 android:inputType="textPassword"
-                android:padding="@dimen/margin_5"
-                android:textSize="@dimen/text_16" />
+                android:paddingStart="@dimen/size_10"
+                android:maxLines="1"
+                style="@style/mediumPlaceHolderText14"
+                android:layout_gravity="center_vertical"
+                android:padding="@dimen/margin_5" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnCreateAccount"
-            style="@style/boldWhiteText16"
+        <RelativeLayout
+            android:id="@+id/rlCreateAccount"
             android:layout_width="@dimen/margin_0"
             android:layout_height="@dimen/size_48"
             android:layout_marginTop="@dimen/margin_25"
-            android:background="@drawable/btn_design_sign_in"
-            android:text="@string/create_account"
-            android:textAllCaps="false"
             app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
             app:layout_constraintStart_toStartOf="@id/guidelineStart"
-            app:layout_constraintTop_toBottomOf="@+id/passwordLayout" />
+            app:layout_constraintTop_toBottomOf="@+id/passwordLayout">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnCreateAccount"
+                style="@style/boldWhiteText16"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/btn_design_sign_in"
+                android:visibility="gone"
+                android:text="@string/create_account"
+                android:textAllCaps="false" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnCreateAccountDisable"
+                style="@style/boldWhiteText16"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/disable_continue_btn_design"
+                android:text="@string/create_account"
+                android:visibility="visible"
+                android:textAllCaps="false" />
+
+        </RelativeLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/clOrSignInWith"
@@ -332,7 +441,7 @@
             android:layout_marginTop="@dimen/margin_30"
             app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
             app:layout_constraintStart_toStartOf="@id/guidelineStart"
-            app:layout_constraintTop_toBottomOf="@+id/btnCreateAccount">
+            app:layout_constraintTop_toBottomOf="@+id/rlCreateAccount">
 
             <View
                 android:layout_width="@dimen/margin_0"

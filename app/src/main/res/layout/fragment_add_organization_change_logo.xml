@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/orange_light_back"
+    tools:context=".feature_add_organization.presentation.AddOrganizationChangeLogoFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guidelineStart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="@dimen/size_15"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guidelineEnd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintGuide_end="@dimen/margin_15" />
+
+        <include
+            android:id="@+id/titleName"
+            layout="@layout/layout_app_name_img"
+            app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
+            app:layout_constraintStart_toStartOf="@id/guidelineStart"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvAddOrganization"
+            style="@style/boldParaHeadingText18"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:drawablePadding="@dimen/margin_2"
+            android:gravity="center_horizontal"
+            android:paddingStart="@dimen/margin_15"
+            android:paddingEnd="@dimen/margin_15"
+            android:paddingBottom="@dimen/size_10"
+            android:text="@string/organization_name"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/guidelineStart"
+            app:layout_constraintTop_toBottomOf="@id/titleName" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvTellUs"
+            style="@style/boldDarkPrimaryText18"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_15"
+            android:drawablePadding="@dimen/margin_2"
+            android:gravity="center_horizontal"
+            android:text="@string/tell_us_about_your_organization"
+            app:layout_constraintStart_toStartOf="@id/guidelineStart"
+            app:layout_constraintTop_toBottomOf="@id/tvAddOrganization" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvOrganizationName"
+            style="@style/mediumDarkPrimaryText14"
+            android:layout_width="@dimen/margin_0"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_20"
+            android:drawablePadding="@dimen/margin_2"
+            android:text="@string/organization_name"
+            app:layout_constraintStart_toStartOf="@id/guidelineStart"
+            app:layout_constraintTop_toBottomOf="@id/tvTellUs" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/starOrganization"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/margin_22"
+            android:src="@drawable/ic_mandatory_star"
+            app:layout_constraintStart_toEndOf="@id/tvOrganizationName"
+            app:layout_constraintTop_toBottomOf="@id/tvTellUs" />
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/etOrganizationName"
+            style="@style/regularDarkPrimary14"
+            android:layout_width="@dimen/margin_0"
+            android:layout_height="@dimen/size_48"
+            android:layout_marginTop="@dimen/margin_5"
+            android:background="@drawable/edit_text_design"
+            android:hint="@string/enter_organization_name"
+            android:inputType="textEmailAddress"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:imeOptions="actionNext"
+            android:paddingStart="@dimen/margin_10"
+            android:paddingEnd="@dimen/margin_0"
+            app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
+            app:layout_constraintStart_toStartOf="@id/guidelineStart"
+            app:layout_constraintTop_toBottomOf="@id/tvOrganizationName" />
+
+       <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvCountry"
+            style="@style/mediumDarkPrimaryText14"
+            android:layout_width="@dimen/margin_0"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_20"
+            android:drawablePadding="@dimen/margin_2"
+            android:text="@string/country"
+            app:layout_constraintStart_toStartOf="@id/guidelineStart"
+            app:layout_constraintTop_toBottomOf="@id/etOrganizationName" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/starCountry"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/margin_22"
+            android:src="@drawable/ic_mandatory_star"
+            app:layout_constraintStart_toEndOf="@id/tvCountry"
+            app:layout_constraintTop_toBottomOf="@id/etOrganizationName" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvSearchCountryBtn"
+            style="@style/regularDarkPrimary14"
+            android:layout_width="@dimen/margin_0"
+            android:layout_height="@dimen/size_48"
+            android:layout_marginTop="@dimen/margin_5"
+            android:background="@drawable/edit_text_design"
+            android:hint="@string/select_country"
+            android:paddingStart="@dimen/margin_10"
+            android:gravity="center_vertical"
+            android:paddingEnd="@dimen/margin_0"
+            app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
+            app:layout_constraintStart_toStartOf="@id/guidelineStart"
+            app:layout_constraintTop_toBottomOf="@id/tvCountry" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvOrganizationLogo"
+            style="@style/mediumDarkPrimaryText14"
+            android:layout_width="@dimen/margin_0"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_20"
+            android:drawablePadding="@dimen/margin_2"
+            android:text="@string/organization_logo"
+            app:layout_constraintStart_toStartOf="@id/guidelineStart"
+            app:layout_constraintTop_toBottomOf="@id/tvSearchCountryBtn" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/starOrganizationLogo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/margin_22"
+            android:src="@drawable/ic_mandatory_star"
+            app:layout_constraintStart_toEndOf="@id/tvOrganizationLogo"
+            app:layout_constraintTop_toBottomOf="@id/tvSearchCountryBtn" />
+        
+        <LinearLayout
+            android:id="@+id/llChangeLogo"
+            android:layout_width="@dimen/margin_0"
+            android:layout_height="@dimen/size_270"
+            android:orientation="vertical"
+            android:layout_marginTop="@dimen/margin_5"
+            android:background="@drawable/add_organization_layout_design"
+            app:layout_constraintStart_toStartOf="@id/guidelineStart"
+            app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
+            app:layout_constraintTop_toBottomOf="@id/tvOrganizationLogo">
+
+            <LinearLayout
+                android:id="@+id/llChangeLogoBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/size_38"
+                android:orientation="horizontal"
+               android:gravity="center_vertical"
+                android:layout_marginTop="@dimen/margin_30"
+                android:paddingStart="@dimen/margin_20"
+                android:paddingEnd="@dimen/margin_20"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/cicular_design_with_border">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvChangeLogo"
+                    style="@style/regularParagraph14"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:drawablePadding="@dimen/size_5"
+                    android:drawableStart="@drawable/ic_change_logo"
+                    android:text="@string/change_logo" />
+
+            </LinearLayout>
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivImage"
+                android:layout_width="@dimen/size_120"
+                android:layout_height="@dimen/size_120"
+                android:layout_marginTop="@dimen/margin_25"
+                android:scaleType="fitXY"
+                android:background="@drawable/edit_text_design"
+                android:src="@drawable/temp_team_event"
+                android:layout_gravity="center_horizontal"/>
+
+    </LinearLayout>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnNext"
+            style="@style/boldWhiteText16"
+            android:layout_width="@dimen/margin_0"
+            android:layout_height="@dimen/size_48"
+            android:layout_marginTop="@dimen/margin_20"
+            android:background="@drawable/btn_design_sign_in"
+            android:text="@string/next"
+            android:textAllCaps="false"
+            app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
+            app:layout_constraintStart_toStartOf="@id/guidelineStart"
+            app:layout_constraintTop_toBottomOf="@+id/llChangeLogo" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.core.widget.NestedScrollView>

@@ -19,6 +19,7 @@
     <string name="welcome_to_event_com">Welcome to event.com</string>
     <string name="apple">Apple</string>
     <string name="verify">Verify</string>
+    <string name="send_otp">sendOTP</string>
     <string name="elevate_your_events">Elevate Your Events, Effortlessly Organized!</string>
     <string name="don_not_have_account">Don’t have an account?</string>
     <string name="already_have_account">Already have an account?</string>
@@ -30,8 +31,11 @@
     <string name="new_password">New Password</string>
     <string name="reset">Reset</string>
     <string name="reset_password">Reset Password</string>
+    <string name="not_yet_received">Not received yet?</string>
+    <string name="resend">Resend</string>
     <string name="confirm_password">Confirm Password</string>
-    <string name="you_will_receive_otp_in">You will receive OTP in 4:00s</string>
+    <string name="you_will_receive_otp_in">You will receive OTP in</string>
+    <string name="you_will_receive_otp_in_2_min">You will receive OTP in 2:00s</string>
     <string name="privacy_policy">By signing up, I agree to the TicketPartner Terms of Service and Privacy Policy.</string>
     <string name="create_your_account">Create your account.</string>
     <string name="create_account">Create account</string>
@@ -41,6 +45,70 @@
     <string name="forgot_your_password">Forgot Your Password?</string>
     <string name="we_will_share_you_default_password">We will share you the default password, so please enter your email address below.</string>
     <string name="your_password_link_has_been_sent">Your reset password link has been sent to your registered email address. Please check your email.</string>
+
+    //login validation
+    <string name="please_enter_email">Please enter your email address</string>
+    <string name="please_enter_valid_email">Please enter valid email address</string>
+    <string name="please_enter_password">Please enter password</string>
+    <string name="please_enter_mobile">Please enter mobile number</string>
+    <string name="otp_is_required">OTP is required</string>
+    <string name="please_verify_your_email">Please verify your email</string>
+    <string name="please_verify_your_phone">Please verify your phone number</string>
+    <string name="enter_phone_number">Enter phone number</string>
+    <string name="please_enter_new_pass">Please enter new password</string>
+    <string name="please_enter_con_pass">Please enter confirm password</string>
+    <string name="new_password_and_confirm_password_should_same">New password and confirm password should be same</string>
+    <string name="account_has_been_created_successfully">Congratulations! Your account has been created successfully.</string>
+
+    //add organization
+    <string name="organization_name">Organization Name</string>
+    <string name="country">Country</string>
+    <string name="organization_logo">Organization Logo</string>
+    <string name="change_logo">Change Logo</string>
+    <string name="tell_us_about_your_organization">Tell us about your Organization</string>
+    <string name="website_hint">"e.g.www.myticketpartner.com"</string>
+    <string name="website">"Website"</string>
+    <string name="social_network_feeds">"Social Network Feeds"</string>
+    <string name="facebook_page">"Facebook Page"</string>
+    <string name="twitter">"Twitter"</string>
+    <string name="linked_in">"LinkedIn"</string>
+    <string name="facebook_hint_ink">"e.g.www.facebook.com"</string>
+    <string name="twitter_hint_link">"e.g.www.twitter.com"</string>
+    <string name="linked_in_hint_link">"e.g.www.linkedin.com"</string>
+    <string name="save_and_continue">"Save &amp; Continue"</string>
+    <string name="enter_organization_name">"Enter Organization name"</string>
+    <string name="select_country">"Select Country"</string>
+    <string name="please_enter_organization_name">"Please enter organization name"</string>
+    <string name="please_select_country">"Please select country"</string>
+    <string name="select_change_logo_image">"Please select change logo image"</string>
+    <string name="search_country">"Search Country..."</string>
+    <string name="empty_organization_id">"Empty organization Id"</string>
+    <string name="camera">"Camera"</string>
+    <string name="gallery">"Gallery"</string>
+    <string name="cancel">"Cancel"</string>
+
+    //create event
+    <string name="basic_details">"Basic Details"</string>
+    <string name="tickets">"Tickets"</string>
+    <string name="event_setup">"Event Setup"</string>
+    <string name="event_name">"Event Name"</string>
+    <string name="description">"Description"</string>
+    <string name="event_cover">"Event Cover"</string>
+    <string name="choose_file_upload">"Choose file to upload"</string>
+    <string name="max_size_10">"Maximum size 10 MB"</string>
+    <string name="add_more_image">"Add more images"</string>
+    <string name="media_from_past_event">"Media from past event"</string>
+    <string name="add_images">"Add images"</string>
+    <string name="date_time">"Date / Time"</string>
+    <string name="timezone">"Timezone"</string>
+    <string name="event_start_end">"Event Start &amp; End"</string>
+    <string name="door_open_at">"Door Open at"</string>
+    <string name="location">"Location"</string>
+    <string name="create_event">"Create Event"</string>
+    <string name="venue">"Venue"</string>
+    <string name="online">"Online"</string>
+    <string name="to_be_announced">"To be announced"</string>
+
 
 
 </resources>

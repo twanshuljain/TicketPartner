@@ -6,7 +6,7 @@
     android:background="@color/white"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".feature_login.SignInFragment">
+    tools:context=".feature_login.presentation.SignInFragment">
 
     <RelativeLayout
         android:id="@+id/titleBar"
@@ -137,18 +137,15 @@
 
             </LinearLayout>
 
-            <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btnSignIn"
-                style="@style/boldWhiteText16"
-                android:layout_width="@dimen/margin_0"
-                android:layout_height="@dimen/size_48"
-                android:layout_marginTop="@dimen/margin_20"
-                android:background="@drawable/btn_design_sign_in"
-                android:text="@string/sign_in"
-                android:textAllCaps="false"
+            <ProgressBar
+                android:id="@+id/loaderProgressBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
                 app:layout_constraintStart_toStartOf="@id/guidelineStart"
-                app:layout_constraintTop_toBottomOf="@+id/loginLayout" />
+                app:layout_constraintTop_toBottomOf="@+id/loginLayout"/>
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/clOrSignInWith"
@@ -157,7 +154,7 @@
                 android:layout_marginTop="@dimen/margin_30"
                 app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
                 app:layout_constraintStart_toStartOf="@id/guidelineStart"
-                app:layout_constraintTop_toBottomOf="@+id/btnSignIn">
+                app:layout_constraintTop_toBottomOf="@+id/loginLayout">
 
                 <View
                     android:layout_width="@dimen/margin_0"

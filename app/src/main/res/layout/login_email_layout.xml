@@ -50,7 +50,14 @@
         android:layout_height="@dimen/size_48"
         android:layout_marginTop="@dimen/margin_5"
         android:background="@drawable/edit_text_design"
-        android:textSize="@dimen/text_16"
+        android:paddingStart="@dimen/margin_10"
+        android:paddingEnd="@dimen/margin_0"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:imeOptions="actionNext"
+        style="@style/mediumPlaceHolderText16"
+        android:hint="@string/enter_your_email"
+        android:inputType="textEmailAddress"
         app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
         app:layout_constraintStart_toStartOf="@id/guidelineStart"
         app:layout_constraintTop_toBottomOf="@id/tvEmail" />
@@ -71,7 +78,13 @@
         android:layout_height="@dimen/size_48"
         android:layout_marginTop="@dimen/margin_5"
         android:background="@drawable/edit_text_design"
-        android:textSize="@dimen/text_16"
+        android:maxLines="1"
+        android:singleLine="true"
+        android:imeOptions="actionDone"
+        android:paddingStart="@dimen/margin_10"
+        android:paddingEnd="@dimen/margin_0"
+        android:hint="@string/enter_password"
+        style="@style/mediumPlaceHolderText16"
         app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
         app:layout_constraintStart_toStartOf="@id/guidelineStart"
         app:layout_constraintTop_toBottomOf="@id/tvPass" />
@@ -109,5 +122,18 @@
             android:textColor="@color/secondary" />
 
     </RelativeLayout>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btnSignIn"
+        style="@style/boldWhiteText16"
+        android:layout_width="@dimen/margin_0"
+        android:layout_height="@dimen/size_48"
+        android:layout_marginTop="@dimen/margin_20"
+        android:background="@drawable/btn_design_sign_in"
+        android:text="@string/sign_in"
+        android:textAllCaps="false"
+        app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
+        app:layout_constraintStart_toStartOf="@id/guidelineStart"
+        app:layout_constraintTop_toBottomOf="@+id/rlForgotPass" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
