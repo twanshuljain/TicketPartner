@@ -108,7 +108,16 @@
     <string name="venue">"Venue"</string>
     <string name="online">"Online"</string>
     <string name="to_be_announced">"To be announced"</string>
-
+    <string name="street_address">"Street Address"</string>
+    <string name="city">"City"</string>
+    <string name="state">"State"</string>
+    <string name="enter_location">"Enter Location"</string>
+    <string name="enter_street_address">"Enter street address"</string>
+    <string name="enter_city">"Enter city"</string>
+    <string name="select_state">"Select State"</string>
+    <string name="link_to_join_the_event">"Link to join the event"</string>
+    <string name="location_name">"Location Name"</string>
+    <string name="send_the_address_confirm_main">"Send the address in confirmation mail"</string>
 
 
 </resources>

@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:background="@color/orange_light_back"
     tools:context=".feature_create_event.presentation.CreateEventBasicDetailsFragment">
 
@@ -118,7 +119,7 @@
             android:hint="@string/enter_organization_name"
             android:textAlignment="textStart"
             android:gravity="start"
-            android:padding="@dimen/size_5"
+            android:padding="@dimen/size_8"
             android:maxLength="140"
             app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
             app:layout_constraintStart_toStartOf="@id/guidelineStart"
@@ -415,6 +416,7 @@
             android:minHeight="@dimen/size_200"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginBottom="@dimen/size_20"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tabLayout"/>
 

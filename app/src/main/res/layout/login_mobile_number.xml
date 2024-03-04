@@ -81,7 +81,7 @@
             android:hint="@string/enter_phone_number"
             android:gravity="center_vertical"
             android:imeOptions="actionDone"
-            android:background="@drawable/no_undreline_et_design"
+            android:background="@drawable/no_underline_et_design"
             android:paddingStart="@dimen/margin_10"
             android:paddingEnd="@dimen/margin_0"
             style="@style/mediumPlaceHolderText16"/>
