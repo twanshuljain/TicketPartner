@@ -4,6 +4,7 @@ import com.example.ticketpartner.feature_add_organization.domain.model.AddOrgSoc
 import com.example.ticketpartner.feature_add_organization.domain.model.AddOrgSocialResponse
 import com.example.ticketpartner.feature_add_organization.domain.model.AddOrganizationResponse
 import com.example.ticketpartner.feature_add_organization.domain.model.SearchCountryResponse
+import com.example.ticketpartner.feature_create_event.domain.model.CreateEventGetTimeZoneResponse
 import com.example.ticketpartner.feature_signup.domain.model.CreateUserAccountRequest
 import com.example.ticketpartner.feature_signup.domain.model.CreateUserAccountResponse
 import com.example.ticketpartner.feature_login.domain.model.ForgotPassSendEmailRequest
@@ -92,5 +93,8 @@ interface RestApiService {
 
     @GET(searchCountry)
     suspend fun searchCountry(): SearchCountryResponse
+
+    @GET(getTimeZone)
+    suspend fun getTimeZone(): CreateEventGetTimeZoneResponse
 
 }

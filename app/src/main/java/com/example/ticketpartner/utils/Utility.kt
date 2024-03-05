@@ -12,6 +12,9 @@ import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
 import java.io.OutputStream
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 
 object Utility {
 
@@ -66,6 +69,25 @@ object Utility {
             return null
         }
         return file
+    }
+
+     fun formatTime(hourOfDay: Int, minute: Int): String {
+        val calendar = Calendar.getInstance()
+        calendar.set(Calendar.HOUR_OF_DAY, hourOfDay)
+        calendar.set(Calendar.MINUTE, minute)
+
+        val amPm = if (calendar.get(Calendar.AM_PM) == Calendar.AM) "AM" else "PM"
+
+        return String.format("%02d:%02d %s", hourOfDay % 12, minute, amPm)
+    }
+
+     fun formatDate(year: Int, month: Int, day: Int): String {
+        val calendar = Calendar.getInstance()
+        calendar.set(year, month +1, day)
+
+        // Change the date format to "yyyy-MM-dd"
+        val dateFormat = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
+        return dateFormat.format(calendar.time)
     }
 
 }

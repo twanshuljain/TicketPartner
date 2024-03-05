@@ -160,7 +160,8 @@ class AddOrganizationChangeLogoFragment : Fragment() {
             dialog.dismiss()
         }
         dialogView.btnCamera.setOnClickListener {
-            captureImage()
+            //captureImage()
+            SnackBarUtil.showSuccessSnackBar(binding.root,"In Progress...")
             dialog.dismiss()
         }
         dialogView.btnCancel.setOnClickListener {

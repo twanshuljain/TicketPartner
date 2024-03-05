@@ -334,7 +334,7 @@
             <include
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/includeStartDate"
+                android:id="@+id/includeDateTime"
                 layout="@layout/layout_start_end_date_time"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="@id/guidelineVerticalCenter"/>

@@ -28,10 +28,8 @@ android {
         debug {
             isDebuggable = true
             isMinifyEnabled = false
-            buildConfigField("String", "API_URL", "\"http://13.235.115.189/\"")
+            buildConfigField("String", "API_URL", "\"https://dev.api.myticketpartner.com/\"")
             proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
-
-
         }
         release {
             isMinifyEnabled = true

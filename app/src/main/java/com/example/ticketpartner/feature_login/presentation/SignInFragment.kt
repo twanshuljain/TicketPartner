@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -23,6 +24,7 @@ import com.example.ticketpartner.feature_login.domain.model.SendMobileOtpUIState
 import com.example.ticketpartner.utils.CountdownTimerCallback
 import com.example.ticketpartner.utils.CountdownTimerUtil
 import com.example.ticketpartner.utils.DialogProgressUtil
+import com.example.ticketpartner.utils.OtpChangeFocusUtil
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -39,6 +41,8 @@ class SignInFragment : Fragment(), CountdownTimerCallback {
     private var otpSec: String = ""
     private var otpThird: String = ""
     private var otpFourth: String = ""
+
+    private val otpFieldsPhoneLogin = mutableListOf<EditText>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -87,7 +91,6 @@ class SignInFragment : Fragment(), CountdownTimerCallback {
         }
     }
 
-
     private fun initView() {
         /** initialize countDown with 2 min. */
         countdownTimerUtil = CountdownTimerUtil(
@@ -114,6 +117,17 @@ class SignInFragment : Fragment(), CountdownTimerCallback {
             countryCode = PLUS + mobileLayout.countryPicker.selectedCountryCode
         }
 
+        otpFieldsPhoneLogin.add(binding.phoneLoginLayout.otp1)
+        otpFieldsPhoneLogin.add(binding.phoneLoginLayout.otp2)
+        otpFieldsPhoneLogin.add(binding.phoneLoginLayout.otp3)
+        otpFieldsPhoneLogin.add(binding.phoneLoginLayout.otp4)
+
+        /** pass otp edit text list here
+         *  to change focus on next and
+         *  for back focus if user is clearing otp fields*/
+        OtpChangeFocusUtil.changeFocus(otpFieldsPhoneLogin)
+
+
         /** get phone number from user */
         mobileLayout.etPhone.doAfterTextChanged {
             etPhone = it.toString().trim()
@@ -122,25 +136,14 @@ class SignInFragment : Fragment(), CountdownTimerCallback {
 
         mobileLayout.otp1.doAfterTextChanged {
             otoFirst = it.toString().trim()
-            if (otoFirst.isNotEmpty()) {
-                mobileLayout.otp2.requestFocus()
-            }
-
         }
 
         mobileLayout.otp2.doAfterTextChanged {
             otpSec = it.toString().trim()
-            if (otpSec.isNotEmpty()) {
-                mobileLayout.otp3.requestFocus()
-            }
-
         }
 
         mobileLayout.otp3.doAfterTextChanged {
             otpThird = it.toString().trim()
-            if (otpThird.isNotEmpty()) {
-                mobileLayout.otp4.requestFocus()
-            }
         }
 
         mobileLayout.otp4.doAfterTextChanged {
@@ -175,11 +178,11 @@ class SignInFragment : Fragment(), CountdownTimerCallback {
 
         /** email login button */
         binding.emailLoginLayout.btnSignIn.setOnClickListener {
-          /*  val isValid = checkValidationForEmailLogin(etEmail, etPassword)
-            if (isValid) {
-                makeEmailLoginApiCall()
-                observeEmailLoginResponse()
-            }*/
+            /*  val isValid = checkValidationForEmailLogin(etEmail, etPassword)
+              if (isValid) {
+                  makeEmailLoginApiCall()
+                  observeEmailLoginResponse()
+              }*/
 
             findNavController().navigate(R.id.createEventBasicDetaills)
         }
@@ -287,6 +290,7 @@ class SignInFragment : Fragment(), CountdownTimerCallback {
                     invalidOtpEditText(false)
                     countdownTimerUtil.stop()
                     SnackBarUtil.showSuccessSnackBar(binding.root, it.onSuccess.message.toString())
+                    findNavController().navigate(R.id.addOrganizationChangeLogoFragment)
                 }
 
                 is MobileLoginUIState.OnFailure -> {
@@ -367,7 +371,7 @@ class SignInFragment : Fragment(), CountdownTimerCallback {
 
     /** if you want condition on every count */
     override fun onTick(minutes: Long, seconds: Long) {
-        Log.e("TAG", "onTick: $seconds", )
+        Log.e("TAG", "onTick: $seconds")
     }
 
     /** add condition on counter finish */

@@ -1,246 +1,248 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".feature_create_event.presentation.ToBeAnnouncedFragment">
 
-   <androidx.constraintlayout.widget.ConstraintLayout
-       android:layout_width="match_parent"
-       android:layout_height="wrap_content">
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
 
-       <androidx.constraintlayout.widget.Guideline
-           android:id="@+id/guidelineStart"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:orientation="vertical"
-           app:layout_constraintGuide_begin="@dimen/size_15"
-           app:layout_constraintStart_toStartOf="parent" />
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guidelineStart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="@dimen/size_15"
+            app:layout_constraintStart_toStartOf="parent" />
 
-       <androidx.constraintlayout.widget.Guideline
-           android:id="@+id/guidelineEnd"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:orientation="vertical"
-           app:layout_constraintEnd_toEndOf="parent"
-           app:layout_constraintGuide_end="@dimen/margin_15" />
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guidelineEnd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintGuide_end="@dimen/margin_15" />
 
-       <androidx.appcompat.widget.AppCompatTextView
-           android:id="@+id/tvCity"
-           style="@style/mediumDarkPrimaryText14"
-           android:layout_width="@dimen/margin_0"
-           android:layout_height="wrap_content"
-           android:layout_marginTop="@dimen/margin_20"
-           android:drawablePadding="@dimen/margin_2"
-           android:text="@string/city"
-           app:layout_constraintStart_toStartOf="@id/guidelineStart"
-           app:layout_constraintTop_toTopOf="parent" />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvCity"
+            style="@style/mediumDarkPrimaryText14"
+            android:layout_width="@dimen/margin_0"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_20"
+            android:drawablePadding="@dimen/margin_2"
+            android:text="@string/city"
+            app:layout_constraintStart_toStartOf="@id/guidelineStart"
+            app:layout_constraintTop_toTopOf="parent" />
 
-       <androidx.appcompat.widget.AppCompatImageView
-           android:id="@+id/starCity"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:layout_centerHorizontal="true"
-           android:layout_marginTop="@dimen/margin_22"
-           android:src="@drawable/ic_mandatory_star"
-           app:layout_constraintStart_toEndOf="@id/tvCity"
-           app:layout_constraintTop_toTopOf="parent" />
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/starCity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/margin_22"
+            android:src="@drawable/ic_mandatory_star"
+            app:layout_constraintStart_toEndOf="@id/tvCity"
+            app:layout_constraintTop_toTopOf="parent" />
 
-       <androidx.appcompat.widget.AppCompatEditText
-           android:id="@+id/etCity"
-           style="@style/regularDarkPrimary14"
-           android:layout_width="@dimen/margin_0"
-           android:layout_height="@dimen/size_48"
-           android:layout_marginTop="@dimen/margin_5"
-           android:background="@drawable/edit_text_design"
-           android:hint="@string/enter_city"
-           android:inputType="textEmailAddress"
-           android:maxLines="1"
-           android:singleLine="true"
-           android:imeOptions="actionNext"
-           android:paddingStart="@dimen/margin_10"
-           android:paddingEnd="@dimen/margin_0"
-           app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
-           app:layout_constraintStart_toStartOf="@id/guidelineStart"
-           app:layout_constraintTop_toBottomOf="@id/tvCity" />
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/etCity"
+            style="@style/regularDarkPrimary14"
+            android:layout_width="@dimen/margin_0"
+            android:layout_height="@dimen/size_48"
+            android:layout_marginTop="@dimen/margin_5"
+            android:background="@drawable/edit_text_design"
+            android:hint="@string/enter_city"
+            android:imeOptions="actionNext"
+            android:inputType="textEmailAddress"
+            android:maxLines="1"
+            android:paddingStart="@dimen/margin_10"
+            android:paddingEnd="@dimen/margin_0"
+            android:singleLine="true"
+            app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
+            app:layout_constraintStart_toStartOf="@id/guidelineStart"
+            app:layout_constraintTop_toBottomOf="@id/tvCity" />
 
-       <androidx.appcompat.widget.AppCompatTextView
-           android:id="@+id/tvState"
-           style="@style/mediumDarkPrimaryText14"
-           android:layout_width="@dimen/margin_0"
-           android:layout_height="wrap_content"
-           android:layout_marginTop="@dimen/margin_20"
-           android:drawablePadding="@dimen/margin_2"
-           android:text="@string/state"
-           app:layout_constraintStart_toStartOf="@id/guidelineStart"
-           app:layout_constraintTop_toBottomOf="@id/etCity" />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvState"
+            style="@style/mediumDarkPrimaryText14"
+            android:layout_width="@dimen/margin_0"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_20"
+            android:drawablePadding="@dimen/margin_2"
+            android:text="@string/state"
+            app:layout_constraintStart_toStartOf="@id/guidelineStart"
+            app:layout_constraintTop_toBottomOf="@id/etCity" />
 
-       <androidx.appcompat.widget.AppCompatImageView
-           android:id="@+id/starState"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:layout_centerHorizontal="true"
-           android:layout_marginTop="@dimen/margin_22"
-           android:src="@drawable/ic_mandatory_star"
-           app:layout_constraintStart_toEndOf="@id/tvState"
-           app:layout_constraintTop_toBottomOf="@id/etCity" />
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/starState"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/margin_22"
+            android:src="@drawable/ic_mandatory_star"
+            app:layout_constraintStart_toEndOf="@id/tvState"
+            app:layout_constraintTop_toBottomOf="@id/etCity" />
 
-       <RelativeLayout
-           android:id="@+id/rlSpinnerState"
-           android:layout_width="@dimen/margin_0"
-           android:layout_height="wrap_content"
-           android:layout_marginTop="@dimen/margin_5"
-           android:background="@drawable/edit_text_design"
-           app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
-           app:layout_constraintStart_toStartOf="@id/guidelineStart"
-           app:layout_constraintTop_toBottomOf="@id/tvState">
+        <RelativeLayout
+            android:id="@+id/rlSpinnerState"
+            android:layout_width="@dimen/margin_0"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_5"
+            android:background="@drawable/edit_text_design"
+            app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
+            app:layout_constraintStart_toStartOf="@id/guidelineStart"
+            app:layout_constraintTop_toBottomOf="@id/tvState">
 
-           <androidx.appcompat.widget.AppCompatSpinner
-               android:id="@+id/stateSpinner"
-               android:layout_width="match_parent"
-               android:layout_height="@dimen/size_48"
-               android:spinnerMode="dropdown" />
+            <androidx.appcompat.widget.AppCompatSpinner
+                android:id="@+id/stateSpinner"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size_48"
+                android:spinnerMode="dropdown" />
 
-       </RelativeLayout>
+        </RelativeLayout>
 
-       <androidx.appcompat.widget.AppCompatTextView
-           android:id="@+id/tvCountry"
-           style="@style/mediumDarkPrimaryText14"
-           android:layout_width="@dimen/margin_0"
-           android:layout_height="wrap_content"
-           android:layout_marginTop="@dimen/margin_20"
-           android:drawablePadding="@dimen/margin_2"
-           android:text="@string/country"
-           app:layout_constraintStart_toStartOf="@id/guidelineStart"
-           app:layout_constraintTop_toBottomOf="@id/rlSpinnerState" />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvCountry"
+            style="@style/mediumDarkPrimaryText14"
+            android:layout_width="@dimen/margin_0"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_20"
+            android:drawablePadding="@dimen/margin_2"
+            android:text="@string/country"
+            app:layout_constraintStart_toStartOf="@id/guidelineStart"
+            app:layout_constraintTop_toBottomOf="@id/rlSpinnerState" />
 
-       <androidx.appcompat.widget.AppCompatImageView
-           android:id="@+id/starCountry"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:layout_centerHorizontal="true"
-           android:layout_marginTop="@dimen/margin_22"
-           android:src="@drawable/ic_mandatory_star"
-           app:layout_constraintStart_toEndOf="@id/tvCountry"
-           app:layout_constraintTop_toBottomOf="@id/rlSpinnerState" />
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/starCountry"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/margin_22"
+            android:src="@drawable/ic_mandatory_star"
+            app:layout_constraintStart_toEndOf="@id/tvCountry"
+            app:layout_constraintTop_toBottomOf="@id/rlSpinnerState" />
 
-       <RelativeLayout
-           android:id="@+id/rlSpinnerCountry"
-           android:layout_width="@dimen/margin_0"
-           android:layout_height="wrap_content"
-           android:layout_marginTop="@dimen/margin_5"
-           android:background="@drawable/edit_text_design"
-           app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
-           app:layout_constraintStart_toStartOf="@id/guidelineStart"
-           app:layout_constraintTop_toBottomOf="@id/tvCountry">
+        <RelativeLayout
+            android:id="@+id/rlSpinnerCountry"
+            android:layout_width="@dimen/margin_0"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_5"
+            android:background="@drawable/edit_text_design"
+            app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
+            app:layout_constraintStart_toStartOf="@id/guidelineStart"
+            app:layout_constraintTop_toBottomOf="@id/tvCountry">
 
-           <androidx.appcompat.widget.AppCompatSpinner
-               android:id="@+id/countrySpinner"
-               android:layout_width="match_parent"
-               android:layout_height="@dimen/size_48"
-               android:spinnerMode="dropdown" />
+            <androidx.appcompat.widget.AppCompatSpinner
+                android:id="@+id/countrySpinner"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size_48"
+                android:spinnerMode="dropdown" />
 
-       </RelativeLayout>
+        </RelativeLayout>
 
-       <RelativeLayout
-           android:id="@+id/rlSendAddConfirmationMail"
-           android:layout_width="@dimen/margin_0"
-           android:layout_height="wrap_content"
-           android:layout_marginTop="@dimen/margin_15"
-           app:layout_constraintStart_toStartOf="@id/guidelineStart"
-           app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
-           app:layout_constraintTop_toBottomOf="@id/rlSpinnerCountry">
+        <RelativeLayout
+            android:id="@+id/rlSendAddConfirmationMail"
+            android:layout_width="@dimen/margin_0"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_15"
+            app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
+            app:layout_constraintStart_toStartOf="@id/guidelineStart"
+            app:layout_constraintTop_toBottomOf="@id/rlSpinnerCountry">
 
-           <androidx.appcompat.widget.AppCompatTextView
-               android:id="@+id/tvDisplayEndTime"
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               style="@style/mediumDarkPrimaryText16"
-               android:layout_centerVertical="true"
-               android:text="@string/send_the_address_confirm_main" />
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvDisplayEndTime"
+                style="@style/mediumDarkPrimaryText16"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:text="@string/send_the_address_confirm_main" />
 
-           <androidx.appcompat.widget.SwitchCompat
-               android:id="@+id/switchDisplayEndTime"
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               android:layout_alignParentEnd="true"/>
-       </RelativeLayout>
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/switchDisplayEndTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true" />
 
-       <androidx.appcompat.widget.AppCompatTextView
-           android:id="@+id/tvLocation"
-           style="@style/mediumDarkPrimaryText14"
-           android:layout_width="@dimen/margin_0"
-           android:layout_height="wrap_content"
-           android:layout_marginTop="@dimen/margin_20"
-           android:drawablePadding="@dimen/margin_2"
-           android:text="@string/link_to_join_the_event"
-           app:layout_constraintStart_toStartOf="@id/guidelineStart"
-           app:layout_constraintTop_toBottomOf="@id/rlSendAddConfirmationMail" />
+        </RelativeLayout>
 
-       <androidx.appcompat.widget.AppCompatImageView
-           android:id="@+id/starLocation"
-           android:layout_width="wrap_content"
-           android:layout_height="wrap_content"
-           android:layout_centerHorizontal="true"
-           android:layout_marginTop="@dimen/margin_22"
-           android:src="@drawable/ic_mandatory_star"
-           app:layout_constraintStart_toEndOf="@id/tvLocation"
-           app:layout_constraintTop_toBottomOf="@id/rlSendAddConfirmationMail" />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvLocation"
+            style="@style/mediumDarkPrimaryText14"
+            android:layout_width="@dimen/margin_0"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_20"
+            android:drawablePadding="@dimen/margin_2"
+            android:text="@string/link_to_join_the_event"
+            app:layout_constraintStart_toStartOf="@id/guidelineStart"
+            app:layout_constraintTop_toBottomOf="@id/rlSendAddConfirmationMail" />
 
-       <RelativeLayout
-           android:id="@+id/emailLayout"
-           android:layout_width="@dimen/margin_0"
-           android:layout_height="@dimen/size_48"
-           android:layout_marginTop="@dimen/size_5"
-           android:background="@drawable/edit_text_design"
-           android:orientation="horizontal"
-           app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
-           app:layout_constraintStart_toStartOf="@id/guidelineStart"
-           app:layout_constraintTop_toBottomOf="@id/tvLocation">
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/starLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/margin_22"
+            android:src="@drawable/ic_mandatory_star"
+            app:layout_constraintStart_toEndOf="@id/tvLocation"
+            app:layout_constraintTop_toBottomOf="@id/rlSendAddConfirmationMail" />
 
-           <androidx.appcompat.widget.AppCompatEditText
-               android:id="@+id/etEnterLocation"
-               android:layout_width="match_parent"
-               android:layout_height="match_parent"
-               android:background="@drawable/no_underline_et_design"
-               android:maxLines="1"
-               android:singleLine="true"
-               android:imeOptions="actionDone"
-               android:hint="@string/enter_location"
-               android:inputType="textEmailAddress"
-               android:layout_toLeftOf="@id/ivLocationPin"
-               android:gravity="center_vertical"
-               android:paddingStart="@dimen/margin_10"
-               style="@style/mediumPlaceHolderText14"/>
+        <RelativeLayout
+            android:id="@+id/emailLayout"
+            android:layout_width="@dimen/margin_0"
+            android:layout_height="@dimen/size_48"
+            android:layout_marginTop="@dimen/size_5"
+            android:background="@drawable/edit_text_design"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
+            app:layout_constraintStart_toStartOf="@id/guidelineStart"
+            app:layout_constraintTop_toBottomOf="@id/tvLocation">
 
-           <androidx.appcompat.widget.AppCompatImageView
-               android:id="@+id/ivLocationPin"
-               style="@style/regularGreyDisable12"
-               android:layout_width="wrap_content"
-               android:layout_height="match_parent"
-               android:gravity="center_vertical"
-               android:padding="@dimen/margin_10"
-               android:visibility="visible"
-               android:src="@drawable/ic_location_pin_purple"
-               android:layout_alignParentEnd="true"
-               android:layout_centerVertical="true"
-               android:paddingStart="@dimen/margin_5"
-               android:paddingEnd="@dimen/margin_10"/>
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/etEnterLocation"
+                style="@style/mediumPlaceHolderText14"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_toLeftOf="@id/ivLocationPin"
+                android:background="@drawable/no_underline_et_design"
+                android:gravity="center_vertical"
+                android:hint="@string/enter_location"
+                android:imeOptions="actionDone"
+                android:inputType="textEmailAddress"
+                android:maxLines="1"
+                android:paddingStart="@dimen/margin_10"
+                android:singleLine="true" />
 
-       </RelativeLayout>
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivLocationPin"
+                style="@style/regularGreyDisable12"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:gravity="center_vertical"
+                android:padding="@dimen/margin_10"
+                android:paddingStart="@dimen/margin_5"
+                android:paddingEnd="@dimen/margin_10"
+                android:src="@drawable/ic_location_pin_purple"
+                android:visibility="visible" />
 
-     <!--  <fragment
-           android:id="@+id/mapFragment"
-           android:name="com.google.android.gms.maps.SupportMapFragment"
-           android:layout_width="@dimen/margin_0"
-           android:layout_height="@dimen/size_200"
-           tools:context=".MainActivity"
-           android:layout_marginTop="@dimen/size_20"
-           app:layout_constraintStart_toStartOf="@id/guidelineStart"
-           app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
-           app:layout_constraintTop_toBottomOf="@id/rlSpinnerCountry"/>-->
-   </androidx.constraintlayout.widget.ConstraintLayout>
+        </RelativeLayout>
+<!--
+        <fragment
+            android:id="@+id/mapFragment"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="@dimen/margin_0"
+            android:layout_height="@dimen/size_200"
+            android:layout_marginTop="@dimen/size_20"
+            app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
+            app:layout_constraintStart_toStartOf="@id/guidelineStart"
+            app:layout_constraintTop_toBottomOf="@id/rlSpinnerCountry"
+            tools:context=".MainActivity" />
+        -->
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.core.widget.NestedScrollView>

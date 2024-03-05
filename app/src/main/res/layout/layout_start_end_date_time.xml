@@ -34,16 +34,16 @@
         app:layout_constraintEnd_toEndOf="@id/guidelineVerticalCenter"
         layout="@layout/item_create_event_start_end_date"/>
 
-    <include android:id="@+id/endDate"
+    <include android:id="@+id/startTime"
         android:layout_width="@dimen/margin_0"
         android:layout_height="@dimen/margin_58"
         app:layout_constraintStart_toStartOf="@id/guidelineVerticalCenter"
         app:layout_constraintTop_toTopOf="@id/startDate"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginStart="@dimen/size_8"
-        layout="@layout/item_create_event_start_end_date"/>
+        layout="@layout/item_create_event_start_end_time"/>
 
-    <include android:id="@+id/startTime"
+    <include android:id="@+id/endDate"
         android:layout_width="@dimen/margin_0"
         android:layout_height="@dimen/margin_58"
         app:layout_constraintStart_toStartOf="parent"
@@ -60,8 +60,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="@dimen/margin_10"
         android:layout_marginStart="@dimen/size_8"
-        app:layout_constraintTop_toBottomOf="@id/endDate"
-        layout="@layout/item_create_event_start_end_date"/>
+        app:layout_constraintTop_toBottomOf="@id/startTime"
+        layout="@layout/item_create_event_start_end_time"/>
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvStartEndDateDoorOpen"
@@ -72,7 +72,7 @@
         android:drawablePadding="@dimen/margin_2"
         android:text="@string/door_open_at"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/startTime" />
+        app:layout_constraintTop_toBottomOf="@id/endDate" />
 
     <include android:id="@+id/startDateDoorOpen"
         android:layout_width="@dimen/margin_0"
@@ -84,7 +84,7 @@
         app:layout_constraintTop_toBottomOf="@id/tvStartEndDateDoorOpen"
         layout="@layout/item_create_event_start_end_date"/>
 
-    <include android:id="@+id/endDateDoorOpen"
+    <include android:id="@+id/startTimeDoorOpen"
         android:layout_width="@dimen/margin_0"
         android:layout_height="@dimen/margin_58"
         app:layout_constraintStart_toStartOf="@id/guidelineVerticalCenter"
@@ -92,9 +92,9 @@
         android:layout_marginStart="@dimen/size_8"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tvStartEndDateDoorOpen"
-        layout="@layout/item_create_event_start_end_date"/>
+        layout="@layout/item_create_event_start_end_time"/>
 
-    <include android:id="@+id/startTimeDoorOpen"
+    <include android:id="@+id/endDateDoorOpen"
         android:layout_width="@dimen/margin_0"
         android:layout_height="@dimen/margin_58"
         app:layout_constraintStart_toStartOf="parent"
@@ -112,6 +112,6 @@
         android:layout_marginStart="@dimen/size_8"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/startDateDoorOpen"
-        layout="@layout/item_create_event_start_end_date"/>
+        layout="@layout/item_create_event_start_end_time"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
