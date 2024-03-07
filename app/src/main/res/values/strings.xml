@@ -86,6 +86,7 @@
     <string name="camera">"Camera"</string>
     <string name="gallery">"Gallery"</string>
     <string name="cancel">"Cancel"</string>
+    <string name="add_logo">"Add Logo"</string>
 
     //create event
     <string name="basic_details">"Basic Details"</string>
@@ -118,6 +119,12 @@
     <string name="link_to_join_the_event">"Link to join the event"</string>
     <string name="location_name">"Location Name"</string>
     <string name="send_the_address_confirm_main">"Send the address in confirmation mail"</string>
+    <string name="title_activity_camera">CameraActivity</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="previous">Previous</string>
+
 
 
 </resources>

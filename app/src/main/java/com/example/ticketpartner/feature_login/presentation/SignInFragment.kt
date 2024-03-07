@@ -178,13 +178,14 @@ class SignInFragment : Fragment(), CountdownTimerCallback {
 
         /** email login button */
         binding.emailLoginLayout.btnSignIn.setOnClickListener {
-            /*  val isValid = checkValidationForEmailLogin(etEmail, etPassword)
+         /*     val isValid = checkValidationForEmailLogin(etEmail, etPassword)
               if (isValid) {
                   makeEmailLoginApiCall()
                   observeEmailLoginResponse()
-              }*/
-
+              }
+*/
             findNavController().navigate(R.id.createEventBasicDetaills)
+           // findNavController().navigate(R.id.addOrganizationChangeLogoFragment)
         }
 
         /** make phone login API call on sign-in button click */

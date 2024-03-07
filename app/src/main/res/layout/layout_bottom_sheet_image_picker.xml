@@ -29,6 +29,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/size_48"
             android:layout_marginTop="@dimen/margin_20"
+            android:layout_marginBottom="@dimen/margin_15"
             android:background="@drawable/btn_design_image_picker"
             android:text="@string/gallery"
             android:textAllCaps="false" />
@@ -36,6 +37,7 @@
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnCancel"
             style="@style/boldWhiteText16"
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="@dimen/size_48"
             android:layout_marginTop="@dimen/margin_20"

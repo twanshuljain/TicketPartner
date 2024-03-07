@@ -7,6 +7,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
@@ -24,38 +25,41 @@ import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.example.ticketpartner.R
 import com.example.ticketpartner.common.IMAGE_EXTENSION
+import com.example.ticketpartner.common.LogUtil
 import com.example.ticketpartner.common.MIME_IMAGE_TYPE
 import com.example.ticketpartner.common.ORGANIZATION_ID
+import com.example.ticketpartner.common.PICK_IMAGE_INTENT_TYPE
 import com.example.ticketpartner.common.SnackBarUtil
 import com.example.ticketpartner.databinding.FragmentAddOrganizationChangeLogoBinding
 import com.example.ticketpartner.databinding.LayoutBottomSheetImagePickerBinding
 import com.example.ticketpartner.feature_add_organization.domain.model.AddOrganizationUIState
+import com.example.ticketpartner.utils.CameraUtils
 import com.example.ticketpartner.utils.DialogProgressUtil
 import com.example.ticketpartner.utils.Utility.getFile
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import java.io.File
+import javax.inject.Inject
 
 
 class AddOrganizationChangeLogoFragment : Fragment() {
     private lateinit var binding: FragmentAddOrganizationChangeLogoBinding
     private val viewModel: AddOrganizationViewModel by activityViewModels()
+
+    @Inject
+    lateinit var logUtil: LogUtil
     private val requestCodeCameraPermission = 1001
+
     private var selectedFile: File? = null
     private var selectedFileUri: String = ""
     private var mimeType: String? = null
     private var organizationName: String = ""
     private var countryId: String = ""
     private var countryName: String = ""
-    private var imageUri: String = ""
+    private var imageFile: String = ""
 
-    private var imageUriS: Uri? = null
 
     private lateinit var requestPermissionLauncher: ActivityResultLauncher<String>
-    private val permissions = arrayOf(
-        CAMERA,
-        WRITE_EXTERNAL_STORAGE
-    )
-
+    private val permissions = arrayOf(CAMERA, WRITE_EXTERNAL_STORAGE)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -68,8 +72,12 @@ class AddOrganizationChangeLogoFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        logUtil = LogUtil()
         initView()
+        checkPermissionCameraStorage()
+    }
 
+    private fun checkPermissionCameraStorage() {
         requestPermissionLauncher =
             registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
                 if (isGranted) {
@@ -104,7 +112,6 @@ class AddOrganizationChangeLogoFragment : Fragment() {
     }
 
     private fun initView() {
-        handleImageResult()
 
         viewModel.getCountyName.observe(viewLifecycleOwner) {
             countryName = it
@@ -160,8 +167,7 @@ class AddOrganizationChangeLogoFragment : Fragment() {
             dialog.dismiss()
         }
         dialogView.btnCamera.setOnClickListener {
-            //captureImage()
-            SnackBarUtil.showSuccessSnackBar(binding.root,"In Progress...")
+            captureImage()
             dialog.dismiss()
         }
         dialogView.btnCancel.setOnClickListener {
@@ -213,45 +219,49 @@ class AddOrganizationChangeLogoFragment : Fragment() {
 
     private fun launchImagePicker() {
         val pickImageIntent = Intent(Intent.ACTION_PICK)
-        pickImageIntent.type = "image/*"
+        pickImageIntent.type = PICK_IMAGE_INTENT_TYPE
         pickImageLauncher.launch(pickImageIntent)
     }
 
     private fun captureImage() {
-        val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        pickImageLauncher.launch(cameraIntent)
+        val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        captureImageLauncher.launch(takePictureIntent)
     }
 
 
     private val pickImageLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
-                result.data?.let {
-                    it.data?.let {
-                        setSelectedFile(it, IMAGE_EXTENSION)
+                try {
+                    val data = result.data?.data
+                    selectedFileUri = data.toString()
+                    binding.ivImage.setImageURI(data)
+                    data?.let {
+                        val bitMapImageFile = CameraUtils.uriToBitmap(requireContext(), it)
+                        bitMapImageFile?.let { bitmap ->
+                            selectedFile = CameraUtils.saveBitmapAsFileWithMaxSizeInMB(bitmap, 10)
+                        }
                     }
+                } catch (e: Exception) {
+                    logUtil.log("TAG", e.message.toString())
                 }
-                val data: Intent? = result.data
-                imageUri = data?.data!!.toString()
-                handleImageResult()
             }
         }
 
-    private fun setSelectedFile(uri: Uri, fileExtension: String) {
-        selectedFile = getFile(requireContext(), uri, fileExtension)
-        selectedFileUri = getFile(requireContext(), uri, fileExtension).toString()
-        mimeType = MIME_IMAGE_TYPE
-    }
+    private val captureImageLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK && result.data != null) {
+                try {
+                    val data = result.data!!.extras?.get("data") as Bitmap
+                    selectedFileUri = result.data!!.extras?.get("data").toString()
 
-
-    /** set image into imageView by using Glide */
-    private fun handleImageResult() {
-        if (imageUri != null) {
-            Glide.with(this)
-                .load(imageUri)
-                .into(binding.ivImage)
+                    binding.ivImage.setImageBitmap(data)
+                    selectedFile = CameraUtils.saveBitmapAsFileWithMaxSizeInMB(data, 10)
+                } catch (e: Exception) {
+                    logUtil.log("TAG", e.message.toString())
+                }
+            }
         }
-    }
 
     /** ask gallery access permission */
     private fun askForGalleryPermission() {
@@ -261,7 +271,6 @@ class AddOrganizationChangeLogoFragment : Fragment() {
             requestCodeCameraPermission
         )
     }
-
 
     override fun onAttach(context: Context) {
         super.onAttach(context)

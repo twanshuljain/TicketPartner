@@ -159,32 +159,66 @@
             android:gravity="center_vertical"
             android:orientation="vertical">
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/ivImageChooseCover"
+            <RelativeLayout
+                android:id="@+id/rlPickImage"
                 android:layout_width="wrap_content"
+                android:layout_centerInParent="true"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:src="@drawable/ic_choose_file_cover"/>
+                android:visibility="visible">
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvChooseFile"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                style="@style/boldParaHeading14"
-                android:layout_marginTop="@dimen/margin_10"
-                android:layout_below="@id/ivImageChooseCover"
-                android:layout_centerHorizontal="true"
-                android:text="@string/choose_file_upload"/>
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/ivImageChooseCover"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:src="@drawable/ic_choose_file_cover"/>
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvMaxCoverSizze"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                style="@style/regularParaText12"
-                android:layout_marginTop="@dimen/margin_10"
-                android:layout_below="@id/tvChooseFile"
-                android:layout_centerHorizontal="true"
-                android:text="@string/max_size_10"/>
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvChooseFile"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/boldParaHeading14"
+                    android:layout_marginTop="@dimen/margin_10"
+                    android:layout_below="@id/ivImageChooseCover"
+                    android:layout_centerHorizontal="true"
+                    android:text="@string/choose_file_upload"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvMaxCoverSizze"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/regularParaText12"
+                    android:layout_marginTop="@dimen/margin_10"
+                    android:layout_below="@id/tvChooseFile"
+                    android:layout_centerHorizontal="true"
+                    android:text="@string/max_size_10"/>
+
+            </RelativeLayout>
+
+           <RelativeLayout
+               android:id="@+id/rlCoverImage"
+               android:layout_width="match_parent"
+               android:layout_height="match_parent"
+               android:background="@drawable/edit_text_design"
+               android:visibility="visible">
+
+               <androidx.appcompat.widget.AppCompatImageView
+                   android:id="@+id/ivCoverImage"
+                   android:layout_width="match_parent"
+                   android:layout_height="match_parent"
+                   android:layout_centerHorizontal="true"
+                   android:scaleType="fitXY"
+                   android:src="@drawable/ic_choose_file_cover"/>
+
+               <androidx.appcompat.widget.AppCompatImageView
+                   android:id="@+id/ivDelete"
+                   android:layout_width="@dimen/margin_40"
+                   android:layout_height="@dimen/margin_40"
+                   android:layout_alignParentEnd="true"
+                   android:padding="@dimen/margin_10"
+                   android:src="@drawable/iv_delete_red"/>
+
+           </RelativeLayout>
 
         </RelativeLayout>
 
@@ -212,9 +246,20 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:src="@drawable/ic_plus_dark_purple"/>
-
+                android:src="@drawable/ic_plus_dark_purple" />
         </RelativeLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvAddMoreImages"
+            android:layout_width="@dimen/margin_0"
+            android:layout_height="@dimen/size_80"
+            app:layout_constraintStart_toEndOf="@id/rlAddMoreImage"
+            app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
+            app:layout_constraintTop_toBottomOf="@id/tvAddMoreImage"
+            android:orientation="horizontal"
+            android:layout_marginTop="@dimen/size_5"
+            tools:listitem="@layout/item_image_list_create_event"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
 
         <View
             android:id="@+id/viewLineAddMoreImg"
@@ -262,7 +307,6 @@
             app:layout_constraintStart_toStartOf="@id/guidelineStart"
             app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
             app:layout_constraintTop_toBottomOf="@id/rlMediaFromPast"/>
-
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvDateTime"
@@ -419,7 +463,6 @@
             android:layout_marginBottom="@dimen/size_20"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tabLayout"/>
-
 
         <!-- <androidx.constraintlayout.widget.ConstraintLayout
              android:layout_width="match_parent"
