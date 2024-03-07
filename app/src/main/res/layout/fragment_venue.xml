@@ -131,43 +131,44 @@
             app:layout_constraintTop_toBottomOf="@id/tvStreetAdd" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvCity"
+            android:id="@+id/tvCountry"
             style="@style/mediumDarkPrimaryText14"
             android:layout_width="@dimen/margin_0"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_20"
             android:drawablePadding="@dimen/margin_2"
-            android:text="@string/city"
+            android:text="@string/country"
             app:layout_constraintStart_toStartOf="@id/guidelineStart"
             app:layout_constraintTop_toBottomOf="@id/etStreetAdd" />
 
         <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/starCity"
+            android:id="@+id/starCountry"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/margin_22"
             android:src="@drawable/ic_mandatory_star"
-            app:layout_constraintStart_toEndOf="@id/tvCity"
+            app:layout_constraintStart_toEndOf="@id/tvCountry"
             app:layout_constraintTop_toBottomOf="@id/etStreetAdd" />
 
-        <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/etCity"
-            style="@style/regularDarkPrimary14"
+        <RelativeLayout
+            android:id="@+id/rlSpinnerCountry"
             android:layout_width="@dimen/margin_0"
-            android:layout_height="@dimen/size_48"
+            android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_5"
             android:background="@drawable/edit_text_design"
-            android:hint="@string/enter_city"
-            android:inputType="textEmailAddress"
-            android:maxLines="1"
-            android:singleLine="true"
-            android:imeOptions="actionNext"
-            android:paddingStart="@dimen/margin_10"
-            android:paddingEnd="@dimen/margin_0"
             app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
             app:layout_constraintStart_toStartOf="@id/guidelineStart"
-            app:layout_constraintTop_toBottomOf="@id/tvCity" />
+            app:layout_constraintTop_toBottomOf="@id/tvCountry">
+
+            <androidx.appcompat.widget.AppCompatSpinner
+                android:id="@+id/countrySpinner"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size_48"
+                android:spinnerMode="dropdown" />
+
+        </RelativeLayout>
+
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvState"
@@ -178,7 +179,7 @@
             android:drawablePadding="@dimen/margin_2"
             android:text="@string/state"
             app:layout_constraintStart_toStartOf="@id/guidelineStart"
-            app:layout_constraintTop_toBottomOf="@id/etCity" />
+            app:layout_constraintTop_toBottomOf="@id/rlSpinnerCountry" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/starState"
@@ -188,7 +189,7 @@
             android:layout_marginTop="@dimen/margin_22"
             android:src="@drawable/ic_mandatory_star"
             app:layout_constraintStart_toEndOf="@id/tvState"
-            app:layout_constraintTop_toBottomOf="@id/etCity" />
+            app:layout_constraintTop_toBottomOf="@id/rlSpinnerCountry" />
 
         <RelativeLayout
             android:id="@+id/rlSpinnerState"
@@ -209,43 +210,45 @@
         </RelativeLayout>
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvCountry"
+            android:id="@+id/tvCity"
             style="@style/mediumDarkPrimaryText14"
             android:layout_width="@dimen/margin_0"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_20"
             android:drawablePadding="@dimen/margin_2"
-            android:text="@string/country"
+            android:text="@string/city"
             app:layout_constraintStart_toStartOf="@id/guidelineStart"
             app:layout_constraintTop_toBottomOf="@id/rlSpinnerState" />
 
         <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/starCountry"
+            android:id="@+id/starCity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/margin_22"
             android:src="@drawable/ic_mandatory_star"
-            app:layout_constraintStart_toEndOf="@id/tvCountry"
+            app:layout_constraintStart_toEndOf="@id/tvCity"
             app:layout_constraintTop_toBottomOf="@id/rlSpinnerState" />
 
-        <RelativeLayout
-            android:id="@+id/rlSpinnerCountry"
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/etCity"
+            style="@style/regularDarkPrimary14"
             android:layout_width="@dimen/margin_0"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/size_48"
             android:layout_marginTop="@dimen/margin_5"
             android:background="@drawable/edit_text_design"
+            android:hint="@string/enter_city"
+            android:inputType="textEmailAddress"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:imeOptions="actionNext"
+            android:paddingStart="@dimen/margin_10"
+            android:paddingEnd="@dimen/margin_0"
             app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
             app:layout_constraintStart_toStartOf="@id/guidelineStart"
-            app:layout_constraintTop_toBottomOf="@id/tvCountry">
+            app:layout_constraintTop_toBottomOf="@id/tvCity" />
 
-            <androidx.appcompat.widget.AppCompatSpinner
-                android:id="@+id/countrySpinner"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/size_48"
-                android:spinnerMode="dropdown" />
 
-        </RelativeLayout>
 
 <!--        <fragment
             android:id="@+id/mapFragment"

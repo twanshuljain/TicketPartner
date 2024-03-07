@@ -19,6 +19,7 @@ const val addOrganization = "organization/create/organization/"
 const val addOrganizationSocial = "organization/about/info/organization/"
 const val searchCountry = "default/data/all/country/"
 const val getTimeZone = "default/data/time-zone/list/"
+const val getEventType = "event/event-type/list/"
 
 /**
  * Multipart API parameter key

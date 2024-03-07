@@ -4,11 +4,14 @@ import android.Manifest
 import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
@@ -21,9 +24,14 @@ import com.example.ticketpartner.common.PICK_IMAGE_INTENT_TYPE
 import com.example.ticketpartner.common.SnackBarUtil
 import com.example.ticketpartner.databinding.FragmentCreateEventBasicDetailsBinding
 import com.example.ticketpartner.databinding.LayoutBottomSheetImagePickerBinding
-import com.example.ticketpartner.feature_add_organization.domain.model.ImageModel
-import com.example.ticketpartner.feature_add_organization.presentation.adapter.SearchCountryAdapter
+import com.example.ticketpartner.feature_create_event.domain.model.CreateEventGetTimeZoneResponse
 import com.example.ticketpartner.feature_create_event.domain.model.CreateEventGetTimeZoneUIState
+import com.example.ticketpartner.feature_create_event.domain.model.CreateEventTypesResponse
+import com.example.ticketpartner.feature_create_event.domain.model.CreateEventTypesUIState
+import com.example.ticketpartner.feature_create_event.presentation.adapter.AddImagesMediaAdapter
+import com.example.ticketpartner.feature_create_event.presentation.adapter.AddMoreImagesAdapter
+import com.example.ticketpartner.feature_create_event.presentation.adapter.CreateEventTypesAdapter
+import com.example.ticketpartner.feature_create_event.presentation.adapter.TimeZoneSpinnerAdapter
 import com.example.ticketpartner.utils.CameraUtils
 import com.example.ticketpartner.utils.DatePickerUtility
 import com.example.ticketpartner.utils.DialogProgressUtil
@@ -38,15 +46,25 @@ class CreateEventBasicDetailsFragment : Fragment() {
     private val viewModel: CreateEventViewModel by activityViewModels()
     private val requestCodeCameraPermission = 1002
     private var selectedButtonId: Int = -1
-    private lateinit var addMoreImageAdapter: AddMoreImageAdapter
+    private lateinit var addMoreImageAdapter: AddMoreImagesAdapter
+    private lateinit var addImageMediaAdapter: AddImagesMediaAdapter
 
     @Inject
     lateinit var logUtil: LogUtil
     private var selectedFileUri: String = ""
 
+    private var timeZoneListResponse: ArrayList<CreateEventGetTimeZoneResponse> = ArrayList()
+    private var timeZoneNameListResponse: ArrayList<String> = ArrayList()
+
+    private var eventTypesListResponse: ArrayList<CreateEventTypesResponse> = ArrayList()
+    private var eventTypesNameListResponse: ArrayList<String> = ArrayList()
+
     private var selectedCoverImageFile: File? = null
     private var addMoreImagesListFile: ArrayList<File> = ArrayList()
-    private var addMoreImagesUriList: ArrayList<Uri> = ArrayList()
+    private var addImagesMediaListFile: ArrayList<File> = ArrayList()
+
+    private var addMoreImagesBitmapList: ArrayList<Bitmap> = ArrayList()
+    private var addImagesMediaBitmapList: ArrayList<Bitmap> = ArrayList()
 
 
     private lateinit var requestPermissionLauncher: ActivityResultLauncher<String>
@@ -71,60 +89,37 @@ class CreateEventBasicDetailsFragment : Fragment() {
         observeResponse()
         setTabViewAdapter()
         checkPermissionCameraStorage()
-
-
-        /*   //spinner adapter
-           ArrayAdapter.createFromResource(
-               requireContext(),
-               R.array.planets_array,
-               android.R.layout.simple_spinner_item
-           ).also { adapter ->
-               adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-               binding.planetsSpinner.adapter = adapter
-           }
-
-           val languages = resources.getStringArray(R.array.planets_array)
-           binding.planetsSpinner.onItemSelectedListener = object :
-               AdapterView.OnItemSelectedListener {
-               override fun onItemSelected(
-                   parent: AdapterView<*>,
-                   view: View, position: Int, id: Long
-               ) {
-                   Toast.makeText(
-                       requireContext(),
-                       "selected Item " + " " +
-                               "" + languages[position], Toast.LENGTH_SHORT
-                   ).show()
-               }
-
-               override fun onNothingSelected(parent: AdapterView<*>) {}
-           }
-   */
-
-        /*
-                binding.switchButton.setOnCheckedChangeListener { _, isChecked ->
-                    if (isChecked) {
-                        Toast.makeText(
-                            requireContext(),
-                            "checked",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    } else {
-                        Toast.makeText(
-                            requireContext(),
-                            "unChecked",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    }
-
-                }*/
     }
 
     private fun makeGetApisCall() {
         viewModel.getTimeZone()
+        viewModel.getEventType()
     }
 
     private fun observeResponse() {
+        viewModel.getEventTypeResponse.observe(viewLifecycleOwner) {
+            when (it) {
+                is CreateEventTypesUIState.IsLoading -> {
+                    DialogProgressUtil.show(childFragmentManager)
+                }
+
+                is CreateEventTypesUIState.OnSuccess -> {
+                    DialogProgressUtil.dismiss()
+                    for (i in 0 until it.result.data?.size!!) {
+                        eventTypesListResponse.add(it.result)
+                        eventTypesNameListResponse.add(it.result.data[i]?.event_type_title.toString())
+                    }
+                    setEventTypesAdapter()
+                }
+
+                is CreateEventTypesUIState.OnFailure -> {
+                    DialogProgressUtil.dismiss()
+                    SnackBarUtil.showErrorSnackBar(binding.root, it.onFailure)
+                }
+            }
+        }
+
+        /** observe time zone response */
         viewModel.getTimeZoneResponse.observe(viewLifecycleOwner) {
             when (it) {
                 is CreateEventGetTimeZoneUIState.IsLoading -> {
@@ -133,7 +128,11 @@ class CreateEventBasicDetailsFragment : Fragment() {
 
                 is CreateEventGetTimeZoneUIState.OnSuccess -> {
                     DialogProgressUtil.dismiss()
-                    //  SnackBarUtil.showSuccessSnackBar(binding.root, it.result.message.toString())
+                    for (i in 0 until it.result.data?.size!!) {
+                        timeZoneListResponse.add(it.result)
+                        timeZoneNameListResponse.add(it.result.data[i]?.time_zone_name.toString())
+                    }
+                    setAutoCompleteDropDown()
                 }
 
                 is CreateEventGetTimeZoneUIState.OnFailure -> {
@@ -144,7 +143,53 @@ class CreateEventBasicDetailsFragment : Fragment() {
         }
     }
 
+    private fun setEventTypesAdapter() {
+        binding.spinnerEvenTypes.hint = getString(R.string.select_event_type)
+        val adapter =
+            CreateEventTypesAdapter(
+                requireContext(),
+                R.layout.custom_drop_down_layout,
+                eventTypesNameListResponse
+            )
+        binding.spinnerEvenTypes.setAdapter(adapter)
+        binding.spinnerEvenTypes.setOnItemClickListener { _, _, position, _ ->
+            val selectedItem = adapter.getItem(position)
+            val selectedItemId = eventTypesListResponse[0].data?.get(position)?.id
+
+            Toast.makeText(
+                requireContext(),
+                "Selected Item ID: $selectedItemId",
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+    }
+
+    private fun setAutoCompleteDropDown() {
+        binding.spinnerTimezone.hint = getString(R.string.select_time_zone)
+        val adapter =
+            TimeZoneSpinnerAdapter(
+                requireContext(),
+                R.layout.custom_drop_down_layout,
+                timeZoneNameListResponse
+            )
+        binding.spinnerTimezone.setAdapter(adapter)
+        binding.spinnerTimezone.setOnItemClickListener { _, _, position, _ ->
+            val selectedItem = adapter.getItem(position)
+            val selectedItemId = timeZoneListResponse[0].data?.get(position)?.id
+
+            Toast.makeText(
+                requireContext(),
+                "Selected Item ID: $selectedItemId",
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+    }
+
+
     private fun initView() {
+        setAddMoreImagesAdapter(addMoreImagesBitmapList)
+        setAddImagesMediaAdapter(addImagesMediaBitmapList)
+
         val viewDateTime = binding.includeDateTime
         val viewDoorOpen = binding.includeDateTime
 
@@ -159,6 +204,11 @@ class CreateEventBasicDetailsFragment : Fragment() {
 
         viewDateTime.startTimeDoorOpen.tvName.text = "Start Time"
         viewDateTime.endTimeDoorOpen.tvName.text = "End Time"
+
+        binding.switchMediaFromPast.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) binding.clAddImageMediaLayout.visibility =
+                View.VISIBLE else binding.clAddImageMediaLayout.visibility = View.GONE
+        }
 
         viewDateTime.startDate.dateLayout.setOnClickListener {
             DatePickerUtility.getSelectedDate(requireContext(), viewDateTime.startDate.tvDate)
@@ -199,19 +249,25 @@ class CreateEventBasicDetailsFragment : Fragment() {
             TimePickerUtility.getSelectedTime(requireContext(), viewDoorOpen.endTimeDoorOpen.tvTime)
         }
 
-        binding.rlPickImage.setOnClickListener {
+        binding.rlPickCoverImage.setOnClickListener {
+            selectedButtonId = R.id.rlPickCoverImage
             checkIsPermissionGranted()
         }
 
         binding.ivDelete.setOnClickListener {
-            binding.rlPickImage.visibility = View.VISIBLE
+            binding.rlPickCoverImage.visibility = View.VISIBLE
             binding.rlCoverImage.visibility = View.GONE
         }
 
         binding.rlAddMoreImage.setOnClickListener {
-
+            selectedButtonId = R.id.rlAddMoreImage
+            checkIsPermissionGranted()
         }
 
+        binding.clAddImageMediaLayout.setOnClickListener {
+            selectedButtonId = R.id.clAddImageMediaLayout
+            checkIsPermissionGranted()
+        }
     }
 
 
@@ -246,7 +302,6 @@ class CreateEventBasicDetailsFragment : Fragment() {
         )
     }
 
-
     //call on button click
     private fun checkIsPermissionGranted() {
         permissions.forEach { permission ->
@@ -260,65 +315,121 @@ class CreateEventBasicDetailsFragment : Fragment() {
         }
     }
 
+    /** open bottom sheet dialog for
+     * chose image resource camera/gallery */
     private fun openImagePickerBottomSheet() {
         val dialog = BottomSheetDialog(requireContext())
         val dialogView = LayoutBottomSheetImagePickerBinding.inflate(layoutInflater)
         dialogView.btnGallery.setOnClickListener {
-            launchImagePicker(R.id.btnGallery)
+            launchImagePicker()
             dialog.dismiss()
         }
         dialogView.btnCamera.setOnClickListener {
-            //  captureImage()
+            captureImage()
             dialog.dismiss()
         }
         dialogView.btnCancel.setOnClickListener {
             dialog.dismiss()
         }
-        dialog.setCanceledOnTouchOutside(true)
         dialog.setContentView(dialogView.root)
+        dialog.setCanceledOnTouchOutside(true)
         dialog.show()
     }
 
-    private fun launchImagePicker(buttonId: Int) {
-        selectedButtonId = buttonId
+    /** launch gallery with this function */
+    private fun launchImagePicker() {
         val pickImageIntent = Intent(Intent.ACTION_PICK)
         pickImageIntent.type = PICK_IMAGE_INTENT_TYPE
         getImageLauncher.launch(pickImageIntent)
     }
 
+    /** capture image from camera */
+    private fun captureImage() {
+        val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        captureImageLauncher.launch(takePictureIntent)
+    }
+
+    /** get data from gallery based on button click id */
     private val getImageLauncher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) { result ->
         if (result.resultCode == RESULT_OK) {
-            // Process the selected image based on the button ID
             when (selectedButtonId) {
-                R.id.btnGallery -> {
+                R.id.rlPickCoverImage -> {
                     try {
                         val data = result.data?.data
-                        selectedFileUri = data.toString()
-                        binding.ivCoverImage.setImageURI(data)
-
                         data?.let {
-                            addMoreImagesUriList.add(it)
+                            val bitImage = CameraUtils.uriToBitmap(requireContext(), it)
+                            setCoverImage(bitImage)
                         }
-                        setAddMoreImagesAdapter()
-
-                        binding.rlPickImage.visibility = View.GONE
-                        binding.rlCoverImage.visibility = View.VISIBLE
-                        selectedCoverImageFile = getFileFromBitmap(data)
-
+                        selectedCoverImageFile = getFileFromUri(data)
                     } catch (e: Exception) {
-                        logUtil.log("TAG", e.message.toString())
                     }
                 }
-                // Add more cases for other buttons as needed
+
+                R.id.rlAddMoreImage -> {
+                    try {
+                        val data = result.data?.data
+                        val bitImage = data?.let { CameraUtils.uriToBitmap(requireContext(), it) }
+                        bitImage?.let { addMoreImagesBitmapList.add(it) }
+                        setAddMoreImagesAdapter(addMoreImagesBitmapList)
+                    } catch (e: Exception) {
+                    }
+                }
+
+                R.id.clAddImageMediaLayout -> {
+                    try {
+                        val data = result.data?.data
+                        val bitImage = data?.let { CameraUtils.uriToBitmap(requireContext(), it) }
+                        bitImage?.let { addImagesMediaBitmapList.add(it) }
+                        setAddImagesMediaAdapter(addImagesMediaBitmapList)
+                    } catch (e: Exception) {
+                    }
+                }
             }
         }
     }
 
+
+    private fun setCoverImage(data: Bitmap?) {
+        binding.rlPickCoverImage.visibility = View.GONE
+        binding.rlCoverImage.visibility = View.VISIBLE
+        binding.ivCoverImage.setImageBitmap(data)
+    }
+
+    private val captureImageLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == RESULT_OK && result.data != null) {
+                when (selectedButtonId) {
+                    R.id.rlPickCoverImage -> {
+                        try {
+                            val data = result.data!!.extras?.get("data") as Bitmap
+                            setCoverImage(data)
+                            selectedCoverImageFile =
+                                CameraUtils.saveBitmapAsFileWithMaxSizeInMB(data, 10)
+                        } catch (e: Exception) {
+                        }
+                    }
+
+                    R.id.rlAddMoreImage -> {
+                        val data = result.data!!.extras?.get("data") as Bitmap
+                        data?.let { addMoreImagesBitmapList.add(it) }
+                        setAddMoreImagesAdapter(addMoreImagesBitmapList)
+                    }
+
+                    R.id.clAddImageMediaLayout -> {
+                        val data = result.data!!.extras?.get("data") as Bitmap
+                        data?.let { addImagesMediaBitmapList.add(it) }
+                        setAddImagesMediaAdapter(addImagesMediaBitmapList)
+                    }
+                }
+            }
+        }
+
+
     /** this function will convert
      *  bitmap into file with max 10 MB size */
-    private fun getFileFromBitmap(data: Uri?): File? {
+    private fun getFileFromUri(data: Uri?): File? {
         try {
             data?.let {
                 val bitMapImageFile = CameraUtils.uriToBitmap(requireContext(), it)
@@ -332,14 +443,33 @@ class CreateEventBasicDetailsFragment : Fragment() {
         return null
     }
 
-   private fun setAddMoreImagesAdapter() {
-        addMoreImageAdapter = AddMoreImageAdapter(requireContext(), addMoreImagesUriList,::onDeleteClickAddMoreImages)
+    private fun setAddMoreImagesAdapter(addMoreImagesUriList: ArrayList<Bitmap>) {
+        addMoreImageAdapter = AddMoreImagesAdapter(
+            requireContext(),
+            addMoreImagesUriList,
+            ::onDeleteClickAddMoreImages
+        )
         binding.rvAddMoreImages.adapter = addMoreImageAdapter
         addMoreImageAdapter.notifyDataSetChanged()
     }
 
+    private fun setAddImagesMediaAdapter(addImagesMediaUriList: ArrayList<Bitmap>) {
+        addImageMediaAdapter = AddImagesMediaAdapter(
+            requireContext(),
+            addImagesMediaUriList,
+            ::onDeleteClickAddImagesMedia
+        )
+        binding.rvAddImagesMedia.adapter = addImageMediaAdapter
+        addImageMediaAdapter.notifyDataSetChanged()
+    }
+
     private fun onDeleteClickAddMoreImages(position: Int) {
-        addMoreImagesUriList.removeAt(position)
-        setAddMoreImagesAdapter()
+        addMoreImagesBitmapList.removeAt(position)
+        setAddMoreImagesAdapter(addMoreImagesBitmapList)
+    }
+
+    private fun onDeleteClickAddImagesMedia(position: Int) {
+        addImagesMediaBitmapList.removeAt(position)
+        setAddImagesMediaAdapter(addImagesMediaBitmapList)
     }
 }

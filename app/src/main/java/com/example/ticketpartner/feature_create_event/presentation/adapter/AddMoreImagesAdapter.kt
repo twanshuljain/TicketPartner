@@ -1,21 +1,20 @@
-package com.example.ticketpartner.feature_create_event.presentation
+package com.example.ticketpartner.feature_create_event.presentation.adapter
 
 import android.content.Context
-import android.net.Uri
+import android.graphics.Bitmap
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.ticketpartner.common.ZERO
 import com.example.ticketpartner.databinding.ItemImageListCreateEventBinding
-import com.example.ticketpartner.feature_add_organization.domain.model.ImageModel
 
-class AddMoreImageAdapter(private val context: Context, private val imageList: List<Uri>, private val onDeleteClick:(Int)-> Unit) :
-    RecyclerView.Adapter<AddMoreImageAdapter.ImageViewHolder>() {
+class AddMoreImagesAdapter(private val context: Context, private val imageList: List<Bitmap>, private val onDeleteClick:(Int)-> Unit) :
+    RecyclerView.Adapter<AddMoreImagesAdapter.ImageViewHolder>() {
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ImageViewHolder {
-        return AddMoreImageAdapter.ImageViewHolder(
+        return ImageViewHolder(
             ItemImageListCreateEventBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
