@@ -8,12 +8,14 @@ import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -39,11 +41,15 @@ import com.example.ticketpartner.utils.TimePickerUtility
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.tabs.TabLayoutMediator
 import java.io.File
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 import javax.inject.Inject
 
 class CreateEventBasicDetailsFragment : Fragment() {
     private lateinit var binding: FragmentCreateEventBasicDetailsBinding
     private val viewModel: CreateEventViewModel by activityViewModels()
+    private val currentDateTime = Calendar.getInstance()
     private val requestCodeCameraPermission = 1002
     private var selectedButtonId: Int = -1
     private lateinit var addMoreImageAdapter: AddMoreImagesAdapter
@@ -65,6 +71,18 @@ class CreateEventBasicDetailsFragment : Fragment() {
 
     private var addMoreImagesBitmapList: ArrayList<Bitmap> = ArrayList()
     private var addImagesMediaBitmapList: ArrayList<Bitmap> = ArrayList()
+
+    private val tvListForDateTime : ArrayList<AppCompatTextView> = ArrayList()
+
+    private var eventStartDate = ""
+    private var eventEndDate = ""
+    private var eventStartTime = ""
+    private var eventEndTime = ""
+
+    private var startDateDoorOpen = ""
+    private var endDateDoorOpen = ""
+    private var startTimeDoorOpen = ""
+    private var endTimeDoorOpen = ""
 
 
     private lateinit var requestPermissionLauncher: ActivityResultLauncher<String>
@@ -211,42 +229,47 @@ class CreateEventBasicDetailsFragment : Fragment() {
         }
 
         viewDateTime.startDate.dateLayout.setOnClickListener {
-            DatePickerUtility.getSelectedDate(requireContext(), viewDateTime.startDate.tvDate)
+            DatePickerUtility.getSelectedDate(requireContext(), viewDateTime.startDate.tvDate,::getSelectedStartDate)
+         ///   val startDateText = viewDateTime.startDate.tvDate.text.toString()
+           /* startDate = startDateText
+            startDateDoorOpen  = startDateText
+
+            viewDoorOpen.startDateDoorOpen.tvDate.text = startDateText
+            viewDoorOpen.endDateDoorOpen.tvDate.text =  startDateText*/
         }
 
         viewDateTime.startTime.timeLayout.setOnClickListener {
-            TimePickerUtility.getSelectedTime(requireContext(), viewDateTime.startTime.tvTime)
+            TimePickerUtility.getSelectedTime(requireContext(),::getSelectedStartTime)
+            //startTime = viewDateTime.startTime.tvTime.text.toString()
         }
 
         viewDateTime.endDate.dateLayout.setOnClickListener {
-            DatePickerUtility.getSelectedDate(requireContext(), viewDateTime.endDate.tvDate)
+            DatePickerUtility.getSelectedDate(requireContext(), viewDateTime.endDate.tvDate,::getSelectedEndDate)
         }
 
         viewDateTime.endTime.timeLayout.setOnClickListener {
-            TimePickerUtility.getSelectedTime(requireContext(), viewDateTime.endTime.tvTime)
+            TimePickerUtility.getSelectedTime(requireContext(),::getSelectedEndTime)
         }
 
         /** for door open's start-end date, start-end time */
-        viewDoorOpen.startDateDoorOpen.dateLayout.setOnClickListener {
+     /*   viewDoorOpen.startDateDoorOpen.dateLayout.setOnClickListener {
             DatePickerUtility.getSelectedDate(
                 requireContext(),
                 viewDoorOpen.startDateDoorOpen.tvDate
             )
-        }
+        }*/
 
         viewDoorOpen.startTimeDoorOpen.timeLayout.setOnClickListener {
             TimePickerUtility.getSelectedTime(
-                requireContext(),
-                viewDoorOpen.startTimeDoorOpen.tvTime
-            )
+                requireContext(),::getOpenDoorStartTime)
         }
 
-        viewDoorOpen.endDateDoorOpen.dateLayout.setOnClickListener {
+      /*  viewDoorOpen.endDateDoorOpen.dateLayout.setOnClickListener {
             DatePickerUtility.getSelectedDate(requireContext(), viewDoorOpen.endDateDoorOpen.tvDate)
-        }
+        }*/
 
         viewDoorOpen.endTimeDoorOpen.timeLayout.setOnClickListener {
-            TimePickerUtility.getSelectedTime(requireContext(), viewDoorOpen.endTimeDoorOpen.tvTime)
+            TimePickerUtility.getSelectedTime(requireContext(),::getOpenDoorEndTime)
         }
 
         binding.rlPickCoverImage.setOnClickListener {
@@ -270,12 +293,52 @@ class CreateEventBasicDetailsFragment : Fragment() {
         }
     }
 
+    private fun getOpenDoorEndTime(openDoorEndTime: String) {
+
+    }
+
+    private fun getOpenDoorStartTime(openDoorStartTime: String) {
+
+    }
+
+    private fun getSelectedEndTime(endTime: String) {
+
+    }
+
+    private fun getSelectedStartTime(startTime: String) {
+        val viewDateTime = binding.includeDateTime
+        viewDateTime.startTime.tvTime.text = startTime
+
+        val currentDate = SimpleDateFormat("dd MMM yyyy", Locale.getDefault()).format(currentDateTime.time)
+        val currentTime = SimpleDateFormat("hh:mm a", Locale.getDefault()).format(currentDateTime.time)
+
+        Log.e("TAG", "getSelectedStartTime: $currentTime", )
+        Log.e("TAG", "getSelectedStartDate: $currentDate", )
+
+        if (eventStartDate <= currentDate.toString() && startTime<currentTime.toString()){
+            SnackBarUtil.showErrorSnackBar(binding.root, "you can't select before $currentTime")
+        }
+
+   /*     val currentTimeFormat = SimpleDateFormat("hh:mm a", Locale.getDefault())
+        val formattedTime = currentTimeFormat.format(currentDateTime.time)*/
+    }
+
+    private fun getSelectedEndDate(endDate: String) {
+
+    }
+
+    private fun getSelectedStartDate(startDate: String) {
+        val viewDateTime = binding.includeDateTime
+        viewDateTime.startDate.tvDate.text = startDate
+        eventStartDate = startDate
+        val viewDoorOpen = binding.includeDateTime
+        viewDoorOpen.startDateDoorOpen.tvDate.text = startDate
+        viewDoorOpen.endDateDoorOpen.tvDate.text = startDate
+    }
+
 
     private fun setTabViewAdapter() {
-        //list of tab title name
         val titleList = resources.getStringArray(R.array.tab_create_event)
-
-        //tabView adapter
         val adapter = TabCreateEvent(requireActivity().supportFragmentManager, lifecycle)
         binding.viewPager.adapter = adapter
         TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
@@ -302,7 +365,8 @@ class CreateEventBasicDetailsFragment : Fragment() {
         )
     }
 
-    //call on button click
+    /** use this funcation to open image/camera dialog
+     * it will check permission then open dialog */
     private fun checkIsPermissionGranted() {
         permissions.forEach { permission ->
             if (ContextCompat.checkSelfPermission(requireContext(), permission) !=

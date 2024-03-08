@@ -19,16 +19,19 @@ import java.util.Date
 import java.util.Locale
 
 class CameraUtils {
-    companion object{
+    companion object {
         // Function to save Bitmap as a file with max file size in megabytes
         fun saveBitmapAsFileWithMaxSizeInMB(bitmap: Bitmap, maxSizeMB: Int): File? {
             val maxSizeBytes = maxSizeMB * 1024 * 1024 // Convert megabytes to bytes
 
-            val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
+            val timeStamp: String =
+                SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
             val fileName = "IMG_$timeStamp${IMAGE_EXTENSION}"
 
             val storageDir = File(
-                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), APP_NAME)
+                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),
+                APP_NAME
+            )
 
             // Create the storage directory if it does not exist
             if (!storageDir.exists()) {
@@ -82,7 +85,7 @@ class CameraUtils {
         }
 
         // Convert File to Uri and return the Uri
-        fun fileToUri(context: Context,file: File): Uri {
+        fun fileToUri(context: Context, file: File): Uri {
             return FileProvider.getUriForFile(
                 context,
                 APP_PACKAGE_NANE,

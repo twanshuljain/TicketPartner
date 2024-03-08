@@ -1,53 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".feature_create_event.presentation.VenueFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guidelineStart"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_begin="@dimen/size_15"
-        app:layout_constraintStart_toStartOf="parent" />
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guidelineStart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="@dimen/size_15"
+            app:layout_constraintStart_toStartOf="parent" />
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guidelineEnd"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintGuide_end="@dimen/margin_15" />
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guidelineEnd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintGuide_end="@dimen/margin_15" />
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvLocationName"
-        style="@style/mediumDarkPrimaryText14"
-        android:layout_width="@dimen/margin_0"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_20"
-        android:drawablePadding="@dimen/margin_2"
-        android:text="@string/location_name"
-        app:layout_constraintStart_toStartOf="@id/guidelineStart"
-        app:layout_constraintTop_toTopOf="parent" />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvLocationName"
+            style="@style/mediumDarkPrimaryText14"
+            android:layout_width="@dimen/margin_0"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_20"
+            android:drawablePadding="@dimen/margin_2"
+            android:text="@string/location_name"
+            app:layout_constraintStart_toStartOf="@id/guidelineStart"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/startLocationName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/margin_22"
-        android:src="@drawable/ic_mandatory_star"
-        app:layout_constraintStart_toEndOf="@id/tvLocationName"
-        app:layout_constraintTop_toTopOf="parent" />
 
         <RelativeLayout
             android:id="@+id/rlLocationName"
@@ -62,32 +52,32 @@
 
             <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/etLocationName"
+                style="@style/mediumPlaceHolderText14"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/no_underline_et_design"
-                android:maxLines="1"
-                android:singleLine="true"
-                android:imeOptions="actionNext"
-                android:hint="@string/enter_location"
-                android:inputType="textEmailAddress"
                 android:layout_toLeftOf="@id/ivLink"
+                android:background="@drawable/no_underline_et_design"
                 android:gravity="center_vertical"
+                android:hint="@string/enter_location"
+                android:imeOptions="actionNext"
+                android:inputType="textEmailAddress"
+                android:maxLines="1"
                 android:paddingStart="@dimen/margin_10"
-                style="@style/mediumPlaceHolderText14"/>
+                android:singleLine="true" />
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/ivLink"
                 style="@style/regularGreyDisable12"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:gravity="center_vertical"
-                android:padding="@dimen/margin_10"
-                android:visibility="visible"
-                android:src="@drawable/ic_location_pin_purple"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
+                android:gravity="center_vertical"
+                android:padding="@dimen/margin_10"
                 android:paddingStart="@dimen/margin_5"
-                android:paddingEnd="@dimen/margin_10"/>
+                android:paddingEnd="@dimen/margin_10"
+                android:src="@drawable/ic_location_pin_purple"
+                android:visibility="visible" />
 
         </RelativeLayout>
 
@@ -102,16 +92,6 @@
             app:layout_constraintStart_toStartOf="@id/guidelineStart"
             app:layout_constraintTop_toBottomOf="@id/rlLocationName" />
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/startStreetAdd"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="@dimen/margin_22"
-            android:src="@drawable/ic_mandatory_star"
-            app:layout_constraintStart_toEndOf="@id/tvStreetAdd"
-            app:layout_constraintTop_toBottomOf="@id/rlLocationName" />
-
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/etStreetAdd"
             style="@style/regularDarkPrimary14"
@@ -120,12 +100,12 @@
             android:layout_marginTop="@dimen/margin_5"
             android:background="@drawable/edit_text_design"
             android:hint="@string/enter_street_address"
+            android:imeOptions="actionNext"
             android:inputType="textEmailAddress"
             android:maxLines="1"
-            android:singleLine="true"
-            android:imeOptions="actionNext"
             android:paddingStart="@dimen/margin_10"
             android:paddingEnd="@dimen/margin_0"
+            android:singleLine="true"
             app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
             app:layout_constraintStart_toStartOf="@id/guidelineStart"
             app:layout_constraintTop_toBottomOf="@id/tvStreetAdd" />
@@ -151,24 +131,29 @@
             app:layout_constraintStart_toEndOf="@id/tvCountry"
             app:layout_constraintTop_toBottomOf="@id/etStreetAdd" />
 
-        <RelativeLayout
-            android:id="@+id/rlSpinnerCountry"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/spinnerCountryLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:layout_width="@dimen/margin_0"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_5"
-            android:background="@drawable/edit_text_design"
+            android:hint=""
             app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
             app:layout_constraintStart_toStartOf="@id/guidelineStart"
-            app:layout_constraintTop_toBottomOf="@id/tvCountry">
+            app:layout_constraintTop_toBottomOf="@+id/tvCountry">
 
-            <androidx.appcompat.widget.AppCompatSpinner
-                android:id="@+id/countrySpinner"
+            <AutoCompleteTextView
+                android:id="@+id/spinner_country"
+                style="@style/regularDarkPrimary14"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/size_48"
-                android:spinnerMode="dropdown" />
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/edit_text_design"
+                android:focusableInTouchMode="false"
+                android:gravity="center_vertical"
+                android:inputType="none"
+                android:singleLine="true" />
 
-        </RelativeLayout>
-
+        </com.google.android.material.textfield.TextInputLayout>
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvState"
@@ -179,7 +164,7 @@
             android:drawablePadding="@dimen/margin_2"
             android:text="@string/state"
             app:layout_constraintStart_toStartOf="@id/guidelineStart"
-            app:layout_constraintTop_toBottomOf="@id/rlSpinnerCountry" />
+            app:layout_constraintTop_toBottomOf="@id/spinnerCountryLayout" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/starState"
@@ -189,25 +174,31 @@
             android:layout_marginTop="@dimen/margin_22"
             android:src="@drawable/ic_mandatory_star"
             app:layout_constraintStart_toEndOf="@id/tvState"
-            app:layout_constraintTop_toBottomOf="@id/rlSpinnerCountry" />
+            app:layout_constraintTop_toBottomOf="@id/spinnerCountryLayout" />
 
-        <RelativeLayout
-            android:id="@+id/rlSpinnerState"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/spinnerStateLayout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:layout_width="@dimen/margin_0"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_5"
-            android:background="@drawable/edit_text_design"
+            android:hint=""
             app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
             app:layout_constraintStart_toStartOf="@id/guidelineStart"
-            app:layout_constraintTop_toBottomOf="@id/tvState">
+            app:layout_constraintTop_toBottomOf="@+id/tvState">
 
-            <androidx.appcompat.widget.AppCompatSpinner
-                android:id="@+id/stateSpinner"
+            <AutoCompleteTextView
+                android:id="@+id/spinner_state"
+                style="@style/regularDarkPrimary14"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/size_48"
-                android:spinnerMode="dropdown" />
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/edit_text_design"
+                android:focusableInTouchMode="false"
+                android:gravity="center_vertical"
+                android:inputType="none"
+                android:singleLine="true" />
 
-        </RelativeLayout>
+        </com.google.android.material.textfield.TextInputLayout>
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvCity"
@@ -218,7 +209,7 @@
             android:drawablePadding="@dimen/margin_2"
             android:text="@string/city"
             app:layout_constraintStart_toStartOf="@id/guidelineStart"
-            app:layout_constraintTop_toBottomOf="@id/rlSpinnerState" />
+            app:layout_constraintTop_toBottomOf="@id/spinnerStateLayout" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/starCity"
@@ -228,7 +219,7 @@
             android:layout_marginTop="@dimen/margin_22"
             android:src="@drawable/ic_mandatory_star"
             app:layout_constraintStart_toEndOf="@id/tvCity"
-            app:layout_constraintTop_toBottomOf="@id/rlSpinnerState" />
+            app:layout_constraintTop_toBottomOf="@id/spinnerStateLayout" />
 
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/etCity"
@@ -238,28 +229,44 @@
             android:layout_marginTop="@dimen/margin_5"
             android:background="@drawable/edit_text_design"
             android:hint="@string/enter_city"
+            android:imeOptions="actionNext"
             android:inputType="textEmailAddress"
             android:maxLines="1"
-            android:singleLine="true"
-            android:imeOptions="actionNext"
             android:paddingStart="@dimen/margin_10"
             android:paddingEnd="@dimen/margin_0"
+            android:singleLine="true"
             app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
             app:layout_constraintStart_toStartOf="@id/guidelineStart"
             app:layout_constraintTop_toBottomOf="@id/tvCity" />
 
 
-
-<!--        <fragment
-            android:id="@+id/mapFragment"
-            android:name="com.google.android.gms.maps.SupportMapFragment"
+        <LinearLayout
             android:layout_width="@dimen/margin_0"
-            android:layout_height="@dimen/size_200"
-            tools:context=".MainActivity"
+            android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/size_20"
-            app:layout_constraintStart_toStartOf="@id/guidelineStart"
+            android:background="@drawable/edit_text_design"
+            android:padding="@dimen/margin_5"
             app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
-            app:layout_constraintTop_toBottomOf="@id/rlSpinnerCountry"/>-->
+            app:layout_constraintStart_toStartOf="@id/guidelineStart"
+            app:layout_constraintTop_toBottomOf="@id/etCity">
 
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardView"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size_200"
+                android:background="@color/white"
+                app:cardCornerRadius="@dimen/margin_10"
+                app:cardElevation="@dimen/size_5">
+
+                <fragment
+                    android:id="@+id/mapFragment"
+                    android:name="com.google.android.gms.maps.SupportMapFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    tools:context=".MainActivity" />
+
+            </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.core.widget.NestedScrollView>
