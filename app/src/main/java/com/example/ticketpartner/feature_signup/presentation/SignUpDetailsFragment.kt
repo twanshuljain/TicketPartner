@@ -9,6 +9,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
@@ -33,6 +34,7 @@ import com.example.ticketpartner.utils.CountdownTimerUtil
 import com.example.ticketpartner.utils.DialogProgressUtil
 import com.example.ticketpartner.utils.FullScreenDialogFragment
 import com.example.ticketpartner.utils.NavigateFragmentUtil.clearBackStackToDestination
+import com.example.ticketpartner.utils.OtpChangeFocusUtil
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -59,6 +61,9 @@ class SignUpDetailsFragment : Fragment(), CountdownTimerCallback {
     private var otpFourth: String = ""
     private var otpNumber: String = ""
 
+    private val otpEditFieldsEmail = mutableListOf<EditText>()
+    private val otpEditFieldsPhone = mutableListOf<EditText>()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
@@ -79,6 +84,13 @@ class SignUpDetailsFragment : Fragment(), CountdownTimerCallback {
 
 
     private fun initView() {
+        countdownTimerUtil = CountdownTimerUtil(
+            binding.emailOtp.tvCountDownTime,
+            totalTimeMillis = 0,  // 0 for initialization only
+            intervalMillis = 0,
+            callback = this
+        )
+
         binding.countryPicker.setOnCountryChangeListener {
             countryCode = PLUS + binding.countryPicker.selectedCountryCode
         }
@@ -95,25 +107,25 @@ class SignUpDetailsFragment : Fragment(), CountdownTimerCallback {
         }
 
 
-        val accessOtp = binding.emailOtp
-        accessOtp.apply {
-            otp1.doAfterTextChanged {
-                if (otoFirst.isNotEmpty()) {
-                    accessOtp.otp2.requestFocus()
-                }
-                otp2.doAfterTextChanged {
-                    if (otpSec.isNotEmpty()) {
-                        accessOtp.otp3.requestFocus()
-                    }
-                }
-                otp3.doAfterTextChanged {
-                    if (otpThird.isNotEmpty()) {
-                        accessOtp.otp4.requestFocus()
-                    }
-                }
-            }
-        }
-
+        /*   val accessOtp = binding.emailOtp
+           accessOtp.apply {
+               otp1.doAfterTextChanged {
+                   if (otoFirst.isNotEmpty()) {
+                       accessOtp.otp2.requestFocus()
+                   }
+                   otp2.doAfterTextChanged {
+                       if (otpSec.isNotEmpty()) {
+                           accessOtp.otp3.requestFocus()
+                       }
+                   }
+                   otp3.doAfterTextChanged {
+                       if (otpThird.isNotEmpty()) {
+                           accessOtp.otp4.requestFocus()
+                       }
+                   }
+               }
+           }
+   */
         binding.emailOtp.tvResendBtn.setOnClickListener {
             clickedOnEmailButton = true
             clickedOnPhoneButton = false
@@ -149,18 +161,28 @@ class SignUpDetailsFragment : Fragment(), CountdownTimerCallback {
         }
 
         binding.emailOtp.apply {
+            otpEditFieldsEmail.add(otp1)
+            otpEditFieldsEmail.add(otp2)
+            otpEditFieldsEmail.add(otp3)
+            otpEditFieldsEmail.add(otp4)
             otp1.addTextChangedListener(createTextWatcherEmail())
             otp2.addTextChangedListener(createTextWatcherEmail())
             otp3.addTextChangedListener(createTextWatcherEmail())
             otp4.addTextChangedListener(createTextWatcherEmail())
         }
+        OtpChangeFocusUtil.changeFocus(otpEditFieldsEmail)
 
         binding.includeOtpPhone.apply {
+            otpEditFieldsPhone.add(otp1)
+            otpEditFieldsPhone.add(otp2)
+            otpEditFieldsPhone.add(otp3)
+            otpEditFieldsPhone.add(otp4)
             otp1.addTextChangedListener(createTextWatcherPhone())
             otp2.addTextChangedListener(createTextWatcherPhone())
             otp3.addTextChangedListener(createTextWatcherPhone())
             otp4.addTextChangedListener(createTextWatcherPhone())
         }
+        OtpChangeFocusUtil.changeFocus(otpEditFieldsPhone)
 
         binding.etFirstName.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
@@ -256,8 +278,8 @@ class SignUpDetailsFragment : Fragment(), CountdownTimerCallback {
                 is CreateUserAccountUIState.OnSuccess -> {
                     DialogProgressUtil.dismiss()
                     SnackBarUtil.showSuccessSnackBar(binding.root, it.result.message.toString())
-                    val signIn = R.id.signInFragment
-                    findNavController().clearBackStackToDestination(signIn)
+                    val changeLogoFragment = R.id.addOrganizationChangeLogoFragment
+                    findNavController().clearBackStackToDestination(changeLogoFragment)
                     // Adding a delay of 2000 milliseconds (2 seconds)
                     Handler(Looper.getMainLooper()).postDelayed({
                         binding.btnCreateAccount.isClickable = false

@@ -224,7 +224,7 @@
     </style>
 
     <style name="MySnackBarErrorStyle" parent="Widget.MaterialComponents.Snackbar">
-        <item name="android:background">@color/red</item>
+        <item name="android:background">@color/red_light</item>
     </style>
 
     //tab text font

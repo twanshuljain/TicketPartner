@@ -4,6 +4,9 @@ import com.example.ticketpartner.feature_add_organization.domain.model.AddOrgSoc
 import com.example.ticketpartner.feature_add_organization.domain.model.AddOrgSocialResponse
 import com.example.ticketpartner.feature_add_organization.domain.model.AddOrganizationResponse
 import com.example.ticketpartner.feature_add_organization.domain.model.SearchCountryResponse
+import com.example.ticketpartner.feature_create_event.domain.model.CreateEventGetTimeZoneResponse
+import com.example.ticketpartner.feature_create_event.domain.model.CreateEventTypesResponse
+import com.example.ticketpartner.feature_create_event.domain.model.CreateEventVenueStateResponse
 import com.example.ticketpartner.feature_signup.domain.model.CreateUserAccountRequest
 import com.example.ticketpartner.feature_signup.domain.model.CreateUserAccountResponse
 import com.example.ticketpartner.feature_login.domain.model.ForgotPassSendEmailRequest
@@ -36,6 +39,7 @@ import retrofit2.http.Multipart
 import retrofit2.http.POST
 import retrofit2.http.Part
 import retrofit2.http.PartMap
+import retrofit2.http.Path
 
 /**
  *  Rest API
@@ -92,5 +96,14 @@ interface RestApiService {
 
     @GET(searchCountry)
     suspend fun searchCountry(): SearchCountryResponse
+
+    @GET(getTimeZone)
+    suspend fun getTimeZone(): CreateEventGetTimeZoneResponse
+
+    @GET(getEventType)
+    suspend fun getEventType(): CreateEventTypesResponse
+
+    @GET(getStateBasedOnCountryId)
+    suspend fun getStateBasedOnCountry(@Path("countryId") countryId: Int): CreateEventVenueStateResponse
 
 }

@@ -18,6 +18,8 @@ const val DELAY_TWO_SEC = 2000L
 don't move or replace the values of constants it might affect the functionality
 add additional constants below this
 * */
+const val APP_NAME = "TicketPartner"
+const val APP_PACKAGE_NANE = "com.ticketPartner.app"
 const val USER_PREFERENCE_NAME = "user_preferences"
 const val USER_ID = "user_id"
 const val USER_NAME = "username"
@@ -27,6 +29,7 @@ const val PLUS = "+"
 const val IndianCountryCode = "+91"
 const val FILE = "file"
 const val IMAGE_EXTENSION = ".jpg"
+const val PICK_IMAGE_INTENT_TYPE = "image/*"
 const val MIME_IMAGE_TYPE = "image/jpeg"
 const val ZERO = 0
 

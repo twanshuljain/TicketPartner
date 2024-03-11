@@ -28,10 +28,9 @@ android {
         debug {
             isDebuggable = true
             isMinifyEnabled = false
-            buildConfigField("String", "API_URL", "\"http://13.235.115.189/\"")
+            buildConfigField("String", "API_URL", "\"https://dev.api.myticketpartner.com/\"")
+            buildConfigField("String", "GOOGLE_MAPS_API_KEY", "\"AIzaSyC73yaRGGiQ-W1qpni-3WlKJJ3A1vWtmUs\"")
             proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
-
-
         }
         release {
             isMinifyEnabled = true
@@ -62,6 +61,7 @@ dependencies {
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.11.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
+
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
@@ -96,6 +96,10 @@ dependencies {
 
     //cardView
     implementation("androidx.cardview:cardview:1.0.0")
+
+    //google-map
+    implementation ("com.google.android.gms:play-services-maps:18.2.0")
+
 }
 
 kapt {
