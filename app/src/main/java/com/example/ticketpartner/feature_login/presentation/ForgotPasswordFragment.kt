@@ -23,6 +23,7 @@ import com.example.ticketpartner.utils.CountdownTimerCallback
 import com.example.ticketpartner.utils.CountdownTimerUtil
 import com.example.ticketpartner.utils.DialogProgressUtil
 import com.example.ticketpartner.utils.NavigateFragmentUtil.clearBackStackToDestination
+import com.example.ticketpartner.utils.Utility
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -62,6 +63,9 @@ class ForgotPasswordFragment : Fragment(), CountdownTimerCallback {
             intervalMillis = 1000,
             callback = this
         )
+
+        /** restrict enter space */
+        Utility.disableSpace(binding.etEmail)
 
         binding.etEmail.doAfterTextChanged {
             etEmail = it.toString().trim()

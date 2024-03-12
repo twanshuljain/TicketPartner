@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:tools="http://schemas.android.com/tools"
@@ -22,68 +23,87 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintGuide_end="@dimen/margin_15" />
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvOtp"
-        style="@style/regularParaHeading12"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clOtp"
         android:layout_width="@dimen/margin_0"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_25"
-        android:drawablePadding="@dimen/margin_2"
-        android:text="@string/otp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="@id/guidelineStart"/>
-
-
-    <LinearLayout
-        android:id="@+id/llOtp"
-        android:layout_width="@dimen/margin_0"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:layout_marginTop="@dimen/size_5"
         app:layout_constraintStart_toStartOf="@id/guidelineStart"
-        app:layout_constraintTop_toBottomOf="@id/tvOtp">
+        app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/otp1"
-            style="@style/OtpEditTextStyle"
-            android:maxLength="1"
-            android:maxLines="1"
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvOtp"
+            style="@style/regularParaHeading12"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawablePadding="@dimen/margin_2"
+            android:text="@string/otp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/starMandatory"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/ic_mandatory_star"
+            app:layout_constraintStart_toEndOf="@id/tvOtp"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <LinearLayout
+            android:id="@+id/llOtp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:gravity="center"
-            android:imeOptions="actionNext"
-            android:layout_marginEnd="@dimen/margin_15"
-            android:background="@drawable/edit_text_design" />
+            android:layout_marginTop="@dimen/margin_5"
+            android:orientation="horizontal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvOtp">
 
-        <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/otp2"
-            style="@style/OtpEditTextStyle"
-            android:maxLength="1"
-            android:maxLines="1"
-            android:gravity="center"
-            android:imeOptions="actionNext"
-            android:layout_marginEnd="@dimen/margin_15"
-            android:background="@drawable/edit_text_design" />
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/otp1"
+                style="@style/OtpEditTextStyle"
+                android:maxLength="1"
+                android:maxLines="1"
+                android:gravity="center"
+                android:imeOptions="actionNext"
+                android:layout_marginEnd="@dimen/margin_15"
+                android:background="@drawable/edit_text_design" />
 
-        <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/otp3"
-            style="@style/OtpEditTextStyle"
-            android:maxLength="1"
-            android:maxLines="1"
-            android:gravity="center"
-            android:imeOptions="actionNext"
-            android:layout_marginEnd="@dimen/margin_15"
-            android:background="@drawable/edit_text_design" />
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/otp2"
+                style="@style/OtpEditTextStyle"
+                android:maxLength="1"
+                android:maxLines="1"
+                android:gravity="center"
+                android:imeOptions="actionNext"
+                android:layout_marginEnd="@dimen/margin_15"
+                android:background="@drawable/edit_text_design" />
 
-        <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/otp4"
-            style="@style/OtpEditTextStyle"
-            android:maxLength="1"
-            android:maxLines="1"
-            android:gravity="center"
-            android:imeOptions="actionDone"
-            android:background="@drawable/edit_text_design" />
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/otp3"
+                style="@style/OtpEditTextStyle"
+                android:maxLength="1"
+                android:maxLines="1"
+                android:gravity="center"
+                android:imeOptions="actionNext"
+                android:layout_marginEnd="@dimen/margin_15"
+                android:background="@drawable/edit_text_design" />
 
-    </LinearLayout>
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/otp4"
+                style="@style/OtpEditTextStyle"
+                android:maxLength="1"
+                android:maxLines="1"
+                android:gravity="center"
+                android:imeOptions="actionDone"
+                android:background="@drawable/edit_text_design" />
+
+        </LinearLayout>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <LinearLayout
         android:id="@+id/tvCountDownLayout"
@@ -91,7 +111,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_marginTop="@dimen/margin_15"
-        app:layout_constraintTop_toBottomOf="@id/llOtp"
+        app:layout_constraintTop_toBottomOf="@id/clOtp"
         app:layout_constraintStart_toStartOf="@id/guidelineStart">
 
         <RelativeLayout

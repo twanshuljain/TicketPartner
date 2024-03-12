@@ -291,6 +291,10 @@ class CreateEventBasicDetailsFragment : Fragment() {
             selectedButtonId = R.id.clAddImageMediaLayout
             checkIsPermissionGranted()
         }
+
+        binding.titleBar.ivBack.setOnClickListener {
+            requireActivity().onBackPressedDispatcher.onBackPressed()
+        }
     }
 
     private fun getOpenDoorEndTime(openDoorEndTime: String) {

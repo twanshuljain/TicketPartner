@@ -89,6 +89,16 @@
         app:layout_constraintStart_toStartOf="@id/guidelineStart"
         app:layout_constraintTop_toBottomOf="@id/tvPass" />
 
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/starMandatoryPass"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/size_25"
+        android:src="@drawable/ic_mandatory_star"
+        app:layout_constraintTop_toBottomOf="@id/etEmail"
+        app:layout_constraintStart_toEndOf="@id/tvPass" />
+
     <RelativeLayout
         android:id="@+id/rlForgotPass"
         android:layout_width="match_parent"

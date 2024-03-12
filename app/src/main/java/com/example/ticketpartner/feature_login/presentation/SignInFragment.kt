@@ -25,6 +25,7 @@ import com.example.ticketpartner.utils.CountdownTimerCallback
 import com.example.ticketpartner.utils.CountdownTimerUtil
 import com.example.ticketpartner.utils.DialogProgressUtil
 import com.example.ticketpartner.utils.OtpChangeFocusUtil
+import com.example.ticketpartner.utils.Utility.disableSpace
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -82,7 +83,7 @@ class SignInFragment : Fragment(), CountdownTimerCallback {
 
         /** Redirect on sign-Up page */
         binding.tvSignUp.setOnClickListener {
-            findNavController().navigate(R.id.signUpEmailFragment)
+            findNavController().navigate(R.id.signUpDetailsFragment)
         }
 
         /** Redirect on forgot page */
@@ -99,6 +100,10 @@ class SignInFragment : Fragment(), CountdownTimerCallback {
             intervalMillis = 1000,
             callback = this
         )
+
+        /** restrict enter space */
+        disableSpace(binding.emailLoginLayout.etEmail)
+        disableSpace(binding.emailLoginLayout.etPassword)
 
         val mobileLayout = binding.phoneLoginLayout
 
@@ -178,14 +183,13 @@ class SignInFragment : Fragment(), CountdownTimerCallback {
 
         /** email login button */
         binding.emailLoginLayout.btnSignIn.setOnClickListener {
-         /*     val isValid = checkValidationForEmailLogin(etEmail, etPassword)
+             /*val isValid = checkValidationForEmailLogin(etEmail, etPassword)
               if (isValid) {
                   makeEmailLoginApiCall()
                   observeEmailLoginResponse()
-              }
-*/
-            findNavController().navigate(R.id.createEventBasicDetaills)
-           // findNavController().navigate(R.id.addOrganizationChangeLogoFragment)
+              }*/
+          //  findNavController().navigate(R.id.createEventBasicDetaills)
+            findNavController().navigate(R.id.addOrganizationChangeLogoFragment)
         }
 
         /** make phone login API call on sign-in button click */
@@ -302,7 +306,6 @@ class SignInFragment : Fragment(), CountdownTimerCallback {
             }
         }
     }
-
 
     /** observe Email login API response*/
     private fun observeEmailLoginResponse() {

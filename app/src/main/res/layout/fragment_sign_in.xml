@@ -69,7 +69,7 @@
                 style="@style/boldParaHeading24"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/size_40"
+                android:layout_marginTop="@dimen/margin_30"
                 android:text="@string/sign_in"
                 app:layout_constraintStart_toStartOf="@id/guidelineStart"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -91,6 +91,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_12"
                 android:orientation="horizontal"
+                android:visibility="gone"
                 app:layout_constraintStart_toStartOf="@id/guidelineStart"
                 app:layout_constraintTop_toBottomOf="@id/tvWelcomeBack">
 
@@ -116,6 +117,7 @@
                 android:id="@+id/loginLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_20"
                 android:orientation="vertical"
                 app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
                 app:layout_constraintStart_toStartOf="@id/guidelineStart"
@@ -215,7 +217,7 @@
                     android:layout_marginEnd="@dimen/size_5"
                     android:background="@drawable/btn_google_login_design"
                     android:gravity="center"
-                    app:layout_constraintEnd_toEndOf="@id/guidelineVerticalCenter"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
 
@@ -239,36 +241,6 @@
 
                 </RelativeLayout>
 
-                <RelativeLayout
-                    android:layout_width="@dimen/margin_0"
-                    android:layout_height="match_parent"
-                    android:layout_marginStart="@dimen/size_5"
-                    android:background="@drawable/btn_google_login_design"
-                    android:gravity="center"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="@id/guidelineVerticalCenter"
-                    app:layout_constraintTop_toTopOf="parent">
-
-                    <androidx.appcompat.widget.AppCompatImageView
-                        android:id="@+id/ic_apple"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="@dimen/margin_15"
-                        android:src="@drawable/ic_apple" />
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tvApple"
-                        style="@style/boldParaHeading16"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignTop="@id/ic_apple"
-                        android:layout_alignBottom="@id/ic_apple"
-                        android:layout_toEndOf="@id/ic_apple"
-                        android:gravity="center_vertical"
-                        android:text="@string/apple" />
-
-                </RelativeLayout>
-
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <RelativeLayout
@@ -277,6 +249,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_25"
                 android:gravity="center"
+                android:paddingBottom="@dimen/size_5"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/clSocialLogin">
@@ -306,11 +279,9 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/clBottomLayout"
         android:layout_width="@dimen/margin_0"
-        android:layout_height="@dimen/size_85"
+        android:layout_height="@dimen/size_60"
         android:layout_marginTop="@dimen/margin_20"
         android:background="@color/border"
-        android:gravity="center_horizontal"
-        android:orientation="vertical"
         app:layout_constraintTop_toBottomOf="@id/nestedLayout"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

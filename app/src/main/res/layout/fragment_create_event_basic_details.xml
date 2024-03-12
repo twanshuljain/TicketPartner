@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -32,6 +33,116 @@
             android:id="@+id/titleBar"
             layout="@layout/layout_title_name_custom" />
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layoutSteps"
+            android:layout_width="match_parent"
+            android:layout_height="88dp"
+            android:background="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/titleBar">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="@dimen/margin_20"
+                android:layout_marginStart="@dimen/margin_40"
+                android:layout_marginEnd="@dimen/margin_15">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/iv_step_one"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    app:layout_constraintStart_toStartOf="@id/tvBasicDetails"
+                    app:layout_constraintEnd_toEndOf="@id/tvBasicDetails"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:src="@drawable/ic_selected_step_one" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvBasicDetails"
+                    style="@style/boldSecondary12"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_7"
+                    android:layout_below="@+id/iv_step_one"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/iv_step_one"
+                    android:text="@string/basic_details" />
+
+                <View
+                    android:layout_width="@dimen/margin_0"
+                    android:layout_height="4dp"
+                    android:layout_marginTop="@dimen/size_8"
+                    app:layout_constraintStart_toEndOf="@id/iv_step_one"
+                    app:layout_constraintTop_toTopOf="@id/iv_step_one"
+                    android:layout_marginStart="@dimen/margin_5"
+                    android:layout_marginBottom="@dimen/margin_5"
+                    android:layout_marginEnd="@dimen/margin_5"
+                    app:layout_constraintEnd_toStartOf="@id/iv_step_second"
+                    app:layout_constraintBottom_toBottomOf="@id/iv_step_one"
+                    android:background="@drawable/dotted_line_create_event" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/iv_step_second"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="@id/tvTickets"
+                    app:layout_constraintEnd_toEndOf="@id/tvTickets"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:src="@drawable/ic_unselect_sec_step" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvTickets"
+                    style="@style/boldSecondary12"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_7"
+                    app:layout_constraintStart_toEndOf="@id/iv_step_one"
+                    app:layout_constraintEnd_toStartOf="@id/iv_step_third"
+                    app:layout_constraintTop_toBottomOf="@id/iv_step_second"
+                    android:text="@string/tickets" />
+
+                <View
+                    android:layout_width="@dimen/margin_0"
+                    android:layout_height="4dp"
+                    android:layout_marginTop="@dimen/size_8"
+                    app:layout_constraintStart_toEndOf="@id/iv_step_second"
+                    app:layout_constraintTop_toTopOf="@id/iv_step_second"
+                    android:layout_marginStart="@dimen/margin_5"
+                    android:layout_marginEnd="@dimen/margin_5"
+                    android:layout_marginBottom="@dimen/margin_5"
+                    app:layout_constraintEnd_toStartOf="@id/iv_step_third"
+                    app:layout_constraintBottom_toBottomOf="@id/iv_step_second"
+                    android:background="@drawable/dotted_line_create_event" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/iv_step_third"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="@id/tvEventSetup"
+                    app:layout_constraintEnd_toEndOf="@id/tvEventSetup"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_alignParentEnd="true"
+                    android:src="@drawable/ic_unselect_step_third" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvEventSetup"
+                    style="@style/boldSecondary12"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_7"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/iv_step_one"
+                    android:text="@string/event_setup" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvEventName"
             style="@style/mediumDarkPrimaryText14"
@@ -41,7 +152,7 @@
             android:drawablePadding="@dimen/margin_2"
             android:text="@string/event_name"
             app:layout_constraintStart_toStartOf="@id/guidelineStart"
-            app:layout_constraintTop_toBottomOf="@id/titleBar" />
+            app:layout_constraintTop_toBottomOf="@id/layoutSteps" />
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/startEventname"
@@ -51,7 +162,7 @@
             android:layout_marginTop="@dimen/margin_22"
             android:src="@drawable/ic_mandatory_star"
             app:layout_constraintStart_toEndOf="@id/tvEventName"
-            app:layout_constraintTop_toBottomOf="@id/titleBar" />
+            app:layout_constraintTop_toBottomOf="@id/layoutSteps" />
 
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/etEventName"
@@ -235,6 +346,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_centerHorizontal="true"
+                    android:background="@drawable/edit_text_design"
                     android:scaleType="fitXY"
                     android:src="@drawable/ic_choose_file_cover" />
 
@@ -537,7 +649,6 @@
             app:tabTextAppearance="@style/tab_text_font"
             app:tabTextColor="@color/tab_text_color" />
 
-
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/viewPager"
             android:layout_width="match_parent"
@@ -551,109 +662,8 @@
             app:layout_constraintTop_toBottomOf="@id/tabLayout"
             app:layout_constraintBottom_toTopOf="@id/btnSaveContinue" />
 
-        <!-- <androidx.constraintlayout.widget.ConstraintLayout
-             android:layout_width="match_parent"
-             android:layout_height="wrap_content"
-             android:background="@color/white"
-             app:layout_constraintEnd_toEndOf="parent"
-             app:layout_constraintStart_toStartOf="parent"
-             app:layout_constraintTop_toTopOf="parent">
 
-             <androidx.constraintlayout.widget.ConstraintLayout
-                 android:layout_width="match_parent"
-                 android:layout_height="match_parent"
-                 android:layout_marginStart="@dimen/margin_40"
-                 android:layout_marginEnd="@dimen/margin_40">
-
-             <androidx.appcompat.widget.AppCompatImageView
-                 android:id="@+id/iv_step_one"
-                 android:layout_width="wrap_content"
-                 android:layout_height="wrap_content"
-                 android:layout_alignParentStart="true"
-                 app:layout_constraintStart_toStartOf="@id/tvBasicDetails"
-                 app:layout_constraintEnd_toEndOf="@id/tvBasicDetails"
-                 app:layout_constraintTop_toTopOf="parent"
-                 app:layout_constraintBottom_toBottomOf="parent"
-                 android:src="@drawable/ic_selected_step_one" />
-
-             <androidx.appcompat.widget.AppCompatTextView
-                 android:id="@+id/tvBasicDetails"
-                 style="@style/boldSecondary12"
-                 android:layout_width="wrap_content"
-                 android:layout_height="wrap_content"
-                 android:layout_below="@+id/iv_step_one"
-                 app:layout_constraintStart_toStartOf="parent"
-                 app:layout_constraintTop_toBottomOf="@id/iv_step_one"
-                 android:text="@string/basic_details" />
-
-             <View
-                 android:layout_width="@dimen/margin_0"
-                 android:layout_height="4dp"
-                 android:layout_marginTop="@dimen/size_8"
-                 app:layout_constraintStart_toEndOf="@id/iv_step_one"
-                 app:layout_constraintTop_toTopOf="@id/iv_step_one"
-                 android:layout_marginStart="@dimen/margin_15"
-                 android:layout_marginEnd="@dimen/margin_15"
-                 app:layout_constraintEnd_toStartOf="@id/iv_step_second"
-                 app:layout_constraintBottom_toBottomOf="@id/iv_step_one"
-                 android:background="@drawable/dotted_line_create_event" />
-
-             <androidx.appcompat.widget.AppCompatImageView
-                 android:id="@+id/iv_step_second"
-                 android:layout_width="wrap_content"
-                 android:layout_height="wrap_content"
-                 app:layout_constraintStart_toStartOf="@id/tvTickets"
-                 app:layout_constraintEnd_toEndOf="@id/tvTickets"
-                 app:layout_constraintTop_toTopOf="parent"
-                 app:layout_constraintBottom_toBottomOf="parent"
-                 android:src="@drawable/ic_unselect_sec_step" />
-
-                 <androidx.appcompat.widget.AppCompatTextView
-                     android:id="@+id/tvTickets"
-                     style="@style/boldSecondary12"
-                     android:layout_width="wrap_content"
-                     android:layout_height="wrap_content"
-                     app:layout_constraintStart_toEndOf="@id/iv_step_one"
-                     app:layout_constraintEnd_toStartOf="@id/iv_step_third"
-                     app:layout_constraintBottom_toBottomOf="parent"
-                     android:text="@string/tickets" />
-
-             <View
-                 android:layout_width="@dimen/margin_0"
-                 android:layout_height="4dp"
-                 android:layout_marginTop="@dimen/size_8"
-                 app:layout_constraintStart_toEndOf="@id/iv_step_second"
-                 app:layout_constraintTop_toTopOf="@id/iv_step_second"
-                 android:layout_marginStart="@dimen/margin_15"
-                 android:layout_marginEnd="@dimen/margin_15"
-                 app:layout_constraintEnd_toStartOf="@id/iv_step_third"
-                 app:layout_constraintBottom_toBottomOf="@id/iv_step_second"
-                 android:background="@drawable/dotted_line_create_event" />
-
-             <androidx.appcompat.widget.AppCompatImageView
-                 android:id="@+id/iv_step_third"
-                 android:layout_width="wrap_content"
-                 android:layout_height="wrap_content"
-                 app:layout_constraintTop_toTopOf="parent"
-                 app:layout_constraintStart_toStartOf="@id/tvEventSetup"
-                 app:layout_constraintEnd_toEndOf="@id/tvEventSetup"
-                 app:layout_constraintBottom_toBottomOf="parent"
-                 android:layout_alignParentEnd="true"
-                 android:src="@drawable/ic_unselect_step_third" />
-
-                 <androidx.appcompat.widget.AppCompatTextView
-                     android:id="@+id/tvEventSetup"
-                     style="@style/boldSecondary12"
-                     android:layout_width="wrap_content"
-                     android:layout_height="wrap_content"
-                     app:layout_constraintEnd_toEndOf="parent"
-                     app:layout_constraintTop_toBottomOf="@id/iv_step_one"
-                     android:text="@string/event_setup" />
-
-             </androidx.constraintlayout.widget.ConstraintLayout>
-         </androidx.constraintlayout.widget.ConstraintLayout>-->
-        <!--
-                <LinearLayout
+         <!--       <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical">

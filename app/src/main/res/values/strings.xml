@@ -37,8 +37,8 @@
     <string name="you_will_receive_otp_in">You will receive OTP in</string>
     <string name="you_will_receive_otp_in_2_min">You will receive OTP in 2:00s</string>
     <string name="privacy_policy">By signing up, I agree to the TicketPartner Terms of Service and Privacy Policy.</string>
-    <string name="create_your_account">Create your account.</string>
-    <string name="create_account">Create account</string>
+    <string name="create_your_account">Create your account</string>
+    <string name="create_account">Create Account</string>
     <string name="choose_an_option_below">Choose an option below to begin managing events with the TicketSpark platform!</string>
     <string name="lorem_ipsum_dolor">Lorem ipsum dolor sit amet consectetur. Consequat pretium feugiat dui vitae.</string>
     <string name="next">Next</string>
