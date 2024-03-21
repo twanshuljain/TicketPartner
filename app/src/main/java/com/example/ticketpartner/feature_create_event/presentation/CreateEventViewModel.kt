@@ -121,6 +121,5 @@ class CreateEventViewModel @Inject constructor(
                 _getTicketList.value = CreateEventTicketListUIState.OnSuccess(it)
             }
         }
-
     }
 }
