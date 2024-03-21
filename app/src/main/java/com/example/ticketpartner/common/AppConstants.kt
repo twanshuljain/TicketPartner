@@ -32,6 +32,9 @@ const val IMAGE_EXTENSION = ".jpg"
 const val PICK_IMAGE_INTENT_TYPE = "image/*"
 const val MIME_IMAGE_TYPE = "image/jpeg"
 const val ZERO = 0
+const val TEN = 10
+const val ONE = 1
+const val FORWARD_SLASH = " / "
 
 
 /**Key constants*/

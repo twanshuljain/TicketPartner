@@ -72,7 +72,9 @@
     <string name="facebook_page">"Facebook Page"</string>
     <string name="twitter">"Twitter"</string>
     <string name="linked_in">"LinkedIn"</string>
+    <string name="instagram">"Instagram"</string>
     <string name="facebook_hint_ink">"e.g.www.facebook.com"</string>
+    <string name="instagram_hint_ink">"e.g.www.instagram.com"</string>
     <string name="twitter_hint_link">"e.g.www.twitter.com"</string>
     <string name="linked_in_hint_link">"e.g.www.linkedin.com"</string>
     <string name="save_and_continue">"Save &amp; Continue"</string>
@@ -127,7 +129,13 @@
     <string name="select_event_type">Select event type</string>
     <string name="event_type">Event type</string>
     <string name="select_time_zone">Select time zone</string>
-
+    <string name="paid_ticket">Paid Ticket</string>
+    <string name="on_sale">On Sale</string>
+    <string name="forward_slash"> / </string>
+    <string name="add_ons">Add-ons</string>
+    <string name="codes">Codes</string>
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
 
 
 </resources>

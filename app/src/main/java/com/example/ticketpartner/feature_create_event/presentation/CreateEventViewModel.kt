@@ -8,8 +8,10 @@ import com.example.ticketpartner.common.LogUtil
 import com.example.ticketpartner.feature_add_organization.domain.model.SearchCountryUIState
 import com.example.ticketpartner.feature_add_organization.domain.usecase.GetSearchCountryUseCase
 import com.example.ticketpartner.feature_create_event.domain.model.CreateEventGetTimeZoneUIState
+import com.example.ticketpartner.feature_create_event.domain.model.CreateEventTicketListUIState
 import com.example.ticketpartner.feature_create_event.domain.model.CreateEventTypesUIState
 import com.example.ticketpartner.feature_create_event.domain.model.CreateEventVenueStateUIState
+import com.example.ticketpartner.feature_create_event.domain.useCase.GetCreateEventTicketListUseCase
 import com.example.ticketpartner.feature_create_event.domain.useCase.GetCreateEventTypesUseCase
 import com.example.ticketpartner.feature_create_event.domain.useCase.GetCreateEventVenueStateUseCase
 import com.example.ticketpartner.feature_create_event.domain.useCase.GetTimeZoneUseCase
@@ -26,6 +28,7 @@ class CreateEventViewModel @Inject constructor(
     private val getCreateEventTypesUseCase: GetCreateEventTypesUseCase,
     private val getSearchCountryUseCase: GetSearchCountryUseCase,
     private val getCreateEventVenueStateUseCase: GetCreateEventVenueStateUseCase,
+    private val getCreateEventTicketListUseCase: GetCreateEventTicketListUseCase,
     private val logUtil: LogUtil
 ) : ViewModel() {
 
@@ -42,6 +45,10 @@ class CreateEventViewModel @Inject constructor(
     private val _getStateResponse: MutableLiveData<CreateEventVenueStateUIState> =
         MutableLiveData()
     val getStateResponse: LiveData<CreateEventVenueStateUIState> = _getStateResponse
+
+    private val _getTicketList: MutableLiveData<CreateEventTicketListUIState> =
+        MutableLiveData()
+    val getTicketListResponse: LiveData<CreateEventTicketListUIState> = _getTicketList
 
     fun getTimeZone() {
         _getTimeZone.value = CreateEventGetTimeZoneUIState.IsLoading(true)
@@ -99,5 +106,21 @@ class CreateEventViewModel @Inject constructor(
                 _getStateResponse.value = CreateEventVenueStateUIState.OnSuccess(it)
             }
         }
+    }
+
+    fun getTicketList(eventId: Int) {
+        _getTicketList.value = CreateEventTicketListUIState.IsLoading(true)
+        viewModelScope.launch {
+            getCreateEventTicketListUseCase.invoke(eventId).catch {
+                logUtil.log(LoginViewModel.TAG, "onError${it.message.toString()}")
+                val error = ErrorResponseHandler(it)
+                _getTicketList.value =
+                    CreateEventTicketListUIState.OnFailure(error.getErrors().message.toString())
+            }.collect {
+                logUtil.log(LoginViewModel.TAG, "onSuccess: $it")
+                _getTicketList.value = CreateEventTicketListUIState.OnSuccess(it)
+            }
+        }
+
     }
 }

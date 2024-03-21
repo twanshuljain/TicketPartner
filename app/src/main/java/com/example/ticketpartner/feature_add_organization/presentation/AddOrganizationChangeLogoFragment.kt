@@ -137,9 +137,15 @@ class AddOrganizationChangeLogoFragment : Fragment() {
         }
 
         /** ask permission and launch gallery on button click */
-        binding.llChangeLogoBtn.setOnClickListener {
+        binding.llChangeLogo.setOnClickListener {
             checkIsPermissionGranted()
+        }
 
+        /** remove current image or change or delete a cover image */
+        binding.ivDeleteImg.setOnClickListener {
+            binding.llChangeLogo.isClickable = true
+            binding.rlDelete.visibility = View.GONE
+            binding.llChangeLogo.visibility = View.VISIBLE
         }
 
         /***/
@@ -237,6 +243,9 @@ class AddOrganizationChangeLogoFragment : Fragment() {
                         val bitMapImageFile = CameraUtils.uriToBitmap(requireContext(), it)
                         bitMapImageFile?.let { bitmap ->
                             selectedFile = CameraUtils.saveBitmapAsFileWithMaxSizeInMB(bitmap, 10)
+                            binding.llChangeLogo.isClickable= false
+                            binding.rlDelete.visibility = View.VISIBLE
+                           // binding.llChangeLogo.visibility = View.GONE
                         }
                     }
                 } catch (e: Exception) {
@@ -254,6 +263,9 @@ class AddOrganizationChangeLogoFragment : Fragment() {
 
                     binding.ivImage.setImageBitmap(data)
                     selectedFile = CameraUtils.saveBitmapAsFileWithMaxSizeInMB(data, 10)
+                    binding.llChangeLogo.isClickable= false
+                    binding.rlDelete.visibility = View.VISIBLE
+                   // binding.llChangeLogo.visibility = View.GONE
                 } catch (e: Exception) {
                     logUtil.log("TAG", e.message.toString())
                 }

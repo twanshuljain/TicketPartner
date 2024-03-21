@@ -74,4 +74,10 @@
         android:label="fragment_create_event_basic_details"
         tools:layout="@layout/fragment_create_event_basic_details" />
 
+    <fragment
+        android:id="@+id/createEventTicket"
+        android:name="com.example.ticketpartner.feature_create_event.presentation.CreateEventTicketsFragment"
+        android:label="fragment_create_event_tickets"
+        tools:layout="@layout/fragment_create_event_tickets" />
+
 </navigation>

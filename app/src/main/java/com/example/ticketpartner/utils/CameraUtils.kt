@@ -1,5 +1,6 @@
 package com.example.ticketpartner.utils
 
+import android.content.ContentResolver
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -91,6 +92,30 @@ class CameraUtils {
                 APP_PACKAGE_NANE,
                 file
             )
+        }
+
+        fun getImageSize(context: Context, imageUri: Uri): Double {
+            var sizeInMB: Double = 0.0
+
+            try {
+                val contentResolver: ContentResolver = context.contentResolver
+                val inputStream: InputStream? = contentResolver.openInputStream(imageUri)
+
+                if (inputStream != null) {
+                    // Get the size of the input stream in bytes
+                    val sizeInBytes = inputStream.available().toDouble()
+
+                    // Convert bytes to megabytes
+                    sizeInMB = sizeInBytes / (1024.0 * 1024.0)
+
+                    // Close the input stream
+                    inputStream.close()
+                }
+            } catch (e: IOException) {
+                e.printStackTrace()
+            }
+
+            return sizeInMB
         }
     }
 }

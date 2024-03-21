@@ -69,11 +69,13 @@ class ForgotPasswordFragment : Fragment(), CountdownTimerCallback {
 
         binding.etEmail.doAfterTextChanged {
             etEmail = it.toString().trim()
-            if (it.toString().isEmpty()) {
-                enableContinueButton(false)
-            } else {
-                // disableSendOtpButton(true)
-                enableContinueButton(true)
+            // disableSendOtpButton(true)
+            if (it.toString().isNotEmpty()) {
+                if (ContactUsInputFieldValidator.isEmailValidPattern(etEmail)) {
+                    enableContinueButton(true)
+                } else {
+                    enableContinueButton(false)
+                }
             }
         }
 

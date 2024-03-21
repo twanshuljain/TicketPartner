@@ -24,6 +24,7 @@ import com.example.ticketpartner.R
 import com.example.ticketpartner.common.LogUtil
 import com.example.ticketpartner.common.PICK_IMAGE_INTENT_TYPE
 import com.example.ticketpartner.common.SnackBarUtil
+import com.example.ticketpartner.common.TEN
 import com.example.ticketpartner.databinding.FragmentCreateEventBasicDetailsBinding
 import com.example.ticketpartner.databinding.LayoutBottomSheetImagePickerBinding
 import com.example.ticketpartner.feature_create_event.domain.model.CreateEventGetTimeZoneResponse
@@ -72,7 +73,7 @@ class CreateEventBasicDetailsFragment : Fragment() {
     private var addMoreImagesBitmapList: ArrayList<Bitmap> = ArrayList()
     private var addImagesMediaBitmapList: ArrayList<Bitmap> = ArrayList()
 
-    private val tvListForDateTime : ArrayList<AppCompatTextView> = ArrayList()
+    private val tvListForDateTime: ArrayList<AppCompatTextView> = ArrayList()
 
     private var eventStartDate = ""
     private var eventEndDate = ""
@@ -205,6 +206,7 @@ class CreateEventBasicDetailsFragment : Fragment() {
 
 
     private fun initView() {
+        logUtil = LogUtil()
         setAddMoreImagesAdapter(addMoreImagesBitmapList)
         setAddImagesMediaAdapter(addImagesMediaBitmapList)
 
@@ -217,9 +219,6 @@ class CreateEventBasicDetailsFragment : Fragment() {
         viewDateTime.startTime.tvName.text = "Start Time"
         viewDateTime.endTime.tvName.text = "End Time"
 
-        viewDateTime.startDateDoorOpen.tvName.text = "Start Date"
-        viewDateTime.endDateDoorOpen.tvName.text = "End Date"
-
         viewDateTime.startTimeDoorOpen.tvName.text = "Start Time"
         viewDateTime.endTimeDoorOpen.tvName.text = "End Time"
 
@@ -229,47 +228,56 @@ class CreateEventBasicDetailsFragment : Fragment() {
         }
 
         viewDateTime.startDate.dateLayout.setOnClickListener {
-            DatePickerUtility.getSelectedDate(requireContext(), viewDateTime.startDate.tvDate,::getSelectedStartDate)
-         ///   val startDateText = viewDateTime.startDate.tvDate.text.toString()
-           /* startDate = startDateText
-            startDateDoorOpen  = startDateText
+            DatePickerUtility.getSelectedDate(
+                requireContext(),
+                viewDateTime.startDate.tvDate,
+                ::getSelectedStartDate
+            )
+            ///   val startDateText = viewDateTime.startDate.tvDate.text.toString()
+            /* startDate = startDateText
+             startDateDoorOpen  = startDateText
 
-            viewDoorOpen.startDateDoorOpen.tvDate.text = startDateText
-            viewDoorOpen.endDateDoorOpen.tvDate.text =  startDateText*/
+             viewDoorOpen.startDateDoorOpen.tvDate.text = startDateText
+             viewDoorOpen.endDateDoorOpen.tvDate.text =  startDateText*/
         }
 
         viewDateTime.startTime.timeLayout.setOnClickListener {
-            TimePickerUtility.getSelectedTime(requireContext(),::getSelectedStartTime)
+            TimePickerUtility.getSelectedTime(requireContext(), ::getSelectedStartTime)
             //startTime = viewDateTime.startTime.tvTime.text.toString()
         }
 
         viewDateTime.endDate.dateLayout.setOnClickListener {
-            DatePickerUtility.getSelectedDate(requireContext(), viewDateTime.endDate.tvDate,::getSelectedEndDate)
+            DatePickerUtility.getSelectedDate(
+                requireContext(),
+                viewDateTime.endDate.tvDate,
+                ::getSelectedEndDate
+            )
         }
 
         viewDateTime.endTime.timeLayout.setOnClickListener {
-            TimePickerUtility.getSelectedTime(requireContext(),::getSelectedEndTime)
+            TimePickerUtility.getSelectedTime(requireContext(), ::getSelectedEndTime)
         }
 
         /** for door open's start-end date, start-end time */
-     /*   viewDoorOpen.startDateDoorOpen.dateLayout.setOnClickListener {
-            DatePickerUtility.getSelectedDate(
-                requireContext(),
-                viewDoorOpen.startDateDoorOpen.tvDate
-            )
-        }*/
+        /*   viewDoorOpen.startDateDoorOpen.dateLayout.setOnClickListener {
+               DatePickerUtility.getSelectedDate(
+                   requireContext(),
+                   viewDoorOpen.startDateDoorOpen.tvDate
+               )
+           }*/
 
         viewDoorOpen.startTimeDoorOpen.timeLayout.setOnClickListener {
             TimePickerUtility.getSelectedTime(
-                requireContext(),::getOpenDoorStartTime)
+                requireContext(), ::getOpenDoorStartTime
+            )
         }
 
-      /*  viewDoorOpen.endDateDoorOpen.dateLayout.setOnClickListener {
-            DatePickerUtility.getSelectedDate(requireContext(), viewDoorOpen.endDateDoorOpen.tvDate)
-        }*/
+        /*  viewDoorOpen.endDateDoorOpen.dateLayout.setOnClickListener {
+              DatePickerUtility.getSelectedDate(requireContext(), viewDoorOpen.endDateDoorOpen.tvDate)
+          }*/
 
         viewDoorOpen.endTimeDoorOpen.timeLayout.setOnClickListener {
-            TimePickerUtility.getSelectedTime(requireContext(),::getOpenDoorEndTime)
+            TimePickerUtility.getSelectedTime(requireContext(), ::getOpenDoorEndTime)
         }
 
         binding.rlPickCoverImage.setOnClickListener {
@@ -313,18 +321,20 @@ class CreateEventBasicDetailsFragment : Fragment() {
         val viewDateTime = binding.includeDateTime
         viewDateTime.startTime.tvTime.text = startTime
 
-        val currentDate = SimpleDateFormat("dd MMM yyyy", Locale.getDefault()).format(currentDateTime.time)
-        val currentTime = SimpleDateFormat("hh:mm a", Locale.getDefault()).format(currentDateTime.time)
+        val currentDate =
+            SimpleDateFormat("dd MMM yyyy", Locale.getDefault()).format(currentDateTime.time)
+        val currentTime =
+            SimpleDateFormat("hh:mm a", Locale.getDefault()).format(currentDateTime.time)
 
-        Log.e("TAG", "getSelectedStartTime: $currentTime", )
-        Log.e("TAG", "getSelectedStartDate: $currentDate", )
+        Log.e("TAG", "getSelectedStartTime: $currentTime")
+        Log.e("TAG", "getSelectedStartDate: $currentDate")
 
-        if (eventStartDate <= currentDate.toString() && startTime<currentTime.toString()){
+        if (eventStartDate <= currentDate.toString() && startTime < currentTime.toString()) {
             SnackBarUtil.showErrorSnackBar(binding.root, "you can't select before $currentTime")
         }
 
-   /*     val currentTimeFormat = SimpleDateFormat("hh:mm a", Locale.getDefault())
-        val formattedTime = currentTimeFormat.format(currentDateTime.time)*/
+        /*     val currentTimeFormat = SimpleDateFormat("hh:mm a", Locale.getDefault())
+             val formattedTime = currentTimeFormat.format(currentDateTime.time)*/
     }
 
     private fun getSelectedEndDate(endDate: String) {
@@ -336,8 +346,6 @@ class CreateEventBasicDetailsFragment : Fragment() {
         viewDateTime.startDate.tvDate.text = startDate
         eventStartDate = startDate
         val viewDoorOpen = binding.includeDateTime
-        viewDoorOpen.startDateDoorOpen.tvDate.text = startDate
-        viewDoorOpen.endDateDoorOpen.tvDate.text = startDate
     }
 
 
@@ -406,9 +414,11 @@ class CreateEventBasicDetailsFragment : Fragment() {
 
     /** launch gallery with this function */
     private fun launchImagePicker() {
-        val pickImageIntent = Intent(Intent.ACTION_PICK)
-        pickImageIntent.type = PICK_IMAGE_INTENT_TYPE
-        getImageLauncher.launch(pickImageIntent)
+        var intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
+        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
+        intent.addCategory(Intent.CATEGORY_OPENABLE)
+        intent.type = PICK_IMAGE_INTENT_TYPE
+        getImageLauncher.launch(intent)
     }
 
     /** capture image from camera */
@@ -437,21 +447,83 @@ class CreateEventBasicDetailsFragment : Fragment() {
 
                 R.id.rlAddMoreImage -> {
                     try {
-                        val data = result.data?.data
-                        val bitImage = data?.let { CameraUtils.uriToBitmap(requireContext(), it) }
-                        bitImage?.let { addMoreImagesBitmapList.add(it) }
-                        setAddMoreImagesAdapter(addMoreImagesBitmapList)
+                        var count = result.data?.clipData?.itemCount
+                        val clipData = result?.data?.clipData
+                        if (clipData != null) {
+                            for (i in 0..count!!) {
+                                val uri = result.data?.clipData?.getItemAt(i)?.uri
+                                uri?.let {
+                                    if (CameraUtils.getImageSize(requireContext(), it) <= TEN) {
+                                        val bitImage =
+                                            CameraUtils.uriToBitmap(requireContext(), it)
+                                        bitImage?.let { addMoreImagesBitmapList.add(it) }
+                                        setAddMoreImagesAdapter(addMoreImagesBitmapList)
+                                    } else {
+                                        SnackBarUtil.showErrorSnackBar(
+                                            binding.root,
+                                            "Max image size is 10 MB "
+                                        )
+                                    }
+                                }
+                            }
+                        } else if (result.data?.data != null) {
+                            val uri = result.data?.data
+                            uri?.let { img ->
+                                if (CameraUtils.getImageSize(requireContext(), img) <= TEN) {
+                                    val bitImage = CameraUtils.uriToBitmap(requireContext(), img)
+                                    bitImage?.let { addMoreImagesBitmapList.add(it) }
+                                    setAddMoreImagesAdapter(addMoreImagesBitmapList)
+                                } else {
+                                    SnackBarUtil.showErrorSnackBar(
+                                        binding.root,
+                                        "Max image size is 10 MB "
+                                    )
+                                }
+                            }
+                        }
                     } catch (e: Exception) {
+                        logUtil.log("TAG", e.toString())
                     }
                 }
 
                 R.id.clAddImageMediaLayout -> {
                     try {
-                        val data = result.data?.data
-                        val bitImage = data?.let { CameraUtils.uriToBitmap(requireContext(), it) }
-                        bitImage?.let { addImagesMediaBitmapList.add(it) }
-                        setAddImagesMediaAdapter(addImagesMediaBitmapList)
+                        var count = result.data?.clipData?.itemCount
+                        val clipData = result?.data?.clipData
+                        if (clipData != null) {
+                            for (i in 0..count!!) {
+                                val uri = result.data?.clipData?.getItemAt(i)?.uri
+                                uri?.let { img ->
+                                    if (CameraUtils.getImageSize(requireContext(), img) <= TEN) {
+                                        val bitImage =
+                                            CameraUtils.uriToBitmap(requireContext(), img)
+                                        bitImage?.let { addImagesMediaBitmapList.add(it) }
+                                        setAddImagesMediaAdapter(addImagesMediaBitmapList)
+                                    } else {
+                                        SnackBarUtil.showErrorSnackBar(
+                                            binding.root,
+                                            "Max image size is 10 MB "
+                                        )
+                                    }
+                                }
+                            }
+                        } else if (result.data?.data != null) {
+                            val uri = result.data?.data
+                            uri?.let { img ->
+                                if (CameraUtils.getImageSize(requireContext(), img) <= TEN) {
+                                    val bitImage = CameraUtils.uriToBitmap(requireContext(), img)
+                                    bitImage?.let { addImagesMediaBitmapList.add(it) }
+                                    setAddImagesMediaAdapter(addImagesMediaBitmapList)
+                                } else {
+                                    SnackBarUtil.showErrorSnackBar(
+                                        binding.root,
+                                        "Max image size is 10 MB "
+                                    )
+                                }
+                            }
+                        }
                     } catch (e: Exception) {
+                        logUtil.log("TAG", e.toString())
                     }
                 }
             }

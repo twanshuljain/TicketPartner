@@ -4,6 +4,7 @@ import com.example.ticketpartner.feature_create_event.data.datasource.CreateEven
 import com.example.ticketpartner.feature_create_event.data.repository.CreateEventRepositoryImpl
 import com.example.ticketpartner.feature_create_event.domain.datasource.CreateEventDataSource
 import com.example.ticketpartner.feature_create_event.domain.repository.CreateEventRepository
+import com.example.ticketpartner.feature_create_event.domain.useCase.GetCreateEventTicketListUseCase
 import com.example.ticketpartner.feature_create_event.domain.useCase.GetTimeZoneUseCase
 import dagger.Module
 import dagger.Provides
@@ -22,5 +23,9 @@ object CreateEventModule {
     @Provides
     fun getTimeZoneUseCase(impl: CreateEventRepositoryImpl): GetTimeZoneUseCase =
         GetTimeZoneUseCase(impl)
+
+    @Provides
+    fun getTicketList(impl: CreateEventRepositoryImpl): GetCreateEventTicketListUseCase =
+        GetCreateEventTicketListUseCase(impl)
 
 }
