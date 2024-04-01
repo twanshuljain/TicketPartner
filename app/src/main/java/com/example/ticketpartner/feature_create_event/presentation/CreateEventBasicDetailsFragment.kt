@@ -6,15 +6,16 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -25,6 +26,7 @@ import com.example.ticketpartner.common.LogUtil
 import com.example.ticketpartner.common.PICK_IMAGE_INTENT_TYPE
 import com.example.ticketpartner.common.SnackBarUtil
 import com.example.ticketpartner.common.TEN
+import com.example.ticketpartner.common.ZERO
 import com.example.ticketpartner.databinding.FragmentCreateEventBasicDetailsBinding
 import com.example.ticketpartner.databinding.LayoutBottomSheetImagePickerBinding
 import com.example.ticketpartner.feature_create_event.domain.model.CreateEventGetTimeZoneResponse
@@ -39,10 +41,17 @@ import com.example.ticketpartner.utils.CameraUtils
 import com.example.ticketpartner.utils.DatePickerUtility
 import com.example.ticketpartner.utils.DialogProgressUtil
 import com.example.ticketpartner.utils.TimePickerUtility
+import com.example.ticketpartner.utils.Utility.areTimesInOrder
+import com.example.ticketpartner.utils.Utility.compareDates
+import com.example.ticketpartner.utils.Utility.compareTimes
+import com.example.ticketpartner.utils.Utility.isTimeInRange
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.tabs.TabLayoutMediator
 import java.io.File
 import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.LocalTime
+import java.time.format.DateTimeFormatter
 import java.util.Calendar
 import java.util.Locale
 import javax.inject.Inject
@@ -80,8 +89,6 @@ class CreateEventBasicDetailsFragment : Fragment() {
     private var eventStartTime = ""
     private var eventEndTime = ""
 
-    private var startDateDoorOpen = ""
-    private var endDateDoorOpen = ""
     private var startTimeDoorOpen = ""
     private var endTimeDoorOpen = ""
 
@@ -101,6 +108,7 @@ class CreateEventBasicDetailsFragment : Fragment() {
         return binding.root
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initView()
@@ -205,6 +213,7 @@ class CreateEventBasicDetailsFragment : Fragment() {
     }
 
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun initView() {
         logUtil = LogUtil()
         setAddMoreImagesAdapter(addMoreImagesBitmapList)
@@ -230,7 +239,6 @@ class CreateEventBasicDetailsFragment : Fragment() {
         viewDateTime.startDate.dateLayout.setOnClickListener {
             DatePickerUtility.getSelectedDate(
                 requireContext(),
-                viewDateTime.startDate.tvDate,
                 ::getSelectedStartDate
             )
             ///   val startDateText = viewDateTime.startDate.tvDate.text.toString()
@@ -242,20 +250,21 @@ class CreateEventBasicDetailsFragment : Fragment() {
         }
 
         viewDateTime.startTime.timeLayout.setOnClickListener {
-            TimePickerUtility.getSelectedTime(requireContext(), ::getSelectedStartTime)
-            //startTime = viewDateTime.startTime.tvTime.text.toString()
+            if (isStartDateNotEmpty(eventStartDate))
+                TimePickerUtility.getSelectedTime(requireContext(), ::getSelectedStartTime)
         }
 
         viewDateTime.endDate.dateLayout.setOnClickListener {
-            DatePickerUtility.getSelectedDate(
-                requireContext(),
-                viewDateTime.endDate.tvDate,
-                ::getSelectedEndDate
-            )
+            if (isStartDateNotEmpty(eventStartDate))
+                DatePickerUtility.getSelectedDate(
+                    requireContext(),
+                    ::getSelectedEndDate
+                )
         }
 
         viewDateTime.endTime.timeLayout.setOnClickListener {
-            TimePickerUtility.getSelectedTime(requireContext(), ::getSelectedEndTime)
+            if (isStartDateNotEmpty(eventStartDate))
+                TimePickerUtility.getSelectedTime(requireContext(), ::getSelectedEndTime)
         }
 
         /** for door open's start-end date, start-end time */
@@ -267,9 +276,10 @@ class CreateEventBasicDetailsFragment : Fragment() {
            }*/
 
         viewDoorOpen.startTimeDoorOpen.timeLayout.setOnClickListener {
-            TimePickerUtility.getSelectedTime(
-                requireContext(), ::getOpenDoorStartTime
-            )
+            if (isStartDateNotEmpty(eventStartDate))
+                TimePickerUtility.getSelectedTime(
+                    requireContext(), ::getOpenDoorStartTime
+                )
         }
 
         /*  viewDoorOpen.endDateDoorOpen.dateLayout.setOnClickListener {
@@ -277,7 +287,8 @@ class CreateEventBasicDetailsFragment : Fragment() {
           }*/
 
         viewDoorOpen.endTimeDoorOpen.timeLayout.setOnClickListener {
-            TimePickerUtility.getSelectedTime(requireContext(), ::getOpenDoorEndTime)
+            if (isStartDateNotEmpty(eventStartDate))
+                TimePickerUtility.getSelectedTime(requireContext(), ::getOpenDoorEndTime)
         }
 
         binding.rlPickCoverImage.setOnClickListener {
@@ -305,47 +316,148 @@ class CreateEventBasicDetailsFragment : Fragment() {
         }
     }
 
-    private fun getOpenDoorEndTime(openDoorEndTime: String) {
-
+    private fun isStartDateNotEmpty(eventStartDate: String): Boolean {
+        return if (eventStartDate.isNullOrEmpty()) {
+            SnackBarUtil.showErrorSnackBar(binding.root, "Please select start date first")
+            false
+        } else {
+            true
+        }
     }
 
-    private fun getOpenDoorStartTime(openDoorStartTime: String) {
 
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun getOpenDoorStartTime(openDoorStartTime: String) {
+        val dateFormatter = DateTimeFormatter.ofPattern("dd MMM yyyy")
+        val timeFormatter = DateTimeFormatter.ofPattern("h:mm a")
+
+        val givenDateString = eventStartDate // given date string
+        val givenDate = LocalDate.parse(givenDateString, dateFormatter)
+
+        val firstTimeString = eventStartTime // first time string
+
+        val firstTime = givenDate.atTime(LocalTime.parse(firstTimeString, timeFormatter))
+        val secondTime = givenDate.atTime(LocalTime.parse(openDoorStartTime, timeFormatter))
+
+        if (areTimesInOrder(firstTime, secondTime)) {
+            SnackBarUtil.showErrorSnackBar(
+                binding.root,
+                "time is bigger than event start time"
+            )
+        } else {
+            SnackBarUtil.showErrorSnackBar(
+                binding.root,
+                "before given time"
+            )
+            startTimeDoorOpen = openDoorStartTime
+            binding.includeDateTime.startTimeDoorOpen.tvTime.text = openDoorStartTime
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun getOpenDoorEndTime(openDoorEndTime: String) {
+
+        val dateFormatter = DateTimeFormatter.ofPattern("dd MMM yyyy")
+        val timeFormatter = DateTimeFormatter.ofPattern("h:mm a")
+
+        val givenDateString = eventStartDate// Example given date string
+        val givenDate = LocalDate.parse(givenDateString, dateFormatter)
+
+        val firstTimeString = eventStartTime// Example first time string
+        val secondTimeString = startTimeDoorOpen// Example second time string
+
+        val firstTime = givenDate.atTime(LocalTime.parse(firstTimeString, timeFormatter))
+        val secondTime = givenDate.atTime(LocalTime.parse(secondTimeString, timeFormatter))
+        val selectedTime = givenDate.atTime(LocalTime.parse(openDoorEndTime, timeFormatter))
+
+        if (isTimeInRange(selectedTime, firstTime, secondTime)) {
+            SnackBarUtil.showErrorSnackBar(
+                binding.root,
+                "The selected time is between the given first time and second time for the given date."
+            )
+            binding.includeDateTime.endTimeDoorOpen.tvTime.text = openDoorEndTime
+            endTimeDoorOpen = openDoorEndTime
+        } else {
+            SnackBarUtil.showErrorSnackBar(
+                binding.root,
+                "Time should be after open door and before event start time."
+            )
+        }
     }
 
     private fun getSelectedEndTime(endTime: String) {
+        if (eventStartDate == eventEndDate) {
+            val comparisonResult = compareTimes(eventStartTime, endTime)
+            when {
+                comparisonResult < ZERO -> {
+                    binding.includeDateTime.endTime.tvTime.text = endTime
+                    eventEndTime = endTime
+                }
 
+                comparisonResult > ZERO -> SnackBarUtil.showErrorSnackBar(
+                    binding.root,
+                    "End time can't be before start time."
+                )
+            }
+        } else {
+            binding.includeDateTime.endTime.tvTime.text = endTime
+            eventEndTime = endTime
+        }
     }
 
     private fun getSelectedStartTime(startTime: String) {
         val viewDateTime = binding.includeDateTime
-        viewDateTime.startTime.tvTime.text = startTime
 
         val currentDate =
             SimpleDateFormat("dd MMM yyyy", Locale.getDefault()).format(currentDateTime.time)
         val currentTime =
             SimpleDateFormat("hh:mm a", Locale.getDefault()).format(currentDateTime.time)
 
-        Log.e("TAG", "getSelectedStartTime: $currentTime")
-        Log.e("TAG", "getSelectedStartDate: $currentDate")
+        val comparisonResult = compareTimes(currentTime.toString(), startTime)
+        if (eventStartDate <= currentDate.toString()) {
+            when {
+                comparisonResult < ZERO -> {
+                    viewDateTime.startTime.tvTime.text = startTime
+                    eventStartTime = startTime
+                }
 
-        if (eventStartDate <= currentDate.toString() && startTime < currentTime.toString()) {
-            SnackBarUtil.showErrorSnackBar(binding.root, "you can't select before $currentTime")
+                comparisonResult > ZERO -> SnackBarUtil.showErrorSnackBar(
+                    binding.root,
+                    "time can't be before $currentTime "
+                )
+            }
+        } else {
+            viewDateTime.startTime.tvTime.text = startTime
+            eventStartTime = startTime
         }
-
-        /*     val currentTimeFormat = SimpleDateFormat("hh:mm a", Locale.getDefault())
-             val formattedTime = currentTimeFormat.format(currentDateTime.time)*/
     }
 
     private fun getSelectedEndDate(endDate: String) {
-
+        isEndDateSmallerThanStartDate(eventStartDate, endDate)
     }
+
+    private fun isEndDateSmallerThanStartDate(startDate: String, endDate: String) {
+        val comparisonResult = compareDates(startDate, endDate)
+        if (isStartDateNotEmpty(eventStartDate)) {
+            when {
+                comparisonResult <= ZERO -> {
+                    binding.includeDateTime.endDate.tvDate.text = endDate
+                    eventEndDate = endDate
+                }
+
+                comparisonResult > ZERO -> SnackBarUtil.showErrorSnackBar(
+                    binding.root,
+                    "End date can't be before start date."
+                )
+            }
+        }
+    }
+
 
     private fun getSelectedStartDate(startDate: String) {
         val viewDateTime = binding.includeDateTime
         viewDateTime.startDate.tvDate.text = startDate
         eventStartDate = startDate
-        val viewDoorOpen = binding.includeDateTime
     }
 
 
