@@ -19,6 +19,7 @@ import com.example.ticketpartner.R
 import com.example.ticketpartner.common.ContactUsInputFieldValidator
 import com.example.ticketpartner.common.DELAY_TWO_SEC
 import com.example.ticketpartner.common.EMAIL_KEY
+import com.example.ticketpartner.common.EMPTY_STRING
 import com.example.ticketpartner.common.IndianCountryCode
 import com.example.ticketpartner.common.PLUS
 import com.example.ticketpartner.common.SnackBarUtil
@@ -35,6 +36,8 @@ import com.example.ticketpartner.utils.DialogProgressUtil
 import com.example.ticketpartner.utils.FullScreenDialogFragment
 import com.example.ticketpartner.utils.NavigateFragmentUtil.clearBackStackToDestination
 import com.example.ticketpartner.utils.OtpChangeFocusUtil
+import com.example.ticketpartner.utils.Utility
+import com.example.ticketpartner.utils.Utility.allowCharactersOnly
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -95,6 +98,17 @@ class SignUpDetailsFragment : Fragment(), CountdownTimerCallback {
             countryCode = PLUS + binding.countryPicker.selectedCountryCode
         }
 
+        /** restrict enter space */
+        Utility.disableSpace(binding.etEmail)
+        Utility.disableSpace(binding.etFirstName)
+        Utility.disableSpace(binding.etLastName)
+        Utility.disableSpace(binding.etPhoneNumber)
+        Utility.disableSpace(binding.etPassword)
+
+        /** allow char only */
+        allowCharactersOnly(binding.etFirstName)
+        allowCharactersOnly(binding.etLastName)
+
         /** get email text from user */
         binding.etEmail.doAfterTextChanged {
             etEmail = it.toString().trim()
@@ -103,7 +117,7 @@ class SignUpDetailsFragment : Fragment(), CountdownTimerCallback {
 
         binding.etPhoneNumber.doAfterTextChanged {
             etPhone = it.toString().trim()
-            enableSendOtpButtonPhone(it.toString())
+         //   enableSendOtpButtonPhone(it.toString())
         }
 
 
@@ -245,7 +259,8 @@ class SignUpDetailsFragment : Fragment(), CountdownTimerCallback {
     private fun initialiseEmailCounter() {
         countdownTimerUtil = CountdownTimerUtil(
             binding.emailOtp.tvCountDownTime,
-            totalTimeMillis = 2 * 60 * 1000,  // 2 minutes
+           // totalTimeMillis = 2 * 60 * 1000,  // 2 minutes
+            totalTimeMillis = 30 * 1000,  // 2 minutes
             intervalMillis = 1000,
             callback = this
         )
@@ -308,7 +323,7 @@ class SignUpDetailsFragment : Fragment(), CountdownTimerCallback {
     }
 
     private fun enableCreateAccountButton() {
-        if (isEmailVerify && isPhoneVerify && etFirstName.isNotEmpty() && etLastName.isNotEmpty() && etPassword.isNotEmpty()) {
+        if (isEmailVerify && etFirstName.isNotEmpty() && etLastName.isNotEmpty() && etPassword.isNotEmpty()) {
             binding.btnCreateAccount.visibility = View.VISIBLE
             binding.btnCreateAccountDisable.visibility = View.GONE
         } else {
@@ -448,10 +463,13 @@ class SignUpDetailsFragment : Fragment(), CountdownTimerCallback {
                     invalidOtpEditTextEmail(false)
                     makeNonEditableEditText(binding.etEmail)
                     countdownTimerUtil.stop()
-                    binding.tvVerify.visibility = View.GONE
-                    binding.tvVerifyDisable.visibility = View.GONE
-                    binding.ivEmailVerify.visibility = View.VISIBLE
-                    binding.emailOtpLayout.visibility = View.GONE
+                    binding.apply {
+                        tvVerify.visibility = View.GONE
+                        tvVerifyDisable.visibility = View.GONE
+                        ivEmailVerify.visibility = View.VISIBLE
+                        emailOtpLayout.visibility = View.GONE
+                        clUserDetails.visibility = View.VISIBLE
+                    }
                     isEmailVerify = true
                     enableCreateAccountButton()
                 }
@@ -479,7 +497,7 @@ class SignUpDetailsFragment : Fragment(), CountdownTimerCallback {
                     binding.otpLayoutPhone.visibility = View.VISIBLE
                     clickedOnEmailButton = false
                     clickedOnPhoneButton = true
-                    startCountDown()
+                   // startCountDown()
                     binding.includeOtpPhone.tvResendLayout.visibility = View.GONE
                     binding.includeOtpPhone.layoutOtpCount.visibility = View.VISIBLE
                     binding.includeOtpPhone.tvCountDown.visibility = View.VISIBLE
@@ -492,7 +510,6 @@ class SignUpDetailsFragment : Fragment(), CountdownTimerCallback {
             }
         }
     }
-
 
     private fun observeSendEmailOtpResponse() {
         viewModel.getSendEmailOtpSignUp.observe(viewLifecycleOwner) {
@@ -511,6 +528,14 @@ class SignUpDetailsFragment : Fragment(), CountdownTimerCallback {
                     binding.emailOtp.tvResendLayout.visibility = View.GONE
                     binding.emailOtp.tvCountDown.visibility = View.VISIBLE
                     binding.emailOtp.layoutOtpCount.visibility = View.VISIBLE
+
+                    binding.etEmail.isFocusable = false
+                    binding.etEmail.isFocusableInTouchMode = false
+
+                    binding.tvVerify.visibility = View.GONE
+                    binding.tvVerifyDisable.visibility = View.GONE
+
+                    binding.emailOtp.clOtp.visibility = View.VISIBLE
                 }
 
                 is SendEmailOtpSignUpUIState.OnFailure -> {
@@ -615,7 +640,7 @@ class SignUpDetailsFragment : Fragment(), CountdownTimerCallback {
     private fun startCountDown() {
         countdownTimerUtil.stop()
         disableSendOtpButton(false)
-        disablePhoneSendOtpButton(false)
+        //disablePhoneSendOtpButton(false)
         countdownTimerUtil.start()
     }
 
@@ -625,14 +650,26 @@ class SignUpDetailsFragment : Fragment(), CountdownTimerCallback {
             binding.emailOtp.tvResendLayout.visibility = View.VISIBLE
             binding.emailOtp.layoutOtpCount.visibility = View.GONE
             binding.emailOtp.tvCountDown.visibility = View.GONE
-            disableSendOtpButton(true)
+            disableOtpLayoutOnTimeOut()
+           // disableSendOtpButton(true)
         }
-        if (clickedOnPhoneButton) {
+    /*    if (clickedOnPhoneButton) {
             //phone
             disablePhoneSendOtpButton(true)
             binding.includeOtpPhone.tvResendLayout.visibility = View.VISIBLE
             binding.includeOtpPhone.layoutOtpCount.visibility = View.GONE
             binding.includeOtpPhone.tvCountDown.visibility = View.GONE
+        }*/
+    }
+
+    private fun disableOtpLayoutOnTimeOut() {
+        binding.emailOtp.clOtp.visibility = View.GONE
+        invalidOtpEditTextEmail(false)
+        binding.emailOtp.apply {
+            otp1.setText(EMPTY_STRING)
+            otp2.setText(EMPTY_STRING)
+            otp3.setText(EMPTY_STRING)
+            otp4.setText(EMPTY_STRING)
         }
     }
 

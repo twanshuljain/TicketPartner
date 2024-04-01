@@ -91,17 +91,17 @@
             android:layout_marginTop="@dimen/margin_5"
             android:background="@drawable/edit_text_design"
             android:hint="@string/enter_organization_name"
+            android:imeOptions="actionNext"
             android:inputType="textEmailAddress"
             android:maxLines="1"
-            android:singleLine="true"
-            android:imeOptions="actionNext"
             android:paddingStart="@dimen/margin_10"
             android:paddingEnd="@dimen/margin_0"
+            android:singleLine="true"
             app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
             app:layout_constraintStart_toStartOf="@id/guidelineStart"
             app:layout_constraintTop_toBottomOf="@id/tvOrganizationName" />
 
-       <androidx.appcompat.widget.AppCompatTextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvCountry"
             style="@style/mediumDarkPrimaryText14"
             android:layout_width="@dimen/margin_0"
@@ -129,9 +129,9 @@
             android:layout_height="@dimen/size_48"
             android:layout_marginTop="@dimen/margin_5"
             android:background="@drawable/edit_text_design"
+            android:gravity="center_vertical"
             android:hint="@string/select_country"
             android:paddingStart="@dimen/margin_10"
-            android:gravity="center_vertical"
             android:paddingEnd="@dimen/margin_0"
             app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
             app:layout_constraintStart_toStartOf="@id/guidelineStart"
@@ -157,53 +157,76 @@
             android:src="@drawable/ic_mandatory_star"
             app:layout_constraintStart_toEndOf="@id/tvOrganizationLogo"
             app:layout_constraintTop_toBottomOf="@id/tvSearchCountryBtn" />
-        
-        <LinearLayout
+
+        <RelativeLayout
             android:id="@+id/llChangeLogo"
             android:layout_width="@dimen/margin_0"
             android:layout_height="@dimen/size_270"
-            android:orientation="vertical"
             android:layout_marginTop="@dimen/margin_5"
             android:background="@drawable/add_organization_layout_design"
-            app:layout_constraintStart_toStartOf="@id/guidelineStart"
+            android:orientation="vertical"
             app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
+            app:layout_constraintStart_toStartOf="@id/guidelineStart"
             app:layout_constraintTop_toBottomOf="@id/tvOrganizationLogo">
 
             <LinearLayout
-                android:id="@+id/llChangeLogoBtn"
                 android:layout_width="wrap_content"
-                android:layout_height="@dimen/size_38"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
                 android:orientation="horizontal"
-               android:gravity="center_vertical"
-                android:layout_marginTop="@dimen/margin_30"
-                android:paddingStart="@dimen/margin_20"
-                android:paddingEnd="@dimen/margin_20"
-                android:layout_gravity="center_horizontal"
-                android:background="@drawable/cicular_design_with_border">
+                android:visibility="visible">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/ivCameraIcon"
+                    android:layout_width="@dimen/size_40"
+                    android:layout_height="@dimen/size_40"
+                    android:layout_centerInParent="true"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/ic_camera_black" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tvChangeLogo"
-                    style="@style/regularParagraph14"
+                    style="@style/regularDarkPrimary14"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
+                    android:layout_centerInParent="true"
+                    android:layout_gravity="center_vertical"
+                    android:layout_toRightOf="@id/ivCameraIcon"
                     android:drawablePadding="@dimen/size_5"
-                    android:drawableStart="@drawable/ic_change_logo"
+                    android:paddingStart="@dimen/margin_10"
                     android:text="@string/add_logo" />
 
             </LinearLayout>
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/ivImage"
-                android:layout_width="@dimen/size_120"
-                android:layout_height="@dimen/size_120"
-                android:layout_marginTop="@dimen/margin_25"
-                android:scaleType="fitXY"
-                android:background="@drawable/edit_text_design"
-                android:src="@drawable/temp_team_event"
-                android:layout_gravity="center_horizontal"/>
+            <RelativeLayout
+                android:id="@+id/rlDelete"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="gone">
 
-    </LinearLayout>
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/ivImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_centerInParent="true"
+                    android:background="@drawable/edit_text_design"
+                    android:padding="@dimen/margin_1"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/temp_tshirt"
+                    android:visibility="visible" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/ivDeleteImg"
+                    android:layout_width="@dimen/size_40"
+                    android:layout_height="@dimen/size_40"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="@dimen/margin_10"
+                    android:layout_marginEnd="@dimen/margin_10"
+                    android:padding="@dimen/margin_5"
+                    android:src="@drawable/ic_delete_red" />
+
+            </RelativeLayout>
+        </RelativeLayout>
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnNext"

@@ -4,15 +4,21 @@ import android.content.Context
 import android.graphics.Color
 import android.net.Uri
 import android.nfc.tech.MifareClassic.BLOCK_SIZE
+import android.os.Build
+import android.text.InputFilter
 import android.text.Spannable
 import android.text.SpannableString
+import android.text.Spanned
 import android.text.style.ForegroundColorSpan
+import androidx.annotation.RequiresApi
+import androidx.appcompat.widget.AppCompatEditText
 import com.example.ticketpartner.common.ZERO
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
 import java.io.OutputStream
 import java.text.SimpleDateFormat
+import java.time.LocalDateTime
 import java.util.Calendar
 import java.util.Locale
 
@@ -71,7 +77,7 @@ object Utility {
         return file
     }
 
-     fun formatTime(hourOfDay: Int, minute: Int): String {
+    fun formatTime(hourOfDay: Int, minute: Int): String {
         val calendar = Calendar.getInstance()
         calendar.set(Calendar.HOUR_OF_DAY, hourOfDay)
         calendar.set(Calendar.MINUTE, minute)
@@ -81,13 +87,90 @@ object Utility {
         return String.format("%02d:%02d %s", hourOfDay % 12, minute, amPm)
     }
 
-     fun formatDate(year: Int, month: Int, day: Int): String {
+    fun formatDate(year: Int, month: Int, day: Int): String {
         val calendar = Calendar.getInstance()
-        calendar.set(year, month +1, day)
+        calendar.set(year, month + 1, day)
 
         // Change the date format to "yyyy-MM-dd"
         val dateFormat = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
         return dateFormat.format(calendar.time)
     }
 
+    fun compareTimes(currentTime: String, selectedTime: String): Int {
+        return currentTime.compareTo(selectedTime)
+    }
+
+    fun compareDates(currentDate: String, selectedDate: String): Int {
+        return currentDate.compareTo(selectedDate)
+    }
+
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun areTimesInOrder(firstTime: LocalDateTime, secondTime: LocalDateTime): Boolean {
+        return if (firstTime.toLocalDate() == secondTime.toLocalDate()) {
+            firstTime.isBefore(secondTime)
+        } else {
+            true // If dates are different, return true
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun isTimeInRange(
+        selectedTime: LocalDateTime,
+        firstTime: LocalDateTime,
+        secondTime: LocalDateTime
+    ): Boolean {
+        // Ensure the selected time falls on the same date as the given times
+        if (selectedTime.toLocalDate() != firstTime.toLocalDate() || selectedTime.toLocalDate() != secondTime.toLocalDate()) {
+            return false
+        }
+
+        // Check if the selected time is after the first time and before the second time
+        return selectedTime.isAfter(firstTime) && selectedTime.isBefore(secondTime)
+    }
+
+
+    // Function to disable space in EditText
+    fun disableSpace(editText: AppCompatEditText) {
+        val filter = object : InputFilter {
+            override fun filter(
+                source: CharSequence?,
+                start: Int,
+                end: Int,
+                dest: Spanned?,
+                dstart: Int,
+                dend: Int
+            ): CharSequence? {
+                if (source != null && source.contains(" ")) {
+                    return ""
+                }
+                return null
+            }
+        }
+        editText.filters = arrayOf(filter)
+    }
+
+    // allow characters only
+    fun allowCharactersOnly(editText: AppCompatEditText) {
+        val filter = object : InputFilter {
+            override fun filter(
+                source: CharSequence?,
+                start: Int,
+                end: Int,
+                dest: Spanned?,
+                dstart: Int,
+                dend: Int
+            ): CharSequence? {
+                // Allow only alphanumeric characters and spaces
+                //  val regex = Regex("[a-zA-Z0-9 ]")
+                val regex = Regex("[a-zA-Z]")
+                if (source != null && !source.matches(regex)) {
+                    return ""
+                }
+                return null
+            }
+        }
+
+        editText.filters = arrayOf(filter)
+    }
 }

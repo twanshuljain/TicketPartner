@@ -38,7 +38,6 @@ class AddMoreImagesAdapter(private val context: Context, private val imageList: 
         return imageList.size ?: ZERO
     }
 
-
     class ImageViewHolder(val binding: ItemImageListCreateEventBinding) :
         RecyclerView.ViewHolder(binding.root)
 }

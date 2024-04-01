@@ -5,6 +5,7 @@ import com.example.ticketpartner.feature_add_organization.domain.model.AddOrgSoc
 import com.example.ticketpartner.feature_add_organization.domain.model.AddOrganizationResponse
 import com.example.ticketpartner.feature_add_organization.domain.model.SearchCountryResponse
 import com.example.ticketpartner.feature_create_event.domain.model.CreateEventGetTimeZoneResponse
+import com.example.ticketpartner.feature_create_event.domain.model.CreateEventTicketListResponse
 import com.example.ticketpartner.feature_create_event.domain.model.CreateEventTypesResponse
 import com.example.ticketpartner.feature_create_event.domain.model.CreateEventVenueStateResponse
 import com.example.ticketpartner.feature_signup.domain.model.CreateUserAccountRequest
@@ -105,5 +106,8 @@ interface RestApiService {
 
     @GET(getStateBasedOnCountryId)
     suspend fun getStateBasedOnCountry(@Path("countryId") countryId: Int): CreateEventVenueStateResponse
+
+    @GET(getCreateEventTicketList)
+    suspend fun getCreateEventTicketList(@Path("eventId") eventId: Int): CreateEventTicketListResponse
 
 }

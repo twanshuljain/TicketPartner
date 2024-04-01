@@ -10,15 +10,11 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.ticketpartner.R
-import com.example.ticketpartner.common.EMAIL_KEY
 import com.example.ticketpartner.common.ORGANIZATION_ID
 import com.example.ticketpartner.common.SnackBarUtil
 import com.example.ticketpartner.common.remote.apis.SessionHandlerInterceptor
-import com.example.ticketpartner.databinding.FragmentAddOrgCountrySearchBinding
 import com.example.ticketpartner.databinding.FragmentAddOrganizationSocialBinding
-import com.example.ticketpartner.feature_add_organization.domain.model.AddOrgSocialRequest
 import com.example.ticketpartner.feature_add_organization.domain.model.AddOrganizationSocialUIState
-import com.example.ticketpartner.feature_add_organization.domain.model.AddOrganizationUIState
 import com.example.ticketpartner.utils.DialogProgressUtil
 import com.example.ticketpartner.utils.NavigateFragmentUtil.clearBackStackToDestination
 
@@ -71,7 +67,7 @@ class AddOrganizationSocialFragment : Fragment() {
         }
 
         binding.btnSaaveAndContinue.setOnClickListener {
-            val request = AddOrgSocialRequest(
+          /*  val request = AddOrgSocialRequest(
                 facebook_url = etFaceBook,
                 linkedin_url = etLinkedIn,
                 organization_id = organizationId,
@@ -83,7 +79,9 @@ class AddOrganizationSocialFragment : Fragment() {
                 observeLiveData()
             }else{
                 SnackBarUtil.showErrorSnackBar(binding.root, getString(R.string.empty_organization_id))
-            }
+            }*/
+
+            findNavController().navigate(R.id.createEventBasicDetaills)
         }
     }
 

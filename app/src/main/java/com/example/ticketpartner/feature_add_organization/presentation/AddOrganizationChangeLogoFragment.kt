@@ -8,7 +8,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
-import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.LayoutInflater
@@ -22,11 +21,8 @@ import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
-import com.bumptech.glide.Glide
 import com.example.ticketpartner.R
-import com.example.ticketpartner.common.IMAGE_EXTENSION
 import com.example.ticketpartner.common.LogUtil
-import com.example.ticketpartner.common.MIME_IMAGE_TYPE
 import com.example.ticketpartner.common.ORGANIZATION_ID
 import com.example.ticketpartner.common.PICK_IMAGE_INTENT_TYPE
 import com.example.ticketpartner.common.SnackBarUtil
@@ -35,7 +31,6 @@ import com.example.ticketpartner.databinding.LayoutBottomSheetImagePickerBinding
 import com.example.ticketpartner.feature_add_organization.domain.model.AddOrganizationUIState
 import com.example.ticketpartner.utils.CameraUtils
 import com.example.ticketpartner.utils.DialogProgressUtil
-import com.example.ticketpartner.utils.Utility.getFile
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import java.io.File
 import javax.inject.Inject
@@ -142,20 +137,28 @@ class AddOrganizationChangeLogoFragment : Fragment() {
         }
 
         /** ask permission and launch gallery on button click */
-        binding.llChangeLogoBtn.setOnClickListener {
+        binding.llChangeLogo.setOnClickListener {
             checkIsPermissionGranted()
+        }
 
+        /** remove current image or change or delete a cover image */
+        binding.ivDeleteImg.setOnClickListener {
+            binding.llChangeLogo.isClickable = true
+            binding.rlDelete.visibility = View.GONE
+            binding.llChangeLogo.visibility = View.VISIBLE
         }
 
         /***/
         binding.btnNext.setOnClickListener {
-            if (checkValidation()) {
+            /*if (checkValidation()) {
                 selectedFile?.let { file ->
                     viewModel.addOrganization(file, organizationName, countryId)
                     observeResponseData()
                 }
-            }
+            }*/
+            findNavController().navigate(R.id.addOrganizationSocialFragment)
         }
+
     }
 
 
@@ -240,6 +243,9 @@ class AddOrganizationChangeLogoFragment : Fragment() {
                         val bitMapImageFile = CameraUtils.uriToBitmap(requireContext(), it)
                         bitMapImageFile?.let { bitmap ->
                             selectedFile = CameraUtils.saveBitmapAsFileWithMaxSizeInMB(bitmap, 10)
+                            binding.llChangeLogo.isClickable= false
+                            binding.rlDelete.visibility = View.VISIBLE
+                           // binding.llChangeLogo.visibility = View.GONE
                         }
                     }
                 } catch (e: Exception) {
@@ -257,6 +263,9 @@ class AddOrganizationChangeLogoFragment : Fragment() {
 
                     binding.ivImage.setImageBitmap(data)
                     selectedFile = CameraUtils.saveBitmapAsFileWithMaxSizeInMB(data, 10)
+                    binding.llChangeLogo.isClickable= false
+                    binding.rlDelete.visibility = View.VISIBLE
+                   // binding.llChangeLogo.visibility = View.GONE
                 } catch (e: Exception) {
                     logUtil.log("TAG", e.message.toString())
                 }

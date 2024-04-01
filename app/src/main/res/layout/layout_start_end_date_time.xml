@@ -74,44 +74,26 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/endDate" />
 
-    <include android:id="@+id/startDateDoorOpen"
-        android:layout_width="@dimen/margin_0"
-        android:layout_height="@dimen/margin_58"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="@dimen/size_5"
-        android:layout_marginEnd="@dimen/size_8"
-        app:layout_constraintEnd_toEndOf="@id/guidelineVerticalCenter"
-        app:layout_constraintTop_toBottomOf="@id/tvStartEndDateDoorOpen"
-        layout="@layout/item_create_event_start_end_date"/>
-
     <include android:id="@+id/startTimeDoorOpen"
         android:layout_width="@dimen/margin_0"
         android:layout_height="@dimen/margin_58"
-        app:layout_constraintStart_toStartOf="@id/guidelineVerticalCenter"
+        app:layout_constraintStart_toStartOf="parent"
         android:layout_marginTop="@dimen/size_5"
         android:layout_marginStart="@dimen/size_8"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginEnd="@dimen/size_8"
+        app:layout_constraintEnd_toEndOf="@id/guidelineVerticalCenter"
         app:layout_constraintTop_toBottomOf="@id/tvStartEndDateDoorOpen"
         layout="@layout/item_create_event_start_end_time"/>
 
-    <include android:id="@+id/endDateDoorOpen"
-        android:layout_width="@dimen/margin_0"
-        android:layout_height="@dimen/margin_58"
-        app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginTop="@dimen/margin_10"
-        android:layout_marginEnd="@dimen/size_8"
-        app:layout_constraintEnd_toEndOf="@id/guidelineVerticalCenter"
-        app:layout_constraintTop_toBottomOf="@id/startDateDoorOpen"
-        layout="@layout/item_create_event_start_end_date"/>
 
     <include android:id="@+id/endTimeDoorOpen"
         android:layout_width="@dimen/margin_0"
         android:layout_height="@dimen/margin_58"
         app:layout_constraintStart_toStartOf="@id/guidelineVerticalCenter"
-        android:layout_marginTop="@dimen/margin_10"
+        android:layout_marginTop="@dimen/size_5"
         android:layout_marginStart="@dimen/size_8"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/startDateDoorOpen"
+        app:layout_constraintTop_toBottomOf="@id/tvStartEndDateDoorOpen"
         layout="@layout/item_create_event_start_end_time"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

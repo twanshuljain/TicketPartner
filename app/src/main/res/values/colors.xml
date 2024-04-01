@@ -28,4 +28,9 @@
     <color name="red_light">#EB5757</color>
     <color name="tab_back">#E7ECEE</color>
     <color name="tab_text_color">#878899</color>
+    <color name="light_blue_back_color">#E8F1FD</color>
+    <color name="light_blue_border_color">#80186ADE</color>
+    <color name="blue_text">#186ADE</color>
+    <color name="grey_back">#E3E3E3</color>
+    <color name="border_grey">#C7CCD3</color>
 </resources>

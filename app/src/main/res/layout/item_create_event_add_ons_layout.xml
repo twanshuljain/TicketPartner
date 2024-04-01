@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:backgroundTint="@color/white"
+    android:layout_marginTop="@dimen/margin_10"
+    android:background="@drawable/edit_text_design">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clDetails"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivProfile"
+            android:layout_width="@dimen/size_111"
+            android:layout_height="@dimen/size_111"
+            android:layout_marginStart="@dimen/margin_10"
+            android:layout_marginTop="@dimen/margin_10"
+            android:src="@drawable/temp_tshirt"
+            android:background="@drawable/edit_text_design"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvTitleName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/semiBoldParaHeadingText16"
+            android:text="T-shirt"
+            android:layout_marginTop="@dimen/margin_10"
+            android:layout_marginStart="@dimen/size_10"
+            app:layout_constraintStart_toEndOf="@id/ivProfile"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <androidx.appcompat.widget.AppCompatCheckBox
+            android:id="@+id/checkbox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            app:layout_constraintTop_toTopOf="@id/ivProfile"
+            app:layout_constraintStart_toStartOf="@id/ivProfile" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/regularParaText10"
+            android:text="Fees Breakdown"
+            android:paddingStart="@dimen/size_10"
+            android:paddingTop="@dimen/margin_5"
+            android:layout_centerVertical="true"
+            app:layout_constraintStart_toEndOf="@id/ivProfile"
+            app:layout_constraintTop_toBottomOf="@id/tvTitleName"
+            android:paddingEnd="@dimen/size_10" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/boldPureBlack14"
+            android:text="$40"
+            android:paddingStart="@dimen/size_10"
+            android:paddingTop="@dimen/margin_5"
+            android:layout_centerVertical="true"
+            app:layout_constraintStart_toEndOf="@id/ivProfile"
+            app:layout_constraintTop_toBottomOf="@id/tvType"
+            android:paddingEnd="@dimen/size_10" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvDescription"
+            android:layout_width="@dimen/margin_0"
+            android:layout_height="wrap_content"
+            style="@style/regularParaText10"
+            android:text="Lorem ipsum dolor sit amet consectetur. Semper bibendum pellentesque......"
+            android:paddingStart="@dimen/size_10"
+            android:paddingTop="@dimen/margin_5"
+            android:layout_centerVertical="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/ivProfile"
+            app:layout_constraintTop_toBottomOf="@id/tvPrice"
+            android:paddingEnd="@dimen/size_10" />
+
+        <RelativeLayout
+            android:id="@+id/rlCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingStart="@dimen/size_5"
+            android:paddingEnd="@dimen/size_5"
+            android:layout_marginStart="@dimen/margin_10"
+            android:layout_marginTop="@dimen/margin_10"
+            android:layout_marginEnd="@dimen/margin_10"
+            android:background="@drawable/grey_border_with_white_design"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ivProfile">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivMinus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_minus_purple"
+                android:padding="@dimen/size_8"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/semiBoldParaHeadingText14"
+                android:text="10"
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@id/ivMinus"
+                android:paddingStart="@dimen/size_10"
+                android:paddingEnd="@dimen/size_10" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivPlus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@id/tvCount"
+                android:padding="@dimen/size_8"
+                android:src="@drawable/ic_plus_purple"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/llOnSale"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/grey_back"
+            android:orientation="horizontal"
+            android:layout_gravity="bottom"
+            android:visibility="visible"
+            android:layout_marginTop="@dimen/margin_15"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/rlCount">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvOnSale"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/regularGreen10"
+                android:text="@string/on_sale"
+                android:paddingStart="@dimen/size_10"
+                android:layout_centerVertical="true"
+                app:layout_constraintTop_toBottomOf="@id/tvPrice"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvSoldOnCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/boldParaHeading10"
+                android:text=":   120 / 200"
+                android:paddingTop="@dimen/text_10"
+                android:paddingBottom="@dimen/text_10"
+                android:layout_centerVertical="true"
+                app:layout_constraintTop_toBottomOf="@id/tvPrice"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</com.google.android.material.card.MaterialCardView>

@@ -26,6 +26,12 @@
         <item name="android:fontFamily" tools:targetApi="o">@font/lato_bold</item>
     </style>
 
+    <style name="boldSecondary16" parent="Widget.AppCompat.TextView">
+        <item name="android:textColor">@color/secondary</item>
+        <item name="android:textSize">@dimen/text_16</item>
+        <item name="android:fontFamily" tools:targetApi="o">@font/lato_bold</item>
+    </style>
+
     <style name="boldWhiteText16" parent="Widget.AppCompat.TextView">
         <item name="android:textColor">@color/white</item>
         <item name="android:textSize">@dimen/text_16</item>
@@ -35,6 +41,18 @@
     <style name="boldParaHeading14" parent="Widget.AppCompat.TextView">
         <item name="android:textColor">@color/paraHeading</item>
         <item name="android:textSize">@dimen/text_14</item>
+        <item name="android:fontFamily" tools:targetApi="o">@font/lato_bold</item>
+    </style>
+
+    <style name="boldPureBlack14" parent="Widget.AppCompat.TextView">
+        <item name="android:textColor">@color/input_number_black</item>
+        <item name="android:textSize">@dimen/text_14</item>
+        <item name="android:fontFamily" tools:targetApi="o">@font/lato_bold</item>
+    </style>
+
+    <style name="boldParaHeading10" parent="Widget.AppCompat.TextView">
+        <item name="android:textColor">@color/paraHeading</item>
+        <item name="android:textSize">@dimen/text_10</item>
         <item name="android:fontFamily" tools:targetApi="o">@font/lato_bold</item>
     </style>
 
@@ -114,6 +132,13 @@
         <item name="android:fontFamily" tools:targetApi="o">@font/lato_semi_bold</item>
     </style>
 
+    <style name="semiBoldParaHeadingText16" parent="Widget.AppCompat.TextView">
+        <item name="android:textColor">@color/paraHeading</item>
+        <item name="hintTextColor">@color/placeholder</item>
+        <item name="android:textSize">@dimen/text_16</item>
+        <item name="android:fontFamily" tools:targetApi="o">@font/lato_semi_bold</item>
+    </style>
+
     <style name="boldDarkPrimaryText18" parent="Widget.AppCompat.TextView">
         <item name="android:textColor">@color/dark_primary</item>
         <item name="hintTextColor">@color/placeholder</item>
@@ -185,6 +210,34 @@
     <style name="regularDarkPrimary14" parent="Widget.AppCompat.TextView">
         <item name="android:textColor">@color/dark_primary</item>
         <item name="android:textSize">@dimen/text_14</item>
+        <item name="hintTextColor">@color/placeholder</item>
+        <item name="android:fontFamily" tools:targetApi="o">@font/lato_regular</item>
+    </style>
+
+    <style name="regularSecondary9" parent="Widget.AppCompat.TextView">
+        <item name="android:textColor">@color/secondary</item>
+        <item name="android:textSize">@dimen/text_9</item>
+        <item name="hintTextColor">@color/placeholder</item>
+        <item name="android:fontFamily" tools:targetApi="o">@font/lato_regular</item>
+    </style>
+
+    <style name="regularGreen10" parent="Widget.AppCompat.TextView">
+        <item name="android:textColor">@color/green</item>
+        <item name="android:textSize">@dimen/text_10</item>
+        <item name="hintTextColor">@color/placeholder</item>
+        <item name="android:fontFamily" tools:targetApi="o">@font/lato_regular</item>
+    </style>
+
+    <style name="regularParaText10" parent="Widget.AppCompat.TextView">
+        <item name="android:textColor">@color/para_text</item>
+        <item name="android:textSize">@dimen/text_10</item>
+        <item name="hintTextColor">@color/placeholder</item>
+        <item name="android:fontFamily" tools:targetApi="o">@font/lato_regular</item>
+    </style>
+
+    <style name="regularBlue10" parent="Widget.AppCompat.TextView">
+        <item name="android:textColor">@color/blue_text</item>
+        <item name="android:textSize">@dimen/text_10</item>
         <item name="hintTextColor">@color/placeholder</item>
         <item name="android:fontFamily" tools:targetApi="o">@font/lato_regular</item>
     </style>

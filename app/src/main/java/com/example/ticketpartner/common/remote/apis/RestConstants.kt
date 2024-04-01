@@ -21,6 +21,7 @@ const val searchCountry = "default/data/all/country/"
 const val getTimeZone = "default/data/time-zone/list/"
 const val getEventType = "event/event-type/list/"
 const val getStateBasedOnCountryId = "default/data/state/{countryId}/"
+const val getCreateEventTicketList = "ticket/ticket-list/{eventId}"
 
 /**
  * Multipart API parameter key
