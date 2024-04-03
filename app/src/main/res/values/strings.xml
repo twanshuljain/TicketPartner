@@ -136,6 +136,11 @@
     <string name="codes">Codes</string>
     <string name="edit">Edit</string>
     <string name="delete">Delete</string>
+    <string name="discount_code">Discount Code</string>
+    <string name="access_code">Access Code</string>
+    <string name="hint_discount_code">eg. ABH235253B</string>
+    <string name="apply_this_code_automatically">Apply this code automatically</string>
+    <string name="customer_can_also_access_this_code">Customers can also access this code via custom URL</string>
 
 
 </resources>
