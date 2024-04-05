@@ -23,6 +23,9 @@ const val getEventType = "event/event-type/list/"
 const val getStateBasedOnCountryId = "default/data/state/{countryId}/"
 const val getCreateEventTicketList = "ticket/ticket-list/{eventId}"
 
+//scan module
+const val loginWithPin = "ticket-scan/login/"
+
 /**
  * Multipart API parameter key
  */

@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/orange_light_back"
+    tools:context=".scan_module.LoginScanModuleFragment">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivTpLogo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_50"
+        android:src="@drawable/ticket_partner_logo_login_scan"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/margin_0"
+        android:layout_marginStart="@dimen/margin_15"
+        android:layout_marginTop="@dimen/margin_30"
+        android:layout_marginEnd="@dimen/margin_15"
+        android:background="@drawable/top_corner_curve_layout_white_design"
+        android:elevation="@dimen/margin_5"
+        app:cardBackgroundColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ivTpLogo">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guidelineStart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="15dp"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guidelineEnd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintGuide_end="@dimen/margin_15" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvYourName"
+            style="@style/regularParaText14"
+            android:layout_width="@dimen/margin_0"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_30"
+            android:layout_marginBottom="@dimen/margin_10"
+            android:gravity="center_horizontal"
+            android:text="@string/your_name"
+            app:layout_constraintStart_toStartOf="@id/guidelineStart"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/etName"
+            style="@style/mediumDarkPrimaryText14"
+            android:layout_width="@dimen/margin_0"
+            android:layout_height="@dimen/size_48"
+            android:layout_marginTop="@dimen/margin_5"
+            android:background="@drawable/scan_edit_text_design"
+            android:hint="@string/enter_your_name"
+            android:imeOptions="actionNext"
+            android:inputType="textEmailAddress"
+            android:maxLines="1"
+            android:paddingStart="@dimen/margin_10"
+            android:paddingEnd="@dimen/margin_10"
+            android:singleLine="true"
+            app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
+            app:layout_constraintStart_toStartOf="@id/guidelineStart"
+            app:layout_constraintTop_toBottomOf="@id/tvYourName" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvPin"
+            style="@style/regularParaText14"
+            android:layout_width="@dimen/margin_0"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_15"
+            android:layout_marginBottom="@dimen/margin_10"
+            android:gravity="center_horizontal"
+            android:text="@string/enter_pin"
+            app:layout_constraintStart_toStartOf="@id/guidelineStart"
+            app:layout_constraintTop_toBottomOf="@id/etName" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/clEnterPin"
+            android:layout_width="@dimen/margin_0"
+            android:layout_height="@dimen/size_48"
+            android:layout_marginTop="@dimen/margin_5"
+            android:background="@drawable/scan_edit_text_design"
+            app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
+            app:layout_constraintStart_toStartOf="@id/guidelineStart"
+            app:layout_constraintTop_toBottomOf="@id/tvPin">
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/etPin"
+                style="@style/mediumDarkPrimaryText14"
+                android:layout_width="@dimen/margin_0"
+                android:layout_height="match_parent"
+                android:backgroundTint="@color/white"
+                android:hint="@string/enter_your_pin"
+                android:imeOptions="actionDone"
+                android:inputType="number"
+                android:maxLines="1"
+                android:paddingStart="@dimen/margin_10"
+                android:singleLine="true"
+                app:layout_constraintEnd_toStartOf="@id/ivClearText"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivClearText"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/margin_0"
+                android:layout_marginEnd="@dimen/margin_8"
+                android:padding="@dimen/margin_5"
+                android:visibility="gone"
+                android:src="@drawable/ic_x_clear_circle"
+                app:layout_constraintBottom_toBottomOf="@id/etPin"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/etPin" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <RelativeLayout
+            android:id="@+id/rlContinue"
+            android:layout_width="@dimen/margin_0"
+            android:layout_height="@dimen/size_48"
+            android:layout_marginTop="@dimen/margin_20"
+            android:background="@drawable/btn_design_dark_primary"
+            android:gravity="center_horizontal"
+            app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
+            app:layout_constraintStart_toStartOf="@id/guidelineStart"
+            app:layout_constraintTop_toBottomOf="@+id/clEnterPin">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvContinue"
+                style="@style/boldWhiteText16"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:text="@string/Continue"
+                android:textAllCaps="false" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_toRightOf="@id/tvContinue"
+                android:paddingStart="@dimen/margin_5"
+                android:src="@drawable/ic_arrow_right_white" />
+
+        </RelativeLayout>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvFindPin"
+            style="@style/regularParaText14"
+            android:layout_width="@dimen/margin_0"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_15"
+            android:layout_marginBottom="@dimen/margin_10"
+            android:gravity="center_horizontal"
+            android:text="@string/where_i_can_find_pin"
+            app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
+            app:layout_constraintStart_toStartOf="@id/guidelineStart"
+            app:layout_constraintTop_toBottomOf="@id/rlContinue" />
+
+        <RelativeLayout
+            android:id="@+id/rlLearnHowToUse"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:layout_marginBottom="@dimen/margin_20"
+            android:padding="@dimen/margin_10"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
+            app:layout_constraintStart_toStartOf="@id/guidelineStart">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivPlay"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingStart="@dimen/margin_5"
+                android:layout_centerVertical="true"
+                android:src="@drawable/ic_play_circle_black" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvLearnHowToUse"
+                style="@style/regularDarkPrimary14"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@id/ivPlay"
+                android:paddingStart="@dimen/margin_5"
+                android:text="@string/learn_how_to_use" />
+
+        </RelativeLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

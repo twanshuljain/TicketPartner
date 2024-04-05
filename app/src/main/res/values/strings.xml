@@ -142,5 +142,15 @@
     <string name="apply_this_code_automatically">Apply this code automatically</string>
     <string name="customer_can_also_access_this_code">Customers can also access this code via custom URL</string>
 
+   <!-- Scan module-->
+    <string name="your_name">Your name</string>
+    <string name="enter_your_name">Enter your name</string>
+    <string name="please_enter_your_name">Please enter your name</string>
+    <string name="please_enter_your_pin">Please enter your pin</string>
+    <string name="enter_your_pin">Enter your pin</string>
+    <string name="enter_pin">Enter Pin</string>
+    <string name="where_i_can_find_pin">Where I can find the pin?</string>
+    <string name="learn_how_to_use">Learn how to use this</string>
+
 
 </resources>
