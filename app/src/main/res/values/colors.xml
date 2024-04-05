@@ -33,4 +33,6 @@
     <color name="blue_text">#186ADE</color>
     <color name="grey_back">#E3E3E3</color>
     <color name="border_grey">#C7CCD3</color>
+
+    <color name="scan_light_grey">#5A6872</color>
 </resources>

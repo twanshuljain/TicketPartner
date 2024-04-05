@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- res/drawable/custom_edittext_background.xml -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+<solid android:color="@color/white"/>
+    <stroke android:color="@color/white" android:width="@dimen/margin_0"/>
+    <!-- Add padding if needed -->
+    <corners android:topRightRadius="@dimen/margin_10"
+        android:topLeftRadius="@dimen/margin_10"/>
+
+</shape>

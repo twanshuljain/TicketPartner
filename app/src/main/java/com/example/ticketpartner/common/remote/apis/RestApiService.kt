@@ -32,6 +32,8 @@ import com.example.ticketpartner.feature_login.domain.model.VerifyEmailForgotPas
 import com.example.ticketpartner.feature_login.domain.model.VerifyEmailForgotPassResponse
 import com.example.ticketpartner.feature_login.domain.model.VerifyMobileOtpRequest
 import com.example.ticketpartner.feature_login.domain.model.VerifyMobileOtpResponse
+import com.example.ticketpartner.scan_module.domain.model.LoginWithPinRequest
+import com.example.ticketpartner.scan_module.domain.model.LoginWithPinResponse
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.http.Body
@@ -109,5 +111,9 @@ interface RestApiService {
 
     @GET(getCreateEventTicketList)
     suspend fun getCreateEventTicketList(@Path("eventId") eventId: Int): CreateEventTicketListResponse
+
+    //scan module
+    @POST(loginWithPin)
+    suspend fun loginWithPin(@Body loginWithPinRequest: LoginWithPinRequest): LoginWithPinResponse
 
 }
