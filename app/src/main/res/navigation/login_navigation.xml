@@ -80,4 +80,17 @@
         android:label="fragment_create_event_tickets"
         tools:layout="@layout/fragment_create_event_tickets" />
 
+
+            <navigation
+                android:id="@+id/scanModuleGraph"
+                app:startDestination="@id/loginScanModuleFragment">
+
+                <fragment
+                    android:id="@+id/loginScanModuleFragment"
+                    android:name="com.example.ticketpartner.scan_module.LoginScanModuleFragment"
+                    android:label="fragment_login_scan_module"
+                    tools:layout="@layout/fragment_login_scan_module" />
+
+    </navigation>
+
 </navigation>

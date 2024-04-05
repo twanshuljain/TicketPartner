@@ -212,6 +212,10 @@ class SignInFragment : Fragment(), CountdownTimerCallback {
                 )
             }
         }
+
+        binding.clJoinAdminStaff.setOnClickListener {
+            findNavController().navigate(R.id.scanModuleGraph)
+        }
     }
 
     /** validation for email login API */
