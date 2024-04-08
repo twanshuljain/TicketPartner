@@ -5,6 +5,7 @@ import com.example.ticketpartner.scan_module.data.repository.LoginScanRepository
 import com.example.ticketpartner.scan_module.domain.datasource.LoginScanDataSource
 import com.example.ticketpartner.scan_module.domain.repository.LoginScanRepository
 import com.example.ticketpartner.scan_module.domain.usecase.GetLoginWithPinUseCase
+import com.example.ticketpartner.scan_module.domain.usecase.GetScanEventDetailsUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -23,4 +24,8 @@ object LoginScanModule {
     @Provides
     fun providesGetLoginWithPinUseCase(loginScanRepository: LoginScanRepository): GetLoginWithPinUseCase =
         GetLoginWithPinUseCase(loginScanRepository)
+
+    @Provides
+    fun providesGetScanEventDetailsUseCase(loginScanRepository: LoginScanRepository): GetScanEventDetailsUseCase =
+        GetScanEventDetailsUseCase(loginScanRepository)
 }

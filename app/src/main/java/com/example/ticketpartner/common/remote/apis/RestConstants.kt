@@ -22,6 +22,7 @@ const val getTimeZone = "default/data/time-zone/list/"
 const val getEventType = "event/event-type/list/"
 const val getStateBasedOnCountryId = "default/data/state/{countryId}/"
 const val getCreateEventTicketList = "ticket/ticket-list/{eventId}"
+const val getScanEventDetails = "ticket-scan/event/detail/"
 
 //scan module
 const val loginWithPin = "ticket-scan/login/"

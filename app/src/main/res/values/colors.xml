@@ -36,4 +36,5 @@
     <color name="grey_suggestion">#5A6872</color>
     <color name="light_orange_border">#EBD7CA</color>
     <color name="scan_light_grey">#5A6872</color>
+    <color name="light_orange_border">#F4E7D4</color>
 </resources>
