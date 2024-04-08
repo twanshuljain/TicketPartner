@@ -5,7 +5,7 @@
 <solid android:color="@color/white"/>
     <stroke android:color="@color/white" android:width="@dimen/margin_0"/>
     <!-- Add padding if needed -->
-    <corners android:topRightRadius="@dimen/margin_10"
-        android:topLeftRadius="@dimen/margin_10"/>
+    <corners android:topRightRadius="@dimen/margin_16"
+        android:topLeftRadius="@dimen/margin_16"/>
 
 </shape>

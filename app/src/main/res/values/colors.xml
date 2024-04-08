@@ -35,4 +35,5 @@
     <color name="border_grey">#C7CCD3</color>
 
     <color name="scan_light_grey">#5A6872</color>
+    <color name="light_orange_border">#F4E7D4</color>
 </resources>

@@ -100,6 +100,9 @@ dependencies {
     //google-map
     implementation ("com.google.android.gms:play-services-maps:18.2.0")
 
+    //circular image view
+    implementation ("de.hdodenhof:circleimageview:3.1.0")
+
 }
 
 kapt {

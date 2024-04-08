@@ -87,10 +87,16 @@
 
                 <fragment
                     android:id="@+id/loginScanModuleFragment"
-                    android:name="com.example.ticketpartner.scan_module.LoginScanModuleFragment"
+                    android:name="com.example.ticketpartner.scan_module.presentation.LoginScanModuleFragment"
                     android:label="fragment_login_scan_module"
                     tools:layout="@layout/fragment_login_scan_module" />
 
-    </navigation>
+                <fragment
+                    android:id="@+id/eventDetailsScanModuleFragment"
+                    android:name="com.example.ticketpartner.scan_module.presentation.EventDetailsScanModuleFragment"
+                    android:label="fragment_evnet_details_scan_module"
+                    tools:layout="@layout/fragment_event_details_scan_module" />
+
+            </navigation>
 
 </navigation>

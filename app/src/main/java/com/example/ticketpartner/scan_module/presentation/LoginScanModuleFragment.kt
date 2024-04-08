@@ -1,4 +1,4 @@
-package com.example.ticketpartner.scan_module
+package com.example.ticketpartner.scan_module.presentation
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import com.example.ticketpartner.R
 import com.example.ticketpartner.common.EMPTY_STRING
 import com.example.ticketpartner.common.SnackBarUtil
@@ -63,10 +64,11 @@ class LoginScanModuleFragment : Fragment() {
         }
 
         binding.rlContinue.setOnClickListener {
-            if (isAllFieldsValid()) {
+            findNavController().navigate(R.id.eventDetailsScanModuleFragment)
+           /* if (isAllFieldsValid()) {
                 viewModel.loginWithPin(etName, etPin)
                 observeLoginResponse()
-            }
+            }*/
         }
     }
 
