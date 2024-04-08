@@ -32,6 +32,7 @@ import com.example.ticketpartner.feature_login.domain.model.VerifyEmailForgotPas
 import com.example.ticketpartner.feature_login.domain.model.VerifyEmailForgotPassResponse
 import com.example.ticketpartner.feature_login.domain.model.VerifyMobileOtpRequest
 import com.example.ticketpartner.feature_login.domain.model.VerifyMobileOtpResponse
+import com.example.ticketpartner.scan_module.domain.model.EventDetailsScanResponse
 import com.example.ticketpartner.scan_module.domain.model.LoginWithPinRequest
 import com.example.ticketpartner.scan_module.domain.model.LoginWithPinResponse
 import okhttp3.MultipartBody
@@ -115,5 +116,8 @@ interface RestApiService {
     //scan module
     @POST(loginWithPin)
     suspend fun loginWithPin(@Body loginWithPinRequest: LoginWithPinRequest): LoginWithPinResponse
+
+    @GET(getScanEventDetails)
+    suspend fun getScanEventDetails(): EventDetailsScanResponse
 
 }

@@ -98,12 +98,33 @@
         <item name="android:fontFamily" tools:targetApi="o">@font/lato_medium</item>
     </style>
 
+    <style name="boldDarkPrimaryText16" parent="Widget.AppCompat.TextView">
+        <item name="android:textColor">@color/dark_primary</item>
+        <item name="hintTextColor">@color/placeholder</item>
+        <item name="android:textSize">@dimen/text_16</item>
+        <item name="android:fontFamily" tools:targetApi="o">@font/lato_bold</item>
+    </style>
+
     <style name="mediumDarkPrimaryText18" parent="Widget.AppCompat.TextView">
         <item name="android:textColor">@color/dark_primary</item>
         <item name="hintTextColor">@color/placeholder</item>
         <item name="android:textSize">@dimen/text_18</item>
         <item name="android:fontFamily" tools:targetApi="o">@font/lato_medium</item>
     </style>
+
+    <style name="mediumDarkPrimaryText24" parent="Widget.AppCompat.TextView">
+        <item name="android:textColor">@color/dark_primary</item>
+        <item name="hintTextColor">@color/placeholder</item>
+        <item name="android:textSize">@dimen/text_24</item>
+        <item name="android:fontFamily" tools:targetApi="o">@font/lato_medium</item>
+    </style>
+
+    <style name="boldDarkPrimaryText24" parent="Widget.AppCompat.TextView">
+        <item name="android:textColor">@color/dark_primary</item>
+        <item name="hintTextColor">@color/placeholder</item>
+        <item name="android:textSize">@dimen/text_24</item>
+        <item name="android:fontFamily" tools:targetApi="o">@font/lato_bold</item>
+    </style>f
 
     <style name="regularParagraph14" parent="Widget.AppCompat.TextView">
         <item name="android:textColor">@color/para_text</item>
@@ -260,6 +281,12 @@
         <item name="android:fontFamily" tools:targetApi="o">@font/lato_regular</item>
     </style>
 
+    <style name="mediumParaText12" parent="Widget.AppCompat.TextView">
+        <item name="android:textColor">@color/text_parra</item>
+        <item name="android:textSize">@dimen/text_12</item>
+        <item name="android:fontFamily" tools:targetApi="o">@font/lato_semi_bold</item>
+    </style>
+
 
     //set snackBar background for success
 
@@ -318,6 +345,11 @@
         <item name="cornerSizeTopLeft">@dimen/margin_15</item>
         <item name="cornerSizeBottomRight">0dp</item>
         <item name="cornerSizeBottomLeft">0dp</item>
+    </style>
+
+    <style name="RoundedTopCorner">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize"> @dimen/margin_16</item><!-- Adjust the radius -->
     </style>
 
 </resources>
