@@ -147,6 +147,12 @@
     <string name="where_i_can_find_pin">Where I can find the pin?</string>
     <string name="learn_how_to_use">Learn how to use this</string>
     <string name="are_you_scanning_for_this_event">Are you scanning for this \nevent?</string>
+    <string name="select_ticket_type">Select Ticket Type</string>
+    <string name="select_all">Select All</string>
+    <string name="search">Search</string>
+    <string name="home">Home</string>
+    <string name="go_offline">Go Offline</string>
+    <string name="end_scan">End Scan</string>
 
 
 </resources>

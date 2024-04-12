@@ -1,0 +1,17 @@
+<!-- res/menu/bottom_nav_menu.xml -->
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/scanBottomNavHome"
+        android:title="@string/home"
+        android:enabled="true"
+        android:icon="@drawable/ic_scan_home_grey" />
+    <item
+        android:id="@+id/scanBottomNavQR"
+        android:title="gg"
+        android:icon="@drawable/ic_qr_scan_purple" />
+    <item
+        android:id="@+id/scanBottomNavSearch"
+        android:title="@string/search"
+        android:enabled="true"
+        android:icon="@drawable/ic_scan_bottom_nav_search" />
+</menu>

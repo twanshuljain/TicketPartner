@@ -10,8 +10,9 @@ const val ERROR_CODE = 1001
 
 const val SPACE = " "
 const val EMPTY_STRING = ""
-const val HYPHEN_CHAR = "-"
+const val HYPHEN_CHAR = " - "
 const val UNDERSCORE_CHAR = "_"
+const val COMMA = ","
 const val DELAY_TWO_SEC = 2000L
 
 /*
@@ -41,6 +42,9 @@ const val FORWARD_SLASH = " / "
 const val EMAIL_KEY = "email"
 const val RESET_TOKEN = "reset_token"
 const val ORGANIZATION_ID = "organization_id"
+
+/** Bundle key constants */
+const val SELECT_SCAN_TICKET_ARRAY = "scan_selected_ticket_type_name"
 
 
 //Database keys

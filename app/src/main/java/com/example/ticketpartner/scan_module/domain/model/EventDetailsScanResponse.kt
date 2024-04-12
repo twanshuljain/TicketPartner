@@ -123,7 +123,8 @@ data class EventTicket(
     val ticket_visibility: String?,
     val updated_at: String?,
     val updated_by: Any?,
-    val user_id: Int?
+    val user_id: Int?,
+    var isSelected: Boolean = false
 )
 
 data class Organization(

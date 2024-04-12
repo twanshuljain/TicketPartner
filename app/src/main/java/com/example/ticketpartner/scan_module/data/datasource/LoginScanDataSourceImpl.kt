@@ -14,6 +14,6 @@ class LoginScanDataSourceImpl @Inject constructor(private val restApiService: Re
     }
 
     override suspend fun getScanEventDetails(): EventDetailsScanResponse {
-        TODO("Not yet implemented")
+     return restApiService.getScanEventDetails()
     }
 }

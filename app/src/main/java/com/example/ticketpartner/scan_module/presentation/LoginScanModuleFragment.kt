@@ -45,6 +45,9 @@ class LoginScanModuleFragment : Fragment() {
         /** allow char only */
         Utility.allowCharactersOnly(binding.etName)
 
+        etName = "d"
+        etPin = "702851"
+
         binding.etName.doAfterTextChanged {
             etName = it.toString().trim()
         }
@@ -64,11 +67,11 @@ class LoginScanModuleFragment : Fragment() {
         }
 
         binding.rlContinue.setOnClickListener {
-            findNavController().navigate(R.id.eventDetailsScanModuleFragment)
-           /* if (isAllFieldsValid()) {
+            //  findNavController().navigate(R.id.eventDetailsScanModuleFragment)
+            if (isAllFieldsValid()) {
                 viewModel.loginWithPin(etName, etPin)
                 observeLoginResponse()
-            }*/
+            }
         }
     }
 
@@ -82,6 +85,7 @@ class LoginScanModuleFragment : Fragment() {
                 is LoginWithPinUIState.OnSuccess -> {
                     DialogProgressUtil.dismiss()
                     SnackBarUtil.showSuccessSnackBar(binding.root, it.onSuccess.message.toString())
+                    findNavController().navigate(R.id.eventDetailsScanModuleFragment)
                 }
 
                 is LoginWithPinUIState.OnFailure -> {

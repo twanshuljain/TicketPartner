@@ -81,9 +81,7 @@ object Utility {
         val calendar = Calendar.getInstance()
         calendar.set(Calendar.HOUR_OF_DAY, hourOfDay)
         calendar.set(Calendar.MINUTE, minute)
-
         val amPm = if (calendar.get(Calendar.AM_PM) == Calendar.AM) "AM" else "PM"
-
         return String.format("%02d:%02d %s", hourOfDay % 12, minute, amPm)
     }
 
@@ -173,4 +171,5 @@ object Utility {
 
         editText.filters = arrayOf(filter)
     }
+
 }

@@ -7,7 +7,6 @@ import androidx.lifecycle.viewModelScope
 import com.example.ticketpartner.common.LogUtil
 import com.example.ticketpartner.common.storage.MyPreferences
 import com.example.ticketpartner.common.storage.PrefConstants
-import com.example.ticketpartner.feature_login.presentation.LoginViewModel
 import com.example.ticketpartner.scan_module.domain.model.EventDetailsScanUIState
 import com.example.ticketpartner.scan_module.domain.model.LoginWithPinUIState
 import com.example.ticketpartner.scan_module.domain.usecase.GetLoginWithPinUseCase
@@ -36,17 +35,22 @@ class LoginScanVewModel @Inject constructor(
         _pinLoginState.value = LoginWithPinUIState.IsLoading(true)
         viewModelScope.launch {
             getPinLoginUseCase.invoke(name, scanPin).catch {
-                logUtil.log(LoginViewModel.TAG, "onError${it.message.toString()}")
+                logUtil.log(TAG, "onError${it.message.toString()}")
                 val error = ErrorResponseHandler(it)
                 _pinLoginState.value =
                     LoginWithPinUIState.OnFailure(error.getErrors().message.toString())
             }.collect {
+                logUtil.log(TAG, "onResponse: $it")
                 it.data?.access_token?.let { accessToken ->
                     MyPreferences.putString(
                         PrefConstants.ACCESS_TOKEN, accessToken.toString()
                     )
                     _pinLoginState.value = LoginWithPinUIState.OnSuccess(it)
                 }
+                logUtil.log(
+                    TAG,
+                    "accessToken: ${MyPreferences.getString(PrefConstants.ACCESS_TOKEN)}"
+                )
             }
         }
     }
@@ -55,13 +59,18 @@ class LoginScanVewModel @Inject constructor(
         _getScanEventDetails.value = EventDetailsScanUIState.IsLoading(true)
         viewModelScope.launch {
             getScanEventDetailsUseCase.invoke().catch {
-                logUtil.log(LoginViewModel.TAG, "onError${it.message.toString()}")
+                logUtil.log(TAG, "onError${it.message.toString()}")
                 val error = ErrorResponseHandler(it)
                 _getScanEventDetails.value =
                     EventDetailsScanUIState.OnFailure(error.getErrors().message.toString())
             }.collect {
+                logUtil.log(TAG, "onResponse: $it")
                 _getScanEventDetails.value = EventDetailsScanUIState.OnSuccess(it)
             }
         }
+    }
+
+    companion object {
+        val TAG = LoginScanVewModel::class.java.simpleName
     }
 }

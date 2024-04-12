@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".scan_module.presentation.EventDetailsScanModuleFragment">
 
     <androidx.constraintlayout.widget.Guideline
@@ -31,8 +30,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_20"
         android:layout_marginBottom="@dimen/margin_10"
-        android:textAlignment="textStart"
         android:text="@string/are_you_scanning_for_this_event"
+        android:textAlignment="textStart"
         app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
         app:layout_constraintStart_toStartOf="@id/guidelineStart"
         app:layout_constraintTop_toTopOf="parent" />
@@ -42,21 +41,21 @@
         android:layout_width="@dimen/margin_0"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_20"
-        android:elevation="@dimen/margin_5"
         android:background="@drawable/corner_curve_layout_design_orange_border"
-        app:layout_constraintStart_toStartOf="@id/guidelineStart"
+        android:elevation="@dimen/margin_5"
         app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
+        app:layout_constraintStart_toStartOf="@id/guidelineStart"
         app:layout_constraintTop_toBottomOf="@id/tvScanning">
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/ivBanner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
             android:scaleType="fitXY"
-            android:src="@drawable/temp_event_back" />
+            android:src="@drawable/temp_event_back"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvEventTitle"
@@ -64,11 +63,10 @@
             android:layout_width="@dimen/margin_0"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/margin_10"
-            android:textAlignment="textStart"
-            android:text="MAHA HOLI ft NUCLEYA  KR$NA | HOLI 2024"
-            app:layout_constraintEnd_toEndOf="parent"
             android:background="@color/orange_light_back"
             android:padding="@dimen/margin_15"
+            android:textAlignment="textStart"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/ivBanner" />
 
@@ -76,134 +74,153 @@
             android:layout_width="@dimen/margin_0"
             android:layout_height="@dimen/size_1"
             android:background="@color/light_orange_border"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvEventTitle"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvEventTitle" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
             android:paddingStart="@dimen/margin_15"
             android:paddingTop="@dimen/margin_15"
             android:paddingBottom="@dimen/margin_15"
-            app:layout_constraintTop_toBottomOf="@id/tvEventTitle"
-            app:layout_constraintBottom_toBottomOf="parent">
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvEventTitle">
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/ivCalendar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
                 android:scaleType="fitXY"
-                android:src="@drawable/ic_calendar_grey" />
+                android:src="@drawable/ic_calendar_grey"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvStartDate"
+                style="@style/mediumParaText12"
                 android:layout_width="@dimen/margin_0"
                 android:layout_height="wrap_content"
-                style="@style/mediumParaText12"
                 android:paddingStart="@dimen/margin_8"
                 android:textAlignment="textStart"
-                android:text="May 25, 2024  |"
-                app:layout_constraintTop_toTopOf="@id/ivCalendar"
                 app:layout_constraintBottom_toBottomOf="@id/ivCalendar"
-                app:layout_constraintStart_toEndOf="@id/ivCalendar"/>
+                app:layout_constraintStart_toEndOf="@id/ivCalendar"
+                app:layout_constraintTop_toTopOf="@id/ivCalendar" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvStartEndTime"
+                style="@style/mediumParaText12"
                 android:layout_width="@dimen/margin_0"
                 android:layout_height="wrap_content"
-                style="@style/mediumParaText12"
-                android:textAlignment="textStart"
                 android:paddingStart="@dimen/margin_8"
-                android:text="6:00 AM - 12:00 PM"
-                app:layout_constraintTop_toTopOf="parent"
+                android:textAlignment="textStart"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/tvStartDate"
-                app:layout_constraintEnd_toEndOf="parent"/>
+                app:layout_constraintTop_toTopOf="parent" />
 
             <View
                 android:id="@+id/viewLineDateTime"
                 android:layout_width="@dimen/margin_0"
                 android:layout_height="@dimen/size_1"
-                android:background="@color/border"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginTop="@dimen/margin_15"
-                app:layout_constraintTop_toBottomOf="@id/ivCalendar"/>
+                android:background="@color/border"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/ivCalendar" />
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/ivLocationPin"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/viewLineDateTime"
-                android:scaleType="fitXY"
                 android:layout_marginTop="@dimen/margin_15"
-                android:src="@drawable/ic_location_pin_grey" />
+                android:scaleType="fitXY"
+                android:src="@drawable/ic_location_pin_grey"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/viewLineDateTime" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvLocation"
+                style="@style/mediumParaText12"
                 android:layout_width="@dimen/margin_0"
                 android:layout_height="wrap_content"
-                style="@style/mediumParaText12"
-                android:textAlignment="textStart"
                 android:paddingStart="@dimen/margin_8"
-                android:text="KTPO, Whitefield, Bengaluru"
-                app:layout_constraintTop_toTopOf="@id/ivLocationPin"
+                android:textAlignment="textStart"
                 app:layout_constraintBottom_toBottomOf="@id/ivLocationPin"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/ivLocationPin"
-                app:layout_constraintEnd_toEndOf="parent"/>
+                app:layout_constraintTop_toTopOf="@id/ivLocationPin" />
 
             <View
                 android:id="@+id/viewLineLocation"
                 android:layout_width="@dimen/margin_0"
                 android:layout_height="@dimen/size_1"
-                android:background="@color/border"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginTop="@dimen/margin_15"
-                app:layout_constraintTop_toBottomOf="@id/tvLocation"/>
+                android:background="@color/border"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvLocation" />
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/ivProfile"
                 android:layout_width="@dimen/margin_40"
                 android:layout_height="@dimen/margin_40"
                 android:layout_marginTop="@dimen/margin_15"
-                app:layout_constraintTop_toBottomOf="@id/viewLineLocation"
+                android:src="@drawable/temp_event_back"
                 app:layout_constraintStart_toStartOf="parent"
-                android:src="@drawable/temp_event_back"/>
+                app:layout_constraintTop_toBottomOf="@id/viewLineLocation" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvOrganizerName"
+                style="@style/mediumDarkPrimaryText14"
                 android:layout_width="@dimen/margin_0"
                 android:layout_height="wrap_content"
-                style="@style/mediumDarkPrimaryText14"
-                android:textAlignment="textStart"
                 android:paddingStart="@dimen/margin_8"
                 android:text="Albert Flores"
-                app:layout_constraintTop_toTopOf="@id/ivProfile"
+                android:textAlignment="textStart"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/ivProfile"
-                app:layout_constraintEnd_toEndOf="parent"/>
+                app:layout_constraintTop_toTopOf="@id/ivProfile" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvProfileType"
+                style="@style/regularParaText12"
                 android:layout_width="@dimen/margin_0"
                 android:layout_height="wrap_content"
-                style="@style/regularParaText12"
-                android:textAlignment="textStart"
                 android:paddingStart="@dimen/margin_8"
                 android:text="Organizer"
-                app:layout_constraintTop_toBottomOf="@id/tvOrganizerName"
+                android:textAlignment="textStart"
                 app:layout_constraintBottom_toBottomOf="@id/ivProfile"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/ivProfile"
-                app:layout_constraintEnd_toEndOf="parent"/>
+                app:layout_constraintTop_toBottomOf="@id/tvOrganizerName" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <RelativeLayout
+        android:layout_width="@dimen/margin_0"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
+        app:layout_constraintStart_toStartOf="@id/guidelineStart">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnContinue"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_48"
+            android:layout_marginTop="@dimen/margin_20"
+            android:layout_marginBottom="@dimen/margin_20"
+            android:textAllCaps="false"
+            android:background="@drawable/btn_design_dark_primary"
+            android:text="@string/Continue"
+            android:textColor="@color/white"
+
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+    </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

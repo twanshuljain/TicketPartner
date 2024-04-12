@@ -50,6 +50,12 @@
         <item name="android:fontFamily" tools:targetApi="o">@font/lato_bold</item>
     </style>
 
+    <style name="mediumPurplek14" parent="Widget.AppCompat.TextView">
+        <item name="android:textColor">@color/purple</item>
+        <item name="android:textSize">@dimen/text_14</item>
+        <item name="android:fontFamily" tools:targetApi="o">@font/lato_medium</item>
+    </style>
+
     <style name="boldParaHeading10" parent="Widget.AppCompat.TextView">
         <item name="android:textColor">@color/paraHeading</item>
         <item name="android:textSize">@dimen/text_10</item>
@@ -88,6 +94,27 @@
         <item name="android:textColor">@color/dark_primary</item>
         <item name="hintTextColor">@color/placeholder</item>
         <item name="android:textSize">@dimen/text_14</item>
+        <item name="android:fontFamily" tools:targetApi="o">@font/lato_medium</item>
+    </style>
+
+    <style name="mediumDarkPrimaryText12" parent="Widget.AppCompat.TextView">
+        <item name="android:textColor">@color/dark_primary</item>
+        <item name="hintTextColor">@color/placeholder</item>
+        <item name="android:textSize">@dimen/text_12</item>
+        <item name="android:fontFamily" tools:targetApi="o">@font/lato_medium</item>
+    </style>
+
+    <style name="mediumGreenText12" parent="Widget.AppCompat.TextView">
+        <item name="android:textColor">@color/green</item>
+        <item name="hintTextColor">@color/placeholder</item>
+        <item name="android:textSize">@dimen/text_12</item>
+        <item name="android:fontFamily" tools:targetApi="o">@font/lato_medium</item>
+    </style>
+
+    <style name="mediumRedLightText12" parent="Widget.AppCompat.TextView">
+        <item name="android:textColor">@color/red_light</item>
+        <item name="hintTextColor">@color/placeholder</item>
+        <item name="android:textSize">@dimen/text_12</item>
         <item name="android:fontFamily" tools:targetApi="o">@font/lato_medium</item>
     </style>
 
@@ -196,6 +223,18 @@
         <item name="android:textColor">@color/purple</item>
         <item name="android:textSize">@dimen/text_12</item>
         <item name="android:fontFamily" tools:targetApi="o">@font/lato_medium</item>
+    </style>
+
+    <style name="mediumPurpleText16" parent="Widget.AppCompat.TextView">
+        <item name="android:textColor">@color/purple</item>
+        <item name="android:textSize">@dimen/text_16</item>
+        <item name="android:fontFamily" tools:targetApi="o">@font/lato_medium</item>
+    </style>
+
+    <style name="regularOrangeText16" parent="Widget.AppCompat.TextView">
+        <item name="android:textColor">@color/button_orange</item>
+        <item name="android:textSize">@dimen/text_16</item>
+        <item name="android:fontFamily" tools:targetApi="o">@font/lato_regular</item>
     </style>
 
     <style name="boldSecondary12" parent="Widget.AppCompat.TextView">
