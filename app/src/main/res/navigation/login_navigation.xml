@@ -11,14 +11,13 @@
         android:label="fragment_sign_in"
         app:popUpTo="@id/login_navigation"
         app:popUpToInclusive="true"
-        tools:layout="@layout/fragment_sign_in" >
-    </fragment>
+        tools:layout="@layout/fragment_sign_in"></fragment>
 
     <fragment
         android:id="@+id/signUpEmailFragment"
         android:name="com.example.ticketpartner.feature_signup.presentation.SignUpEmailFragment"
         android:label="fragment_sign_up_email"
-        tools:layout="@layout/fragment_sign_up_email" >
+        tools:layout="@layout/fragment_sign_up_email">
 
     </fragment>
 
@@ -26,7 +25,7 @@
         android:id="@+id/signUpDetailsFragment"
         android:name="com.example.ticketpartner.feature_signup.presentation.SignUpDetailsFragment"
         android:label="fragment_sign_up_details"
-        tools:layout="@layout/fragment_sign_up_details" >
+        tools:layout="@layout/fragment_sign_up_details">
 
     </fragment>
 
@@ -40,7 +39,7 @@
         android:id="@+id/splashLandingFragment"
         android:name="com.example.ticketpartner.feature_login.presentation.SplashLandingFragment"
         android:label="fragment_splash_landing"
-        tools:layout="@layout/fragment_splash_landing" >
+        tools:layout="@layout/fragment_splash_landing">
 
     </fragment>
 
@@ -81,34 +80,34 @@
         tools:layout="@layout/fragment_create_event_tickets" />
 
 
-            <navigation
-                android:id="@+id/scanModuleGraph"
-                app:startDestination="@id/loginScanModuleFragment">
+    <navigation
+        android:id="@+id/scanModuleGraph"
+        app:startDestination="@id/loginScanModuleFragment">
 
-                <fragment
-                    android:id="@+id/loginScanModuleFragment"
-                    android:name="com.example.ticketpartner.scan_module.presentation.LoginScanModuleFragment"
-                    android:label="fragment_login_scan_module"
-                    tools:layout="@layout/fragment_login_scan_module" />
+        <fragment
+            android:id="@+id/loginScanModuleFragment"
+            android:name="com.example.ticketpartner.scan_module.feature_login_scan.presentation.LoginScanModuleFragment"
+            android:label="fragment_login_scan_module"
+            tools:layout="@layout/fragment_login_scan_module" />
 
-                <fragment
-                    android:id="@+id/eventDetailsScanModuleFragment"
-                    android:name="com.example.ticketpartner.scan_module.presentation.EventDetailsScanModuleFragment"
-                    android:label="fragment_evnet_details_scan_module"
-                    tools:layout="@layout/fragment_event_details_scan_module" />
+        <fragment
+            android:id="@+id/eventDetailsScanModuleFragment"
+            android:name="com.example.ticketpartner.scan_module.feature_login_scan.presentation.EventDetailsScanModuleFragment"
+            android:label="fragment_evnet_details_scan_module"
+            tools:layout="@layout/fragment_event_details_scan_module" />
 
-                <fragment
-                    android:id="@+id/selectTicketTypeScanModuleFragment"
-                    android:name="com.example.ticketpartner.scan_module.presentation.SelectTicketTypeScanModuleFragment"
-                    android:label="fragment_select_ticket_type_scan_module"
-                    tools:layout="@layout/fragment_select_ticket_type_scan_module" />
+        <fragment
+            android:id="@+id/selectTicketTypeScanModuleFragment"
+            android:name="com.example.ticketpartner.scan_module.feature_login_scan.presentation.SelectTicketTypeScanModuleFragment"
+            android:label="fragment_select_ticket_type_scan_module"
+            tools:layout="@layout/fragment_select_ticket_type_scan_module" />
 
-                <fragment
-                    android:id="@+id/scanQRLandingFragment"
-                    android:name="com.example.ticketpartner.ScanQRLandingFragment"
-                    android:label="fragment_scan_q_r_landing"
-                    tools:layout="@layout/fragment_scan_q_r_landing" />
+        <fragment
+            android:id="@+id/scanQRLandingFragment"
+            android:name="com.example.ticketpartner.ScanQRLandingFragment"
+            android:label="fragment_scan_q_r_landing"
+            tools:layout="@layout/fragment_scan_q_r_landing" />
 
-            </navigation>
+    </navigation>
 
 </navigation>

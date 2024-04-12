@@ -32,9 +32,12 @@ import com.example.ticketpartner.feature_login.domain.model.VerifyEmailForgotPas
 import com.example.ticketpartner.feature_login.domain.model.VerifyEmailForgotPassResponse
 import com.example.ticketpartner.feature_login.domain.model.VerifyMobileOtpRequest
 import com.example.ticketpartner.feature_login.domain.model.VerifyMobileOtpResponse
-import com.example.ticketpartner.scan_module.domain.model.EventDetailsScanResponse
-import com.example.ticketpartner.scan_module.domain.model.LoginWithPinRequest
-import com.example.ticketpartner.scan_module.domain.model.LoginWithPinResponse
+import com.example.ticketpartner.scan_module.feature_login_scan.domain.model.EventDetailsScanResponse
+import com.example.ticketpartner.scan_module.feature_login_scan.domain.model.LoginWithPinRequest
+import com.example.ticketpartner.scan_module.feature_login_scan.domain.model.LoginWithPinResponse
+import com.example.ticketpartner.scan_module.feature_qr_scan.domain.model.QrScanRequest
+import com.example.ticketpartner.scan_module.feature_qr_scan.domain.model.QrScanResponse
+import com.example.ticketpartner.scan_module.feature_qr_scan.domain.model.QrScannedTicketResponse
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.http.Body
@@ -119,5 +122,11 @@ interface RestApiService {
 
     @GET(getScanEventDetails)
     suspend fun getScanEventDetails(): EventDetailsScanResponse
+
+    @POST(scanQrCode)
+    suspend fun scanQrCode(@Body qrScanRequest: QrScanRequest): QrScanResponse
+
+    @GET(getQrScannedTicketData)
+    suspend fun getQrScannedTicketData(): QrScannedTicketResponse
 
 }

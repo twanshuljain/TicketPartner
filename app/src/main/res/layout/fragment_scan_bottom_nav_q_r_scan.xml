@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/white"
-    tools:context=".scan_module.presentation.ScanBottomQRScanFragment">
+    tools:context=".scan_module.feature_login_scan.presentation.ScanBottomQRScanFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/clRadio"
@@ -55,7 +55,7 @@
             android:layout_width="@dimen/margin_0"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_7"
-            android:background="@drawable/select_ticket_type_item_light_purple_design"
+            android:background="@drawable/select_ticket_type_item_disable_design"
             android:paddingStart="@dimen/margin_10"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@id/guidelineVerticalCenter"
@@ -66,9 +66,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:clickable="false"
+                android:focusable="false"
                 android:buttonTint="@color/secondary"
                 android:paddingStart="@dimen/margin_10"
-                android:text="@string/mobile_number" />
+                android:text="@string/rfid" />
 
         </RelativeLayout>
 
@@ -223,6 +225,7 @@
                         app:layout_constraintTop_toBottomOf="@id/tvTotalScanned" />
 
                     <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/btnEndScan"
                         style="@style/regularOrangeText16"
                         android:layout_width="@dimen/margin_0"
                         android:layout_height="@dimen/size_32"

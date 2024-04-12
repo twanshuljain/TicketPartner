@@ -132,6 +132,13 @@
         <item name="android:fontFamily" tools:targetApi="o">@font/lato_bold</item>
     </style>
 
+    <style name="boldDarkPrimaryText14" parent="Widget.AppCompat.TextView">
+        <item name="android:textColor">@color/dark_primary</item>
+        <item name="hintTextColor">@color/placeholder</item>
+        <item name="android:textSize">@dimen/text_14</item>
+        <item name="android:fontFamily" tools:targetApi="o">@font/lato_bold</item>
+    </style>
+
     <style name="mediumDarkPrimaryText18" parent="Widget.AppCompat.TextView">
         <item name="android:textColor">@color/dark_primary</item>
         <item name="hintTextColor">@color/placeholder</item>

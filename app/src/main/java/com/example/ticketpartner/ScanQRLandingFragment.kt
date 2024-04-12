@@ -1,22 +1,25 @@
 package com.example.ticketpartner
 
+import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
+import com.example.ticketpartner.common.SELECT_SCAN_TICKET_ARRAY
 import com.example.ticketpartner.databinding.FragmentScanQRLandingBinding
-import com.example.ticketpartner.scan_module.presentation.ScanBottomNavHomeFragment
-import com.example.ticketpartner.scan_module.presentation.ScanBottomNavSearchFragment
-import com.example.ticketpartner.scan_module.presentation.ScanBottomQRScanFragment
+import com.example.ticketpartner.scan_module.feature_login_scan.presentation.ScanBottomNavHomeFragment
+import com.example.ticketpartner.scan_module.feature_login_scan.presentation.ScanBottomNavSearchFragment
+import com.example.ticketpartner.scan_module.feature_login_scan.presentation.ScanBottomQRScanFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class ScanQRLandingFragment : Fragment() {
     private lateinit var binding: FragmentScanQRLandingBinding
     private lateinit var bottomNavView: BottomNavigationView
     private lateinit var navController: NavController
-    private var isTorchOn = false
+    private var selectedTicketTypeList = ArrayList<String>()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -28,6 +31,19 @@ class ScanQRLandingFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        arguments?.let {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                selectedTicketTypeList = it.getStringArrayList(
+                    SELECT_SCAN_TICKET_ARRAY
+                ) as ArrayList<String>
+            } else {
+                selectedTicketTypeList =
+                    it.getStringArrayList(SELECT_SCAN_TICKET_ARRAY) as ArrayList<String>
+            }
+        }
+        Log.e("TAG", "selectedTicketNameList QR: ${selectedTicketTypeList} ")
+
         initBottomNavigation()
         initView()
     }
@@ -69,15 +85,6 @@ class ScanQRLandingFragment : Fragment() {
         binding.includeTitle.ivBack.setOnClickListener {
             requireActivity().onBackPressedDispatcher.onBackPressed()
         }
-        /*
-                binding.ivTorch.setOnClickListener {
-                    if (isTorchOn) {
-                        TorchController.turnOff(requireContext())
-                        isTorchOn = false
-                    } else {
-                        TorchController.turnOn(requireContext())
-                        isTorchOn = true
-                    }
-                }*/
+
     }
 }
