@@ -1,4 +1,4 @@
-package com.example.ticketpartner.scan_module.feature_login_scan.presentation
+package com.example.ticketpartner.scan_module.feature_qr_scan.presentation
 
 import android.annotation.SuppressLint
 import android.content.pm.PackageManager
@@ -14,11 +14,12 @@ import androidx.core.content.ContextCompat
 import androidx.core.util.isNotEmpty
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
+import com.example.ticketpartner.R
 import com.example.ticketpartner.common.SnackBarUtil
 import com.example.ticketpartner.common.ZERO
 import com.example.ticketpartner.databinding.FragmentScanBottomNavQRScanBinding
 import com.example.ticketpartner.databinding.LayoutEndScanBottomDialogBinding
-import com.example.ticketpartner.scan_module.feature_qr_scan.presentation.QrScanViewModel
 import com.example.ticketpartner.utils.TorchController
 import com.google.android.gms.vision.CameraSource
 import com.google.android.gms.vision.Detector
@@ -72,7 +73,7 @@ class ScanBottomQRScanFragment : Fragment() {
             openImagePickerBottomSheet()
         }
 
-       // viewModel.qrScanCode("244447224741818",selectedTicketTypeList)
+        // viewModel.qrScanCode("244447224741818",selectedTicketTypeList)
         //viewModel.getScannedTicketData()
     }
 
@@ -154,11 +155,11 @@ class ScanBottomQRScanFragment : Fragment() {
         val dialog = BottomSheetDialog(requireContext())
         val dialogView = LayoutEndScanBottomDialogBinding.inflate(layoutInflater)
         dialogView.btnNo.setOnClickListener {
-
             dialog.dismiss()
         }
         dialogView.btnYes.setOnClickListener {
-           // dialog.dismiss()
+            findNavController().navigate(R.id.qrScanReportFragment)
+            dialog.dismiss()
         }
         dialogView.ivClose.setOnClickListener {
             dialog.dismiss()

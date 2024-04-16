@@ -287,6 +287,14 @@
         <item name="android:fontFamily" tools:targetApi="o">@font/lato_regular</item>
     </style>
 
+    <style name="regularDarkGrey12" parent="Widget.AppCompat.TextView">
+        <item name="android:textColor">@color/dark_grey</item>
+        <item name="android:textSize">@dimen/text_12</item>
+        <item name="hintTextColor">@color/placeholder</item>
+        <item name="android:fontFamily" tools:targetApi="o">@font/lato_regular</item>
+    </style>
+
+
     <style name="regularSecondary9" parent="Widget.AppCompat.TextView">
         <item name="android:textColor">@color/secondary</item>
         <item name="android:textSize">@dimen/text_9</item>
@@ -337,6 +345,18 @@
         <item name="android:textColor">@color/text_parra</item>
         <item name="android:textSize">@dimen/text_12</item>
         <item name="android:fontFamily" tools:targetApi="o">@font/lato_semi_bold</item>
+    </style>
+
+    <style name="boldParaText12" parent="Widget.AppCompat.TextView">
+        <item name="android:textColor">@color/text_parra</item>
+        <item name="android:textSize">@dimen/text_12</item>
+        <item name="android:fontFamily" tools:targetApi="o">@font/lato_bold</item>
+    </style>
+
+    <style name="boldParaText14" parent="Widget.AppCompat.TextView">
+        <item name="android:textColor">@color/text_parra</item>
+        <item name="android:textSize">@dimen/text_14</item>
+        <item name="android:fontFamily" tools:targetApi="o">@font/lato_bold</item>
     </style>
 
 
@@ -402,6 +422,12 @@
     <style name="RoundedTopCorner">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize"> @dimen/margin_16</item><!-- Adjust the radius -->
+    </style>
+
+    //circular progress bar
+    <style name="CircularDeterminateProgressBar">
+        <item name="android:indeterminateOnly">false </item>
+        <item name="android:progressDrawable">@drawable/circle</item>
     </style>
 
 </resources>

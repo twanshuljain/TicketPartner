@@ -1,4 +1,4 @@
-package com.example.ticketpartner.scan_module.feature_qr_scan.presentation
+package com.example.ticketpartner.scan_module
 
 import android.os.Build
 import android.os.Bundle
@@ -11,9 +11,9 @@ import androidx.navigation.NavController
 import com.example.ticketpartner.R
 import com.example.ticketpartner.common.SELECT_SCAN_TICKET_ARRAY
 import com.example.ticketpartner.databinding.FragmentScanQRLandingBinding
-import com.example.ticketpartner.scan_module.feature_login_scan.presentation.ScanBottomNavHomeFragment
-import com.example.ticketpartner.scan_module.feature_login_scan.presentation.ScanBottomNavSearchFragment
-import com.example.ticketpartner.scan_module.feature_login_scan.presentation.ScanBottomQRScanFragment
+import com.example.ticketpartner.scan_module.feature_qr_scan.presentation.ScanBottomNavHomeFragment
+import com.example.ticketpartner.scan_module.feature_qr_scan.presentation.ScanBottomNavSearchFragment
+import com.example.ticketpartner.scan_module.feature_qr_scan.presentation.ScanBottomQRScanFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class ScanQRLandingFragment : Fragment() {

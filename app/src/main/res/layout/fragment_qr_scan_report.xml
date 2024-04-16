@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".QrScanReportFragment">
+
+    <include
+        android:id="@+id/includeTitle"
+        layout="@layout/scan_module_title_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/margin_0"
+        android:background="@color/orange_light_back"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/includeTitle">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingBottom="@dimen/margin_5"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/includeTitle">
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guidelineStart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_begin="15dp"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guidelineEnd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintGuide_end="@dimen/margin_15" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvEventName"
+                style="@style/mediumDarkPrimaryText16"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_15"
+                android:text="Albert Flores"
+                android:textAlignment="textStart"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvDateTime"
+                style="@style/regularParaText14"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_5"
+                android:text="May 25, 2024 |  6:00 AM - 12:00 PM"
+                android:textAlignment="textStart"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvEventName" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnAll"
+                style="@style/regularDarkPrimary14"
+                android:layout_width="@dimen/size_80"
+                android:layout_height="@dimen/size_32"
+                android:layout_marginStart="@dimen/size_10"
+                android:layout_marginTop="@dimen/margin_20"
+                android:background="@drawable/curve_btn_black_back_design"
+                android:text="@string/all"
+                android:textColor="@color/white"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvDateTime" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnAccepted"
+                style="@style/regularDarkPrimary14"
+                android:layout_width="@dimen/size_110"
+                android:layout_height="@dimen/size_32"
+                android:layout_marginStart="@dimen/size_10"
+                android:layout_marginTop="@dimen/margin_20"
+                android:background="@drawable/orange_border_button_design"
+                android:text="@string/accepted"
+                app:layout_constraintStart_toEndOf="@id/btnAll"
+                app:layout_constraintTop_toBottomOf="@id/tvDateTime" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnRejected"
+                style="@style/regularDarkPrimary14"
+                android:layout_width="@dimen/size_110"
+                android:layout_height="@dimen/size_32"
+                android:layout_marginStart="@dimen/size_10"
+                android:layout_marginTop="@dimen/margin_20"
+                android:background="@drawable/orange_border_button_design"
+                android:text="@string/rejected"
+                app:layout_constraintStart_toEndOf="@id/btnAccepted"
+                app:layout_constraintTop_toBottomOf="@id/tvDateTime" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/cvProgress"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_20"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="@dimen/margin_20"
+                app:cardElevation="@dimen/margin_5"
+                app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
+                app:layout_constraintStart_toStartOf="@id/guidelineStart"
+                app:layout_constraintTop_toBottomOf="@id/btnAll"
+                app:strokeWidth="@dimen/margin_0">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/margin_20">
+
+                    <androidx.constraintlayout.widget.Guideline
+                        android:id="@+id/guidelineVerticalCenter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintGuide_end="@dimen/margin_15"
+                        app:layout_constraintGuide_percent="0.5"
+                        app:layout_constraintStart_toStartOf="parent" />
+
+                    <androidx.constraintlayout.widget.Guideline
+                        android:id="@+id/guidelineVerticalLeft"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintGuide_end="@dimen/margin_15"
+                        app:layout_constraintGuide_percent="0.28"
+                        app:layout_constraintStart_toStartOf="parent" />
+
+                    <androidx.constraintlayout.widget.Guideline
+                        android:id="@+id/guidelineVerticalRight"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintGuide_end="@dimen/margin_15"
+                        app:layout_constraintGuide_percent="0.72"
+                        app:layout_constraintStart_toStartOf="parent" />
+
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/progress"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_20"
+                        android:src="@drawable/temp_pie_chart"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@id/tvAccepted"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/margin_15"
+                        android:layout_marginTop="@dimen/margin_15"
+                        android:drawableStart="@drawable/ic_accepted_circle"
+                        android:drawablePadding="@dimen/size_10"
+                        android:text="@string/accepted"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/progress" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvAcceptedCount"
+                        android:layout_width="@dimen/margin_0"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_15"
+                        android:paddingStart="@dimen/margin_5"
+                        android:paddingEnd="@dimen/margin_5"
+                        android:text="380"
+                        android:textAlignment="center"
+                        app:layout_constraintEnd_toEndOf="@id/guidelineVerticalCenter"
+                        app:layout_constraintStart_toStartOf="@id/guidelineVerticalLeft"
+                        app:layout_constraintTop_toBottomOf="@id/progress" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvRejected"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_15"
+                        android:drawableStart="@drawable/ic_rejected_circle"
+                        android:drawablePadding="@dimen/size_10"
+                        android:text="@string/rejected"
+                        app:layout_constraintStart_toStartOf="@id/guidelineVerticalCenter"
+                        app:layout_constraintTop_toBottomOf="@id/progress" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvRejectedCount"
+                        android:layout_width="@dimen/margin_0"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_15"
+                        android:layout_marginEnd="@dimen/margin_15"
+                        android:paddingStart="@dimen/margin_5"
+                        android:paddingEnd="@dimen/margin_5"
+                        android:text="15"
+                        android:textAlignment="center"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="@id/guidelineVerticalRight"
+                        app:layout_constraintTop_toBottomOf="@id/progress" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvOnline"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/margin_15"
+                        android:layout_marginTop="@dimen/margin_15"
+                        android:drawableStart="@drawable/ic_online_circle"
+                        android:drawablePadding="@dimen/size_10"
+                        android:text="@string/online"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tvAcceptedCount" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvOnlineCount"
+                        android:layout_width="@dimen/margin_0"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_15"
+                        android:paddingStart="@dimen/margin_5"
+                        android:paddingEnd="@dimen/margin_5"
+                        android:text="285"
+                        android:textAlignment="center"
+                        app:layout_constraintEnd_toEndOf="@id/guidelineVerticalCenter"
+                        app:layout_constraintStart_toStartOf="@id/guidelineVerticalLeft"
+                        app:layout_constraintTop_toBottomOf="@id/tvAcceptedCount" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvPhysical"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_15"
+                        android:drawableStart="@drawable/ic_physical_circle"
+                        android:drawablePadding="@dimen/size_10"
+                        android:text="@string/online"
+                        app:layout_constraintStart_toStartOf="@id/guidelineVerticalCenter"
+                        app:layout_constraintTop_toBottomOf="@id/tvRejected" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvPhysicalCount"
+                        android:layout_width="@dimen/margin_0"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_15"
+                        android:layout_marginEnd="@dimen/margin_15"
+                        android:paddingStart="@dimen/margin_5"
+                        android:paddingEnd="@dimen/margin_5"
+                        android:text="80"
+                        android:textAlignment="center"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="@id/guidelineVerticalRight"
+                        app:layout_constraintTop_toBottomOf="@id/tvRejectedCount" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="@dimen/margin_0"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_20"
+                android:minHeight="@dimen/size_200"
+                android:orientation="vertical"
+                app:cardBackgroundColor="@color/white"
+                app:cardCornerRadius="@dimen/margin_20"
+                app:cardElevation="@dimen/margin_5"
+                app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
+                app:layout_constraintStart_toStartOf="@id/guidelineStart"
+                app:layout_constraintTop_toBottomOf="@id/cvProgress"
+                app:strokeWidth="@dimen/margin_0">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvReportTicketType"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/white"
+                    app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
+                    app:layout_constraintStart_toStartOf="@id/guidelineStart"
+                    app:layout_constraintTop_toBottomOf="@id/cvProgress"
+                    tools:listitem="@layout/item_scan_report_ticket_types" />
+
+            </com.google.android.material.card.MaterialCardView>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
