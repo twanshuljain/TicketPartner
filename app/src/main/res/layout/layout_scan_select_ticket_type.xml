@@ -28,8 +28,21 @@
         android:scaleType="fitXY"
         android:paddingStart="@dimen/margin_5"
         android:paddingEnd="@dimen/margin_10"
-        android:visibility="visible"
+        android:visibility="gone"
         android:src="@drawable/ic_checked_checkbox"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/ivUnChecked"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleType="fitXY"
+        android:layout_marginEnd="@dimen/margin_15"
+        android:layout_marginBottom="@dimen/margin_5"
+        android:visibility="visible"
+        android:src="@drawable/temp_img_unselected"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />

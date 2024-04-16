@@ -104,7 +104,7 @@
 
         <fragment
             android:id="@+id/scanQRLandingFragment"
-            android:name="com.example.ticketpartner.ScanQRLandingFragment"
+            android:name="com.example.ticketpartner.scan_module.feature_qr_scan.presentation.ScanQRLandingFragment"
             android:label="fragment_scan_q_r_landing"
             tools:layout="@layout/fragment_scan_q_r_landing" />
 

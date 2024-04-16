@@ -33,7 +33,6 @@ class SelectTicketTypeScanModuleFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         initView()
         observeTicketTypeResponse()
-
     }
 
     private fun initView() {
@@ -46,13 +45,15 @@ class SelectTicketTypeScanModuleFragment : Fragment() {
         }
 
         binding.tvSelectAll.setOnClickListener {
-
+            adapter.selectAll()
         }
 
         binding.btnContinue.setOnClickListener {
             val bundle = bundleOf(SELECT_SCAN_TICKET_ARRAY to selectedTicketName)
             findNavController().navigate(R.id.scanQRLandingFragment, bundle)
         }
+
+
     }
 
     private fun observeTicketTypeResponse() {
@@ -62,6 +63,7 @@ class SelectTicketTypeScanModuleFragment : Fragment() {
                 is EventDetailsScanUIState.OnSuccess -> {
                     setTicketTypesAdapter(it.onSuccess.data)
                 }
+
                 is EventDetailsScanUIState.OnFailure -> {}
             }
         }

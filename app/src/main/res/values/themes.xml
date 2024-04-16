@@ -1,6 +1,8 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Base.Theme.TicketPartner" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="android:statusBarColor">@color/white</item>
+        <item name="android:windowLightStatusBar">true</item>
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/white</item>
         <item name="colorPrimaryDark">@color/white</item>
@@ -15,34 +17,40 @@
         <item name="android:statusBarColor">@color/white</item>-->
     </style>
 
+  <style name="Theme.TicketPartner" parent="Base.Theme.TicketPartner" />
 
 
-    <style name="AppTheme.NoActionBar" parent="Theme.Material3.Light.NoActionBar">
 
-        <!-- Set background color to white -->
+
+ <!--   <style name="AppTheme.NoActionBar" parent="Theme.Material3.Light.NoActionBar">
+
+
         <item name="android:windowBackground">@android:color/white</item>
-        <!-- Set the status bar icons to be dark -->
 
         <item name="android:statusBarColor">@android:color/white</item>
-        <!-- Make the status bar icons and text black -->
         <item name="android:windowLightStatusBar">true</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="android:windowFullscreen">false</item>
-    </style>
+    </style>-->
 
-<!--    <style name="AppTheme.NoActionBar.NoActionBar">
+<!-- <style name="AppTheme.NoActionBar.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>-->
 
-    <style name="Theme.TicketPartner" parent="Base.Theme.TicketPartner" />
+
+
     <style name="MainAlertDialog" parent="Theme.AppCompat.Light.Dialog.Alert">
         <item name="android:windowBackground">@drawable/bg_alert_dialog</item>
     </style>
-    <!-- Base application theme. -->
-    <style name="Base.AppTheme.NoActionBar" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+
+<!--
+<style name="Base.AppTheme.NoActionBar" parent="Theme.Material3.DayNight.NoActionBar">
+     <item name="colorPrimary">@color/white</item>
+    <item name="android:statusBarColor">@android:color/white</item>
+    <item name="android:windowLightStatusBar">true</item>
     </style>
+-->
+
 </resources>

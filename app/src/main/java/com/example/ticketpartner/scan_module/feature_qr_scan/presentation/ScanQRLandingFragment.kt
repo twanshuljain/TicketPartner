@@ -1,4 +1,4 @@
-package com.example.ticketpartner
+package com.example.ticketpartner.scan_module.feature_qr_scan.presentation
 
 import android.os.Build
 import android.os.Bundle
@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.NavController
+import com.example.ticketpartner.R
 import com.example.ticketpartner.common.SELECT_SCAN_TICKET_ARRAY
 import com.example.ticketpartner.databinding.FragmentScanQRLandingBinding
 import com.example.ticketpartner.scan_module.feature_login_scan.presentation.ScanBottomNavHomeFragment
@@ -20,6 +21,7 @@ class ScanQRLandingFragment : Fragment() {
     private lateinit var bottomNavView: BottomNavigationView
     private lateinit var navController: NavController
     private var selectedTicketTypeList = ArrayList<String>()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -49,6 +51,7 @@ class ScanQRLandingFragment : Fragment() {
     }
 
     private fun initBottomNavigation() {
+        binding.scanBottomNav.itemIconTintList = null
         loadFragment(ScanBottomQRScanFragment())
         binding.scanBottomNav.setOnItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
