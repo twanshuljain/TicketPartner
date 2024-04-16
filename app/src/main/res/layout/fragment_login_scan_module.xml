@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/orange_light_back"
-    tools:context=".scan_module.presentation.LoginScanModuleFragment">
+    tools:context=".scan_module.feature_login_scan.presentation.LoginScanModuleFragment">
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/ivTpLogo"
@@ -69,6 +69,7 @@
             android:imeOptions="actionNext"
             android:inputType="textEmailAddress"
             android:maxLines="1"
+            android:text="d"
             android:paddingStart="@dimen/margin_10"
             android:paddingEnd="@dimen/margin_10"
             android:singleLine="true"
@@ -105,6 +106,7 @@
                 android:layout_height="match_parent"
                 android:backgroundTint="@color/white"
                 android:hint="@string/enter_your_pin"
+                android:text="702851"
                 android:imeOptions="actionDone"
                 android:inputType="number"
                 android:maxLines="1"

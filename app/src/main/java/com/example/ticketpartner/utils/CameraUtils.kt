@@ -28,21 +28,16 @@ class CameraUtils {
             val timeStamp: String =
                 SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
             val fileName = "IMG_$timeStamp${IMAGE_EXTENSION}"
-
             val storageDir = File(
                 Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),
                 APP_NAME
             )
-
             // Create the storage directory if it does not exist
             if (!storageDir.exists()) {
                 storageDir.mkdirs()
             }
-
             val imageFile = File(storageDir, fileName)
-
             val scale = calculateScaleFactor(bitmap.width, bitmap.height, maxSizeBytes.toLong())
-
             try {
                 val scaledBitmap = Bitmap.createScaledBitmap(
                     bitmap,
@@ -50,13 +45,10 @@ class CameraUtils {
                     (bitmap.height * scale).toInt(),
                     false
                 )
-
                 val fileOutputStream = FileOutputStream(imageFile)
                 scaledBitmap.compress(Bitmap.CompressFormat.JPEG, 100, fileOutputStream)
                 fileOutputStream.close()
-
                 return imageFile
-
             } catch (e: IOException) {
                 e.printStackTrace()
                 // Handle the exception appropriately

@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".scan_module.feature_login_scan.presentation.SelectTicketTypeScanModuleFragment">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineStart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="15dp"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineEnd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintGuide_end="@dimen/margin_15" />
+
+    <include
+        android:id="@+id/includeTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        layout="@layout/scan_module_title_layout" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clEvent"
+        android:layout_width="@dimen/margin_0"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
+        app:layout_constraintStart_toStartOf="@id/guidelineStart"
+        android:elevation="@dimen/margin_8"
+        android:background="@drawable/select_ticket_type_layout_design"
+        android:layout_marginTop="@dimen/margin_18"
+        android:paddingTop="@dimen/margin_2"
+        app:layout_constraintTop_toBottomOf="@id/includeTitle">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvTitle"
+            style="@style/boldDarkPrimaryText16"
+            android:layout_width="@dimen/margin_0"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/margin_15"
+            android:background="@color/orange_light_back"
+            android:text="MAHA HOLI ft NUCLEYA  KR$NA | \n HOLI 2024"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:id="@+id/viewLineTitle"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_1"
+            android:background="@color/light_orange_border"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvTitle" />
+
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivCalendar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleType="fitXY"
+            android:paddingStart="@dimen/margin_15"
+            android:layout_marginTop="@dimen/margin_20"
+            android:src="@drawable/ic_calendar_grey"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/viewLineTitle" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvStartDate"
+            style="@style/mediumParaText12"
+            android:layout_width="@dimen/margin_0"
+            android:layout_height="wrap_content"
+            android:paddingStart="@dimen/margin_8"
+            android:text="May 25, 2024 |"
+            android:textAlignment="textStart"
+            app:layout_constraintBottom_toBottomOf="@id/ivCalendar"
+            app:layout_constraintStart_toEndOf="@id/ivCalendar"
+            app:layout_constraintTop_toTopOf="@id/ivCalendar" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvStartEndTime"
+            style="@style/mediumParaText12"
+            android:layout_width="@dimen/margin_0"
+            android:layout_height="wrap_content"
+            android:paddingStart="@dimen/margin_8"
+            android:text="6:00 AM - 12:00 PM"
+            android:textAlignment="textStart"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tvStartDate"
+            app:layout_constraintTop_toTopOf="@id/ivCalendar"
+            app:layout_constraintBottom_toBottomOf="@id/ivCalendar" />
+
+        <View
+            android:id="@+id/viewLineDateTime"
+            android:layout_width="@dimen/margin_0"
+            android:layout_height="@dimen/size_1"
+            android:layout_marginTop="@dimen/margin_15"
+            android:background="@color/border"
+            android:paddingStart="@dimen/margin_15"
+            android:paddingEnd="@dimen/margin_15"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ivCalendar" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivLocationPin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_15"
+            android:paddingStart="@dimen/margin_15"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_location_pin_grey"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/viewLineDateTime" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvLocation"
+            style="@style/mediumParaText12"
+            android:layout_width="@dimen/margin_0"
+            android:layout_height="wrap_content"
+            android:paddingStart="@dimen/margin_8"
+            android:text="KTPO, Whitefield, Bengaluru"
+            android:textAlignment="textStart"
+            app:layout_constraintBottom_toBottomOf="@id/ivLocationPin"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/ivLocationPin"
+            app:layout_constraintTop_toTopOf="@id/ivLocationPin" />
+
+        <View
+            android:id="@+id/vlLocation"
+            android:layout_width="@dimen/margin_0"
+            android:layout_height="@dimen/size_1"
+            android:layout_marginTop="@dimen/margin_20"
+            android:background="@color/border"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvLocation" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvTickets"
+        style="@style/regularParaText14"
+        android:layout_width="@dimen/margin_0"
+        android:layout_height="wrap_content"
+        android:paddingStart="@dimen/margin_8"
+        android:text="@string/tickets"
+        android:layout_marginTop="@dimen/margin_30"
+        android:textAlignment="textStart"
+        app:layout_constraintStart_toStartOf="@id/guidelineStart"
+        app:layout_constraintTop_toBottomOf="@id/clEvent" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvSelectAll"
+        style="@style/mediumPurpleText16"
+        android:layout_width="@dimen/margin_0"
+        android:layout_height="wrap_content"
+        android:paddingStart="@dimen/margin_8"
+        android:text="@string/select_all"
+        android:layout_marginTop="@dimen/margin_30"
+        android:textAlignment="textStart"
+        app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
+        app:layout_constraintTop_toBottomOf="@id/clEvent" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvSelectTicketType"
+        android:layout_width="@dimen/margin_0"
+        android:layout_height="@dimen/margin_0"
+        android:layout_marginTop="@dimen/margin_5"
+        app:layout_constraintTop_toBottomOf="@id/tvTickets"
+        app:layout_constraintStart_toStartOf="@id/guidelineStart"
+        app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
+        app:layout_constraintBottom_toTopOf="@id/rlBtn"
+        tools:listitem="@layout/layout_scan_select_ticket_type"
+        android:orientation="vertical"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+    <RelativeLayout
+        android:id="@+id/rlBtn"
+        android:layout_width="@dimen/margin_0"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
+        app:layout_constraintStart_toStartOf="@id/guidelineStart">
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnContinue"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_48"
+            android:layout_marginTop="@dimen/margin_20"
+            android:layout_marginBottom="@dimen/margin_20"
+            android:textAllCaps="false"
+            android:background="@drawable/btn_design_dark_primary"
+            android:text="@string/Continue"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+    </RelativeLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

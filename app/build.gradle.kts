@@ -103,6 +103,20 @@ dependencies {
     //circular image view
     implementation ("de.hdodenhof:circleimageview:3.1.0")
 
+    implementation ("androidx.camera:camera-core:1.3.2")
+    implementation ("androidx.camera:camera-lifecycle:1.3.2")
+    implementation ("androidx.camera:camera-view:1.3.2")
+    implementation ("androidx.camera:camera-extensions:1.3.2")
+
+
+    implementation ("androidx.camera:camera-core:1.3.2")
+    implementation ("androidx.camera:camera-lifecycle:1.3.2")
+    implementation ("androidx.camera:camera-view:1.3.2")
+    implementation ("androidx.camera:camera-extensions:1.3.2")
+
+    implementation ("com.google.android.gms:play-services-vision-common:19.1.3")
+    implementation ("com.google.android.gms:play-services-vision:20.1.3")
+
 }
 
 kapt {
