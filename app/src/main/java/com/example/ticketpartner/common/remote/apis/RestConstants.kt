@@ -23,9 +23,11 @@ const val getEventType = "event/event-type/list/"
 const val getStateBasedOnCountryId = "default/data/state/{countryId}/"
 const val getCreateEventTicketList = "ticket/ticket-list/{eventId}"
 const val getScanEventDetails = "ticket-scan/event/detail/"
+const val getQrScannedTicketData = "ticket-scan/runtime-reports/"
 
 //scan module
 const val loginWithPin = "ticket-scan/login/"
+const val scanQrCode = "ticket-scan/qrcode/"
 
 /**
  * Multipart API parameter key
