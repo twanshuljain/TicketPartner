@@ -25,7 +25,7 @@
         tools:progress="10" />
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvTicketType"
+        android:id="@+id/tvTicketName"
         style="@style/boldParaText14"
         android:layout_width="@dimen/margin_0"
         android:layout_height="wrap_content"

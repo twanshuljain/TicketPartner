@@ -287,6 +287,13 @@
         <item name="android:fontFamily" tools:targetApi="o">@font/lato_regular</item>
     </style>
 
+    <style name="regularOrange14" parent="Widget.AppCompat.TextView">
+        <item name="android:textColor">@color/orange</item>
+        <item name="android:textSize">@dimen/text_14</item>
+        <item name="hintTextColor">@color/placeholder</item>
+        <item name="android:fontFamily" tools:targetApi="o">@font/lato_regular</item>
+    </style>
+
     <style name="regularDarkGrey12" parent="Widget.AppCompat.TextView">
         <item name="android:textColor">@color/dark_grey</item>
         <item name="android:textSize">@dimen/text_12</item>
@@ -358,7 +365,6 @@
         <item name="android:textSize">@dimen/text_14</item>
         <item name="android:fontFamily" tools:targetApi="o">@font/lato_bold</item>
     </style>
-
 
     //set snackBar background for success
 

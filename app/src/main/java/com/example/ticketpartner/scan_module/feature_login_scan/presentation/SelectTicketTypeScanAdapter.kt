@@ -34,7 +34,6 @@ class SelectTicketTypeScanAdapter(
         val isSelected = eventTickets?.get(position)?.isSelected ?: false
 
         if (isSelected) {
-            itemSelectUnselect(view,isSelected)
             view.ivChecked.visibility = View.VISIBLE
             view.ivUnChecked.visibility = View.GONE
             view.itemLayout.background =
@@ -75,10 +74,6 @@ class SelectTicketTypeScanAdapter(
 
     class ViewHolder(val binding: LayoutScanSelectTicketTypeBinding) :
         RecyclerView.ViewHolder(binding.root)
-
-    private fun itemSelectUnselect(view: LayoutScanSelectTicketTypeBinding, isSelected: Boolean) {
-        if (isSelected){}else{}
-    }
 
     fun selectAll() {
         try {

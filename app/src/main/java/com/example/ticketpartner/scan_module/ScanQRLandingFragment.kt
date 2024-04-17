@@ -51,21 +51,25 @@ class ScanQRLandingFragment : Fragment() {
     }
 
     private fun initBottomNavigation() {
+        binding.includeTitle.ivBack.visibility = View.GONE
         binding.scanBottomNav.itemIconTintList = null
-        loadFragment(ScanBottomQRScanFragment())
+        loadFragment(ScanBottomNavHomeFragment())
         binding.scanBottomNav.setOnItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.scanBottomNavHome -> {
+                    binding.includeTitle.ivBack.visibility = View.GONE
                     loadFragment(ScanBottomNavHomeFragment())
                     true
                 }
 
                 R.id.scanBottomNavQR -> {
+                    binding.includeTitle.ivBack.visibility = View.VISIBLE
                     loadFragment(ScanBottomQRScanFragment())
                     true
                 }
 
                 R.id.scanBottomNavSearch -> {
+                    binding.includeTitle.ivBack.visibility = View.VISIBLE
                     loadFragment(ScanBottomNavSearchFragment())
                     true
                 }
@@ -78,6 +82,7 @@ class ScanQRLandingFragment : Fragment() {
 
     private fun loadFragment(fragment: Fragment) {
         val transaction = requireActivity().supportFragmentManager.beginTransaction()
+        transaction.setCustomAnimations(R.anim.slide_in, R.anim.slide_out)
         transaction.replace(R.id.frameLayout, fragment)
         transaction.addToBackStack(null)
         transaction.commit()

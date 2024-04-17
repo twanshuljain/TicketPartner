@@ -27,6 +27,7 @@
     <string name="join_as_administrator">Join as a Admission Staff</string>
     <string name="otp">OTP</string>
     <string name="Continue">Continue</string>
+    <string name="organized">Organized</string>
     <string name="remember_it">Remember it?</string>
     <string name="new_password">New Password</string>
     <string name="reset">Reset</string>
@@ -167,6 +168,7 @@
     <string name="accepted">Accepted</string>
     <string name="rejected">Rejected</string>
     <string name="physical">Physical</string>
+    <string name="total_tickets">Total Tickets</string>
 
 
 </resources>

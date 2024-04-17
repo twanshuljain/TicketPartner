@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/orange_light_back"
     tools:context=".QrScanReportFragment">
 
     <include
@@ -90,7 +90,7 @@
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnAccepted"
-                style="@style/regularDarkPrimary14"
+                style="@style/regularOrange14"
                 android:layout_width="@dimen/size_110"
                 android:layout_height="@dimen/size_32"
                 android:layout_marginStart="@dimen/size_10"
@@ -102,7 +102,7 @@
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/btnRejected"
-                style="@style/regularDarkPrimary14"
+                style="@style/regularOrange14"
                 android:layout_width="@dimen/size_110"
                 android:layout_height="@dimen/size_32"
                 android:layout_marginStart="@dimen/size_10"
@@ -160,16 +160,35 @@
                         app:layout_constraintGuide_percent="0.72"
                         app:layout_constraintStart_toStartOf="parent" />
 
-
-                    <androidx.appcompat.widget.AppCompatImageView
+                    <com.example.ticketpartner.utils.CircularProgressBar
                         android:id="@+id/progress"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="@dimen/size_180"
+                        android:layout_height="@dimen/size_180"
                         android:layout_marginTop="@dimen/margin_20"
-                        android:src="@drawable/temp_pie_chart"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvTotalValue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        style="@style/boldDarkPrimaryText16"
+                        android:text="500"
+                        app:layout_constraintStart_toStartOf="@id/progress"
+                        app:layout_constraintEnd_toEndOf="@id/progress"
+                        app:layout_constraintTop_toTopOf="@id/progress"
+                        app:layout_constraintBottom_toBottomOf="@id/progress"/>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        style="@style/regularParaText10"
+                        android:text="@string/total_tickets"
+                        android:layout_marginTop="@dimen/margin_10"
+                        app:layout_constraintStart_toStartOf="@id/tvTotalValue"
+                        app:layout_constraintEnd_toEndOf="@id/tvTotalValue"
+                        app:layout_constraintTop_toBottomOf="@id/tvTotalValue" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@id/tvAccepted"
@@ -290,14 +309,17 @@
                 app:strokeWidth="@dimen/margin_0">
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rvReportTicketType"
+                    android:id="@+id/rvReportTicketName"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@color/white"
                     app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
                     app:layout_constraintStart_toStartOf="@id/guidelineStart"
                     app:layout_constraintTop_toBottomOf="@id/cvProgress"
-                    tools:listitem="@layout/item_scan_report_ticket_types" />
+                    android:orientation="vertical"
+                    android:layout_marginBottom="@dimen/margin_15"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:listitem="@layout/item_scan_report_ticket_name" />
 
             </com.google.android.material.card.MaterialCardView>
 

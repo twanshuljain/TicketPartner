@@ -12,10 +12,14 @@ import com.example.ticketpartner.R
 import com.example.ticketpartner.common.EMPTY_STRING
 import com.example.ticketpartner.common.SnackBarUtil
 import com.example.ticketpartner.common.ZERO
+import com.example.ticketpartner.common.storage.MyPreferences
+import com.example.ticketpartner.common.storage.PrefConstants
 import com.example.ticketpartner.databinding.FragmentLoginScanModuleBinding
+import com.example.ticketpartner.scan_module.feature_login_scan.domain.model.LoginWithPinResponse
 import com.example.ticketpartner.scan_module.feature_login_scan.domain.model.LoginWithPinUIState
 import com.example.ticketpartner.utils.DialogProgressUtil
 import com.example.ticketpartner.utils.Utility
+import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -37,6 +41,10 @@ class LoginScanModuleFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        if (!MyPreferences.getString(PrefConstants.LOGGED_USER_DETAILS).isNullOrEmpty()) {
+            findNavController().navigate(R.id.scanQRLandingFragment)
+        }
 
         /** restrict user to enter space */
         Utility.disableSpace(binding.etName)
@@ -85,6 +93,7 @@ class LoginScanModuleFragment : Fragment() {
                 is LoginWithPinUIState.OnSuccess -> {
                     DialogProgressUtil.dismiss()
                     SnackBarUtil.showSuccessSnackBar(binding.root, it.onSuccess.message.toString())
+                    updateUserDetailsToSession(it.onSuccess)
                     findNavController().navigate(R.id.eventDetailsScanModuleFragment)
                 }
 
@@ -94,6 +103,17 @@ class LoginScanModuleFragment : Fragment() {
                 }
             }
         }
+    }
+
+    private fun updateUserDetailsToSession(loginData: LoginWithPinResponse) {
+        loginData.let {
+            val gson = Gson() // You'll need the Gson library for serialization
+            val userJson = gson.toJson(
+                it
+            )
+            MyPreferences.putString(PrefConstants.LOGGED_USER_DETAILS, userJson)
+        }
+
     }
 
     private fun isAllFieldsValid(): Boolean {

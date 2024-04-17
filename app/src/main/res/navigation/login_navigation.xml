@@ -112,6 +112,7 @@
             android:name="com.example.ticketpartner.scan_module.ScanQRLandingFragment"
             android:label="fragment_scan_q_r_landing"
             tools:layout="@layout/fragment_scan_q_r_landing" />
+
         <fragment
             android:id="@+id/qrScanReportFragment"
             android:name="com.example.ticketpartner.QrScanReportFragment"

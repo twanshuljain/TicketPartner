@@ -53,9 +53,8 @@ class ScanBottomQRScanFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        initCameraPermission()
         initView()
+        initCameraPermission()
     }
 
     private fun initView() {
@@ -83,7 +82,6 @@ class ScanBottomQRScanFragment : Fragment() {
             ) != PackageManager.PERMISSION_GRANTED
         ) askForCameraPermission() else setupControls()
 
-        //   startAnimation()
     }
 
     private fun setupControls() {
