@@ -5,25 +5,22 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.example.ticketpartner.databinding.FragmentScanBottomNavSearchBinding
+import com.example.ticketpartner.databinding.FragmentTicketScannedStatusBinding
 
-class ScanBottomNavSearchFragment : Fragment() {
-    private lateinit var binding: FragmentScanBottomNavSearchBinding
+class TicketScannedStatusFragment : Fragment() {
+    private lateinit var binding: FragmentTicketScannedStatusBinding
+
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        binding = FragmentScanBottomNavSearchBinding.inflate(layoutInflater)
+        binding = FragmentTicketScannedStatusBinding.inflate(layoutInflater)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initView()
-    }
-
-    private fun initView() {
 
     }
-
 }

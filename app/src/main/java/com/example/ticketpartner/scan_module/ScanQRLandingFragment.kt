@@ -2,25 +2,33 @@ package com.example.ticketpartner.scan_module
 
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.NavController
+import androidx.navigation.fragment.findNavController
 import com.example.ticketpartner.R
-import com.example.ticketpartner.common.SELECT_SCAN_TICKET_ARRAY
+import com.example.ticketpartner.common.SCAN_MODULE_EVENT_DETAILS
+import com.example.ticketpartner.common.storage.MyPreferences
 import com.example.ticketpartner.databinding.FragmentScanQRLandingBinding
+import com.example.ticketpartner.databinding.LayoutEndScanBottomDialogBinding
+import com.example.ticketpartner.scan_module.feature_login_scan.domain.model.DataItem
+import com.example.ticketpartner.scan_module.feature_qr_scan.presentation.QrScanViewModel
 import com.example.ticketpartner.scan_module.feature_qr_scan.presentation.ScanBottomNavHomeFragment
 import com.example.ticketpartner.scan_module.feature_qr_scan.presentation.ScanBottomNavSearchFragment
-import com.example.ticketpartner.scan_module.feature_qr_scan.presentation.ScanBottomQRScanFragment
+import com.example.ticketpartner.scan_module.feature_qr_scan.presentation.TicketScannedStatusFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.bottomsheet.BottomSheetDialog
 
 class ScanQRLandingFragment : Fragment() {
     private lateinit var binding: FragmentScanQRLandingBinding
+    private val viewModel: QrScanViewModel by activityViewModels()
     private lateinit var bottomNavView: BottomNavigationView
     private lateinit var navController: NavController
-    private var selectedTicketTypeList = ArrayList<String>()
+    private var eventDetailsResponse = ArrayList<DataItem>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,17 +42,18 @@ class ScanQRLandingFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        arguments?.let {
+       arguments?.let {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                selectedTicketTypeList = it.getStringArrayList(
-                    SELECT_SCAN_TICKET_ARRAY
-                ) as ArrayList<String>
+                eventDetailsResponse = it.getStringArrayList(
+                    SCAN_MODULE_EVENT_DETAILS
+                ) as ArrayList<DataItem>
+
             } else {
-                selectedTicketTypeList =
-                    it.getStringArrayList(SELECT_SCAN_TICKET_ARRAY) as ArrayList<String>
+                eventDetailsResponse =
+                    it.getStringArrayList(SCAN_MODULE_EVENT_DETAILS) as ArrayList<DataItem>
             }
+            viewModel.putSelectedTicketName(eventDetailsResponse)
         }
-        Log.e("TAG", "selectedTicketNameList QR: ${selectedTicketTypeList} ")
 
         initBottomNavigation()
         initView()
@@ -64,7 +73,8 @@ class ScanQRLandingFragment : Fragment() {
 
                 R.id.scanBottomNavQR -> {
                     binding.includeTitle.ivBack.visibility = View.VISIBLE
-                    loadFragment(ScanBottomQRScanFragment())
+                    //loadFragment(ScanBottomQRScanFragment())
+                    loadFragment(TicketScannedStatusFragment())
                     true
                 }
 
@@ -89,10 +99,36 @@ class ScanQRLandingFragment : Fragment() {
     }
 
     private fun initView() {
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
+            logoutDialog()
+        }
         /// navController = Navigation.findNavController(this, R.id.nav_host_fragment)
         binding.includeTitle.ivBack.setOnClickListener {
-            requireActivity().onBackPressedDispatcher.onBackPressed()
+            logoutDialog()
         }
 
+    }
+
+    private fun logoutDialog() {
+        val dialog = BottomSheetDialog(requireContext())
+        val dialogView = LayoutEndScanBottomDialogBinding.inflate(layoutInflater)
+        dialogView.apply {
+            tvTitle.text = getString(R.string.logout)
+            tvDescription.text = getString(R.string.are_you_sure_logout)
+        }
+        dialogView.btnNo.setOnClickListener {
+            dialog.dismiss()
+        }
+        dialogView.btnYes.setOnClickListener {
+            findNavController().popBackStack(R.id.loginScanModuleFragment,false)
+            MyPreferences.clearpref()
+            dialog.dismiss()
+        }
+        dialogView.ivClose.setOnClickListener {
+            dialog.dismiss()
+        }
+        dialog.setCanceledOnTouchOutside(true)
+        dialog.setContentView(dialogView.root)
+        dialog.show()
     }
 }

@@ -38,13 +38,14 @@ class SplashLandingFragment : Fragment() {
     private fun initView() {
         changeTextColor()
 
-
         binding.btnNext.setOnClickListener {
-            if (!MyPreferences.getString(PrefConstants.LOGGED_USER_DETAILS).isNullOrEmpty()) {
+            /*if (!MyPreferences.getString(PrefConstants.LOGGED_USER_DETAILS).isNullOrEmpty()) {
                 findNavController().navigate(R.id.scanModuleGraph)
             } else {
                 findNavController().navigate(R.id.signInFragment)
-            }
+            }*/
+            //findNavController().navigate(R.id.signInFragment)
+            findNavController().navigate(R.id.signInFragment)
         }
     }
 

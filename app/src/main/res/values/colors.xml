@@ -23,6 +23,7 @@
     <color name="orange_light_back">#FEF7F2</color>
     <color name="blue">#2F80ED</color>
     <color name="green">#21BE79</color>
+    <color name="light_green">#6FCF97</color>
     <color name="red">#FF0000</color>
     <color name="dark_transparency">#80000000</color>
     <color name="link_color">#147BD1</color>
@@ -40,4 +41,5 @@
     <color name="checkbox_unchecked_color">#FFFFFFFF</color>
     <color name="scan_light_grey">#5A6872</color>
     <color name="light_orange_border">#F4E7D4</color>
+    <color name="dark_green_text">#00322E</color>
 </resources>

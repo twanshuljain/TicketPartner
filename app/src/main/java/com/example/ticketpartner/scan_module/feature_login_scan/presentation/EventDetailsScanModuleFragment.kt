@@ -4,12 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.ticketpartner.R
 import com.example.ticketpartner.common.COMMA
 import com.example.ticketpartner.common.HYPHEN_CHAR
+import com.example.ticketpartner.common.SCAN_MODULE_EVENT_DETAILS
 import com.example.ticketpartner.common.SnackBarUtil
 import com.example.ticketpartner.databinding.FragmentEventDetailsScanModuleBinding
 import com.example.ticketpartner.scan_module.feature_login_scan.domain.model.DataItem
@@ -22,6 +24,7 @@ import com.example.ticketpartner.utils.getFormattedTimeForEvent
 class EventDetailsScanModuleFragment : Fragment() {
     private lateinit var binding: FragmentEventDetailsScanModuleBinding
     private val viewModel: LoginScanVewModel by activityViewModels()
+    private val eventDetails = ArrayList<DataItem>()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -48,6 +51,7 @@ class EventDetailsScanModuleFragment : Fragment() {
                 is EventDetailsScanUIState.OnSuccess -> {
                     DialogProgressUtil.dismiss()
                     showDetailsData(it.onSuccess.data)
+                    it.onSuccess.data?.let { data -> eventDetails.add(data) }
                 }
 
                 is EventDetailsScanUIState.OnFailure -> {
@@ -74,7 +78,8 @@ class EventDetailsScanModuleFragment : Fragment() {
 
     private fun initView() {
         binding.btnContinue.setOnClickListener {
-            findNavController().navigate(R.id.selectTicketTypeScanModuleFragment)
+            val bundle = bundleOf(SCAN_MODULE_EVENT_DETAILS to eventDetails)
+            findNavController().navigate(R.id.scanQRLandingFragment, bundle)
         }
     }
 }

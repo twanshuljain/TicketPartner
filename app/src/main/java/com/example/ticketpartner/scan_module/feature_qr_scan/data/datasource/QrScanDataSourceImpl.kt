@@ -1,6 +1,7 @@
 package com.example.ticketpartner.scan_module.feature_qr_scan.data.datasource
 
 import com.example.ticketpartner.common.remote.apis.RestApiService
+import com.example.ticketpartner.scan_module.feature_login_scan.domain.model.EventDetailsScanResponse
 import com.example.ticketpartner.scan_module.feature_qr_scan.domain.datasource.QrScanDataSource
 import com.example.ticketpartner.scan_module.feature_qr_scan.domain.model.QrScanRequest
 import com.example.ticketpartner.scan_module.feature_qr_scan.domain.model.QrScanResponse
@@ -14,5 +15,9 @@ class QrScanDataSourceImpl @Inject constructor(private val restApiService: RestA
 
     override suspend fun getQrScannedTicketData(): QrScannedTicketResponse {
        return restApiService.getQrScannedTicketData()
+    }
+
+    override suspend fun getScanEventDetails(): EventDetailsScanResponse {
+        return restApiService.getScanEventDetails()
     }
 }

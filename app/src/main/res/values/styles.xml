@@ -38,6 +38,12 @@
         <item name="android:fontFamily" tools:targetApi="o">@font/lato_bold</item>
     </style>
 
+    <style name="boldWhiteText18" parent="Widget.AppCompat.TextView">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">@dimen/text_18</item>
+        <item name="android:fontFamily" tools:targetApi="o">@font/lato_bold</item>
+    </style>
+
     <style name="boldParaHeading14" parent="Widget.AppCompat.TextView">
         <item name="android:textColor">@color/paraHeading</item>
         <item name="android:textSize">@dimen/text_14</item>
@@ -46,6 +52,12 @@
 
     <style name="boldPureBlack14" parent="Widget.AppCompat.TextView">
         <item name="android:textColor">@color/input_number_black</item>
+        <item name="android:textSize">@dimen/text_14</item>
+        <item name="android:fontFamily" tools:targetApi="o">@font/lato_bold</item>
+    </style>
+
+    <style name="boldPureDarkGreen14" parent="Widget.AppCompat.TextView">
+        <item name="android:textColor">@color/dark_green_text</item>
         <item name="android:textSize">@dimen/text_14</item>
         <item name="android:fontFamily" tools:targetApi="o">@font/lato_bold</item>
     </style>
@@ -85,6 +97,13 @@
 
     <style name="mediumPlaceHolderText14" parent="Widget.AppCompat.TextView">
         <item name="android:textColor">@color/paraHeading</item>
+        <item name="hintTextColor">@color/placeholder</item>
+        <item name="android:textSize">@dimen/text_14</item>
+        <item name="android:fontFamily" tools:targetApi="o">@font/lato_medium</item>
+    </style>
+
+    <style name="mediumScanLightGreyText14" parent="Widget.AppCompat.TextView">
+        <item name="android:textColor">@color/scan_light_grey</item>
         <item name="hintTextColor">@color/placeholder</item>
         <item name="android:textSize">@dimen/text_14</item>
         <item name="android:fontFamily" tools:targetApi="o">@font/lato_medium</item>
@@ -146,6 +165,27 @@
         <item name="android:fontFamily" tools:targetApi="o">@font/lato_medium</item>
     </style>
 
+    <style name="mediumWhiteText18" parent="Widget.AppCompat.TextView">
+        <item name="android:textColor">@color/white</item>
+        <item name="hintTextColor">@color/placeholder</item>
+        <item name="android:textSize">@dimen/text_18</item>
+        <item name="android:fontFamily" tools:targetApi="o">@font/lato_medium</item>
+    </style>
+
+    <style name="mediumWhiteText14" parent="Widget.AppCompat.TextView">
+        <item name="android:textColor">@color/white</item>
+        <item name="hintTextColor">@color/placeholder</item>
+        <item name="android:textSize">@dimen/text_14</item>
+        <item name="android:fontFamily" tools:targetApi="o">@font/lato_medium</item>
+    </style>
+
+    <style name="mediumWhiteText16" parent="Widget.AppCompat.TextView">
+        <item name="android:textColor">@color/white</item>
+        <item name="hintTextColor">@color/placeholder</item>
+        <item name="android:textSize">@dimen/text_16</item>
+        <item name="android:fontFamily" tools:targetApi="o">@font/lato_medium</item>
+    </style>
+
     <style name="mediumDarkPrimaryText24" parent="Widget.AppCompat.TextView">
         <item name="android:textColor">@color/dark_primary</item>
         <item name="hintTextColor">@color/placeholder</item>
@@ -158,7 +198,8 @@
         <item name="hintTextColor">@color/placeholder</item>
         <item name="android:textSize">@dimen/text_24</item>
         <item name="android:fontFamily" tools:targetApi="o">@font/lato_bold</item>
-    </style>f
+    </style>
+    f
 
     <style name="regularParagraph14" parent="Widget.AppCompat.TextView">
         <item name="android:textColor">@color/para_text</item>
@@ -336,6 +377,12 @@
         <item name="android:fontFamily" tools:targetApi="o">@font/lato_regular</item>
     </style>
 
+    <style name="regularWhite12" parent="Widget.AppCompat.TextView">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">@dimen/text_12</item>
+        <item name="android:fontFamily" tools:targetApi="o">@font/lato_regular</item>
+    </style>
+
     <style name="regularParaHeading12" parent="Widget.AppCompat.TextView">
         <item name="android:textColor">@color/paraHeading</item>
         <item name="android:textSize">@dimen/text_12</item>
@@ -377,6 +424,7 @@
     </style>
 
     //set snackBar background for error
+
     <style name="CustomSnackBarErrorTheme">
         <item name="snackbarStyle">@style/MySnackBarErrorStyle</item>
     </style>
@@ -386,6 +434,7 @@
     </style>
 
     //tab text font
+
     <style name="tab_text_font" parent="@android:style/TextAppearance.Widget.TabWidget">
         <item name="android:fontFamily">@font/lato_medium</item>
         <item name="android:textSize">@dimen/text_14</item>
@@ -412,6 +461,7 @@
     </style>
 
     //cardView
+
     <style name="CardViewImagePicker" parent="@style/Widget.MaterialComponents.CardView">
         <item name="shapeAppearanceOverlay">@style/ShapeAppearanceOverlay.MaterialCardView.Cut
         </item>
@@ -427,12 +477,13 @@
 
     <style name="RoundedTopCorner">
         <item name="cornerFamily">rounded</item>
-        <item name="cornerSize"> @dimen/margin_16</item><!-- Adjust the radius -->
+        <item name="cornerSize">@dimen/margin_16</item><!-- Adjust the radius -->
     </style>
 
     //circular progress bar
+
     <style name="CircularDeterminateProgressBar">
-        <item name="android:indeterminateOnly">false </item>
+        <item name="android:indeterminateOnly">false</item>
         <item name="android:progressDrawable">@drawable/circle</item>
     </style>
 

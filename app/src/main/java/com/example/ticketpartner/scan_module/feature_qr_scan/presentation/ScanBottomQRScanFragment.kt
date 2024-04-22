@@ -152,6 +152,10 @@ class ScanBottomQRScanFragment : Fragment() {
     private fun openImagePickerBottomSheet() {
         val dialog = BottomSheetDialog(requireContext())
         val dialogView = LayoutEndScanBottomDialogBinding.inflate(layoutInflater)
+        dialogView.apply {
+            tvTitle.text = getString(R.string.end_scan_with_mark)
+            tvDescription.text = getString(R.string.are_you_sure_end_scan)
+        }
         dialogView.btnNo.setOnClickListener {
             dialog.dismiss()
         }

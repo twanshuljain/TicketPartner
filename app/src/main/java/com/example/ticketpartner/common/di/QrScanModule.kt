@@ -5,6 +5,7 @@ import com.example.ticketpartner.scan_module.feature_qr_scan.data.repository.QrS
 import com.example.ticketpartner.scan_module.feature_qr_scan.domain.datasource.QrScanDataSource
 import com.example.ticketpartner.scan_module.feature_qr_scan.domain.repository.QrScanRepository
 import com.example.ticketpartner.scan_module.feature_qr_scan.domain.usecase.GetQrScanUseCase
+import com.example.ticketpartner.scan_module.feature_qr_scan.domain.usecase.GetScanEventDetailsDashboardUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -23,4 +24,8 @@ object QrScanModule {
     @Provides
     fun providesGetUseCase(qrScanRepository: QrScanRepository): GetQrScanUseCase =
         GetQrScanUseCase(qrScanRepository)
+
+    @Provides
+    fun providesGetEventDetailsUseCase(qrScanRepository: QrScanRepository): GetScanEventDetailsDashboardUseCase =
+        GetScanEventDetailsDashboardUseCase(qrScanRepository)
 }
