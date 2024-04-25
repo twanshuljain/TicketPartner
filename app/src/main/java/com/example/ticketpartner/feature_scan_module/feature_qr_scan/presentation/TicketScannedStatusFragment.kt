@@ -1,0 +1,26 @@
+package com.example.ticketpartner.feature_scan_module.feature_qr_scan.presentation
+
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import com.example.ticketpartner.databinding.FragmentTicketScannedStatusBinding
+
+class TicketScannedStatusFragment : Fragment() {
+    private lateinit var binding: FragmentTicketScannedStatusBinding
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        // Inflate the layout for this fragment
+        binding = FragmentTicketScannedStatusBinding.inflate(layoutInflater)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+    }
+}

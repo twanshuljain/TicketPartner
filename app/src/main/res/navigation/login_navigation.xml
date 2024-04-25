@@ -84,32 +84,31 @@
         android:label="fragment_create_event_codes"
         tools:layout="@layout/fragment_create_event_codes" />
 
-
     <navigation
         android:id="@+id/scanModuleGraph"
         app:startDestination="@id/loginScanModuleFragment">
 
         <fragment
             android:id="@+id/loginScanModuleFragment"
-            android:name="com.example.ticketpartner.scan_module.feature_login_scan.presentation.LoginScanModuleFragment"
+            android:name="com.example.ticketpartner.feature_scan_module.feature_login_scan.presentation.LoginScanModuleFragment"
             android:label="fragment_login_scan_module"
             tools:layout="@layout/fragment_login_scan_module" />
 
         <fragment
             android:id="@+id/eventDetailsScanModuleFragment"
-            android:name="com.example.ticketpartner.scan_module.feature_login_scan.presentation.EventDetailsScanModuleFragment"
+            android:name="com.example.ticketpartner.feature_scan_module.feature_login_scan.presentation.EventDetailsScanModuleFragment"
             android:label="fragment_evnet_details_scan_module"
             tools:layout="@layout/fragment_event_details_scan_module" />
 
         <fragment
             android:id="@+id/selectTicketTypeScanModuleFragment"
-            android:name="com.example.ticketpartner.scan_module.feature_login_scan.presentation.SelectTicketTypeScanModuleFragment"
+            android:name="com.example.ticketpartner.feature_scan_module.feature_login_scan.presentation.SelectTicketTypeScanModuleFragment"
             android:label="fragment_select_ticket_type_scan_module"
             tools:layout="@layout/fragment_select_ticket_type_scan_module" />
 
         <fragment
             android:id="@+id/scanQRLandingFragment"
-            android:name="com.example.ticketpartner.scan_module.ScanQRLandingFragment"
+            android:name="com.example.ticketpartner.feature_scan_module.ScanQRLandingFragment"
             android:label="fragment_scan_q_r_landing"
             tools:layout="@layout/fragment_scan_q_r_landing" />
 
@@ -119,6 +118,25 @@
             android:label="fragment_qr_scan_report"
             tools:layout="@layout/fragment_qr_scan_report" />
 
+        <fragment
+            android:id="@+id/scanBottomNavSearchFragment2"
+            android:name="com.example.ticketpartner.feature_scan_module.feature_qr_scan.presentation.ScanBottomNavSearchFragment"
+            android:label="fragment_scan_bottom_nav_search"
+            tools:layout="@layout/fragment_scan_bottom_nav_search" />
+
+        <fragment
+            android:id="@+id/scanSearchedOrderDetailsFragment"
+            android:name="com.example.ticketpartner.feature_scan_module.feature_qr_scan.presentation.ScanSearchedOrderDetailsFragment"
+            android:label="fragment_scan_searched_order_details"
+            tools:layout="@layout/fragment_scan_searched_order_details" />
+
+        <fragment
+            android:id="@+id/scanBottomQRScanFragment"
+            android:name="com.example.ticketpartner.feature_scan_module.feature_qr_scan.presentation.ScanBottomQRScanFragment"
+            android:label="fragment_scan_bottom_nav_q_r_scan"
+            tools:layout="@layout/fragment_scan_bottom_nav_q_r_scan" />
+
     </navigation>
+
 
 </navigation>

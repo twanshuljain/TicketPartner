@@ -6,8 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.ticketpartner.databinding.FragmentQrScanReportBinding
-import com.example.ticketpartner.scan_module.feature_qr_scan.domain.model.TicketData
-import com.example.ticketpartner.scan_module.feature_qr_scan.presentation.ScanReportTicketNameAdapter
+import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.TicketData
+import com.example.ticketpartner.feature_scan_module.feature_qr_scan.presentation.ScanReportTicketNameAdapter
 
 class QrScanReportFragment : Fragment() {
     private lateinit var binding: FragmentQrScanReportBinding

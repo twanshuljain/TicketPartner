@@ -24,6 +24,7 @@ class SplashLandingFragment : Fragment() {
         binding = FragmentSplashLandingBinding.inflate(layoutInflater, container, false)
         if (!MyPreferences.getString(PrefConstants.LOGGED_USER_DETAILS).isNullOrEmpty()) {
             findNavController().navigate(R.id.scanModuleGraph)
+            //findNavController().navigate(R.id.qr_scan_navigation)
         }
         return binding.root
     }
