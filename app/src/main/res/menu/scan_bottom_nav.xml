@@ -6,7 +6,7 @@
         android:icon="@drawable/bottom_nav_home_selector" />
     <item
         android:id="@+id/scanBottomNavQR"
-        android:title="gg"
+        android:title=""
         android:iconTint="@null"
         android:icon="@drawable/bottom_nav_scan_selector" />
     <item

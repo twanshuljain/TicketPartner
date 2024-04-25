@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.example.ticketpartner.R
 import com.example.ticketpartner.common.SnackBarUtil
 import com.example.ticketpartner.databinding.FragmentCreateEventTicketsBinding
 import com.example.ticketpartner.databinding.LayoutBottomSheetEditDeleteBinding
@@ -93,10 +94,15 @@ class CreateEventTicketsFragment : Fragment() {
     }
 
     private fun initView() {
+        binding.titleBar.tvTitle.text = getString(R.string.create_event)
+
         binding.tvAddOns.setOnClickListener {
 
         }
 
+        binding.titleBar.ivBack.setOnClickListener {
+            requireActivity().onBackPressedDispatcher.onBackPressed()
+        }
     }
 
     private fun onPlusClick(position: Int) {
@@ -110,5 +116,4 @@ class CreateEventTicketsFragment : Fragment() {
     private fun onEllipsisClick() {
         openEditDeleteBottomSheet()
     }
-
 }

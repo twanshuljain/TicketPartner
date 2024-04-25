@@ -215,6 +215,7 @@ class SignInFragment : Fragment(), CountdownTimerCallback {
 
         binding.clJoinAdminStaff.setOnClickListener {
             findNavController().navigate(R.id.scanModuleGraph)
+            //findNavController().navigate(R.id.qr_scan_navigation)
         }
     }
 

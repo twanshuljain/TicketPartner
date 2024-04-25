@@ -27,6 +27,7 @@
     <string name="join_as_administrator">Join as a Admission Staff</string>
     <string name="otp">OTP</string>
     <string name="Continue">Continue</string>
+    <string name="organized">Organized</string>
     <string name="remember_it">Remember it?</string>
     <string name="new_password">New Password</string>
     <string name="reset">Reset</string>
@@ -136,6 +137,11 @@
     <string name="codes">Codes</string>
     <string name="edit">Edit</string>
     <string name="delete">Delete</string>
+    <string name="discount_code">Discount Code</string>
+    <string name="access_code">Access Code</string>
+    <string name="hint_discount_code">eg. ABH235253B</string>
+    <string name="apply_this_code_automatically">Apply this code automatically</string>
+    <string name="customer_can_also_access_this_code">Customers can also access this code via custom URL</string>
 
     <!-- Scan module-->
     <string name="your_name">Your name</string>
@@ -153,11 +159,20 @@
     <string name="home">Home</string>
     <string name="go_offline">Go Offline</string>
     <string name="end_scan">End Scan</string>
-    <string name="end_scan_with_mark">End Scan?</string>
+    <string name="end_scan_with_mark">End Scan</string>
     <string name="rfid">RFID</string>
-    <string name="are_you_sure_end_scan">Are you sure you want to scan for this event.</string>
+    <string name="are_you_sure_end_scan">Are you sure you want to scan for this event?</string>
     <string name="no">No</string>
     <string name="yes">Yes</string>
+    <string name="all">All</string>
+    <string name="accepted">Accepted</string>
+    <string name="rejected">Rejected</string>
+    <string name="physical">Physical</string>
+    <string name="total_tickets">Total Tickets</string>
+    <string name="logout">Log Out</string>
+    <string name="are_you_sure_logout">Are you sure you want to log out?</string>
+    <string name="search_bar_hint">Search email, order number, name...</string>
+    <string name="view_details">View Details</string>
 
 
 </resources>

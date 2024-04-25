@@ -21,6 +21,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import com.example.ticketpartner.R
 import com.example.ticketpartner.common.LogUtil
 import com.example.ticketpartner.common.PICK_IMAGE_INTENT_TYPE
@@ -215,6 +216,8 @@ class CreateEventBasicDetailsFragment : Fragment() {
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun initView() {
+        binding.titleBar.tvTitle.text = getString(R.string.create_event)
+
         logUtil = LogUtil()
         setAddMoreImagesAdapter(addMoreImagesBitmapList)
         setAddImagesMediaAdapter(addImagesMediaBitmapList)
@@ -234,6 +237,10 @@ class CreateEventBasicDetailsFragment : Fragment() {
         binding.switchMediaFromPast.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) binding.clAddImageMediaLayout.visibility =
                 View.VISIBLE else binding.clAddImageMediaLayout.visibility = View.GONE
+        }
+
+        binding.btnSaveContinue.setOnClickListener {
+            findNavController().navigate(R.id.createEventCodesFragment)
         }
 
         viewDateTime.startDate.dateLayout.setOnClickListener {

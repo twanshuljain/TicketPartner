@@ -48,11 +48,24 @@ class DialogProgressUtil {
             }
         }
 
+        /*  fun dismiss() {
+              progressDialog?.let { dialog ->
+                  fragmentManager?.let { fm ->
+                      if (!fm.isDestroyed && dialog.isAdded)
+                          dialog.dismiss()
+                  }
+              }
+          }*/
+
         fun dismiss() {
+            // Check if the fragment is added to the activity
             progressDialog?.let { dialog ->
                 fragmentManager?.let { fm ->
-                    if (!fm.isDestroyed && dialog.isAdded)
-                        dialog.dismiss()
+                    if (!fm.isDestroyed && dialog.isAdded) {
+                        if (fm is FragmentManager) {
+                            dialog.dismiss()
+                        }
+                    }
                 }
             }
         }

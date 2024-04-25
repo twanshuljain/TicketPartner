@@ -1,11 +1,11 @@
 package com.example.ticketpartner.common.di
 
-import com.example.ticketpartner.scan_module.feature_login_scan.data.datasource.LoginScanDataSourceImpl
-import com.example.ticketpartner.scan_module.feature_login_scan.data.repository.LoginScanRepositoryImpl
-import com.example.ticketpartner.scan_module.feature_login_scan.domain.datasource.LoginScanDataSource
-import com.example.ticketpartner.scan_module.feature_login_scan.domain.repository.LoginScanRepository
-import com.example.ticketpartner.scan_module.feature_login_scan.domain.usecase.GetLoginWithPinUseCase
-import com.example.ticketpartner.scan_module.feature_login_scan.domain.usecase.GetScanEventDetailsUseCase
+import com.example.ticketpartner.feature_scan_module.feature_login_scan.data.datasource.LoginScanDataSourceImpl
+import com.example.ticketpartner.feature_scan_module.feature_login_scan.data.repository.LoginScanRepositoryImpl
+import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.datasource.LoginScanDataSource
+import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.repository.LoginScanRepository
+import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.usecase.GetLoginWithPinUseCase
+import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.usecase.GetScanEventDetailsUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

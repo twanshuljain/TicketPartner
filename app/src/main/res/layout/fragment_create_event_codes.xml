@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".feature_create_event.presentation.CreateEventCodesFragment">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_height="@dimen/margin_0"
+        android:layout_width="match_parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:orientation="vertical"
+        android:background="@color/orange_light_back">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guidelineStart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="@dimen/size_15"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guidelineEnd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintGuide_end="@dimen/margin_15" />
+
+        <include
+            android:id="@+id/titleBar"
+            layout="@layout/layout_title_name_custom" />
+
+            <RadioGroup
+                android:id="@+id/radioGroup"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_12"
+                android:orientation="horizontal"
+                android:visibility="visible"
+                app:layout_constraintStart_toStartOf="@id/guidelineStart"
+                app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
+                app:layout_constraintTop_toBottomOf="@id/titleBar">
+
+                <RadioButton
+                    android:id="@+id/rdDiscountCode"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/margin_16"
+                    android:buttonTint="@color/secondary"
+                    android:checked="true"
+                    android:text="@string/discount_code" />
+
+                <RadioButton
+                    android:id="@+id/rdAccessCode"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_30"
+                    android:buttonTint="@color/secondary"
+                    android:text="@string/access_code" />
+            </RadioGroup>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvDiscountCode"
+                style="@style/mediumDarkPrimaryText14"
+                android:layout_width="@dimen/margin_0"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_20"
+                android:drawablePadding="@dimen/margin_2"
+                android:text="@string/discount_code"
+                app:layout_constraintStart_toStartOf="@id/guidelineStart"
+                app:layout_constraintTop_toBottomOf="@id/radioGroup" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/starOrganization"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/margin_22"
+                android:src="@drawable/ic_mandatory_star"
+                app:layout_constraintStart_toEndOf="@id/tvDiscountCode"
+                app:layout_constraintTop_toBottomOf="@id/radioGroup" />
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/etDiscountCode"
+                style="@style/regularDarkPrimary14"
+                android:layout_width="@dimen/margin_0"
+                android:layout_height="@dimen/size_48"
+                android:layout_marginTop="@dimen/margin_5"
+                android:background="@drawable/edit_text_design"
+                android:hint="@string/hint_discount_code"
+                android:imeOptions="actionNext"
+                android:inputType="text"
+                android:maxLines="1"
+                android:paddingStart="@dimen/margin_10"
+                android:paddingEnd="@dimen/margin_0"
+                android:singleLine="true"
+                app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
+                app:layout_constraintStart_toStartOf="@id/guidelineStart"
+                app:layout_constraintTop_toBottomOf="@id/tvDiscountCode" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvSuggestDisCountCode"
+                style="@style/regularSuggestionGreyText12"
+                android:layout_width="@dimen/margin_0"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_3"
+                android:drawablePadding="@dimen/margin_2"
+                android:text="@string/customer_can_also_access_this_code"
+                app:layout_constraintStart_toStartOf="@id/guidelineStart"
+                app:layout_constraintTop_toBottomOf="@id/etDiscountCode" />
+
+            <View
+                android:id="@+id/vlCodeAutomaticallyTop"
+                android:layout_width="@dimen/margin_0"
+                android:layout_height="@dimen/margin_1"
+                android:layout_marginTop="@dimen/margin_15"
+                android:background="@color/light_orange_border"
+                app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
+                app:layout_constraintStart_toStartOf="@id/guidelineStart"
+                app:layout_constraintTop_toBottomOf="@id/tvSuggestDisCountCode" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvApplyCodeAutomatically"
+                style="@style/mediumPlaceHolderText16"
+                android:layout_width="@dimen/margin_0"
+                android:layout_height="wrap_content"
+                android:drawablePadding="@dimen/margin_2"
+                android:text="@string/apply_this_code_automatically"
+                app:layout_constraintStart_toStartOf="@id/guidelineStart"
+                app:layout_constraintBottom_toBottomOf="@id/vlCodeAutomaticallyBottom"
+                app:layout_constraintTop_toTopOf="@id/vlCodeAutomaticallyTop" />
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/switchApplyCodeAutomatically"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/vlCodeAutomaticallyTop"
+                app:layout_constraintEnd_toEndOf="@id/guidelineEnd" />
+
+            <View
+                android:id="@+id/vlCodeAutomaticallyBottom"
+                android:layout_width="@dimen/margin_0"
+                android:layout_height="@dimen/margin_1"
+                android:background="@color/light_orange_border"
+                app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
+                app:layout_constraintStart_toStartOf="@id/guidelineStart"
+                app:layout_constraintTop_toBottomOf="@id/switchApplyCodeAutomatically" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

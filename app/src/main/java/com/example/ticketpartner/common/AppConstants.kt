@@ -45,6 +45,8 @@ const val ORGANIZATION_ID = "organization_id"
 
 /** Bundle key constants */
 const val SELECT_SCAN_TICKET_ARRAY = "scan_selected_ticket_type_name"
+const val SCAN_MODULE_EVENT_DETAILS = "scan_module_event_details"
+const val SELECTED_TICKET_NAME = "selected_ticket_name"
 
 
 //Database keys

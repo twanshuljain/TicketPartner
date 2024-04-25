@@ -25,12 +25,11 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvEndScan"
+        android:id="@+id/tvTitle"
         style="@style/boldDarkPrimaryText16"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_20"
-        android:text="@string/end_scan_with_mark"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/ivHyphen" />
@@ -43,9 +42,9 @@
         android:background="@drawable/top_corner_curve_layout_white_design"
         android:padding="@dimen/margin_10"
         android:src="@drawable/ic_x_clear_black"
-        app:layout_constraintBottom_toBottomOf="@id/tvEndScan"
+        app:layout_constraintBottom_toBottomOf="@id/tvTitle"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/tvEndScan" />
+        app:layout_constraintTop_toTopOf="@id/tvTitle" />
 
     <View
         android:id="@+id/viewLine"
@@ -55,16 +54,15 @@
         android:background="@color/purple_border"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvEndScan" />
+        app:layout_constraintTop_toBottomOf="@id/tvTitle" />
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvAreYouSure"
+        android:id="@+id/tvDescription"
         style="@style/regularDarkPrimary14"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_20"
         android:elevation="@dimen/margin_5"
-        android:text="@string/are_you_sure_end_scan"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/viewLine" />
@@ -80,11 +78,12 @@
         android:layout_marginBottom="@dimen/margin_20"
         android:background="@drawable/btn_desing_black_border"
         android:text="@string/no"
+        android:textAlignment="center"
         android:textAllCaps="false"
         android:textColor="@color/black"
         app:layout_constraintEnd_toEndOf="@id/guidelineVerticalCenter"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvAreYouSure" />
+        app:layout_constraintTop_toBottomOf="@id/tvDescription" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnYes"
@@ -98,10 +97,10 @@
         android:background="@drawable/btn_design_dark_primary"
         android:text="@string/yes"
         android:textAllCaps="false"
+        android:textAlignment="center"
         android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@id/guidelineVerticalCenter"
-        app:layout_constraintTop_toBottomOf="@id/tvAreYouSure" />
-
+        app:layout_constraintTop_toBottomOf="@id/tvDescription" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
