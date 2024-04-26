@@ -41,16 +41,19 @@ class LoginScanVewModel @Inject constructor(
                     LoginWithPinUIState.OnFailure(error.getErrors().message.toString())
             }.collect {
                 logUtil.log(TAG, "onResponse: $it")
+
                 it.data?.access_token?.let { accessToken ->
                     MyPreferences.putString(
-                        PrefConstants.ACCESS_TOKEN, accessToken
+                        PrefConstants.ACCESS_TOKEN, accessToken.toString()
                     )
                     _pinLoginState.value = LoginWithPinUIState.OnSuccess(it)
                 }
-                logUtil.log(
+
+               logUtil.log(
                     TAG,
                     "accessToken: ${MyPreferences.getString(PrefConstants.ACCESS_TOKEN)}"
                 )
+
             }
         }
     }
@@ -60,6 +63,8 @@ class LoginScanVewModel @Inject constructor(
         viewModelScope.launch {
             getScanEventDetailsUseCase.invoke().catch {
                 logUtil.log(TAG, "onError${it.message.toString()}")
+                _getScanEventDetails.value =
+                    EventDetailsScanUIState.OnFailure(it.message.toString())
                 val error = ErrorResponseHandler(it)
                 _getScanEventDetails.value =
                     EventDetailsScanUIState.OnFailure(error.getErrors().message.toString())

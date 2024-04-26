@@ -45,9 +45,9 @@ class LoginScanModuleFragment : Fragment() {
 
         requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) { }
 
-        if (!MyPreferences.getString(PrefConstants.LOGGED_USER_DETAILS).isNullOrEmpty()) {
+      /*  if (!MyPreferences.getString(PrefConstants.LOGGED_USER_DETAILS).isNullOrEmpty()) {
             findNavController().navigate(R.id.scanQRLandingFragment)
-        }
+        }*/
 
         /** restrict user to enter space */
         Utility.disableSpace(binding.etName)
@@ -78,8 +78,9 @@ class LoginScanModuleFragment : Fragment() {
         }
 
         binding.rlContinue.setOnClickListener {
-            //  findNavController().navigate(R.id.eventDetailsScanModuleFragment)
-            if (isAllFieldsValid()) {
+
+            //findNavController().navigate(R.id.scan_bottom_navigation)
+          if (isAllFieldsValid()) {
                 viewModel.loginWithPin(etName, etPin)
                 observeLoginResponse()
             }
@@ -98,6 +99,7 @@ class LoginScanModuleFragment : Fragment() {
                     SnackBarUtil.showSuccessSnackBar(binding.root, it.onSuccess.message.toString())
                     updateUserDetailsToSession(it.onSuccess)
                     findNavController().navigate(R.id.eventDetailsScanModuleFragment)
+
                 }
 
                 is LoginWithPinUIState.OnFailure -> {

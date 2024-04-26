@@ -6,6 +6,7 @@ object PrefConstants {
     const val USER_ID = "user_id"
     const val MOBILE = "mobile"
     const val ACCESS_TOKEN = "access_token"
+    const val TEMP_ACCESS_TOKEN = "access_token"
     const val BEARER = "Bearer"
     const val LOGGED_USER_DETAILS = "logged_user_details"
 }

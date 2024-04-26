@@ -1,19 +1,17 @@
 package com.example.ticketpartner.feature_scan_module.feature_login_scan.presentation
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.navigation.fragment.findNavController
-import com.example.ticketpartner.R
 import com.example.ticketpartner.common.COMMA
 import com.example.ticketpartner.common.HYPHEN_CHAR
-import com.example.ticketpartner.common.SCAN_MODULE_EVENT_DETAILS
 import com.example.ticketpartner.common.SnackBarUtil
 import com.example.ticketpartner.databinding.FragmentEventDetailsScanModuleBinding
+import com.example.ticketpartner.feature_scan_module.ScanQRCodeActivity
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.DataItem
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.EventDetailsScanUIState
 import com.example.ticketpartner.utils.DialogProgressUtil
@@ -78,8 +76,10 @@ class EventDetailsScanModuleFragment : Fragment() {
 
     private fun initView() {
         binding.btnContinue.setOnClickListener {
-            val bundle = bundleOf(SCAN_MODULE_EVENT_DETAILS to eventDetails)
-            findNavController().navigate(R.id.scanQRLandingFragment, bundle)
+        /*  val bundle = bundleOf(SCAN_MODULE_EVENT_DETAILS to eventDetails)
+            findNavController().navigate(R.id.scan_bottom_navigation, bundle)*/
+            val intent = Intent(requireActivity(),ScanQRCodeActivity::class.java)
+            requireActivity().startActivity(intent)
         }
     }
 }

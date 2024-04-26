@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.addCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.NavController
@@ -106,9 +105,9 @@ class ScanQRLandingFragment : Fragment() {
     }
 
     private fun initView() {
-        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
+       /* requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
             logoutDialog()
-        }
+        }*/
         /// navController = Navigation.findNavController(this, R.id.nav_host_fragment)
         binding.includeTitle.ivBack.setOnClickListener {
             logoutDialog()

@@ -28,6 +28,7 @@ import com.example.ticketpartner.utils.OtpChangeFocusUtil
 import com.example.ticketpartner.utils.Utility.disableSpace
 import dagger.hilt.android.AndroidEntryPoint
 
+
 @AndroidEntryPoint
 class SignInFragment : Fragment(), CountdownTimerCallback {
     private lateinit var binding: FragmentSignInBinding
@@ -183,12 +184,12 @@ class SignInFragment : Fragment(), CountdownTimerCallback {
 
         /** email login button */
         binding.emailLoginLayout.btnSignIn.setOnClickListener {
-           /*  val isValid = checkValidationForEmailLogin(etEmail, etPassword)
-              if (isValid) {
-                  makeEmailLoginApiCall()
-                  observeEmailLoginResponse()
-              }*/
-          //  findNavController().navigate(R.id.createEventBasicDetaills)
+            /*  val isValid = checkValidationForEmailLogin(etEmail, etPassword)
+               if (isValid) {
+                   makeEmailLoginApiCall()
+                   observeEmailLoginResponse()
+               }*/
+            //  findNavController().navigate(R.id.createEventBasicDetaills)
             findNavController().navigate(R.id.addOrganizationChangeLogoFragment)
             //findNavController().navigate(R.id.createEventTicket)
         }
@@ -214,8 +215,7 @@ class SignInFragment : Fragment(), CountdownTimerCallback {
         }
 
         binding.clJoinAdminStaff.setOnClickListener {
-            findNavController().navigate(R.id.scanModuleGraph)
-            //findNavController().navigate(R.id.qr_scan_navigation)
+            findNavController().navigate(R.id.scan_module_navigation)
         }
     }
 

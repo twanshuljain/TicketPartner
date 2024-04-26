@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/scan_bottom_navigation"
+    app:startDestination="@id/scanBottomNavHome">
+
+   <!-- <fragment
+        android:id="@+id/scanQRLandingFragment"
+        android:name="com.example.ticketpartner.feature_scan_module.ScanQRLandingFragment"
+        android:label="fragment_scan_q_r_landing"
+        tools:layout="@layout/fragment_scan_q_r_landing" />-->
+
+    <fragment
+        android:id="@+id/scanBottomNavHome"
+        android:name="com.example.ticketpartner.feature_scan_module.feature_qr_scan.presentation.ScanBottomNavHomeFragment"
+        android:label="fragment_scan_bottom_nav_home"
+        tools:layout="@layout/fragment_scan_bottom_nav_home" />
+
+    <fragment
+        android:id="@+id/scanBottomNavSearch"
+        android:name="com.example.ticketpartner.feature_scan_module.feature_qr_scan.presentation.ScanBottomNavSearchFragment"
+        android:label="fragment_scan_bottom_nav_search"
+        tools:layout="@layout/fragment_scan_bottom_nav_search" />
+
+    <fragment
+        android:id="@+id/scanSearchedOrderDetailsFragment"
+        android:name="com.example.ticketpartner.feature_scan_module.feature_qr_scan.presentation.ScanSearchedOrderDetailsFragment"
+        android:label="fragment_scan_searched_order_details"
+        tools:layout="@layout/fragment_scan_searched_order_details" />
+
+    <fragment
+        android:id="@+id/scanBottomNavQR"
+        android:name="com.example.ticketpartner.feature_scan_module.feature_qr_scan.presentation.ScanBottomQRScanFragment"
+        android:label="fragment_scan_bottom_nav_q_r_scan"
+        tools:layout="@layout/fragment_scan_bottom_nav_q_r_scan" />
+
+    <fragment
+        android:id="@+id/qrScanReportFragment"
+        android:name="com.example.ticketpartner.QrScanReportFragment"
+        android:label="fragment_qr_scan_report"
+        tools:layout="@layout/fragment_qr_scan_report" />
+
+</navigation>

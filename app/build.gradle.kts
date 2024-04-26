@@ -117,6 +117,10 @@ dependencies {
     implementation ("com.google.android.gms:play-services-vision-common:19.1.3")
     implementation ("com.google.android.gms:play-services-vision:20.1.3")
 
+    //implementation ("com.intuit.sdp:sdp-android:1.0.6")
+
+
+
     //for Graph,Pie-chart and Bar chart.
     //implementation ("com.github.PhilJay:MPAndroidChart:v3.1.0")
 

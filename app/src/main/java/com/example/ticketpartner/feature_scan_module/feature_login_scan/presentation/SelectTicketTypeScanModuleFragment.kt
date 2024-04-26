@@ -4,12 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.navigation.fragment.findNavController
-import com.example.ticketpartner.R
-import com.example.ticketpartner.common.SELECT_SCAN_TICKET_ARRAY
 import com.example.ticketpartner.common.ZERO
 import com.example.ticketpartner.databinding.FragmentSelectTicketTypeScanModuleBinding
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.DataItem
@@ -49,11 +45,9 @@ class SelectTicketTypeScanModuleFragment : Fragment() {
         }
 
         binding.btnContinue.setOnClickListener {
-            val bundle = bundleOf(SELECT_SCAN_TICKET_ARRAY to selectedTicketName)
-            findNavController().navigate(R.id.scanQRLandingFragment, bundle)
+        /*    val bundle = bundleOf(SELECT_SCAN_TICKET_ARRAY to selectedTicketName)
+            findNavController().navigate(R.id.scanQRLandingFragment, bundle)*/
         }
-
-
     }
 
     private fun observeTicketTypeResponse() {
