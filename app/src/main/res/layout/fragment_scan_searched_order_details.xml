@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".feature_scan_module.feature_qr_scan.presentation.ScanSearchedOrderDetailsFragment">
 
@@ -23,6 +24,7 @@
                android:id="@+id/includeTitle"
                layout="@layout/scan_module_title_layout"
                android:layout_width="match_parent"
+               android:visibility="gone"
                android:layout_height="wrap_content"
                app:layout_constraintEnd_toEndOf="parent"
                app:layout_constraintStart_toStartOf="parent"

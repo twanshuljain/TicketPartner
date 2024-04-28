@@ -1,6 +1,7 @@
 package com.example.ticketpartner.feature_scan_module
 
 import android.os.Bundle
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
@@ -16,18 +17,30 @@ import dagger.hilt.android.AndroidEntryPoint
 class ScanQRCodeActivity : AppCompatActivity() {
     private lateinit var binding: ActivityScanQrcodeBinding
     private var navController: NavController? = null
-    private  var appBarConfiguration: AppBarConfiguration? = null
+    private var appBarConfiguration: AppBarConfiguration? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityScanQrcodeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        onBackPressedDispatcher.addCallback(
+            this /* lifecycle owner */,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    // Back is pressed... Finishing the activity
+                    if (navController?.currentDestination?.id == R.id.scanBottomNavHome) {
+                        finish()
+                    } else {
+                        navController?.popBackStack()
+                    }
+                }
+            })
 
         /** Implement bottom navigation with navGraph */
         setSupportActionBar(binding.toolbar)
         binding.scanBottomNav.itemIconTintList = null
-         navController = findNavController(R.id.fragment_bottom_container)
-         appBarConfiguration = AppBarConfiguration(
+        navController = findNavController(R.id.fragment_bottom_container)
+        appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.scanBottomNavHome,
                 R.id.scanBottomNavQR,

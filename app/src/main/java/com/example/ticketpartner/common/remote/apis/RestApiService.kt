@@ -38,6 +38,7 @@ import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.m
 import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.QrScanRequest
 import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.QrScanResponse
 import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.QrScannedTicketResponse
+import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.SearchApiScanResponse
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.http.Body
@@ -47,6 +48,7 @@ import retrofit2.http.POST
 import retrofit2.http.Part
 import retrofit2.http.PartMap
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 /**
  *  Rest API
@@ -128,5 +130,8 @@ interface RestApiService {
 
     @GET(getQrScannedTicketData)
     suspend fun getQrScannedTicketData(): QrScannedTicketResponse
+
+    @GET(getQrScannedSearchData)
+    suspend fun getQrScannedSearchData(@Query("search") orderId: String): SearchApiScanResponse
 
 }

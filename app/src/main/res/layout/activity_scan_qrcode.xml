@@ -18,17 +18,16 @@
         app:contentInsetStartWithNavigation="0dp"
         app:layout_constraintTop_toTopOf="parent">
 
+        <include
+            android:id="@+id/includeTitle"
+            layout="@layout/scan_module_title_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
     </androidx.appcompat.widget.Toolbar>
-
-    <include
-        android:id="@+id/includeTitle"
-        layout="@layout/scan_module_title_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
 
     <fragment
         android:id="@+id/fragment_bottom_container"
@@ -37,7 +36,7 @@
         android:layout_height="@dimen/margin_0"
         app:defaultNavHost="true"
         app:layout_constraintBottom_toTopOf="@id/clScanNavLayout"
-        app:layout_constraintTop_toBottomOf="@+id/includeTitle"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar"
         app:navGraph="@navigation/scan_bottom_navigation" />
 
 

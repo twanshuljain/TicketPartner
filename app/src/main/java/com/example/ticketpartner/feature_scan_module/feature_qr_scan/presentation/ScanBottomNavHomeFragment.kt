@@ -78,7 +78,6 @@ class ScanBottomNavHomeFragment : Fragment() {
         binding.btnContinue.setOnClickListener {
           /*  val bundle = bundleOf(SELECTED_TICKET_NAME to selectedTicketName)
             findNavController().navigate(R.id.scanBottomQRScanFragment, bundle)*/
-            viewModel.onContinueClick.value = true
         }
     }
 

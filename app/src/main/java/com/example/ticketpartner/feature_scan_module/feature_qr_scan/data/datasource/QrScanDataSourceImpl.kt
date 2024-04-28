@@ -6,6 +6,7 @@ import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.data
 import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.QrScanRequest
 import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.QrScanResponse
 import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.QrScannedTicketResponse
+import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.SearchApiScanResponse
 import javax.inject.Inject
 
 class QrScanDataSourceImpl @Inject constructor(private val restApiService: RestApiService): QrScanDataSource {
@@ -19,5 +20,9 @@ class QrScanDataSourceImpl @Inject constructor(private val restApiService: RestA
 
     override suspend fun getScanEventDetails(): EventDetailsScanResponse {
         return restApiService.getScanEventDetails()
+    }
+
+    override suspend fun getScanSearchResponse(orderId: String): SearchApiScanResponse {
+        return restApiService.getQrScannedSearchData(orderId = orderId)
     }
 }

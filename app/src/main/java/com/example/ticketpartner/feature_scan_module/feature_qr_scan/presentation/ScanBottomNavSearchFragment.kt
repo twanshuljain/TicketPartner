@@ -5,15 +5,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.ticketpartner.R
 import com.example.ticketpartner.databinding.FragmentScanBottomNavSearchBinding
 import com.example.ticketpartner.databinding.LayoutEndScanBottomDialogBinding
+import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.DataList
+import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.QrScanSearchItemUIState
+import com.example.ticketpartner.utils.DialogProgressUtil
 import com.google.android.material.bottomsheet.BottomSheetDialog
 
 class ScanBottomNavSearchFragment : Fragment() {
     private lateinit var binding: FragmentScanBottomNavSearchBinding
     private lateinit var adapter: ScanSearchOrderAdapter
+    private val viewModel: QrScanViewModel by activityViewModels()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
@@ -28,18 +33,37 @@ class ScanBottomNavSearchFragment : Fragment() {
     }
 
     private fun initView() {
-       adapter = ScanSearchOrderAdapter(getSearchListResponse(),::isItemClicked)
-        binding.rvScanOrder.adapter = adapter
-        binding.rvScanOrder.setHasFixedSize(true)
-
+        observeSearchItemResponse("b5fac2c0-d689-47fd-900b-4faa6f7ec8e4")
     }
 
-    private fun getSearchListResponse(): ArrayList<String> {
-        val list = ArrayList<String>()
-        for (i in 0 until 20) {
-            list.add("Rebecca Young")
+    private fun observeSearchItemResponse(orderId: String) {
+        viewModel.getSearchData(orderId)
+        viewModel.observeScanSearchData.observe(viewLifecycleOwner){
+            when(it){
+                is QrScanSearchItemUIState.IsLoading -> {
+                    DialogProgressUtil.show(childFragmentManager)
+                }
+                is QrScanSearchItemUIState.OnSuccess -> {
+                    DialogProgressUtil.dismiss()
+                    it.onSuccess.data?.let {list ->
+                        setAdapter(list)
+                    }
+                }
+                is QrScanSearchItemUIState.OnFailure -> {
+                    DialogProgressUtil.dismiss()
+                }
+            }
         }
-        return list
+    }
+
+    private fun setAdapter(data: List<DataList?>) {
+        data?.let {
+            adapter = ScanSearchOrderAdapter(it,::isItemClicked)
+            binding.rvScanOrder.adapter = adapter
+            binding.rvScanOrder.setHasFixedSize(true)
+        }
+
+
     }
 
      private fun openImagePickerBottomSheet() {
