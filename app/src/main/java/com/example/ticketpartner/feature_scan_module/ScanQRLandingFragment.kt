@@ -127,7 +127,11 @@ class ScanQRLandingFragment : Fragment() {
             dialog.dismiss()
         }
         dialogView.btnYes.setOnClickListener {
-            findNavController().popBackStack(R.id.loginScanModuleFragment,false)
+
+            val navController = findNavController()
+            navController.popBackStack(R.id.scanQRLandingFragment, true)
+            navController.navigate(R.id.loginScanModuleFragment)
+
             MyPreferences.clearpref()
             dialog.dismiss()
         }

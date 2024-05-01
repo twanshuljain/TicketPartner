@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.addCallback
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -43,12 +42,6 @@ class LoginScanModuleFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) { }
-
-        if (!MyPreferences.getString(PrefConstants.LOGGED_USER_DETAILS).isNullOrEmpty()) {
-            findNavController().navigate(R.id.scanQRLandingFragment)
-        }
-
         /** restrict user to enter space */
         Utility.disableSpace(binding.etName)
         Utility.disableSpace(binding.etPin)
@@ -57,7 +50,7 @@ class LoginScanModuleFragment : Fragment() {
         Utility.allowCharactersOnly(binding.etName)
 
         etName = "d"
-        etPin = "587928"
+        etPin = "607008"
 
         binding.etName.doAfterTextChanged {
             etName = it.toString().trim()
@@ -97,7 +90,11 @@ class LoginScanModuleFragment : Fragment() {
                     DialogProgressUtil.dismiss()
                     SnackBarUtil.showSuccessSnackBar(binding.root, it.onSuccess.message.toString())
                     updateUserDetailsToSession(it.onSuccess)
-                    findNavController().navigate(R.id.eventDetailsScanModuleFragment)
+                   // findNavController().navigate(R.id.action_loginScanModuleFragment_to_eventDetailsScanModuleFragment)
+                    val navController = findNavController()
+                    // Clear the back stack up to but not including Fragment A, then navigate
+                    navController.popBackStack(R.id.loginScanModuleFragment, true)
+                    navController.navigate(R.id.eventDetailsScanModuleFragment)
                 }
 
                 is LoginWithPinUIState.OnFailure -> {

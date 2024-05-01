@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -36,6 +37,19 @@ class EventDetailsScanModuleFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val callback: OnBackPressedCallback =
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    // Leave empty do disable back press or
+                    // write your code which you want
+                }
+            }
+        requireActivity().onBackPressedDispatcher.addCallback(
+            requireActivity(),
+            callback
+        )
+
         initView()
         getEventDetailsResponse()
     }
@@ -77,9 +91,12 @@ class EventDetailsScanModuleFragment : Fragment() {
     }
 
     private fun initView() {
-        binding.btnContinue.setOnClickListener {
-            val bundle = bundleOf(SCAN_MODULE_EVENT_DETAILS to eventDetails)
-            findNavController().navigate(R.id.scanQRLandingFragment, bundle)
-        }
+            binding.btnContinue.setOnClickListener {
+                val bundle = bundleOf(SCAN_MODULE_EVENT_DETAILS to eventDetails)
+                val navController = findNavController()
+                navController.popBackStack(R.id.eventDetailsScanModuleFragment, true)
+                navController.navigate(R.id.rqScanNavGraph,bundle)
+                //findNavController().navigate(R.id.action_eventDetailsScanModuleFragment_to_rqScanNavGraph, bundle)
+            }
     }
 }
