@@ -34,7 +34,7 @@ import com.example.ticketpartner.utils.CountdownTimerCallback
 import com.example.ticketpartner.utils.CountdownTimerUtil
 import com.example.ticketpartner.utils.DialogProgressUtil
 import com.example.ticketpartner.utils.FullScreenDialogFragment
-import com.example.ticketpartner.utils.NavigateFragmentUtil.clearBackStackToDestination
+import com.example.ticketpartner.utils.NavigationUtil.clearBackStackToDestination
 import com.example.ticketpartner.utils.OtpChangeFocusUtil
 import com.example.ticketpartner.utils.Utility
 import com.example.ticketpartner.utils.Utility.allowCharactersOnly

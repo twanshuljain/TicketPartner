@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -14,183 +13,183 @@
         android:orientation="vertical"
         android:fillViewport="true">
 
-  <androidx.constraintlayout.widget.ConstraintLayout
-       android:id="@+id/llRootLayout"
-       android:layout_width="match_parent"
-       android:layout_height="@dimen/margin_0"
-       android:layout_marginStart="@dimen/margin_20"
-       android:layout_marginEnd="@dimen/margin_20"
-       android:layout_marginTop="@dimen/margin_20"
-       android:layout_marginBottom="@dimen/margin_30"
-       android:background="@drawable/red_corner_curve_layout"
-       app:layout_constraintStart_toStartOf="parent"
-       app:layout_constraintEnd_toEndOf="parent"
-       app:layout_constraintTop_toTopOf="parent"
-       app:layout_constraintBottom_toBottomOf="parent"
-       android:orientation="vertical">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/llRootLayout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/margin_0"
+            android:layout_marginStart="@dimen/margin_20"
+            android:layout_marginEnd="@dimen/margin_20"
+            android:layout_marginTop="@dimen/margin_20"
+            android:layout_marginBottom="@dimen/margin_30"
+            android:background="@drawable/red_corner_curve_layout"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:orientation="vertical">
 
-      <androidx.appcompat.widget.AppCompatTextView
-          android:id="@+id/tvEventName"
-          style="@style/boldWhiteText18"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:textAlignment="center"
-          android:layout_marginTop="@dimen/size_40"
-          android:text="Annual meetup 24"
-          app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintEnd_toEndOf="parent"
-          app:layout_constraintTop_toTopOf="parent"/>
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvEventName"
+                style="@style/boldWhiteText18"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:layout_marginTop="@dimen/size_40"
+                android:text="Annual meetup 24"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-      <androidx.appcompat.widget.AppCompatImageView
-          android:id="@+id/ivCorrect"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_marginTop="@dimen/margin_20"
-         android:src="@drawable/ic_circle_white_49"
-          app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintEnd_toEndOf="parent"
-          app:layout_constraintTop_toBottomOf="@id/tvEventName"/>
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivCorrect"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_20"
+                android:src="@drawable/ic_circle_white_49"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvEventName" />
 
-      <androidx.appcompat.widget.AppCompatTextView
-          android:id="@+id/tvTicketStatusMessage"
-          style="@style/mediumWhiteText18"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:textAlignment="center"
-          android:layout_marginTop="@dimen/margin_5"
-          android:text="Valid Ticket"
-          app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintEnd_toEndOf="parent"
-          app:layout_constraintTop_toBottomOf="@id/ivCorrect"/>
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvTicketStatusMessage"
+                style="@style/mediumWhiteText18"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:layout_marginTop="@dimen/margin_5"
+                android:text="Valid Ticket"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/ivCorrect" />
 
-      <View
-          android:id="@+id/viewStatus"
-          android:layout_width="@dimen/margin_45"
-          android:layout_height="@dimen/size_1"
-          android:layout_gravity="center_horizontal"
-          android:layout_marginTop="@dimen/margin_15"
-          android:background="@color/white"
-          app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintEnd_toEndOf="parent"
-          app:layout_constraintTop_toBottomOf="@id/tvTicketStatusMessage"/>
+            <View
+                android:id="@+id/viewStatus"
+                android:layout_width="@dimen/margin_45"
+                android:layout_height="@dimen/size_1"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/margin_15"
+                android:background="@color/white"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvTicketStatusMessage" />
 
-      <androidx.appcompat.widget.AppCompatTextView
-          android:id="@+id/organiserName"
-          style="@style/mediumWhiteText14"
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:textAlignment="center"
-          android:layout_marginTop="@dimen/margin_15"
-          android:text="Tom Haverford"
-          app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintEnd_toEndOf="parent"
-          app:layout_constraintTop_toBottomOf="@id/viewStatus"/>
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/organiserName"
+                style="@style/mediumWhiteText14"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:layout_marginTop="@dimen/margin_15"
+                android:text="Tom Haverford"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/viewStatus" />
 
-      <LinearLayout
-          android:id="@+id/llTimeLayout"
-          android:layout_width="@dimen/size_200"
-          android:layout_height="wrap_content"
-          android:background="@drawable/white_border_transparent_curve_layout"
-          android:layout_gravity="center_horizontal"
-          android:orientation="vertical"
-          android:layout_marginTop="@dimen/size_20"
-          app:layout_constraintStart_toStartOf="parent"
-          app:layout_constraintEnd_toEndOf="parent"
-          app:layout_constraintTop_toBottomOf="@id/organiserName">
+            <LinearLayout
+                android:id="@+id/llTimeLayout"
+                android:layout_width="@dimen/size_200"
+                android:layout_height="wrap_content"
+                android:background="@drawable/white_border_transparent_curve_layout"
+                android:layout_gravity="center_horizontal"
+                android:orientation="vertical"
+                android:layout_marginTop="@dimen/size_20"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/organiserName">
 
-         <androidx.appcompat.widget.AppCompatImageView
-             android:layout_width="match_parent"
-             android:layout_height="wrap_content"
-             android:src="@drawable/ic_clock_white"
-             android:layout_marginTop="@dimen/margin_15"/>
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_clock_white"
+                    android:layout_marginTop="@dimen/margin_15" />
 
-         <androidx.appcompat.widget.AppCompatTextView
-             style="@style/regularWhite12"
-             android:layout_width="match_parent"
-             android:layout_height="wrap_content"
-             android:textAlignment="center"
-             android:layout_marginTop="@dimen/margin_5"
-             android:text="Scan Time" />
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/regularWhite12"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    android:layout_marginTop="@dimen/margin_5"
+                    android:text="Scan Time" />
 
-         <androidx.appcompat.widget.AppCompatTextView
-             style="@style/mediumWhiteText14"
-             android:layout_width="match_parent"
-             android:layout_height="wrap_content"
-             android:textAlignment="center"
-             android:layout_marginTop="@dimen/margin_8"
-             android:layout_marginBottom="@dimen/margin_15"
-             android:text="6:00 AM" />
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/mediumWhiteText14"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    android:layout_marginTop="@dimen/margin_8"
+                    android:layout_marginBottom="@dimen/margin_15"
+                    android:text="6:00 AM" />
 
-      </LinearLayout>
+            </LinearLayout>
 
-       <RelativeLayout
-           android:id="@+id/rlSideCurve"
-           android:layout_width="match_parent"
-           android:layout_height="@dimen/margin_40"
-           app:layout_constraintStart_toStartOf="parent"
-           app:layout_constraintEnd_toEndOf="parent"
-           android:layout_marginBottom="@dimen/margin_40"
-           app:layout_constraintTop_toBottomOf="@id/llTimeLayout"
-           app:layout_constraintBottom_toTopOf="@id/rlContinue">
+            <RelativeLayout
+                android:id="@+id/rlSideCurve"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/margin_40"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginBottom="@dimen/margin_40"
+                app:layout_constraintTop_toBottomOf="@id/llTimeLayout"
+                app:layout_constraintBottom_toTopOf="@id/rlContinue">
 
-          <androidx.appcompat.widget.AppCompatImageView
-               android:id="@+id/leftHalfCircle"
-               android:layout_width="wrap_content"
-               android:layout_height="match_parent"
-              android:rotation="-90"
-               android:background="@drawable/circle_layout_design_purple_border"
-               android:layout_alignParentStart="true"/>
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/leftHalfCircle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:rotation="-90"
+                    android:background="@drawable/circle_layout_design_purple_border"
+                    android:layout_alignParentStart="true" />
 
-          <androidx.appcompat.widget.AppCompatImageView
-               android:layout_width="wrap_content"
-               android:layout_height="match_parent"
-              android:layout_centerVertical="true"
-               android:background="@drawable/dotted_line_ticket_status_light"
-               android:layout_toRightOf="@id/leftHalfCircle"
-               android:layout_toLeftOf="@id/rightHalfCircle"/>
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/dotted_line_ticket_status_light"
+                    android:layout_toRightOf="@id/leftHalfCircle"
+                    android:layout_toLeftOf="@id/rightHalfCircle" />
 
-           <androidx.appcompat.widget.AppCompatImageView
-               android:id="@+id/rightHalfCircle"
-               android:layout_width="wrap_content"
-               android:layout_height="match_parent"
-               android:rotation="90"
-               android:background="@drawable/circle_layout_design_purple_border"
-               android:layout_alignParentEnd="true"/>
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/rightHalfCircle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:rotation="90"
+                    android:background="@drawable/circle_layout_design_purple_border"
+                    android:layout_alignParentEnd="true" />
 
-       </RelativeLayout>
+            </RelativeLayout>
 
-       <RelativeLayout
-           android:id="@+id/rlContinue"
-           android:layout_width="@dimen/size_160"
-           android:layout_height="@dimen/size_48"
-           android:layout_marginTop="@dimen/margin_20"
-           android:background="@drawable/btn_design_white"
-           android:gravity="center_horizontal"
-           app:layout_constraintEnd_toEndOf="parent"
-           app:layout_constraintStart_toStartOf="parent"
-           android:layout_marginBottom="@dimen/margin_40"
-           app:layout_constraintBottom_toBottomOf="@id/llRootLayout">
+            <RelativeLayout
+                android:id="@+id/rlContinue"
+                android:layout_width="@dimen/size_160"
+                android:layout_height="@dimen/size_48"
+                android:layout_marginTop="@dimen/margin_20"
+                android:background="@drawable/btn_design_white"
+                android:gravity="center_horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:layout_marginBottom="@dimen/margin_40"
+                app:layout_constraintBottom_toBottomOf="@id/llRootLayout">
 
-           <androidx.appcompat.widget.AppCompatTextView
-               android:id="@+id/tvContinue"
-               style="@style/mediumDarkPrimaryText16"
-               android:layout_width="wrap_content"
-               android:layout_height="match_parent"
-               android:gravity="center_vertical"
-               android:text="@string/Continue"
-               android:textAllCaps="false" />
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvContinue"
+                    style="@style/mediumDarkPrimaryText16"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:text="@string/Continue"
+                    android:textAllCaps="false" />
 
-           <androidx.appcompat.widget.AppCompatImageView
-               android:layout_width="wrap_content"
-               android:layout_height="match_parent"
-               android:layout_toRightOf="@id/tvContinue"
-               android:rotation="180"
-               android:layout_marginStart="@dimen/margin_5"
-               android:src="@drawable/ic_arrow_back_black" />
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_toRightOf="@id/tvContinue"
+                    android:rotation="180"
+                    android:layout_marginStart="@dimen/margin_5"
+                    android:src="@drawable/ic_arrow_back_black" />
 
-       </RelativeLayout>
+            </RelativeLayout>
 
-   </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.core.widget.NestedScrollView>
 

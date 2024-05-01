@@ -5,8 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.ticketpartner.common.LogUtil
-import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.DataItem
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.EventDetailsScanUIState
+import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.EventTicket
 import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.QrScanSearchItemUIState
 import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.QrScanUIState
 import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.QrScannedTicketUIState
@@ -29,8 +29,8 @@ class QrScanViewModel @Inject constructor(
     private val logUtil: LogUtil
 ) : ViewModel() {
 
-    private val _selectedTicketName: MutableLiveData<List<DataItem?>?> = MutableLiveData()
-    val observerSelectedTicketName: LiveData<List<DataItem?>?> = _selectedTicketName
+    private val _eventTicketList: MutableLiveData<List<EventTicket?>?> = MutableLiveData()
+    val observerEventTicketList: LiveData<List<EventTicket?>?> = _eventTicketList
 
     private val _qrScanState: MutableLiveData<QrScanUIState> = MutableLiveData()
     val observeQrScanResponse: LiveData<QrScanUIState> = _qrScanState
@@ -44,11 +44,13 @@ class QrScanViewModel @Inject constructor(
     private val _getScanSearchData: MutableLiveData<QrScanSearchItemUIState> = MutableLiveData()
     val observeScanSearchData: LiveData<QrScanSearchItemUIState> = _getScanSearchData
 
-    fun putSelectedTicketName(selectedTicketName: ArrayList<DataItem>) {
-        _selectedTicketName.value = selectedTicketName
+    fun putEventTicketList(eventTicketList: ArrayList<EventTicket>) {
+        _eventTicketList.value = eventTicketList
     }
 
-    val onContinueClick = MutableLiveData<Boolean>()
+    val onContinueClick = MutableLiveData<Int>()
+    val selectedEventName = MutableLiveData<ArrayList<String>>()
+    val isLogOut = MutableLiveData<Boolean>()
 
 
     /*  private val _onContinueClick:MutableLiveData<Boolean> = MutableLiveData()

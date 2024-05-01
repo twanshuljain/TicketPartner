@@ -1,11 +1,17 @@
 package com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+import kotlinx.parcelize.RawValue
+
+
 data class EventDetailsScanResponse(
-    val data: DataItem?,
-    val error: Any?,
+    val data:  DataItem?,
+    val error:  Any?,
     val message: String?,
     val status_code: Int?
 )
+
 
 data class DataItem(
     val event: Event?,
@@ -90,23 +96,24 @@ data class EventLocations(
     val virtual_event_link: Any?
 )
 
-data class EventTicket(
+@Parcelize
+data class  EventTicket(
     val advance_setting: Boolean?,
     val created_at: String?,
-    val created_by: Any?,
+    val created_by: @RawValue Any?,
     val donation_amount_type: String?,
     val event_id: Int?,
     val id: Int?,
-    val is_access_code: Any?,
-    val is_access_code_applied: Any?,
+    val is_access_code: @RawValue Any?,
+    val is_access_code_applied: @RawValue Any?,
     val is_active: Boolean?,
-    val is_allow_to_change_currency: Any?,
-    val is_sale_ended: Any?,
+    val is_allow_to_change_currency: @RawValue Any?,
+    val is_sale_ended: @RawValue Any?,
     val one_ticket_equal_to: Int?,
     val order_status: String?,
     val ticket_currency_type: String?,
     val ticket_description: String?,
-    val ticket_id: Any?,
+    val ticket_id:@RawValue Any?,
     val ticket_name: String?,
     val ticket_name_with_type: String?,
     val ticket_per_order_maximum_quantity: Int?,
@@ -122,10 +129,10 @@ data class EventTicket(
     val ticket_type: String?,
     val ticket_visibility: String?,
     val updated_at: String?,
-    val updated_by: Any?,
+    val updated_by: @RawValue Any?,
     val user_id: Int?,
     var isSelected: Boolean = false
-)
+) : Parcelable
 
 data class Organization(
     val country_id: Any?,

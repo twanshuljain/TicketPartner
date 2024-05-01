@@ -84,8 +84,8 @@ dependencies {
     implementation("androidx.room:room-ktx:2.6.1")
     kapt("androidx.room:room-compiler:2.6.1")
 
-    implementation("androidx.navigation:navigation-fragment-ktx:2.5.3")
-    implementation("androidx.navigation:navigation-ui-ktx:2.5.3")
+    implementation("androidx.navigation:navigation-fragment-ktx:2.7.7")
+    implementation("androidx.navigation:navigation-ui-ktx:2.7.7")
 
     //countryCode picker
     implementation("com.hbb20:ccp:2.5.2")
@@ -117,12 +117,9 @@ dependencies {
     implementation ("com.google.android.gms:play-services-vision-common:19.1.3")
     implementation ("com.google.android.gms:play-services-vision:20.1.3")
 
-    //implementation ("com.intuit.sdp:sdp-android:1.0.6")
+    implementation ("com.intuit.sdp:sdp-android:1.0.6")
 
 
-
-    //for Graph,Pie-chart and Bar chart.
-    //implementation ("com.github.PhilJay:MPAndroidChart:v3.1.0")
 
 }
 

@@ -29,12 +29,11 @@
         android:theme="@style/Theme.TicketPartner"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
-        <activity
+
+     <!--   <activity
             android:name=".feature_scan_module.ScanQRCodeActivity"
-            android:exported="false" />
-        <activity
-            android:name=".feature_scan_module.ScanQrCodeActivity"
-            android:exported="false" />
+            android:exported="false" />-->
+
         <activity
             android:name=".feature_login.presentation.SplashActivity"
             android:exported="false" />

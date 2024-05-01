@@ -14,7 +14,7 @@ import com.example.ticketpartner.common.SnackBarUtil
 import com.example.ticketpartner.databinding.FragmentResetPasswordBinding
 import com.example.ticketpartner.feature_login.domain.model.ResetPasswordUIState
 import com.example.ticketpartner.utils.DialogProgressUtil
-import com.example.ticketpartner.utils.NavigateFragmentUtil.clearBackStackToDestination
+import com.example.ticketpartner.utils.NavigationUtil.clearBackStackToDestination
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

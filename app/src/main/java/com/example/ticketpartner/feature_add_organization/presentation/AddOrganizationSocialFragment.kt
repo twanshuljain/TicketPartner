@@ -16,7 +16,7 @@ import com.example.ticketpartner.common.remote.apis.SessionHandlerInterceptor
 import com.example.ticketpartner.databinding.FragmentAddOrganizationSocialBinding
 import com.example.ticketpartner.feature_add_organization.domain.model.AddOrganizationSocialUIState
 import com.example.ticketpartner.utils.DialogProgressUtil
-import com.example.ticketpartner.utils.NavigateFragmentUtil.clearBackStackToDestination
+import com.example.ticketpartner.utils.NavigationUtil.clearBackStackToDestination
 
 class AddOrganizationSocialFragment : Fragment() {
     private lateinit var binding: FragmentAddOrganizationSocialBinding

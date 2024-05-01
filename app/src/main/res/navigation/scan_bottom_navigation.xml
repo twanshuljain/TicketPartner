@@ -5,7 +5,7 @@
     android:id="@+id/scan_bottom_navigation"
     app:startDestination="@id/scanBottomNavHome">
 
-   <!-- <fragment
+<!--<fragment
         android:id="@+id/scanQRLandingFragment"
         android:name="com.example.ticketpartner.feature_scan_module.ScanQRLandingFragment"
         android:label="fragment_scan_q_r_landing"

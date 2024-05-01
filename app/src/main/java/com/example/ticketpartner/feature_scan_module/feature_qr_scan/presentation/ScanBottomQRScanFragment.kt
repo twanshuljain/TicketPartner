@@ -3,12 +3,12 @@ package com.example.ticketpartner.feature_scan_module.feature_qr_scan.presentati
 import android.annotation.SuppressLint
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.util.Log
 import android.util.SparseArray
 import android.view.LayoutInflater
 import android.view.SurfaceHolder
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.Animation
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.util.isNotEmpty
@@ -34,7 +34,6 @@ class ScanBottomQRScanFragment : Fragment() {
     private lateinit var cameraSource: CameraSource
     private lateinit var barcodeDetector: BarcodeDetector
     private val requestCodeCameraPermission = 1001
-    private var aniSlide: Animation? = null
     private var isTorchOn = false
 
     private var selectedTicketTypeList = ArrayList<String>()
@@ -71,6 +70,14 @@ class ScanBottomQRScanFragment : Fragment() {
         binding.btnEndScan.setOnClickListener {
             openImagePickerBottomSheet()
         }
+
+        viewModel.selectedEventName.observe(viewLifecycleOwner){
+            for (i in it.indices)
+            selectedTicketTypeList.add(it[i])
+            Log.e("TAG", "initView: $selectedTicketTypeList ", )
+        }
+
+
 
         // viewModel.qrScanCode("244447224741818",selectedTicketTypeList)
         //viewModel.getScannedTicketData()
@@ -135,7 +142,9 @@ class ScanBottomQRScanFragment : Fragment() {
                 val barcodes: SparseArray<Barcode> = detections.detectedItems
                 if (barcodes.isNotEmpty()) {
                     val scannedValue = barcodes.valueAt(ZERO).rawValue
-                    SnackBarUtil.showSuccessSnackBar(binding.root, scannedValue)
+                    viewModel.selectedEventName.observe(viewLifecycleOwner){
+                        SnackBarUtil.showSuccessSnackBar(binding.root, it.toString()+"  "+scannedValue)
+                    }
                 }
             }
         })

@@ -19,6 +19,7 @@ import com.example.ticketpartner.databinding.FragmentLoginScanModuleBinding
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.LoginWithPinResponse
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.LoginWithPinUIState
 import com.example.ticketpartner.utils.DialogProgressUtil
+import com.example.ticketpartner.utils.NavigationUtil.navigateWithStackClear
 import com.example.ticketpartner.utils.Utility
 import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
@@ -78,8 +79,6 @@ class LoginScanModuleFragment : Fragment() {
         }
 
         binding.rlContinue.setOnClickListener {
-
-            //findNavController().navigate(R.id.scan_bottom_navigation)
           if (isAllFieldsValid()) {
                 viewModel.loginWithPin(etName, etPin)
                 observeLoginResponse()
@@ -98,7 +97,9 @@ class LoginScanModuleFragment : Fragment() {
                     DialogProgressUtil.dismiss()
                     SnackBarUtil.showSuccessSnackBar(binding.root, it.onSuccess.message.toString())
                     updateUserDetailsToSession(it.onSuccess)
-                    findNavController().navigate(R.id.eventDetailsScanModuleFragment)
+                  ///  findNavController().navigate(R.id.eventDetailsScanModuleFragment)
+                  // findNavController().clearBackStackToDestination(R.id.eventDetailsScanModuleFragment)
+                   findNavController().navigateWithStackClear(R.id.eventDetailsScanModuleFragment,false,null)
 
                 }
 
@@ -118,7 +119,6 @@ class LoginScanModuleFragment : Fragment() {
             )
             MyPreferences.putString(PrefConstants.LOGGED_USER_DETAILS, userJson)
         }
-
     }
 
     private fun isAllFieldsValid(): Boolean {
