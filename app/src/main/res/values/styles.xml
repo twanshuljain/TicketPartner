@@ -364,6 +364,13 @@
         <item name="android:fontFamily" tools:targetApi="o">@font/lato_regular</item>
     </style>
 
+    <style name="regularGreenText14" parent="Widget.AppCompat.TextView">
+        <item name="android:textColor">@color/green</item>
+        <item name="android:textSize">@dimen/text_14</item>
+        <item name="hintTextColor">@color/placeholder</item>
+        <item name="android:fontFamily" tools:targetApi="o">@font/lato_regular</item>
+    </style>
+
     <style name="regularParaText10" parent="Widget.AppCompat.TextView">
         <item name="android:textColor">@color/para_text</item>
         <item name="android:textSize">@dimen/text_10</item>

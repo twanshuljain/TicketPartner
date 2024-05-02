@@ -107,10 +107,10 @@ class ScanBottomNavSearchFragment : Fragment() {
             dialog.show()
         }
 
-    private fun isItemClicked(b: Boolean) {
-        if (b){
-            val bottomSheet = CheckInBottomSheetFragment()
+    private fun isItemClicked(orderId: String) {
+            val bottomSheet = CheckInBottomSheetFragment(orderId)
             bottomSheet.show(requireActivity().supportFragmentManager, bottomSheet.tag)
+
 
           /*  //openImagePickerBottomSheet()
             val transaction = requireActivity().supportFragmentManager.beginTransaction()
@@ -119,7 +119,7 @@ class ScanBottomNavSearchFragment : Fragment() {
             transaction.addToBackStack(null)
             transaction.commit()*/
            // findNavController().navigate(R.id.scanSearchedOrderDetailsFragment)
-        }
+
     }
 }
 

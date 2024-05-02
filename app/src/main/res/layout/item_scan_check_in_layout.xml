@@ -22,7 +22,19 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:checked="false"
+        android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvCheckedIn"
+        style="@style/regularGreenText14"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Checked in"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/CheckBox"
+        app:layout_constraintTop_toTopOf="@id/CheckBox" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

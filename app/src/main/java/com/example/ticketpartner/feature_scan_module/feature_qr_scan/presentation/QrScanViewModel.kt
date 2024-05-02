@@ -9,12 +9,14 @@ import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.m
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.EventDetailsScanUIState
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.QrScanSearchItemUIState
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.presentation.LoginScanVewModel
+import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.QrScanCheckedInUIState
 import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.QrScanOrderDetailsUIState
 import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.QrScanUIState
 import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.QrScannedTicketUIState
 import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.usecase.GetQrScanSearchUseCase
 import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.usecase.GetQrScanUseCase
 import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.usecase.GetQrScannedTicketDataUseCase
+import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.usecase.GetScanCheckedInUseCase
 import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.usecase.GetScanEventDetailsDashboardUseCase
 import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.usecase.GetScanOrderDetailsUseCase
 import com.technotoil.tglivescan.common.retrofit.apis.ErrorResponseHandler
@@ -30,6 +32,7 @@ class QrScanViewModel @Inject constructor(
     private val getScanEventDetailsDashboardUseCase: GetScanEventDetailsDashboardUseCase,
     private val getQrScanSearchUseCase: GetQrScanSearchUseCase,
     private val getScanOrderDetailsUseCase: GetScanOrderDetailsUseCase,
+    private val getScanCheckedInUseCase: GetScanCheckedInUseCase,
     private val logUtil: LogUtil
 ) : ViewModel() {
 
@@ -50,6 +53,9 @@ class QrScanViewModel @Inject constructor(
 
     private val _getScanOrderDetailsData: MutableLiveData<QrScanOrderDetailsUIState> = MutableLiveData()
     val observeScanOrderDetailsData: LiveData<QrScanOrderDetailsUIState> = _getScanOrderDetailsData
+
+    private val _getScanCheckedInData: MutableLiveData<QrScanCheckedInUIState> = MutableLiveData()
+    val observeScanCheckedInData: LiveData<QrScanCheckedInUIState> = _getScanCheckedInData
 
     fun putSelectedTicketName(selectedTicketName: ArrayList<DataItem>){
         _selectedTicketName.value = selectedTicketName
@@ -128,6 +134,7 @@ class QrScanViewModel @Inject constructor(
     }
 
     fun getOrderDetailsResponse(orderId: String){
+        _getScanOrderDetailsData.value = QrScanOrderDetailsUIState.IsLoading(true)
         viewModelScope.launch {
             getScanOrderDetailsUseCase.invoke(orderId).catch {
                 logUtil.log(TAG, "onError${it.message.toString()}")
@@ -139,6 +146,21 @@ class QrScanViewModel @Inject constructor(
                 _getScanOrderDetailsData.value = QrScanOrderDetailsUIState.OnSuccess(it)
             }
         }
+    }
+
+    fun getCheckInOrder(checkedOrderId:ArrayList<Int>,orderId: String){
+        _getScanCheckedInData.value = QrScanCheckedInUIState.IsLoading(true)
+        viewModelScope.launch {
+            getScanCheckedInUseCase.invoke(checkedOrderId,orderId).catch {
+                logUtil.log(TAG, "onError${it.message.toString()}")
+                val error = ErrorResponseHandler(it)
+                _getScanCheckedInData.value =
+                    QrScanCheckedInUIState.OnFailure(error.getErrors().message.toString())
+            }.collect{
+                _getScanCheckedInData.value = QrScanCheckedInUIState.OnSuccess(it)
+            }
+        }
+
     }
 
     companion object {

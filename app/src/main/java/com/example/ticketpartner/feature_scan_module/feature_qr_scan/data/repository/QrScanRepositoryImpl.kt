@@ -4,6 +4,7 @@ import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.m
 import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.datasource.QrScanDataSource
 import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.QrScanResponse
 import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.QrScannedTicketResponse
+import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.ScanCheckedInResponse
 import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.ScanSearchOrderDetailsResponse
 import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.SearchApiScanResponse
 import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.repository.QrScanRepository
@@ -28,5 +29,12 @@ class QrScanRepositoryImpl @Inject constructor(private val qrScanDataSource: QrS
 
     override suspend fun getScanOrderDetailsResponse(orderId: String): ScanSearchOrderDetailsResponse {
         return qrScanDataSource.getScanOrderDetailsResponse(orderId)
+    }
+
+    override suspend fun getScanCheckedInResponse(
+        checkedOrderIdList: ArrayList<Int>,
+        orderId: String
+    ): ScanCheckedInResponse {
+        return qrScanDataSource.getScanCheckedInResponse(checkedOrderIdList, orderId)
     }
 }
