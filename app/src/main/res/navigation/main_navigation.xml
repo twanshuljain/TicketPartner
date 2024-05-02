@@ -11,24 +11,19 @@
         android:label="fragment_sign_in"
         app:popUpTo="@id/login_navigation"
         app:popUpToInclusive="true"
-        tools:layout="@layout/fragment_sign_in"></fragment>
+        tools:layout="@layout/fragment_sign_in"/>
 
     <fragment
         android:id="@+id/signUpEmailFragment"
         android:name="com.example.ticketpartner.feature_signup.presentation.SignUpEmailFragment"
         android:label="fragment_sign_up_email"
-        tools:layout="@layout/fragment_sign_up_email">
-
-    </fragment>
+        tools:layout="@layout/fragment_sign_up_email"/>
 
     <fragment
         android:id="@+id/signUpDetailsFragment"
         android:name="com.example.ticketpartner.feature_signup.presentation.SignUpDetailsFragment"
         android:label="fragment_sign_up_details"
-        tools:layout="@layout/fragment_sign_up_details">
-
-    </fragment>
-
+        tools:layout="@layout/fragment_sign_up_details"/>
     <fragment
         android:id="@+id/forgotPasswordFragment"
         android:name="com.example.ticketpartner.feature_login.presentation.ForgotPasswordFragment"
@@ -39,9 +34,7 @@
         android:id="@+id/splashLandingFragment"
         android:name="com.example.ticketpartner.feature_login.presentation.SplashLandingFragment"
         android:label="fragment_splash_landing"
-        tools:layout="@layout/fragment_splash_landing">
-
-    </fragment>
+        tools:layout="@layout/fragment_splash_landing"/>
 
     <fragment
         android:id="@+id/resetPasswordFragment"

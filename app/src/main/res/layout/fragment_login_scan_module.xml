@@ -107,7 +107,7 @@
                 android:layout_height="match_parent"
                 android:backgroundTint="@color/white"
                 android:hint="@string/enter_your_pin"
-                android:text="607008"
+                android:text="295736"
                 android:imeOptions="actionDone"
                 android:inputType="number"
                 android:maxLines="1"

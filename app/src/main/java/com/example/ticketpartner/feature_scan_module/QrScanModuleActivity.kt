@@ -21,12 +21,9 @@ class QrScanModuleActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         if (!MyPreferences.getString(PrefConstants.LOGGED_USER_DETAILS).isNullOrEmpty()) {
-            // Obtain reference to the NavHostFragment
             val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_scan_module) as NavHostFragment
-            // Get the NavController
             navController = navHostFragment.navController
-            // Set up the ActionBar with the Navigation UI
-            // setupActionBarWithNavController(navController)
+            navController.popBackStack(R.id.qr_scan_module_navigation,true)
             navController.navigate(R.id.rqScanNavGraph)
         }
     }
@@ -34,4 +31,9 @@ class QrScanModuleActivity : AppCompatActivity() {
         val navController = findNavController(R.id.nav_host_scan_module)
         return navController.navigateUp() || super.onSupportNavigateUp()
     }
+
+ /*   override fun onBackPressed() {
+        super.onBackPressed()
+        onBackPressedDispatcher.onBackPressed()
+    }*/
 }

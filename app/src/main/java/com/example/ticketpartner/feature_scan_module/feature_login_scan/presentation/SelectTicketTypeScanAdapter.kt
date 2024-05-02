@@ -30,7 +30,7 @@ class SelectTicketTypeScanAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val view = holder.binding
-        view.tvTicketType.text = eventTickets?.get(position)?.ticket_type
+        view.tvTicketName.text = eventTickets?.get(position)?.ticket_name
         val isSelected = eventTickets?.get(position)?.isSelected ?: false
 
         if (isSelected) {

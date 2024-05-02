@@ -17,9 +17,13 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.ticketpartner.R
 import com.example.ticketpartner.common.SnackBarUtil
+import com.example.ticketpartner.common.VERTICAL_DOTS
 import com.example.ticketpartner.common.ZERO
 import com.example.ticketpartner.databinding.FragmentScanBottomNavQRScanBinding
 import com.example.ticketpartner.databinding.LayoutEndScanBottomDialogBinding
+import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.QrScanUIState
+import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.QrScannedTicketUIState
+import com.example.ticketpartner.utils.DialogProgressUtil
 import com.example.ticketpartner.utils.TorchController
 import com.google.android.gms.vision.CameraSource
 import com.google.android.gms.vision.Detector
@@ -36,6 +40,7 @@ class ScanBottomQRScanFragment : Fragment() {
     private val requestCodeCameraPermission = 1001
     private var aniSlide: Animation? = null
     private var isTorchOn = false
+
 
     private var selectedTicketTypeList = ArrayList<String>()
 
@@ -55,6 +60,7 @@ class ScanBottomQRScanFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         initView()
         initCameraPermission()
+        getScannedTicketData()
     }
 
     private fun initView() {
@@ -73,16 +79,16 @@ class ScanBottomQRScanFragment : Fragment() {
         }
 
         // viewModel.qrScanCode("244447224741818",selectedTicketTypeList)
-        //viewModel.getScannedTicketData()
     }
 
     private fun initCameraPermission() {
-        if (ContextCompat.checkSelfPermission(
+       if (ContextCompat.checkSelfPermission(
                 requireActivity(), android.Manifest.permission.CAMERA
             ) != PackageManager.PERMISSION_GRANTED
         ) askForCameraPermission() else setupControls()
 
     }
+
 
     private fun setupControls() {
 
@@ -95,6 +101,7 @@ class ScanBottomQRScanFragment : Fragment() {
             )
             .setAutoFocusEnabled(true)
             .build()
+
 
         binding.surfaceView.holder.addCallback(object : SurfaceHolder.Callback {
             @SuppressLint("MissingPermission")
@@ -135,10 +142,34 @@ class ScanBottomQRScanFragment : Fragment() {
                 val barcodes: SparseArray<Barcode> = detections.detectedItems
                 if (barcodes.isNotEmpty()) {
                     val scannedValue = barcodes.valueAt(ZERO).rawValue
-                    SnackBarUtil.showSuccessSnackBar(binding.root, scannedValue)
+                    viewModel.selectedTicketTypeArrayList.observe(viewLifecycleOwner){
+                        viewModel.qrScanCode(scannedValue,it)
+                        observeScanTicketResponse()
+                    }
+
+                   // SnackBarUtil.showSuccessSnackBar(binding.root, scannedValue)
                 }
             }
         })
+    }
+
+    private fun observeScanTicketResponse(){
+        viewModel.observeQrScanResponse.observe(viewLifecycleOwner){
+            when(it){
+                is QrScanUIState.IsLoading -> {
+                    DialogProgressUtil.show(childFragmentManager)
+                }
+                is QrScanUIState.OnSuccess -> {
+                    DialogProgressUtil.dismiss()
+                    SnackBarUtil.showErrorSnackBar(binding.root, it.onSuccess.message.toString())
+                }
+                is QrScanUIState.OnFailure -> {
+                    DialogProgressUtil.dismiss()
+                    SnackBarUtil.showErrorSnackBar(binding.root, it.onFailure)
+                }
+            }
+        }
+
     }
 
     private fun askForCameraPermission() {
@@ -147,6 +178,33 @@ class ScanBottomQRScanFragment : Fragment() {
             arrayOf(android.Manifest.permission.CAMERA),
             requestCodeCameraPermission
         )
+    }
+
+    @SuppressLint("SetTextI18n")
+    private fun getScannedTicketData() {
+        viewModel.getScannedTicketData()
+        viewModel.observeTicketScannedResponse.observe(viewLifecycleOwner) {
+            when (it) {
+                is QrScannedTicketUIState.IsLoading -> {
+                    DialogProgressUtil.show(childFragmentManager)
+                }
+
+                is QrScannedTicketUIState.OnSuccess -> {
+                    DialogProgressUtil.dismiss()
+                    val res = it.onSuccess.data
+                    binding.tvTotalScanned.text =
+                        getString(R.string.total_scanned) + VERTICAL_DOTS + res?.total_scanned.toString()
+                    binding.tvAccepted.text =
+                        getString(R.string.accepted) + VERTICAL_DOTS + res?.total_accepted.toString()
+                    binding.tvRejected.text =
+                        getString(R.string.rejected) + VERTICAL_DOTS + res?.total_rejected.toString()
+                }
+
+                is QrScannedTicketUIState.OnFailure -> {
+                    DialogProgressUtil.dismiss()
+                }
+            }
+        }
     }
 
     private fun openImagePickerBottomSheet() {

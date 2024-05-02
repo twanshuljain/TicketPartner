@@ -23,33 +23,58 @@
             android:layout_gravity="end"
             android:src="@drawable/ic_x_clear_circle"
             android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="@id/etSearch"
+            app:layout_constraintBottom_toBottomOf="@id/etSearchLayout"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/etSearch" />
+            app:layout_constraintTop_toTopOf="@id/etSearchLayout" />
 
-        <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/etSearch"
-            style="@style/mediumDarkPrimaryText14"
+        <RelativeLayout
+            android:id="@+id/etSearchLayout"
             android:layout_width="match_parent"
             android:layout_height="@dimen/size_48"
-            android:layout_marginStart="@dimen/margin_15"
-            android:layout_marginTop="@dimen/margin_15"
-            android:layout_marginEnd="@dimen/margin_15"
-            android:background="@drawable/edit_text_design_search_bar"
-            android:drawableLeft="@drawable/ic_search_grey"
-            android:drawablePadding="@dimen/margin_10"
-            android:elevation="@dimen/margin_10"
-            android:gravity="center_vertical"
-            android:hint="@string/search_bar_hint"
-            android:imeOptions="actionDone"
-            android:inputType="textEmailAddress"
-            android:maxLines="1"
-            android:paddingStart="@dimen/margin_10"
-            android:paddingEnd="@dimen/margin_10"
-            android:singleLine="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:background="@drawable/edit_text_design_search_bar"
+            android:gravity="center_vertical"
+            android:elevation="@dimen/margin_10"
+            android:layout_marginStart="@dimen/margin_15"
+            android:layout_marginTop="@dimen/margin_15"
+            android:layout_marginEnd="@dimen/margin_15">
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/etSearch"
+                style="@style/mediumDarkPrimaryText14"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="@dimen/margin_1"
+                android:layout_marginTop="@dimen/margin_1"
+                android:layout_marginEnd="@dimen/margin_1"
+                android:layout_marginBottom="@dimen/margin_1"
+                android:layout_toStartOf="@id/icClear"
+                android:background="@drawable/et_transparent_design"
+                android:drawableLeft="@drawable/ic_search_grey"
+                android:drawablePadding="@dimen/margin_10"
+                android:gravity="center_vertical"
+                android:hint="@string/search_bar_hint"
+                android:imeOptions="actionDone"
+                android:inputType="textEmailAddress"
+                android:maxLines="1"
+                android:paddingStart="@dimen/margin_10"
+                android:paddingEnd="@dimen/margin_10"
+                android:singleLine="true"
+                android:visibility="visible" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/icClear"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:padding="@dimen/margin_10"
+                android:visibility="gone"
+                android:src="@drawable/ic_x_clear_circle" />
+
+        </RelativeLayout>
 
         <View
             android:layout_width="match_parent"
@@ -58,12 +83,12 @@
             android:background="@color/border_grey"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/etSearch" />
+            app:layout_constraintTop_toBottomOf="@id/etSearchLayout" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvScanOrder"
+        android:id="@+id/rvSearchOrder"
         android:layout_width="match_parent"
         android:layout_height="@dimen/margin_0"
         app:layout_constraintStart_toStartOf="parent"

@@ -216,9 +216,6 @@ class SignInFragment : Fragment(), CountdownTimerCallback {
         }
 
         binding.clJoinAdminStaff.setOnClickListener {
-            //findNavController().navigate(R.id.scanLoginNavGraph)
-
-
             val intent = Intent(requireContext(), QrScanModuleActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent)

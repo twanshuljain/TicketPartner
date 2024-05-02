@@ -7,12 +7,16 @@ import androidx.lifecycle.viewModelScope
 import com.example.ticketpartner.common.LogUtil
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.DataItem
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.EventDetailsScanUIState
+import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.QrScanSearchItemUIState
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.presentation.LoginScanVewModel
+import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.QrScanOrderDetailsUIState
 import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.QrScanUIState
 import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.QrScannedTicketUIState
+import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.usecase.GetQrScanSearchUseCase
 import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.usecase.GetQrScanUseCase
 import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.usecase.GetQrScannedTicketDataUseCase
 import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.usecase.GetScanEventDetailsDashboardUseCase
+import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.usecase.GetScanOrderDetailsUseCase
 import com.technotoil.tglivescan.common.retrofit.apis.ErrorResponseHandler
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.catch
@@ -24,6 +28,8 @@ class QrScanViewModel @Inject constructor(
     private val getQrScanUseCase: GetQrScanUseCase,
     private val getQrScannedTicketDataUseCase: GetQrScannedTicketDataUseCase,
     private val getScanEventDetailsDashboardUseCase: GetScanEventDetailsDashboardUseCase,
+    private val getQrScanSearchUseCase: GetQrScanSearchUseCase,
+    private val getScanOrderDetailsUseCase: GetScanOrderDetailsUseCase,
     private val logUtil: LogUtil
 ) : ViewModel() {
 
@@ -39,11 +45,19 @@ class QrScanViewModel @Inject constructor(
     private val _getScanEventDetails: MutableLiveData<EventDetailsScanUIState> = MutableLiveData()
     val observeScanEventDetailsResponse: LiveData<EventDetailsScanUIState> = _getScanEventDetails
 
+    private val _getScanSearchData: MutableLiveData<QrScanSearchItemUIState> = MutableLiveData()
+    val observeScanSearchData: LiveData<QrScanSearchItemUIState> = _getScanSearchData
+
+    private val _getScanOrderDetailsData: MutableLiveData<QrScanOrderDetailsUIState> = MutableLiveData()
+    val observeScanOrderDetailsData: LiveData<QrScanOrderDetailsUIState> = _getScanOrderDetailsData
+
     fun putSelectedTicketName(selectedTicketName: ArrayList<DataItem>){
         _selectedTicketName.value = selectedTicketName
     }
 
-    val onContinueClick=  MutableLiveData<Boolean>()
+    val onContinueClick=  MutableLiveData<Int>()
+
+    val selectedTicketTypeArrayList = MutableLiveData<ArrayList<String>>()
 
 
     /*  private val _onContinueClick:MutableLiveData<Boolean> = MutableLiveData()
@@ -95,6 +109,34 @@ class QrScanViewModel @Inject constructor(
             }.collect {
                 logUtil.log(LoginScanVewModel.TAG, "onResponse: $it")
                 _getScanEventDetails.value = EventDetailsScanUIState.OnSuccess(it)
+            }
+        }
+    }
+
+    fun getSearchData(orderId: String) {
+        viewModelScope.launch {
+            getQrScanSearchUseCase.invoke(orderId).catch {
+                logUtil.log(TAG, "onError${it.message.toString()}")
+                val error = ErrorResponseHandler(it)
+                _getScanSearchData.value =
+                    QrScanSearchItemUIState.OnFailure(error.getErrors().message.toString())
+            }.collect {
+                logUtil.log(TAG, "onResponse: $it")
+                _getScanSearchData.value = QrScanSearchItemUIState.OnSuccess(it)
+            }
+        }
+    }
+
+    fun getOrderDetailsResponse(orderId: String){
+        viewModelScope.launch {
+            getScanOrderDetailsUseCase.invoke(orderId).catch {
+                logUtil.log(TAG, "onError${it.message.toString()}")
+                val error = ErrorResponseHandler(it)
+                _getScanOrderDetailsData.value =
+                    QrScanOrderDetailsUIState.OnFailure(error.getErrors().message.toString())
+            }.collect{
+                logUtil.log(TAG, "onResponse: $it")
+                _getScanOrderDetailsData.value = QrScanOrderDetailsUIState.OnSuccess(it)
             }
         }
     }

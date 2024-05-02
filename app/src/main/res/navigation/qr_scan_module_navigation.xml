@@ -46,7 +46,15 @@
             android:label="fragment_scan_bottom_nav_search"
             tools:layout="@layout/fragment_scan_bottom_nav_search" />
 
+
+        <fragment
+            android:id="@+id/scanSearchedOrderDetailsFragment"
+            android:name="com.example.ticketpartner.feature_scan_module.feature_qr_scan.presentation.ScanSearchedOrderDetailsFragment"
+            android:label="fragment_scan_searched_order_details"
+            tools:layout="@layout/fragment_scan_searched_order_details" />
+
     </navigation>
+
 
     <fragment
         android:id="@+id/qrScanReportFragment"
@@ -55,10 +63,5 @@
         tools:layout="@layout/fragment_qr_scan_report" />
 
 
-    <fragment
-        android:id="@+id/scanSearchedOrderDetailsFragment"
-        android:name="com.example.ticketpartner.feature_scan_module.feature_qr_scan.presentation.ScanSearchedOrderDetailsFragment"
-        android:label="fragment_scan_searched_order_details"
-        tools:layout="@layout/fragment_scan_searched_order_details" />
 
 </navigation>

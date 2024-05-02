@@ -195,7 +195,6 @@
                         android:layout_width="@dimen/margin_0"
                         android:layout_height="wrap_content"
                         android:paddingEnd="@dimen/margin_5"
-                        android:text="Total Scanned : 287"
                         app:layout_constraintEnd_toEndOf="@id/guidelineRight"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -206,7 +205,6 @@
                         android:layout_width="@dimen/margin_0"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/margin_5"
-                        android:text="Total Scanned : 56555"
                         app:layout_constraintEnd_toEndOf="@id/guidelineLeft"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/tvTotalScanned" />
@@ -218,7 +216,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/margin_5"
                         android:paddingStart="@dimen/margin_10"
-                        android:text="Rejected : 54545"
                         android:textAlignment="textStart"
                         app:layout_constraintEnd_toEndOf="@id/guidelineRight"
                         app:layout_constraintStart_toEndOf="@id/tvAccepted"

@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -42,7 +43,18 @@ class LoginScanModuleFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        /** restrict user to enter space */
+        // Handle the back press in this fragment
+        val callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+
+            }
+        }
+        // Note that you should add the callback in onCreate and remove it in onDestroy
+        requireActivity().onBackPressedDispatcher.addCallback(requireActivity(), callback)
+
+
+
+    /** restrict user to enter space */
         Utility.disableSpace(binding.etName)
         Utility.disableSpace(binding.etPin)
 
@@ -50,7 +62,7 @@ class LoginScanModuleFragment : Fragment() {
         Utility.allowCharactersOnly(binding.etName)
 
         etName = "d"
-        etPin = "607008"
+        etPin = "295736"
 
         binding.etName.doAfterTextChanged {
             etName = it.toString().trim()

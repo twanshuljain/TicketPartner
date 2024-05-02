@@ -6,6 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import com.example.ticketpartner.R
+import com.example.ticketpartner.common.COMMA
+import com.example.ticketpartner.common.HYPHEN_CHAR
 import com.example.ticketpartner.common.SnackBarUtil
 import com.example.ticketpartner.common.ZERO
 import com.example.ticketpartner.databinding.FragmentScanBottomNavHomeBinding
@@ -13,12 +16,13 @@ import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.m
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.EventDetailsScanUIState
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.presentation.SelectTicketTypeScanAdapter
 import com.example.ticketpartner.utils.DialogProgressUtil
+import com.example.ticketpartner.utils.getFormattedStartDateForEvent
+import com.example.ticketpartner.utils.getFormattedTimeForEvent
 
 class ScanBottomNavHomeFragment : Fragment() {
     private lateinit var binding: FragmentScanBottomNavHomeBinding
     private val viewModel: QrScanViewModel by activityViewModels()
     private lateinit var adapter: SelectTicketTypeScanAdapter
-    private var selectedTicketName = ArrayList<String>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -47,7 +51,7 @@ class ScanBottomNavHomeFragment : Fragment() {
     }
 
     private fun makeEventDetailsAPICall() {
-        viewModel.getEventDetailsData()
+        //  viewModel.getEventDetailsData()
         viewModel.observeScanEventDetailsResponse.observe(viewLifecycleOwner) {
             when (it) {
                 is EventDetailsScanUIState.IsLoading -> {
@@ -57,6 +61,7 @@ class ScanBottomNavHomeFragment : Fragment() {
                 is EventDetailsScanUIState.OnSuccess -> {
                     DialogProgressUtil.dismiss()
                     setTicketTypesAdapter(it.onSuccess.data)
+                    setDetailsOnCard(it.onSuccess.data)
                 }
 
                 is EventDetailsScanUIState.OnFailure -> {
@@ -67,18 +72,36 @@ class ScanBottomNavHomeFragment : Fragment() {
         }
     }
 
+    private fun setDetailsOnCard(data: DataItem?) {
+        binding.tvTitle.text = data?.event?.name
+        binding.tvStartDate.text =
+            getFormattedStartDateForEvent(data?.event_dates?.event_start_date)
+        val startEndTime =
+            getFormattedTimeForEvent(data?.event_dates?.event_start_time) + HYPHEN_CHAR + getFormattedTimeForEvent(
+                data?.event_dates?.event_end_time
+            )
+        binding.tvStartEndTime.text = startEndTime
+        val location = data?.event_locations
+        binding.tvLocation.text =
+            location?.city + COMMA + location?.state + COMMA + location?.country
+    }
+
+
     private fun initView() {
         adapter =
-            SelectTicketTypeScanAdapter(requireActivity(), emptyList(), ::selectedTicketNameList)
+            SelectTicketTypeScanAdapter(
+                requireActivity(),
+                emptyList(),
+                ::selectedTicketNameList
+            )
+
         binding.tvSelectAll.setOnClickListener {
             adapter.selectAll()
         }
         binding.rvSelectTicketType.setHasFixedSize(true)
 
         binding.btnContinue.setOnClickListener {
-          /*  val bundle = bundleOf(SELECTED_TICKET_NAME to selectedTicketName)
-            findNavController().navigate(R.id.scanBottomQRScanFragment, bundle)*/
-            viewModel.onContinueClick.value = true
+            viewModel.onContinueClick.value = R.id.scanBottomNavQR
         }
     }
 
@@ -94,7 +117,16 @@ class ScanBottomNavHomeFragment : Fragment() {
 
     private fun selectedTicketNameList(list: ArrayList<String>) {
         if (list.size > ZERO) {
-            selectedTicketName = list
+            viewModel.selectedTicketTypeArrayList.value = list
+            binding.btnContinue.background =
+                requireContext().getDrawable(R.drawable.btn_design_dark_primary)
+            binding.btnContinue.isEnabled = true
+
+        } else {
+            binding.btnContinue.background =
+                requireContext().getDrawable(R.drawable.disable_continue_btn_design)
+          binding.btnContinue.isEnabled = false
         }
     }
+
 }
