@@ -14,7 +14,7 @@ import javax.inject.Inject
 
 class QrScanDataSourceImpl @Inject constructor(private val restApiService: RestApiService): QrScanDataSource {
     override suspend fun qrScanCode(qrId: String, ticketType: ArrayList<String>): QrScanResponse {
-        return restApiService.scanQrCode(QrScanRequest(qrid = qrId, ticket_name = ticketType))
+        return restApiService.scanQrCode(QrScanRequest(qrid = qrId, ticket_names = ticketType))
     }
 
     override suspend fun getQrScannedTicketData(): QrScannedTicketResponse {

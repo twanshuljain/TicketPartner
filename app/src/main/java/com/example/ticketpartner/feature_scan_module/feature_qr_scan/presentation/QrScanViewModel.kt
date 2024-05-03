@@ -64,6 +64,7 @@ class QrScanViewModel @Inject constructor(
     val onContinueClick=  MutableLiveData<Int>()
 
     val selectedTicketTypeArrayList = MutableLiveData<ArrayList<String>>()
+    val eventName = MutableLiveData<String>()
 
 
     /*  private val _onContinueClick:MutableLiveData<Boolean> = MutableLiveData()

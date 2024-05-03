@@ -11,14 +11,11 @@ import android.view.ViewGroup
 import android.view.animation.Animation
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.core.util.isNotEmpty
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.navigation.fragment.findNavController
+import com.example.ticketpartner.QrScanReportFragment
 import com.example.ticketpartner.R
-import com.example.ticketpartner.common.SnackBarUtil
 import com.example.ticketpartner.common.VERTICAL_DOTS
-import com.example.ticketpartner.common.ZERO
 import com.example.ticketpartner.databinding.FragmentScanBottomNavQRScanBinding
 import com.example.ticketpartner.databinding.LayoutEndScanBottomDialogBinding
 import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.QrScanUIState
@@ -139,15 +136,19 @@ class ScanBottomQRScanFragment : Fragment() {
             }
 
             override fun receiveDetections(detections: Detector.Detections<Barcode>) {
+                var scannedValue = ""
+                val list = ArrayList<String>()
+                list.add("The Vvip")
                 val barcodes: SparseArray<Barcode> = detections.detectedItems
-                if (barcodes.isNotEmpty()) {
-                    val scannedValue = barcodes.valueAt(ZERO).rawValue
-                    viewModel.selectedTicketTypeArrayList.observe(viewLifecycleOwner){
-                        viewModel.qrScanCode(scannedValue,it)
+                scannedValue = barcodes.valueAt(0).rawValue
+
+                //Don't forget to add this line printing value or finishing activity must run on main thread
+                requireActivity().runOnUiThread {
+                    if (scannedValue.isNotEmpty()) {
+                        cameraSource.stop()
+                        viewModel.qrScanCode(scannedValue,list)
                         observeScanTicketResponse()
                     }
-
-                   // SnackBarUtil.showSuccessSnackBar(binding.root, scannedValue)
                 }
             }
         })
@@ -161,15 +162,23 @@ class ScanBottomQRScanFragment : Fragment() {
                 }
                 is QrScanUIState.OnSuccess -> {
                     DialogProgressUtil.dismiss()
-                    SnackBarUtil.showErrorSnackBar(binding.root, it.onSuccess.message.toString())
+                    viewModel.getScannedTicketData()
+                    navigateToStatusTicket()
                 }
                 is QrScanUIState.OnFailure -> {
                     DialogProgressUtil.dismiss()
-                    SnackBarUtil.showErrorSnackBar(binding.root, it.onFailure)
+                    navigateToStatusTicket()
                 }
             }
         }
+    }
 
+    private fun navigateToStatusTicket() {
+        val transaction = requireActivity().supportFragmentManager.beginTransaction()
+        transaction.setCustomAnimations(R.anim.slide_in, R.anim.slide_out)
+        transaction.replace(R.id.frameLayout, TicketScannedStatusFragment())
+        transaction.addToBackStack(null)
+        transaction.commit()
     }
 
     private fun askForCameraPermission() {
@@ -207,6 +216,7 @@ class ScanBottomQRScanFragment : Fragment() {
         }
     }
 
+
     private fun openImagePickerBottomSheet() {
         val dialog = BottomSheetDialog(requireContext())
         val dialogView = LayoutEndScanBottomDialogBinding.inflate(layoutInflater)
@@ -218,8 +228,10 @@ class ScanBottomQRScanFragment : Fragment() {
             dialog.dismiss()
         }
         dialogView.btnYes.setOnClickListener {
-            findNavController().navigate(R.id.qrScanReportFragment)
+            //findNavController().navigate(R.id.qrScanReportFragment)
+            scanReportNavigation()
             dialog.dismiss()
+
         }
         dialogView.ivClose.setOnClickListener {
             dialog.dismiss()
@@ -227,5 +239,13 @@ class ScanBottomQRScanFragment : Fragment() {
         dialog.setCanceledOnTouchOutside(true)
         dialog.setContentView(dialogView.root)
         dialog.show()
+    }
+
+    private fun scanReportNavigation() {
+        val transaction = requireActivity().supportFragmentManager.beginTransaction()
+        transaction.setCustomAnimations(R.anim.slide_in, R.anim.slide_out)
+        transaction.replace(R.id.frameLayout, QrScanReportFragment())
+        transaction.addToBackStack(null)
+        transaction.commit()
     }
 }

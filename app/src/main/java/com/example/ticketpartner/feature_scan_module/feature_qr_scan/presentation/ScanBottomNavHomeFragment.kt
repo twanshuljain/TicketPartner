@@ -73,6 +73,7 @@ class ScanBottomNavHomeFragment : Fragment() {
     }
 
     private fun setDetailsOnCard(data: DataItem?) {
+        viewModel.eventName.value = data?.event?.name
         binding.tvTitle.text = data?.event?.name
         binding.tvStartDate.text =
             getFormattedStartDateForEvent(data?.event_dates?.event_start_date)
