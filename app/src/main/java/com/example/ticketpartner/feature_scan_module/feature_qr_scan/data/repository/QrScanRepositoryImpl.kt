@@ -33,7 +33,7 @@ class QrScanRepositoryImpl @Inject constructor(private val qrScanDataSource: QrS
     }
 
     override suspend fun getScanCheckedInResponse(
-        checkedOrderIdList: ArrayList<Int>,
+        checkedOrderIdList: ArrayList<Long>,
         orderId: String
     ): ScanCheckedInResponse {
         return qrScanDataSource.getScanCheckedInResponse(checkedOrderIdList, orderId)

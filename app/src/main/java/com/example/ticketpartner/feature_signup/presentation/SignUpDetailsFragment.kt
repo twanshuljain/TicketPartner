@@ -34,7 +34,7 @@ import com.example.ticketpartner.utils.CountdownTimerCallback
 import com.example.ticketpartner.utils.CountdownTimerUtil
 import com.example.ticketpartner.utils.DialogProgressUtil
 import com.example.ticketpartner.utils.FullScreenDialogFragment
-import com.example.ticketpartner.utils.NavigateFragmentUtil.clearBackStackToDestination
+import com.example.ticketpartner.utils.NavigateFragmentUtil.navigateWithClearAllBackStack
 import com.example.ticketpartner.utils.OtpChangeFocusUtil
 import com.example.ticketpartner.utils.Utility
 import com.example.ticketpartner.utils.Utility.allowCharactersOnly
@@ -171,7 +171,7 @@ class SignUpDetailsFragment : Fragment(), CountdownTimerCallback {
         }
 
         binding.tvSignInText.setOnClickListener {
-            findNavController().clearBackStackToDestination(R.id.signInFragment)
+            findNavController().navigateWithClearAllBackStack(R.id.signInFragment)
         }
 
         binding.emailOtp.apply {
@@ -294,7 +294,7 @@ class SignUpDetailsFragment : Fragment(), CountdownTimerCallback {
                     DialogProgressUtil.dismiss()
                     SnackBarUtil.showSuccessSnackBar(binding.root, it.result.message.toString())
                     val changeLogoFragment = R.id.addOrganizationChangeLogoFragment
-                    findNavController().clearBackStackToDestination(changeLogoFragment)
+                    findNavController().navigateWithClearAllBackStack(changeLogoFragment)
                     // Adding a delay of 2000 milliseconds (2 seconds)
                     Handler(Looper.getMainLooper()).postDelayed({
                         binding.btnCreateAccount.isClickable = false
@@ -318,7 +318,7 @@ class SignUpDetailsFragment : Fragment(), CountdownTimerCallback {
         dialog.onStart()
         val signIn = R.id.signInFragment
         if (dialog.hasDialogDismissed()) {
-            findNavController().clearBackStackToDestination(signIn)
+            findNavController().navigateWithClearAllBackStack(signIn)
         }
     }
 

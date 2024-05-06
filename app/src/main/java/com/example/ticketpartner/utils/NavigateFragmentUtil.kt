@@ -2,20 +2,40 @@ package com.example.ticketpartner.utils
 
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph
+import androidx.navigation.NavOptions
+import androidx.navigation.Navigation.findNavController
+import androidx.navigation.fragment.findNavController
+import com.example.ticketpartner.R
 
 object NavigateFragmentUtil {
 
-    fun NavController.clearBackStackToDestination(destinationId: Int) {
+    //When popUpToInclusive is set to true:
+    /* The back stack is cleared up to and including the destination specified by popUpTo.
+     That means the destination specified is also removed from the stack.*/
+
+    // When popUpToInclusive is set to false:When popUpToInclusive is set to false:
+    /*  The back stack is cleared up to the destination specified in popUpTo,
+      but the destination itself is not removed. That means after the action,
+      the specified destination will be the topmost in the back stack.*/
+
+    fun NavController.navigateWithClearAllBackStack(destinationId: Int) {
         popBackStack(destinationId, false)
     }
 
-   /* fun NavController.exitAppWithClearAllBackStack(navGraph: l) {
-        // Pop the back stack to the root destination
-        popBackStack(navGraph.startDestination, false)
+    fun NavController.navigateParentToChildFragment(
+        currentId: Int,
+        destinationId: Int,
+        inclusive: Boolean = false
+    ) {
+        val navOptions = NavOptions.Builder()
+            .setPopUpTo(currentId, inclusive).build()
+        navigate(destinationId, null, navOptions)
+    }
 
-        // Optionally, you can finish the activity or close the app in other ways
-        // For example:
-        // activity?.finish()
-        // Process.killProcess(Process.myPid())
-    }*/
+    fun NavController.navigateWithClearNavGraph(navGraph: Int,destinationId: Int){
+      popBackStack(navGraph, true)  // Clear everything up to the nav_graph
+       navigate(destinationId)
+    }
+
+
 }

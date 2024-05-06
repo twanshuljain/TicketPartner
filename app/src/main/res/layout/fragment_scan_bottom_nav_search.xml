@@ -98,9 +98,6 @@
         android:layout_marginTop="@dimen/margin_15"
         android:orientation="vertical"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:listitem="@layout/item_scan_order_search">
-
-
-    </androidx.recyclerview.widget.RecyclerView>
+        tools:listitem="@layout/item_scan_order_search"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

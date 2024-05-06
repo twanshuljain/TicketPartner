@@ -14,7 +14,7 @@ import com.example.ticketpartner.common.SnackBarUtil
 import com.example.ticketpartner.databinding.FragmentResetPasswordBinding
 import com.example.ticketpartner.feature_login.domain.model.ResetPasswordUIState
 import com.example.ticketpartner.utils.DialogProgressUtil
-import com.example.ticketpartner.utils.NavigateFragmentUtil.clearBackStackToDestination
+import com.example.ticketpartner.utils.NavigateFragmentUtil.navigateWithClearAllBackStack
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -67,7 +67,7 @@ class ResetPasswordFragment : Fragment() {
         }
 
         binding.ivBack.setOnClickListener {
-            findNavController().clearBackStackToDestination(R.id.forgotPasswordFragment)
+            findNavController().navigateWithClearAllBackStack(R.id.forgotPasswordFragment)
         }
     }
 
@@ -80,7 +80,7 @@ class ResetPasswordFragment : Fragment() {
                 is ResetPasswordUIState.OnSuccess -> {
                     DialogProgressUtil.dismiss()
                     SnackBarUtil.showSuccessSnackBar(binding.root, it.result.message.toString())
-                    findNavController().clearBackStackToDestination(R.id.signInFragment)
+                    findNavController().navigateWithClearAllBackStack(R.id.signInFragment)
                 }
                 is ResetPasswordUIState.OnFailure -> {
                     DialogProgressUtil.dismiss()

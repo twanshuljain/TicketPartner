@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -25,7 +26,6 @@ class ScanBottomNavSearchFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         binding = FragmentScanBottomNavSearchBinding.inflate(layoutInflater)
         return binding.root
     }
@@ -33,10 +33,20 @@ class ScanBottomNavSearchFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initView()
-
     }
 
     private fun initView() {
+        viewModel.eventName.observe(viewLifecycleOwner){
+            val title = activity?.findViewById<AppCompatTextView>(R.id.title)
+            title?.text = it
+        }
+
+        viewModel.dateTimeEventDetails.observe(viewLifecycleOwner){
+            val subTitle = activity?.findViewById<AppCompatTextView>(R.id.subTitle)
+            subTitle?.visibility = View.VISIBLE
+            subTitle?.text = it
+        }
+
         binding.etSearch.addTextChangedListener {
             if (it.toString().length > ZERO){
                 binding.rvSearchOrder.visibility = View.VISIBLE
@@ -84,42 +94,9 @@ class ScanBottomNavSearchFragment : Fragment() {
         }
     }
 
-
-        private fun openImagePickerBottomSheet() {
-            val dialog = BottomSheetDialog(requireContext())
-            val dialogView = LayoutEndScanBottomDialogBinding.inflate(layoutInflater)
-            dialogView.apply {
-                tvTitle.text = getString(R.string.end_scan_with_mark)
-                tvDescription.text = getString(R.string.are_you_sure_end_scan)
-            }
-            dialogView.btnNo.setOnClickListener {
-                dialog.dismiss()
-            }
-            dialogView.btnYes.setOnClickListener {
-                findNavController().navigate(R.id.qrScanReportFragment)
-                dialog.dismiss()
-            }
-            dialogView.ivClose.setOnClickListener {
-                dialog.dismiss()
-            }
-            dialog.setCanceledOnTouchOutside(true)
-            dialog.setContentView(dialogView.root)
-            dialog.show()
-        }
-
-    private fun isItemClicked(orderId: String) {
-            val bottomSheet = CheckInBottomSheetFragment(orderId)
-            bottomSheet.show(requireActivity().supportFragmentManager, bottomSheet.tag)
-
-
-          /*  //openImagePickerBottomSheet()
-            val transaction = requireActivity().supportFragmentManager.beginTransaction()
-            transaction.setCustomAnimations(R.anim.slide_in, R.anim.slide_out)
-            transaction.replace(R.id.frameLayout, ScanSearchedOrderDetailsFragment())
-            transaction.addToBackStack(null)
-            transaction.commit()*/
-           // findNavController().navigate(R.id.scanSearchedOrderDetailsFragment)
-
+    private fun isItemClicked(emailId: String) {
+        viewModel.selectedSearchedItemEmailAdd.value = emailId
+        findNavController().navigate(R.id.action_scanBottomNavSearchFragment_to_scanSearchedOrderDetailsFragment)
     }
 }
 

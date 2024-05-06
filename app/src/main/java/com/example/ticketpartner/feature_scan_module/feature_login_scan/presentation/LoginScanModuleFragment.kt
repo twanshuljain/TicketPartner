@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
@@ -18,7 +19,9 @@ import com.example.ticketpartner.common.storage.PrefConstants
 import com.example.ticketpartner.databinding.FragmentLoginScanModuleBinding
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.LoginWithPinResponse
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.LoginWithPinUIState
+import com.example.ticketpartner.utils.BackPressHandler
 import com.example.ticketpartner.utils.DialogProgressUtil
+import com.example.ticketpartner.utils.NavigateFragmentUtil.navigateWithClearNavGraph
 import com.example.ticketpartner.utils.Utility
 import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
@@ -37,32 +40,27 @@ class LoginScanModuleFragment : Fragment() {
         // Inflate the layout for this fragment
         binding = FragmentLoginScanModuleBinding.inflate(layoutInflater)
         return binding.root
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Handle the back press in this fragment
         val callback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-
+                handleOnBackPressedButton()
             }
         }
-        // Note that you should add the callback in onCreate and remove it in onDestroy
         requireActivity().onBackPressedDispatcher.addCallback(requireActivity(), callback)
 
-
-
-    /** restrict user to enter space */
+        /** restrict user to enter space */
         Utility.disableSpace(binding.etName)
         Utility.disableSpace(binding.etPin)
 
         /** allow char only */
         Utility.allowCharactersOnly(binding.etName)
 
-        etName = "d"
-        etPin = "295736"
+       /* etName = "d"
+        etPin = "108469"*/
 
         binding.etName.doAfterTextChanged {
             etName = it.toString().trim()
@@ -83,7 +81,6 @@ class LoginScanModuleFragment : Fragment() {
         }
 
         binding.rlContinue.setOnClickListener {
-            //  findNavController().navigate(R.id.eventDetailsScanModuleFragment)
             if (isAllFieldsValid()) {
                 viewModel.loginWithPin(etName, etPin)
                 observeLoginResponse()
@@ -102,11 +99,10 @@ class LoginScanModuleFragment : Fragment() {
                     DialogProgressUtil.dismiss()
                     SnackBarUtil.showSuccessSnackBar(binding.root, it.onSuccess.message.toString())
                     updateUserDetailsToSession(it.onSuccess)
-                   // findNavController().navigate(R.id.action_loginScanModuleFragment_to_eventDetailsScanModuleFragment)
-                    val navController = findNavController()
-                    // Clear the back stack up to but not including Fragment A, then navigate
-                    navController.popBackStack(R.id.loginScanModuleFragment, true)
-                    navController.navigate(R.id.eventDetailsScanModuleFragment)
+                    findNavController().navigateWithClearNavGraph(
+                        R.id.main_nav_graph,
+                        R.id.eventDetailsScanModuleFragment
+                    )
                 }
 
                 is LoginWithPinUIState.OnFailure -> {
@@ -119,13 +115,10 @@ class LoginScanModuleFragment : Fragment() {
 
     private fun updateUserDetailsToSession(loginData: LoginWithPinResponse) {
         loginData.let {
-            val gson = Gson() // You'll need the Gson library for serialization
-            val userJson = gson.toJson(
-                it
-            )
+            val gson = Gson()
+            val userJson = gson.toJson(it)
             MyPreferences.putString(PrefConstants.LOGGED_USER_DETAILS, userJson)
         }
-
     }
 
     private fun isAllFieldsValid(): Boolean {
@@ -137,5 +130,13 @@ class LoginScanModuleFragment : Fragment() {
             SnackBarUtil.showErrorSnackBar(binding.root, getString(R.string.please_enter_your_pin))
             return false
         } else return true
+    }
+
+    private fun handleOnBackPressedButton() {
+        if (requireActivity().supportFragmentManager.backStackEntryCount > 1) {
+            requireActivity().supportFragmentManager.popBackStack()
+        } else {
+            BackPressHandler.onBackPressed(requireActivity())
+        }
     }
 }

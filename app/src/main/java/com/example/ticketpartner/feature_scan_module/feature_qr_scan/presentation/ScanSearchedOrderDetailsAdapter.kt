@@ -8,21 +8,22 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.ticketpartner.R
 import com.example.ticketpartner.common.ZERO
 import com.example.ticketpartner.databinding.ItemScanOrderSearchBinding
+import com.example.ticketpartner.databinding.ItemSearchedOrderDetailsListBinding
 import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.MData
 
-class ScanSearchOrderAdapter(
-   private val context: Context,
+class ScanSearchedOrderDetailsAdapter(
+    private val context: Context,
     private val searchResponse: List<MData?>,
     private val isItemClicked: (String) -> Unit
 ) :
-    RecyclerView.Adapter<ScanSearchOrderAdapter.ViewHolder>() {
+    RecyclerView.Adapter<ScanSearchedOrderDetailsAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): ScanSearchOrderAdapter.ViewHolder {
+    ): ScanSearchedOrderDetailsAdapter.ViewHolder {
         return ViewHolder(
-            ItemScanOrderSearchBinding.inflate(
+            ItemSearchedOrderDetailsListBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
                 false
@@ -31,14 +32,14 @@ class ScanSearchOrderAdapter(
     }
 
     @SuppressLint("SetTextI18n")
-    override fun onBindViewHolder(holder: ScanSearchOrderAdapter.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ScanSearchedOrderDetailsAdapter.ViewHolder, position: Int) {
         val view = holder.binding
         view.tvName.text = searchResponse[position]?.name.toString()
         view.tvEmail.text = searchResponse[position]?.email.toString()
         view.tvOrderId.text = context.getString(R.string.order_id)+": "+searchResponse[position]?.order_id.toString()
         view.tvPaymentMethod.text = context.getString(R.string.payment_method)+": "+searchResponse[position]?.payment_type.toString()
-        view.btnViewDetails.setOnClickListener {
-            isItemClicked(searchResponse[position]?.email.toString())
+        view.btnCheckIn.setOnClickListener {
+            isItemClicked(searchResponse[position]?.order_id.toString())
         }
     }
 
@@ -46,6 +47,6 @@ class ScanSearchOrderAdapter(
         return searchResponse.size ?: ZERO
     }
 
-    class ViewHolder(val binding: ItemScanOrderSearchBinding) :
+    class ViewHolder(val binding: ItemSearchedOrderDetailsListBinding) :
         RecyclerView.ViewHolder(binding.root)
 }

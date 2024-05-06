@@ -1,22 +1,23 @@
 package com.example.ticketpartner.feature_scan_module
 
 import android.annotation.SuppressLint
-import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.addCallback
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.NavController
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.NavigationUI
+import androidx.navigation.ui.setupWithNavController
 import com.example.ticketpartner.R
 import com.example.ticketpartner.common.HYPHEN_CHAR
-import com.example.ticketpartner.common.SCAN_MODULE_EVENT_DETAILS
 import com.example.ticketpartner.common.SnackBarUtil
 import com.example.ticketpartner.common.VERTICAL_POLE
-import com.example.ticketpartner.common.ZERO
 import com.example.ticketpartner.common.storage.MyPreferences
 import com.example.ticketpartner.databinding.FragmentScanQRLandingBinding
 import com.example.ticketpartner.databinding.LayoutEndScanBottomDialogBinding
@@ -25,10 +26,9 @@ import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.m
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.EventDates
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.EventDetailsScanUIState
 import com.example.ticketpartner.feature_scan_module.feature_qr_scan.presentation.QrScanViewModel
-import com.example.ticketpartner.feature_scan_module.feature_qr_scan.presentation.ScanBottomNavHomeFragment
-import com.example.ticketpartner.feature_scan_module.feature_qr_scan.presentation.ScanBottomNavSearchFragment
-import com.example.ticketpartner.feature_scan_module.feature_qr_scan.presentation.ScanBottomQRScanFragment
+import com.example.ticketpartner.utils.BackPressHandler
 import com.example.ticketpartner.utils.DialogProgressUtil
+import com.example.ticketpartner.utils.NavigateFragmentUtil.navigateWithClearNavGraph
 import com.example.ticketpartner.utils.getFormattedStartDateForEvent
 import com.example.ticketpartner.utils.getFormattedTimeForEvent
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -36,7 +36,8 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 class ScanQRLandingFragment : Fragment() {
     private lateinit var binding: FragmentScanQRLandingBinding
     private val viewModel: QrScanViewModel by activityViewModels()
-
+    private lateinit var appBarConfiguration: AppBarConfiguration
+    private lateinit var navController: NavController
     private var eventDetailsResponse = ArrayList<DataItem>()
     private var eventData = ArrayList<Event?>()
 
@@ -44,110 +45,92 @@ class ScanQRLandingFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         binding = FragmentScanQRLandingBinding.inflate(layoutInflater)
+
+        val callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                handleOnBackPressedButton()
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(requireActivity(), callback)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        arguments?.let {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                eventDetailsResponse = it.getStringArrayList(
-                    SCAN_MODULE_EVENT_DETAILS
-                ) as ArrayList<DataItem>
-
-            } else {
-                eventDetailsResponse =
-                    it.getStringArrayList(SCAN_MODULE_EVENT_DETAILS) as ArrayList<DataItem>
-            }
-            viewModel.putSelectedTicketName(eventDetailsResponse)
-        }
-        initView()
         initBottomNavigation()
+        initView()
         makeEventDetailsAPICall()
     }
 
     private fun initBottomNavigation() {
-        binding.includeTitle.ivBack.visibility = View.GONE
         binding.includeTitle.title.text = getString(R.string.select_ticket_type)
         binding.scanBottomNav.itemIconTintList = null
-        loadFragment(ScanBottomNavHomeFragment())
 
-        binding.scanBottomNav.setOnItemSelectedListener { menuItem ->
-            when (menuItem.itemId) {
-                R.id.scanBottomNavHome -> {
-                    binding.includeTitle.subTitle.visibility = View.VISIBLE
-                    binding.includeTitle.ivBack.visibility = View.GONE
-                    binding.includeTitle.title.text = getString(R.string.select_ticket_type)
-                    loadFragment(ScanBottomNavHomeFragment())
+        val navHostFragment =
+            childFragmentManager.findFragmentById(R.id.nav_host_qr_scan) as NavHostFragment
+        appBarConfiguration = AppBarConfiguration(
+            setOf(
+                R.id.scanBottomNavHomeFragment,
+                R.id.scanBottomQRScanFragment,
+                R.id.scanBottomNavSearchFragment,
+                R.id.qrScanReportFragment,
+                R.id.scanSearchedOrderDetailsFragment
+            )
+        )
+        navController = navHostFragment.navController
+        binding.scanBottomNav.setupWithNavController(navController)
+
+        binding.scanBottomNav.setOnItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.scanBottomQRScanFragment -> {
+                    // Apply the condition only for the Home tab
+                    if (viewModel.listSize != 0) {
+                        navController.navigate(R.id.scanBottomQRScanFragment)
+                        true
+                    } else {
+                        SnackBarUtil.showErrorSnackBar(binding.root,"Please select ticket types")
+                        false
+                    }
+                }
+                else -> {
+                    navController.navigate(item.itemId)
                     true
                 }
-
-                R.id.scanBottomNavQR -> {
-                    binding.includeTitle.subTitle.visibility = View.VISIBLE
-                    binding.includeTitle.ivBack.visibility = View.VISIBLE
-                    binding.includeTitle.title.text = eventData[ZERO]?.name.toString()
-                    loadFragment(ScanBottomQRScanFragment())
-                    true
-                }
-
-                R.id.scanBottomNavSearch -> {
-                    binding.includeTitle.subTitle.visibility = View.VISIBLE
-                    binding.includeTitle.ivBack.visibility = View.VISIBLE
-                    binding.includeTitle.title.text = eventData[ZERO]?.name.toString()
-                    loadFragment(ScanBottomNavSearchFragment())
-                    true
-                }
-
-                else -> false
             }
         }
 
-        viewModel.onContinueClick.observe(viewLifecycleOwner) {
-           when(it){
-               R.id.scanBottomNavQR -> binding.scanBottomNav.selectedItemId = it
-               R.id.qrScanReportFragment -> {
-                   binding.includeTitle.title.text = getString(R.string.scanReport)
-                   binding.includeTitle.subTitle.visibility = View.GONE
-                   binding.includeTitle.ivBack.visibility = View.INVISIBLE
-               }
-           }
+        binding.includeTitle.ivBack.setOnClickListener {
+            handleOnBackPressedButton()
         }
 
+        navController.addOnDestinationChangedListener { controller, destination, arguments ->
+            if (destination.id == R.id.scanBottomNavHomeFragment) {
+                binding.includeTitle.ivBack.visibility = View.GONE
+            } else {
+                binding.includeTitle.ivBack.visibility = View.VISIBLE
+            }
+        }
     }
 
-    private fun loadFragment(fragment: Fragment) {
-        val transaction = requireActivity().supportFragmentManager.beginTransaction()
-        transaction.setCustomAnimations(R.anim.slide_in, R.anim.slide_out)
-        transaction.replace(R.id.frameLayout, fragment)
-        transaction.addToBackStack(null)
-        transaction.commit()
-    }
 
     private fun initView() {
-        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner) {
-            if (binding.scanBottomNav.selectedItemId != R.id.scanBottomNavHome) {
-                binding.scanBottomNav.selectedItemId = R.id.scanBottomNavHome
-            } else {
-               // logoutDialog()
-            }
-
+        viewModel.selectedSearchedItemEmailAdd.observe(viewLifecycleOwner){
+            binding.includeTitle.subTitle.visibility = View.GONE
+            binding.includeTitle.title.text = it.toString()
         }
-        /// navController = Navigation.findNavController(this, R.id.nav_host_fragment)
-        binding.includeTitle.ivBack.setOnClickListener {
-            if (binding.scanBottomNav.selectedItemId != R.id.scanBottomNavHome) {
-                binding.scanBottomNav.selectedItemId = R.id.scanBottomNavHome
-            } else {
-                //logoutDialog()
-            }
+
+      viewModel.onContinueClick.observe(viewLifecycleOwner){
+          if (viewModel.listSize != 0) {
+              binding.scanBottomNav.selectedItemId = it
+          } else {
+              SnackBarUtil.showErrorSnackBar(binding.root,"Please select ticket types")
+          }
         }
 
         binding.includeTitle.ivLogOut.setOnClickListener {
             logoutDialog()
         }
-
     }
 
     private fun makeEventDetailsAPICall() {
@@ -181,7 +164,7 @@ class ScanQRLandingFragment : Fragment() {
             getFormattedTimeForEvent(eventDates?.event_start_time) + HYPHEN_CHAR + getFormattedTimeForEvent(
                 eventDates?.event_end_time
             )
-        binding.includeTitle.subTitle.text = startDate+VERTICAL_POLE+startEndTime
+        binding.includeTitle.subTitle.text = startDate + VERTICAL_POLE + startEndTime
     }
 
     private fun logoutDialog() {
@@ -195,11 +178,10 @@ class ScanQRLandingFragment : Fragment() {
             dialog.dismiss()
         }
         dialogView.btnYes.setOnClickListener {
-            val navController = findNavController()
-            navController.popBackStack(R.id.qr_scan_module_navigation, true)
-            val intent = Intent(requireActivity(),QrScanModuleActivity::class.java)
-            startActivity(intent)
-            requireActivity().finish()
+            findNavController().navigateWithClearNavGraph(
+                R.id.nested_qr_scan_nav_graph,
+                R.id.loginScanModuleFragment
+            )
             MyPreferences.clearpref()
             dialog.dismiss()
         }
@@ -209,5 +191,14 @@ class ScanQRLandingFragment : Fragment() {
         dialog.setCanceledOnTouchOutside(true)
         dialog.setContentView(dialogView.root)
         dialog.show()
+    }
+
+    private fun handleOnBackPressedButton() {
+        if (binding.scanBottomNav.selectedItemId == R.id.scanBottomNavHomeFragment) {
+            BackPressHandler.onBackPressed(requireActivity())
+        } else {
+            navController.popBackStack()
+            //binding.scanBottomNav.selectedItemId = R.id.scanBottomNavHomeFragment
+        }
     }
 }

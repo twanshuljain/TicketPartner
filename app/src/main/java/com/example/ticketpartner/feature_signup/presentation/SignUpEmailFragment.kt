@@ -12,7 +12,7 @@ import com.example.ticketpartner.common.ContactUsInputFieldValidator
 import com.example.ticketpartner.common.EMAIL_KEY
 import com.example.ticketpartner.common.SnackBarUtil
 import com.example.ticketpartner.databinding.FragmentSignUpEmailBinding
-import com.example.ticketpartner.utils.NavigateFragmentUtil.clearBackStackToDestination
+import com.example.ticketpartner.utils.NavigateFragmentUtil.navigateWithClearAllBackStack
 import com.example.ticketpartner.utils.Utility
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -52,7 +52,7 @@ class SignUpEmailFragment : Fragment() {
 
         /** navigate user to signIn page */
         binding.tvSignIn.setOnClickListener {
-            findNavController().clearBackStackToDestination(R.id.signInFragment)
+            findNavController().navigateWithClearAllBackStack(R.id.signInFragment)
         }
 
         binding.btnSignUp.setOnClickListener {

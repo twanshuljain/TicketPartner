@@ -1,16 +1,16 @@
 <!-- res/menu/bottom_nav_menu.xml -->
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/scanBottomNavHome"
+        android:id="@+id/scanBottomNavHomeFragment"
         android:title="@string/home"
         android:icon="@drawable/bottom_nav_home_selector" />
     <item
-        android:id="@+id/scanBottomNavQR"
+        android:id="@+id/scanBottomQRScanFragment"
         android:title=""
         android:iconTint="@null"
         android:icon="@drawable/bottom_nav_scan_selector" />
     <item
-        android:id="@+id/scanBottomNavSearch"
+        android:id="@+id/scanBottomNavSearchFragment"
         android:title="@string/search"
         android:icon="@drawable/bottom_nav_search_selector" />
 </menu>

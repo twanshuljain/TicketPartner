@@ -13,11 +13,11 @@ import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.m
 class SelectTicketTypeScanAdapter(
     private val context: Context,
     private val eventTickets: List<EventTicket?>?,
-    private val selectedTicketName: (ArrayList<String>) -> Unit
+    private val selectedTicketName: (ArrayList<String>) -> Unit,
+    private val selectedListSize: (Int) -> Unit
 ) :
     RecyclerView.Adapter<SelectTicketTypeScanAdapter.ViewHolder>() {
     private var selectedNameList = ArrayList<String>()
-    private val isButton = false
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
@@ -66,7 +66,9 @@ class SelectTicketTypeScanAdapter(
                 }
                 selectedTicketName(selectedNameList)
             }
+            selectedListSize(selectedNameList.size)
         }
+
     }
 
     override fun getItemCount(): Int {
@@ -76,6 +78,10 @@ class SelectTicketTypeScanAdapter(
 
     class ViewHolder(val binding: LayoutScanSelectTicketTypeBinding) :
         RecyclerView.ViewHolder(binding.root)
+
+    fun  isSelectedNameSize(): Int{
+        return selectedNameList.size
+    }
 
     fun selectAll() {
         try {
