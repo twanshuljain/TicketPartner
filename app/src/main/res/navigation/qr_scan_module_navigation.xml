@@ -58,7 +58,7 @@
 
     <fragment
         android:id="@+id/qrScanReportFragment"
-        android:name="com.example.ticketpartner.QrScanReportFragment"
+        android:name="com.example.ticketpartner.feature_scan_module.feature_qr_scan.presentation.QrScanReportFragment"
         android:label="fragment_qr_scan_report"
         tools:layout="@layout/fragment_qr_scan_report" />
 

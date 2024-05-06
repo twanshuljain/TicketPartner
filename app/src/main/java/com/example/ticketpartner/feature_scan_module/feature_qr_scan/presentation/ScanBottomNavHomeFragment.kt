@@ -10,6 +10,7 @@ import com.example.ticketpartner.R
 import com.example.ticketpartner.common.COMMA
 import com.example.ticketpartner.common.HYPHEN_CHAR
 import com.example.ticketpartner.common.SnackBarUtil
+import com.example.ticketpartner.common.VERTICAL_POLE
 import com.example.ticketpartner.common.ZERO
 import com.example.ticketpartner.databinding.FragmentScanBottomNavHomeBinding
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.DataItem
@@ -35,6 +36,7 @@ class ScanBottomNavHomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        //viewModel.onContinueButtonCLickCount.value = 0
         initView()
 
         /* viewModel.observerSelectedTicketName.observe(viewLifecycleOwner) {
@@ -75,8 +77,9 @@ class ScanBottomNavHomeFragment : Fragment() {
     private fun setDetailsOnCard(data: DataItem?) {
         viewModel.eventName.value = data?.event?.name
         binding.tvTitle.text = data?.event?.name
-        binding.tvStartDate.text =
-            getFormattedStartDateForEvent(data?.event_dates?.event_start_date)
+        val startDate = getFormattedStartDateForEvent(data?.event_dates?.event_start_date)+ VERTICAL_POLE
+        binding.tvStartDate.text = startDate
+
         val startEndTime =
             getFormattedTimeForEvent(data?.event_dates?.event_start_time) + HYPHEN_CHAR + getFormattedTimeForEvent(
                 data?.event_dates?.event_end_time
@@ -85,6 +88,8 @@ class ScanBottomNavHomeFragment : Fragment() {
         val location = data?.event_locations
         binding.tvLocation.text =
             location?.city + COMMA + location?.state + COMMA + location?.country
+
+        viewModel.dateTimeEventDetails.value = startDate+startEndTime
     }
 
 
@@ -114,19 +119,15 @@ class ScanBottomNavHomeFragment : Fragment() {
         )
         binding.rvSelectTicketType.adapter = adapter
         binding.rvSelectTicketType.setHasFixedSize(true)
+
     }
 
     private fun selectedTicketNameList(list: ArrayList<String>) {
         if (list.size > ZERO) {
             viewModel.selectedTicketTypeArrayList.value = list
-            binding.btnContinue.background =
-                requireContext().getDrawable(R.drawable.btn_design_dark_primary)
-            binding.btnContinue.isEnabled = true
 
-        } else {
-            binding.btnContinue.background =
-                requireContext().getDrawable(R.drawable.disable_continue_btn_design)
-          binding.btnContinue.isEnabled = false
+        } else if (list.size <=0 ) {
+
         }
     }
 

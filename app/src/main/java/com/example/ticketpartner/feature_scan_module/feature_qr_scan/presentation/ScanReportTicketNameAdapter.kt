@@ -6,9 +6,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.ticketpartner.common.FORWARD_SLASH
 import com.example.ticketpartner.common.ZERO
 import com.example.ticketpartner.databinding.ItemScanReportTicketNameBinding
-import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.TicketData
+import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.TicketDataList
 
-class ScanReportTicketNameAdapter(private val ticketName: List<TicketData>) :
+class ScanReportTicketNameAdapter(private val res: List<TicketDataList?>?) :
     RecyclerView.Adapter<ScanReportTicketNameAdapter.ViewHolder>() {
 
 
@@ -29,14 +29,15 @@ class ScanReportTicketNameAdapter(private val ticketName: List<TicketData>) :
         val view = holder.binding
         // val ticket = ticketName.get(ZERO).data?.ticket_data
         view.apply {
-            tvTicketName.text = ticketName?.get(ZERO)?.ticket_name
-            tvOutOfAmount.text = ticketName?.get(position)?.total_scanned.toString()
-            tvTotalAmount.text = FORWARD_SLASH+ticketName?.get(position)?.total_ticket.toString()
+            tvTicketName.text = res?.get(position)?.ticket_name.toString()
+            tvOutOfAmount.text =  res?.get(position)?.total_scanned.toString()
+            tvTotalAmount.text = FORWARD_SLASH+ res?.get(position)?.total_ticket.toString()
+            progressBar.progress = res?.get(position)?.total_scanned!!?: ZERO
         }
     }
 
     override fun getItemCount(): Int {
-        return ticketName.size ?: ZERO
+        return res?.size ?: ZERO
     }
 
     class ViewHolder(val binding: ItemScanReportTicketNameBinding) :

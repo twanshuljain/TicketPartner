@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/orange_light_back"
-    tools:context=".QrScanReportFragment">
+    tools:context=".feature_scan_module.feature_qr_scan.presentation.QrScanReportFragment">
 
     <include
         android:id="@+id/includeTitle"
@@ -58,7 +58,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_15"
-                android:text="Albert Flores"
                 android:textAlignment="textStart"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -70,7 +69,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_5"
-                android:text="May 25, 2024 |  6:00 AM - 12:00 PM"
                 android:textAlignment="textStart"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -131,7 +129,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/margin_20">
 
-                    <androidx.constraintlayout.widget.Guideline
+                  <!--  <androidx.constraintlayout.widget.Guideline
                         android:id="@+id/guidelineVerticalCenter"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -149,9 +147,9 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintGuide_end="@dimen/margin_15"
                         app:layout_constraintGuide_percent="0.28"
-                        app:layout_constraintStart_toStartOf="parent" />
+                        app:layout_constraintStart_toStartOf="parent" />-->
 
-                    <androidx.constraintlayout.widget.Guideline
+            <!--        <androidx.constraintlayout.widget.Guideline
                         android:id="@+id/guidelineVerticalRight"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -160,12 +158,14 @@
                         app:layout_constraintGuide_end="@dimen/margin_15"
                         app:layout_constraintGuide_percent="0.72"
                         app:layout_constraintStart_toStartOf="parent" />
-
+-->
                     <com.example.ticketpartner.utils.CircularProgressBar
                         android:id="@+id/progress"
                         android:layout_width="@dimen/size_180"
                         android:layout_height="@dimen/size_180"
                         android:layout_marginTop="@dimen/margin_20"
+                        android:progressDrawable="@drawable/circle"
+                        android:visibility="visible"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -175,121 +175,235 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         style="@style/boldDarkPrimaryText16"
-                        android:text="500"
+                        android:visibility="visible"
                         app:layout_constraintStart_toStartOf="@id/progress"
                         app:layout_constraintEnd_toEndOf="@id/progress"
                         app:layout_constraintTop_toTopOf="@id/progress"
                         app:layout_constraintBottom_toBottomOf="@id/progress"/>
 
                     <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvTotalTicket"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         style="@style/regularParaText10"
+                        android:visibility="visible"
                         android:text="@string/total_tickets"
                         android:layout_marginTop="@dimen/margin_10"
                         app:layout_constraintStart_toStartOf="@id/tvTotalValue"
                         app:layout_constraintEnd_toEndOf="@id/tvTotalValue"
                         app:layout_constraintTop_toBottomOf="@id/tvTotalValue" />
 
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@id/tvAccepted"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/margin_15"
-                        android:layout_marginTop="@dimen/margin_15"
-                        android:drawableStart="@drawable/ic_accepted_circle"
-                        android:drawablePadding="@dimen/size_10"
-                        android:text="@string/accepted"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/progress" />
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tvAcceptedCount"
-                        android:layout_width="@dimen/margin_0"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/margin_15"
-                        android:paddingStart="@dimen/margin_5"
-                        android:paddingEnd="@dimen/margin_5"
-                        android:text="380"
-                        android:textAlignment="center"
-                        app:layout_constraintEnd_toEndOf="@id/guidelineVerticalCenter"
-                        app:layout_constraintStart_toStartOf="@id/guidelineVerticalLeft"
-                        app:layout_constraintTop_toBottomOf="@id/progress" />
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tvRejected"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/margin_15"
-                        android:drawableStart="@drawable/ic_rejected_circle"
-                        android:drawablePadding="@dimen/size_10"
-                        android:text="@string/rejected"
-                        app:layout_constraintStart_toStartOf="@id/guidelineVerticalCenter"
-                        app:layout_constraintTop_toBottomOf="@id/progress" />
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tvRejectedCount"
-                        android:layout_width="@dimen/margin_0"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/margin_15"
-                        android:layout_marginEnd="@dimen/margin_15"
-                        android:paddingStart="@dimen/margin_5"
-                        android:paddingEnd="@dimen/margin_5"
-                        android:text="15"
-                        android:textAlignment="center"
+                    <ProgressBar
+                        android:id="@+id/progress_accepted"
+                        style="@style/CircularDeterminateProgressBar"
+                        android:layout_width="@dimen/size_180"
+                        android:layout_height="@dimen/size_180"
+                        android:indeterminateOnly="false"
+                        android:progressDrawable="@drawable/progress_accepted_circle"
+                        android:layout_marginTop="@dimen/margin_20"
+                        android:rotation="0"
+                        android:visibility="gone"
                         app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="@id/guidelineVerticalRight"
-                        app:layout_constraintTop_toBottomOf="@id/progress" />
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tvOnline"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/margin_15"
-                        android:layout_marginTop="@dimen/margin_15"
-                        android:drawableStart="@drawable/ic_online_circle"
-                        android:drawablePadding="@dimen/size_10"
-                        android:text="@string/online"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/tvAcceptedCount" />
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:progress="10" />
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tvOnlineCount"
-                        android:layout_width="@dimen/margin_0"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/margin_15"
-                        android:paddingStart="@dimen/margin_5"
-                        android:paddingEnd="@dimen/margin_5"
-                        android:text="285"
-                        android:textAlignment="center"
-                        app:layout_constraintEnd_toEndOf="@id/guidelineVerticalCenter"
-                        app:layout_constraintStart_toStartOf="@id/guidelineVerticalLeft"
-                        app:layout_constraintTop_toBottomOf="@id/tvAcceptedCount" />
-
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tvPhysical"
+                        android:id="@+id/tvTotalValueAccepted"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/margin_15"
-                        android:drawableStart="@drawable/ic_physical_circle"
-                        android:drawablePadding="@dimen/size_10"
-                        android:text="@string/online"
-                        app:layout_constraintStart_toStartOf="@id/guidelineVerticalCenter"
-                        app:layout_constraintTop_toBottomOf="@id/tvRejected" />
+                        style="@style/boldDarkPrimaryText16"
+                        android:visibility="gone"
+                        app:layout_constraintStart_toStartOf="@id/progress_accepted"
+                        app:layout_constraintEnd_toEndOf="@id/progress_accepted"
+                        app:layout_constraintTop_toTopOf="@id/progress_accepted"
+                        app:layout_constraintBottom_toBottomOf="@id/progress_accepted"/>
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tvPhysicalCount"
-                        android:layout_width="@dimen/margin_0"
+                        android:id="@+id/tvTotalTicketAccepted"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        style="@style/regularParaText10"
+                        android:text="@string/total_tickets"
+                        android:layout_marginTop="@dimen/margin_10"
+                        android:visibility="gone"
+                        app:layout_constraintStart_toStartOf="@id/tvTotalValueAccepted"
+                        app:layout_constraintEnd_toEndOf="@id/tvTotalValueAccepted"
+                        app:layout_constraintTop_toBottomOf="@id/tvTotalValueAccepted" />
+
+                    <ProgressBar
+                        android:id="@+id/progress_rejected"
+                        style="@style/CircularDeterminateProgressBar"
+                        android:layout_width="@dimen/size_180"
+                        android:layout_height="@dimen/size_180"
+                        android:indeterminateOnly="false"
+                        android:progressDrawable="@drawable/progress_circle_rejected"
+                        android:layout_marginTop="@dimen/margin_20"
+                        android:visibility="gone"
+                        android:rotation="0"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:progress="10" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvTotalValueRejected"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        style="@style/boldDarkPrimaryText16"
+                        android:visibility="gone"
+                        app:layout_constraintStart_toStartOf="@id/progress_rejected"
+                        app:layout_constraintEnd_toEndOf="@id/progress_rejected"
+                        app:layout_constraintTop_toTopOf="@id/progress_rejected"
+                        app:layout_constraintBottom_toBottomOf="@id/progress_rejected"/>
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvTotalTicketRejected"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        style="@style/regularParaText10"
+                        android:text="@string/total_tickets"
+                        android:visibility="gone"
+                        android:layout_marginTop="@dimen/margin_10"
+                        app:layout_constraintStart_toStartOf="@id/tvTotalValueRejected"
+                        app:layout_constraintEnd_toEndOf="@id/tvTotalValueRejected"
+                        app:layout_constraintTop_toBottomOf="@id/tvTotalValueRejected" />
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/clAllTicketCount"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/margin_15"
-                        android:layout_marginEnd="@dimen/margin_15"
-                        android:paddingStart="@dimen/margin_5"
-                        android:paddingEnd="@dimen/margin_5"
-                        android:text="80"
-                        android:textAlignment="center"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="@id/guidelineVerticalRight"
-                        app:layout_constraintTop_toBottomOf="@id/tvRejectedCount" />
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/progress">
+
+                        <androidx.constraintlayout.widget.Guideline
+                            android:id="@+id/guidelineVerticalCenter"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintGuide_end="@dimen/margin_15"
+                            app:layout_constraintGuide_percent="0.5"
+                            app:layout_constraintStart_toStartOf="parent" />
+
+                        <androidx.constraintlayout.widget.Guideline
+                            android:id="@+id/guidelineVerticalLeft"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintGuide_end="@dimen/margin_15"
+                            app:layout_constraintGuide_percent="0.28"
+                            app:layout_constraintStart_toStartOf="parent" />
+
+                        <androidx.constraintlayout.widget.Guideline
+                            android:id="@+id/guidelineVerticalRight"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintGuide_end="@dimen/margin_15"
+                            app:layout_constraintGuide_percent="0.72"
+                            app:layout_constraintStart_toStartOf="parent" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@id/tvAccepted"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/margin_15"
+                            android:layout_marginTop="@dimen/margin_15"
+                            android:drawableStart="@drawable/ic_accepted_circle"
+                            android:drawablePadding="@dimen/size_10"
+                            android:text="@string/accepted"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvAcceptedCount"
+                            android:layout_width="@dimen/margin_0"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/margin_15"
+                            android:paddingStart="@dimen/margin_5"
+                            android:paddingEnd="@dimen/margin_5"
+                            android:textAlignment="center"
+                            app:layout_constraintEnd_toEndOf="@id/guidelineVerticalCenter"
+                            app:layout_constraintStart_toStartOf="@id/guidelineVerticalLeft"
+                            app:layout_constraintTop_toTopOf="parent"  />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvRejected"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/margin_15"
+                            android:drawableStart="@drawable/ic_rejected_circle"
+                            android:drawablePadding="@dimen/size_10"
+                            android:text="@string/rejected"
+                            app:layout_constraintStart_toStartOf="@id/guidelineVerticalCenter"
+                            app:layout_constraintTop_toTopOf="parent"  />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvRejectedCount"
+                            android:layout_width="@dimen/margin_0"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/margin_15"
+                            android:layout_marginEnd="@dimen/margin_15"
+                            android:paddingStart="@dimen/margin_5"
+                            android:paddingEnd="@dimen/margin_5"
+                            android:textAlignment="center"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="@id/guidelineVerticalRight"
+                            app:layout_constraintTop_toTopOf="parent"  />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvOnline"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/margin_15"
+                            android:layout_marginTop="@dimen/margin_15"
+                            android:drawableStart="@drawable/ic_online_circle"
+                            android:drawablePadding="@dimen/size_10"
+                            android:text="@string/online"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/tvAcceptedCount" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvOnlineCount"
+                            android:layout_width="@dimen/margin_0"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/margin_15"
+                            android:paddingStart="@dimen/margin_5"
+                            android:paddingEnd="@dimen/margin_5"
+                            android:textAlignment="center"
+                            app:layout_constraintEnd_toEndOf="@id/guidelineVerticalCenter"
+                            app:layout_constraintStart_toStartOf="@id/guidelineVerticalLeft"
+                            app:layout_constraintTop_toBottomOf="@id/tvAcceptedCount" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvPhysical"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/margin_15"
+                            android:drawableStart="@drawable/ic_physical_circle"
+                            android:drawablePadding="@dimen/size_10"
+                            android:text="@string/physical"
+                            app:layout_constraintStart_toStartOf="@id/guidelineVerticalCenter"
+                            app:layout_constraintTop_toBottomOf="@id/tvRejected" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvPhysicalCount"
+                            android:layout_width="@dimen/margin_0"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/margin_15"
+                            android:layout_marginEnd="@dimen/margin_15"
+                            android:paddingStart="@dimen/margin_5"
+                            android:paddingEnd="@dimen/margin_5"
+                            android:textAlignment="center"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="@id/guidelineVerticalRight"
+                            app:layout_constraintTop_toBottomOf="@id/tvRejectedCount" />
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -312,7 +426,7 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rvReportTicketName"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:background="@color/white"
                     app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
                     app:layout_constraintStart_toStartOf="@id/guidelineStart"

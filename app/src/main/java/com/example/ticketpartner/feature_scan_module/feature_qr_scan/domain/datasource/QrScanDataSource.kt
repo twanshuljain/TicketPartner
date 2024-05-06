@@ -1,6 +1,7 @@
 package com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.datasource
 
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.EventDetailsScanResponse
+import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.QrScanReportAllResponse
 import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.QrScanResponse
 import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.QrScannedTicketResponse
 import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.ScanCheckedInResponse
@@ -14,5 +15,6 @@ interface QrScanDataSource {
     suspend fun getScanSearchResponse(orderId: String): SearchApiScanResponse
     suspend fun getScanOrderDetailsResponse(orderId: String): ScanSearchOrderDetailsResponse
     suspend fun getScanCheckedInResponse(checkedOrderIdList: ArrayList<Int>, orderId: String): ScanCheckedInResponse
+    suspend fun getScanReportAllResponse(type: String): QrScanReportAllResponse
 
 }

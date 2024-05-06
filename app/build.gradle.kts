@@ -22,13 +22,11 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
-
-  /*  buildConfigField("String", "API_URL", "\"https://dev.api.myticketpartner.com/\"")*/
     buildTypes {
         debug {
             isDebuggable = true
             isMinifyEnabled = false
-            buildConfigField("String", "API_URL", "\"http://192.168.1.109:8000/\"")
+            buildConfigField("String", "API_URL", "\"https://dev.api.myticketpartner.com/\"")
             buildConfigField("String", "GOOGLE_MAPS_API_KEY", "\"AIzaSyC73yaRGGiQ-W1qpni-3WlKJJ3A1vWtmUs\"")
             proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
         }

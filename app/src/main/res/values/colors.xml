@@ -5,6 +5,9 @@
     <color name="paraHeading">#0E0D1D</color>
     <color name="error_color_orange">#FA4616</color>
     <color name="orange">#FA4616</color>
+    <color name="orange_progress_bar">#FB896B</color>
+    <color name="yellow_progress_bar">#FFD467</color>
+    <color name="light_blue_progress_bar">#85B1E5</color>
     <color name="input_border">#DAD4F4</color>
     <color name="purple_border">#DAD4F4</color>
     <color name="text_parra">#6A6D79</color>
@@ -24,6 +27,7 @@
     <color name="orange_light_back">#FEF7F2</color>
     <color name="blue">#2F80ED</color>
     <color name="green">#21BE79</color>
+    <color name="green_progress_bar">#01BC71</color>
     <color name="light_green">#6FCF97</color>
     <color name="red">#FF0000</color>
     <color name="dark_transparency">#80000000</color>

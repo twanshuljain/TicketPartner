@@ -177,6 +177,7 @@
     <string name="total_scanned">Total Scanned</string>
     <string name="order_id">Order ID</string>
     <string name="payment_method">Payment method</string>
+    <string name="scanReport">Scan Report</string>
 
 
 </resources>

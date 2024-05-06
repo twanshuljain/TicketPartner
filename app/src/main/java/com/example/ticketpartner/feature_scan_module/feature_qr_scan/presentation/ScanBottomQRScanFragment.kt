@@ -13,7 +13,6 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import com.example.ticketpartner.QrScanReportFragment
 import com.example.ticketpartner.R
 import com.example.ticketpartner.common.VERTICAL_DOTS
 import com.example.ticketpartner.databinding.FragmentScanBottomNavQRScanBinding
@@ -137,8 +136,6 @@ class ScanBottomQRScanFragment : Fragment() {
 
             override fun receiveDetections(detections: Detector.Detections<Barcode>) {
                 var scannedValue = ""
-                val list = ArrayList<String>()
-                list.add("The Vvip")
                 val barcodes: SparseArray<Barcode> = detections.detectedItems
                 scannedValue = barcodes.valueAt(0).rawValue
 
@@ -146,8 +143,10 @@ class ScanBottomQRScanFragment : Fragment() {
                 requireActivity().runOnUiThread {
                     if (scannedValue.isNotEmpty()) {
                         cameraSource.stop()
-                        viewModel.qrScanCode(scannedValue,list)
-                        observeScanTicketResponse()
+                        viewModel.selectedTicketTypeArrayList.observe(viewLifecycleOwner){
+                            viewModel.qrScanCode(scannedValue,it)
+                            observeScanTicketResponse()
+                        }
                     }
                 }
             }
@@ -216,6 +215,18 @@ class ScanBottomQRScanFragment : Fragment() {
         }
     }
 
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == requestCodeCameraPermission) {
+            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                setupControls()
+            } else {
+                // Permission was denied
+                // Handle the case where the user denies the permission
+            }
+        }
+    }
+
 
     private fun openImagePickerBottomSheet() {
         val dialog = BottomSheetDialog(requireContext())
@@ -229,7 +240,9 @@ class ScanBottomQRScanFragment : Fragment() {
         }
         dialogView.btnYes.setOnClickListener {
             //findNavController().navigate(R.id.qrScanReportFragment)
+            cameraSource.stop()
             scanReportNavigation()
+            viewModel.onContinueClick.value = R.id.qrScanReportFragment
             dialog.dismiss()
 
         }

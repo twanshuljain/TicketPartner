@@ -6,6 +6,7 @@ import android.graphics.Paint
 import android.graphics.RectF
 import android.util.AttributeSet
 import android.view.View
+import com.example.ticketpartner.R
 
 class CircularProgressBar @JvmOverloads constructor(
     context: Context,
@@ -22,9 +23,14 @@ class CircularProgressBar @JvmOverloads constructor(
     init {
         progressPaint.style = Paint.Style.STROKE
         backgroundPaint.style = Paint.Style.STROKE
+
         // Set the stroke width for progress and background paints
-        progressPaint.strokeWidth = 20f // Set this value to your desired width
-        backgroundPaint.strokeWidth = 20f // Set this value to your desired width
+        val strokeWidth = 20f // Adjustable stroke width
+        progressPaint.strokeWidth = strokeWidth
+        backgroundPaint.strokeWidth = strokeWidth
+
+        // Set the default color for the background
+        backgroundPaint.color = context.getColor(R.color.grey_disable) // Using Android's default darker gray
     }
 
     fun setProgressValues(values: List<Pair<Int, Int>>, totalAmount: Int) {
@@ -43,6 +49,9 @@ class CircularProgressBar @JvmOverloads constructor(
         val radius = (width.coerceAtMost(height) / 2f) * 0.8f
 
         bounds.set(centerX - radius, centerY - radius, centerX + radius, centerY + radius)
+
+        // Draw the background circle first
+        canvas.drawArc(bounds, 0f, 360f, false, backgroundPaint)
 
         var startAngle = -90f
         progressValues.forEach { (value, color) ->

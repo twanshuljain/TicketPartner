@@ -78,6 +78,7 @@ class ScanQRLandingFragment : Fragment() {
         binding.scanBottomNav.setOnItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.scanBottomNavHome -> {
+                    binding.includeTitle.subTitle.visibility = View.VISIBLE
                     binding.includeTitle.ivBack.visibility = View.GONE
                     binding.includeTitle.title.text = getString(R.string.select_ticket_type)
                     loadFragment(ScanBottomNavHomeFragment())
@@ -85,6 +86,7 @@ class ScanQRLandingFragment : Fragment() {
                 }
 
                 R.id.scanBottomNavQR -> {
+                    binding.includeTitle.subTitle.visibility = View.VISIBLE
                     binding.includeTitle.ivBack.visibility = View.VISIBLE
                     binding.includeTitle.title.text = eventData[ZERO]?.name.toString()
                     loadFragment(ScanBottomQRScanFragment())
@@ -92,6 +94,7 @@ class ScanQRLandingFragment : Fragment() {
                 }
 
                 R.id.scanBottomNavSearch -> {
+                    binding.includeTitle.subTitle.visibility = View.VISIBLE
                     binding.includeTitle.ivBack.visibility = View.VISIBLE
                     binding.includeTitle.title.text = eventData[ZERO]?.name.toString()
                     loadFragment(ScanBottomNavSearchFragment())
@@ -103,7 +106,14 @@ class ScanQRLandingFragment : Fragment() {
         }
 
         viewModel.onContinueClick.observe(viewLifecycleOwner) {
-            binding.scanBottomNav.selectedItemId = it
+           when(it){
+               R.id.scanBottomNavQR -> binding.scanBottomNav.selectedItemId = it
+               R.id.qrScanReportFragment -> {
+                   binding.includeTitle.title.text = getString(R.string.scanReport)
+                   binding.includeTitle.subTitle.visibility = View.GONE
+                   binding.includeTitle.ivBack.visibility = View.INVISIBLE
+               }
+           }
         }
 
     }

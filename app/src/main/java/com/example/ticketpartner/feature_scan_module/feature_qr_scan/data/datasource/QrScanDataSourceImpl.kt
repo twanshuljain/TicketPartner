@@ -3,6 +3,7 @@ package com.example.ticketpartner.feature_scan_module.feature_qr_scan.data.datas
 import com.example.ticketpartner.common.remote.apis.RestApiService
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.EventDetailsScanResponse
 import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.datasource.QrScanDataSource
+import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.QrScanReportAllResponse
 import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.QrScanRequest
 import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.QrScanResponse
 import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.QrScannedTicketResponse
@@ -38,5 +39,9 @@ class QrScanDataSourceImpl @Inject constructor(private val restApiService: RestA
         orderId: String
     ): ScanCheckedInResponse {
         return restApiService.getQrScanCheckedInData(ScanCheckedInRequest(checkedOrderIdList,orderId))
+    }
+
+    override suspend fun getScanReportAllResponse(type: String): QrScanReportAllResponse {
+        return restApiService.getQrScanReportAllData(type)
     }
 }
