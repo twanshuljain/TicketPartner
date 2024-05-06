@@ -1,6 +1,5 @@
 package com.example.ticketpartner.feature_login.presentation
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,7 +10,6 @@ import com.example.ticketpartner.R
 import com.example.ticketpartner.common.storage.MyPreferences
 import com.example.ticketpartner.common.storage.PrefConstants
 import com.example.ticketpartner.databinding.FragmentSplashLandingBinding
-import com.example.ticketpartner.utils.NavigateFragmentUtil.navigateParentToChildFragment
 import com.example.ticketpartner.utils.NavigateFragmentUtil.navigateWithClearNavGraph
 import com.example.ticketpartner.utils.Utility.changeStringColor
 import dagger.hilt.android.AndroidEntryPoint
@@ -19,7 +17,6 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class SplashLandingFragment : Fragment() {
     private lateinit var binding: FragmentSplashLandingBinding
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,14 +32,11 @@ class SplashLandingFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         initView()
-
     }
 
     private fun initView() {
         changeTextColor()
-
         binding.btnNext.setOnClickListener {
             findNavController().navigate(R.id.signInFragment)
         }
