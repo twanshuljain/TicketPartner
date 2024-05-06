@@ -24,6 +24,10 @@ const val getStateBasedOnCountryId = "default/data/state/{countryId}/"
 const val getCreateEventTicketList = "ticket/ticket-list/{eventId}"
 const val getScanEventDetails = "ticket-scan/event/detail/"
 const val getQrScannedTicketData = "ticket-scan/runtime-reports/"
+const val getQrScannedSearchData = "ticket-scan/get-orders/?"
+const val getQrOrderDetailsData = "ticket-scan/get-orders/details/?"
+const val getQrCheckedIn = "ticket-scan/check-in/"
+const val getQrScanReportAll = "ticket-scan/reports/"
 
 //scan module
 const val loginWithPin = "ticket-scan/login/"

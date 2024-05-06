@@ -17,6 +17,7 @@ class SelectTicketTypeScanAdapter(
 ) :
     RecyclerView.Adapter<SelectTicketTypeScanAdapter.ViewHolder>() {
     private var selectedNameList = ArrayList<String>()
+    private val isButton = false
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
@@ -30,7 +31,7 @@ class SelectTicketTypeScanAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val view = holder.binding
-        view.tvTicketType.text = eventTickets?.get(position)?.ticket_type
+        view.tvTicketName.text = eventTickets?.get(position)?.ticket_name
         val isSelected = eventTickets?.get(position)?.isSelected ?: false
 
         if (isSelected) {
@@ -71,6 +72,7 @@ class SelectTicketTypeScanAdapter(
     override fun getItemCount(): Int {
         return eventTickets?.size ?: ZERO
     }
+
 
     class ViewHolder(val binding: LayoutScanSelectTicketTypeBinding) :
         RecyclerView.ViewHolder(binding.root)

@@ -2,7 +2,10 @@ package com.example.ticketpartner.utils
 
 import android.app.TimePickerDialog
 import android.content.Context
+import java.text.SimpleDateFormat
 import java.util.Calendar
+import java.util.Date
+import java.util.Locale
 
 class TimePickerUtility {
     companion object {
@@ -24,6 +27,11 @@ class TimePickerUtility {
                 true // Set to true for 24-hour format, false for 12-hour format
             )
             timePickerDialog.show()
+        }
+
+        fun getCurrentTimeWithAmPm(): String {
+            val dateFormat = SimpleDateFormat(CURRENT_TIME_PATTERN, Locale.getDefault())
+            return dateFormat.format(Date())
         }
     }
 }

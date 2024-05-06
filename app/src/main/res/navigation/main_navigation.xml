@@ -11,24 +11,19 @@
         android:label="fragment_sign_in"
         app:popUpTo="@id/login_navigation"
         app:popUpToInclusive="true"
-        tools:layout="@layout/fragment_sign_in"></fragment>
+        tools:layout="@layout/fragment_sign_in"/>
 
     <fragment
         android:id="@+id/signUpEmailFragment"
         android:name="com.example.ticketpartner.feature_signup.presentation.SignUpEmailFragment"
         android:label="fragment_sign_up_email"
-        tools:layout="@layout/fragment_sign_up_email">
-
-    </fragment>
+        tools:layout="@layout/fragment_sign_up_email"/>
 
     <fragment
         android:id="@+id/signUpDetailsFragment"
         android:name="com.example.ticketpartner.feature_signup.presentation.SignUpDetailsFragment"
         android:label="fragment_sign_up_details"
-        tools:layout="@layout/fragment_sign_up_details">
-
-    </fragment>
-
+        tools:layout="@layout/fragment_sign_up_details"/>
     <fragment
         android:id="@+id/forgotPasswordFragment"
         android:name="com.example.ticketpartner.feature_login.presentation.ForgotPasswordFragment"
@@ -39,9 +34,7 @@
         android:id="@+id/splashLandingFragment"
         android:name="com.example.ticketpartner.feature_login.presentation.SplashLandingFragment"
         android:label="fragment_splash_landing"
-        tools:layout="@layout/fragment_splash_landing">
-
-    </fragment>
+        tools:layout="@layout/fragment_splash_landing"/>
 
     <fragment
         android:id="@+id/resetPasswordFragment"
@@ -78,65 +71,14 @@
         android:name="com.example.ticketpartner.feature_create_event.presentation.CreateEventTicketsFragment"
         android:label="fragment_create_event_tickets"
         tools:layout="@layout/fragment_create_event_tickets" />
+
     <fragment
         android:id="@+id/createEventCodesFragment"
         android:name="com.example.ticketpartner.feature_create_event.presentation.CreateEventCodesFragment"
         android:label="fragment_create_event_codes"
         tools:layout="@layout/fragment_create_event_codes" />
 
-    <navigation
-        android:id="@+id/scanModuleGraph"
-        app:startDestination="@id/loginScanModuleFragment">
-
-        <fragment
-            android:id="@+id/loginScanModuleFragment"
-            android:name="com.example.ticketpartner.feature_scan_module.feature_login_scan.presentation.LoginScanModuleFragment"
-            android:label="fragment_login_scan_module"
-            tools:layout="@layout/fragment_login_scan_module" />
-
-        <fragment
-            android:id="@+id/eventDetailsScanModuleFragment"
-            android:name="com.example.ticketpartner.feature_scan_module.feature_login_scan.presentation.EventDetailsScanModuleFragment"
-            android:label="fragment_evnet_details_scan_module"
-            tools:layout="@layout/fragment_event_details_scan_module" />
-
-        <fragment
-            android:id="@+id/selectTicketTypeScanModuleFragment"
-            android:name="com.example.ticketpartner.feature_scan_module.feature_login_scan.presentation.SelectTicketTypeScanModuleFragment"
-            android:label="fragment_select_ticket_type_scan_module"
-            tools:layout="@layout/fragment_select_ticket_type_scan_module" />
-
-        <fragment
-            android:id="@+id/scanQRLandingFragment"
-            android:name="com.example.ticketpartner.feature_scan_module.ScanQRLandingFragment"
-            android:label="fragment_scan_q_r_landing"
-            tools:layout="@layout/fragment_scan_q_r_landing" />
-
-        <fragment
-            android:id="@+id/qrScanReportFragment"
-            android:name="com.example.ticketpartner.QrScanReportFragment"
-            android:label="fragment_qr_scan_report"
-            tools:layout="@layout/fragment_qr_scan_report" />
-
-        <fragment
-            android:id="@+id/scanBottomNavSearchFragment2"
-            android:name="com.example.ticketpartner.feature_scan_module.feature_qr_scan.presentation.ScanBottomNavSearchFragment"
-            android:label="fragment_scan_bottom_nav_search"
-            tools:layout="@layout/fragment_scan_bottom_nav_search" />
-
-        <fragment
-            android:id="@+id/scanSearchedOrderDetailsFragment"
-            android:name="com.example.ticketpartner.feature_scan_module.feature_qr_scan.presentation.ScanSearchedOrderDetailsFragment"
-            android:label="fragment_scan_searched_order_details"
-            tools:layout="@layout/fragment_scan_searched_order_details" />
-
-        <fragment
-            android:id="@+id/scanBottomQRScanFragment"
-            android:name="com.example.ticketpartner.feature_scan_module.feature_qr_scan.presentation.ScanBottomQRScanFragment"
-            android:label="fragment_scan_bottom_nav_q_r_scan"
-            tools:layout="@layout/fragment_scan_bottom_nav_q_r_scan" />
-
-    </navigation>
+    <include app:graph="@navigation/qr_scan_module_navigation" />
 
 
 </navigation>

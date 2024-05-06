@@ -7,8 +7,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.ticketpartner.R
-import com.example.ticketpartner.common.storage.MyPreferences
-import com.example.ticketpartner.common.storage.PrefConstants
 import com.example.ticketpartner.databinding.FragmentSplashLandingBinding
 import com.example.ticketpartner.utils.Utility.changeStringColor
 import dagger.hilt.android.AndroidEntryPoint
@@ -22,10 +20,7 @@ class SplashLandingFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         binding = FragmentSplashLandingBinding.inflate(layoutInflater, container, false)
-        if (!MyPreferences.getString(PrefConstants.LOGGED_USER_DETAILS).isNullOrEmpty()) {
-            findNavController().navigate(R.id.scanModuleGraph)
-            //findNavController().navigate(R.id.qr_scan_navigation)
-        }
+
         return binding.root
     }
 
@@ -40,12 +35,6 @@ class SplashLandingFragment : Fragment() {
         changeTextColor()
 
         binding.btnNext.setOnClickListener {
-            /*if (!MyPreferences.getString(PrefConstants.LOGGED_USER_DETAILS).isNullOrEmpty()) {
-                findNavController().navigate(R.id.scanModuleGraph)
-            } else {
-                findNavController().navigate(R.id.signInFragment)
-            }*/
-            //findNavController().navigate(R.id.signInFragment)
             findNavController().navigate(R.id.signInFragment)
         }
     }

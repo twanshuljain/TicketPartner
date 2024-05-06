@@ -4,15 +4,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.os.bundleOf
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.ticketpartner.R
 import com.example.ticketpartner.common.COMMA
 import com.example.ticketpartner.common.HYPHEN_CHAR
-import com.example.ticketpartner.common.SCAN_MODULE_EVENT_DETAILS
 import com.example.ticketpartner.common.SnackBarUtil
+import com.example.ticketpartner.common.VERTICAL_POLE
 import com.example.ticketpartner.databinding.FragmentEventDetailsScanModuleBinding
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.DataItem
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.EventDetailsScanUIState
@@ -36,6 +36,19 @@ class EventDetailsScanModuleFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val callback: OnBackPressedCallback =
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    // Leave empty do disable back press or
+                    // write your code which you want
+                }
+            }
+        requireActivity().onBackPressedDispatcher.addCallback(
+            requireActivity(),
+            callback
+        )
+
         initView()
         getEventDetailsResponse()
     }
@@ -64,22 +77,30 @@ class EventDetailsScanModuleFragment : Fragment() {
 
     private fun showDetailsData(data: DataItem?) {
         binding.tvEventTitle.text = data?.event?.name
-        binding.tvStartDate.text =
-            getFormattedStartDateForEvent(data?.event_dates?.event_start_date)
+
+            val startDate = getFormattedStartDateForEvent(data?.event_dates?.event_start_date)
         val startEndTime =
             getFormattedTimeForEvent(data?.event_dates?.event_start_time) + HYPHEN_CHAR + getFormattedTimeForEvent(
                 data?.event_dates?.event_end_time
             )
-        binding.tvStartEndTime.text = startEndTime
+        binding.tvStartDateTime.text = startDate+ VERTICAL_POLE+startEndTime
+
         val location = data?.event_locations
         binding.tvLocation.text =
             location?.city + COMMA + location?.state + COMMA + location?.country
+        binding.tvOrganizerName.text = data?.organization?.name.toString()
     }
 
     private fun initView() {
-        binding.btnContinue.setOnClickListener {
-            val bundle = bundleOf(SCAN_MODULE_EVENT_DETAILS to eventDetails)
-            findNavController().navigate(R.id.scanQRLandingFragment, bundle)
-        }
+            binding.btnContinue.setOnClickListener {
+             /*   val bundle = bundleOf(SCAN_MODULE_EVENT_DETAILS to eventDetails)
+                navController.popBackStack(R.id.eventDetailsScanModuleFragment, true)
+                navController.navigate(R.id.rqScanNavGraph,bundle)*/
+
+                val navController = findNavController()
+               navController.popBackStack(R.id.qr_scan_module_navigation,true)
+                navController.navigate(R.id.rqScanNavGraph)
+                //findNavController().navigate(R.id.action_eventDetailsScanModuleFragment_to_rqScanNavGraph, bundle)
+            }
     }
 }

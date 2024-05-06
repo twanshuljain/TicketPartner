@@ -6,19 +6,24 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import com.example.ticketpartner.R
+import com.example.ticketpartner.common.COMMA
+import com.example.ticketpartner.common.HYPHEN_CHAR
 import com.example.ticketpartner.common.SnackBarUtil
+import com.example.ticketpartner.common.VERTICAL_POLE
 import com.example.ticketpartner.common.ZERO
 import com.example.ticketpartner.databinding.FragmentScanBottomNavHomeBinding
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.DataItem
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.EventDetailsScanUIState
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.presentation.SelectTicketTypeScanAdapter
 import com.example.ticketpartner.utils.DialogProgressUtil
+import com.example.ticketpartner.utils.getFormattedStartDateForEvent
+import com.example.ticketpartner.utils.getFormattedTimeForEvent
 
 class ScanBottomNavHomeFragment : Fragment() {
     private lateinit var binding: FragmentScanBottomNavHomeBinding
     private val viewModel: QrScanViewModel by activityViewModels()
     private lateinit var adapter: SelectTicketTypeScanAdapter
-    private var selectedTicketName = ArrayList<String>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,6 +36,7 @@ class ScanBottomNavHomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        //viewModel.onContinueButtonCLickCount.value = 0
         initView()
 
         /* viewModel.observerSelectedTicketName.observe(viewLifecycleOwner) {
@@ -47,7 +53,7 @@ class ScanBottomNavHomeFragment : Fragment() {
     }
 
     private fun makeEventDetailsAPICall() {
-        viewModel.getEventDetailsData()
+        //  viewModel.getEventDetailsData()
         viewModel.observeScanEventDetailsResponse.observe(viewLifecycleOwner) {
             when (it) {
                 is EventDetailsScanUIState.IsLoading -> {
@@ -57,6 +63,7 @@ class ScanBottomNavHomeFragment : Fragment() {
                 is EventDetailsScanUIState.OnSuccess -> {
                     DialogProgressUtil.dismiss()
                     setTicketTypesAdapter(it.onSuccess.data)
+                    setDetailsOnCard(it.onSuccess.data)
                 }
 
                 is EventDetailsScanUIState.OnFailure -> {
@@ -67,18 +74,40 @@ class ScanBottomNavHomeFragment : Fragment() {
         }
     }
 
+    private fun setDetailsOnCard(data: DataItem?) {
+        viewModel.eventName.value = data?.event?.name
+        binding.tvTitle.text = data?.event?.name
+        val startDate = getFormattedStartDateForEvent(data?.event_dates?.event_start_date)+ VERTICAL_POLE
+        binding.tvStartDate.text = startDate
+
+        val startEndTime =
+            getFormattedTimeForEvent(data?.event_dates?.event_start_time) + HYPHEN_CHAR + getFormattedTimeForEvent(
+                data?.event_dates?.event_end_time
+            )
+        binding.tvStartEndTime.text = startEndTime
+        val location = data?.event_locations
+        binding.tvLocation.text =
+            location?.city + COMMA + location?.state + COMMA + location?.country
+
+        viewModel.dateTimeEventDetails.value = startDate+startEndTime
+    }
+
+
     private fun initView() {
         adapter =
-            SelectTicketTypeScanAdapter(requireActivity(), emptyList(), ::selectedTicketNameList)
+            SelectTicketTypeScanAdapter(
+                requireActivity(),
+                emptyList(),
+                ::selectedTicketNameList
+            )
+
         binding.tvSelectAll.setOnClickListener {
             adapter.selectAll()
         }
         binding.rvSelectTicketType.setHasFixedSize(true)
 
         binding.btnContinue.setOnClickListener {
-          /*  val bundle = bundleOf(SELECTED_TICKET_NAME to selectedTicketName)
-            findNavController().navigate(R.id.scanBottomQRScanFragment, bundle)*/
-            viewModel.onContinueClick.value = true
+            viewModel.onContinueClick.value = R.id.scanBottomNavQR
         }
     }
 
@@ -90,11 +119,16 @@ class ScanBottomNavHomeFragment : Fragment() {
         )
         binding.rvSelectTicketType.adapter = adapter
         binding.rvSelectTicketType.setHasFixedSize(true)
+
     }
 
     private fun selectedTicketNameList(list: ArrayList<String>) {
         if (list.size > ZERO) {
-            selectedTicketName = list
+            viewModel.selectedTicketTypeArrayList.value = list
+
+        } else if (list.size <=0 ) {
+
         }
     }
+
 }

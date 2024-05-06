@@ -16,7 +16,6 @@
         android:layout_width="@dimen/size_40"
         android:layout_height="@dimen/size_40"
         android:indeterminateOnly="false"
-        android:progress="60"
         android:progressDrawable="@drawable/circle"
         android:rotation="0"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -30,7 +29,6 @@
         android:layout_width="@dimen/margin_0"
         android:layout_height="wrap_content"
         android:padding="@dimen/margin_15"
-        android:text="General Admission "
         android:textAlignment="textStart"
         app:layout_constraintEnd_toStartOf="@+id/llCount"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -53,7 +51,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="end"
             android:paddingStart="@dimen/margin_10"
-            android:text="5,323"
             android:textAlignment="textEnd" />
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -63,7 +60,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="end"
             android:paddingStart="@dimen/margin_10"
-            android:text="/ 8,500"
             android:textAlignment="textEnd" />
 
     </LinearLayout>

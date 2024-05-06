@@ -2,5 +2,5 @@ package com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.mod
 
 data class QrScanRequest(
     val qrid: String?,
-    val ticket_name: List<String?>?
+    val ticket_names: List<String?>?
 )

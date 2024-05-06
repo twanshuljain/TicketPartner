@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rqScanNavGraph"
+    app:startDestination="@id/scanBottomNavHomeFragment">
+
+  <!--      <fragment
+            android:id="@+id/scanQRLandingFragment"
+            android:name="com.example.ticketpartner.feature_scan_module.ScanQRLandingFragment"
+            android:label="fragment_scan_q_r_landing"
+            tools:layout="@layout/fragment_scan_q_r_landing" />-->
+
+        <fragment
+            android:id="@+id/scanBottomNavHomeFragment"
+            android:name="com.example.ticketpartner.feature_scan_module.feature_qr_scan.presentation.ScanBottomNavHomeFragment"
+            android:label="fragment_scan_bottom_nav_home"
+            tools:layout="@layout/fragment_scan_bottom_nav_home" />
+
+        <fragment
+            android:id="@+id/scanBottomQRScanFragment"
+            android:name="com.example.ticketpartner.feature_scan_module.feature_qr_scan.presentation.ScanBottomQRScanFragment"
+            android:label="fragment_scan_bottom_nav_q_r_scan"
+            tools:layout="@layout/fragment_scan_bottom_nav_q_r_scan" />
+
+
+        <fragment
+            android:id="@+id/scanBottomNavSearchFragment"
+            android:name="com.example.ticketpartner.feature_scan_module.feature_qr_scan.presentation.ScanBottomNavSearchFragment"
+            android:label="fragment_scan_bottom_nav_search"
+            tools:layout="@layout/fragment_scan_bottom_nav_search" />
+
+    </navigation>

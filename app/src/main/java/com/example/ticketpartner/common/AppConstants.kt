@@ -13,6 +13,8 @@ const val EMPTY_STRING = ""
 const val HYPHEN_CHAR = " - "
 const val UNDERSCORE_CHAR = "_"
 const val COMMA = ","
+const val VERTICAL_POLE = " | "
+const val VERTICAL_DOTS = " : "
 const val DELAY_TWO_SEC = 2000L
 
 /*

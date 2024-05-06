@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/qr_scan_module_navigation"
+    app:startDestination="@id/loginScanModuleFragment">
+
+    <fragment
+        android:id="@+id/loginScanModuleFragment"
+        android:name="com.example.ticketpartner.feature_scan_module.feature_login_scan.presentation.LoginScanModuleFragment"
+        android:label="fragment_login_scan_module"
+        tools:layout="@layout/fragment_login_scan_module" />
+
+    <fragment
+        android:id="@+id/eventDetailsScanModuleFragment"
+        android:name="com.example.ticketpartner.feature_scan_module.feature_login_scan.presentation.EventDetailsScanModuleFragment"
+        android:label="fragment_evnet_details_scan_module"
+        tools:layout="@layout/fragment_event_details_scan_module" />
+
+    <navigation
+        android:id="@+id/rqScanNavGraph"
+        app:startDestination="@id/scanQRLandingFragment">
+
+        <fragment
+            android:id="@+id/scanQRLandingFragment"
+            android:name="com.example.ticketpartner.feature_scan_module.ScanQRLandingFragment"
+            android:label="fragment_scan_q_r_landing"
+            tools:layout="@layout/fragment_scan_q_r_landing" />
+
+        <fragment
+            android:id="@+id/scanBottomNavHomeFragment"
+            android:name="com.example.ticketpartner.feature_scan_module.feature_qr_scan.presentation.ScanBottomNavHomeFragment"
+            android:label="fragment_scan_bottom_nav_home"
+            tools:layout="@layout/fragment_scan_bottom_nav_home" />
+
+        <fragment
+            android:id="@+id/scanBottomQRScanFragment"
+            android:name="com.example.ticketpartner.feature_scan_module.feature_qr_scan.presentation.ScanBottomQRScanFragment"
+            android:label="fragment_scan_bottom_nav_q_r_scan"
+            tools:layout="@layout/fragment_scan_bottom_nav_q_r_scan" />
+
+
+        <fragment
+            android:id="@+id/scanBottomNavSearchFragment"
+            android:name="com.example.ticketpartner.feature_scan_module.feature_qr_scan.presentation.ScanBottomNavSearchFragment"
+            android:label="fragment_scan_bottom_nav_search"
+            tools:layout="@layout/fragment_scan_bottom_nav_search" />
+
+
+        <fragment
+            android:id="@+id/scanSearchedOrderDetailsFragment"
+            android:name="com.example.ticketpartner.feature_scan_module.feature_qr_scan.presentation.ScanSearchedOrderDetailsFragment"
+            android:label="fragment_scan_searched_order_details"
+            tools:layout="@layout/fragment_scan_searched_order_details" />
+
+    </navigation>
+
+
+    <fragment
+        android:id="@+id/qrScanReportFragment"
+        android:name="com.example.ticketpartner.feature_scan_module.feature_qr_scan.presentation.QrScanReportFragment"
+        android:label="fragment_qr_scan_report"
+        tools:layout="@layout/fragment_qr_scan_report" />
+
+
+
+</navigation>

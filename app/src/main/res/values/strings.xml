@@ -173,6 +173,11 @@
     <string name="are_you_sure_logout">Are you sure you want to log out?</string>
     <string name="search_bar_hint">Search email, order number, name...</string>
     <string name="view_details">View Details</string>
+    <string name="check_in">Check in</string>
+    <string name="total_scanned">Total Scanned</string>
+    <string name="order_id">Order ID</string>
+    <string name="payment_method">Payment method</string>
+    <string name="scanReport">Scan Report</string>
 
 
 </resources>

@@ -1,6 +1,7 @@
 package com.example.ticketpartner.feature_login.presentation
 
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -21,6 +22,7 @@ import com.example.ticketpartner.databinding.LoginMobileNumberBinding
 import com.example.ticketpartner.feature_login.domain.model.EmailLoginUIState
 import com.example.ticketpartner.feature_login.domain.model.MobileLoginUIState
 import com.example.ticketpartner.feature_login.domain.model.SendMobileOtpUIState
+import com.example.ticketpartner.feature_scan_module.QrScanModuleActivity
 import com.example.ticketpartner.utils.CountdownTimerCallback
 import com.example.ticketpartner.utils.CountdownTimerUtil
 import com.example.ticketpartner.utils.DialogProgressUtil
@@ -214,7 +216,9 @@ class SignInFragment : Fragment(), CountdownTimerCallback {
         }
 
         binding.clJoinAdminStaff.setOnClickListener {
-            findNavController().navigate(R.id.scanModuleGraph)
+            val intent = Intent(requireContext(), QrScanModuleActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent)
             //findNavController().navigate(R.id.qr_scan_navigation)
         }
     }

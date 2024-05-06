@@ -2,8 +2,12 @@ package com.example.ticketpartner.feature_scan_module.feature_qr_scan.data.repos
 
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.EventDetailsScanResponse
 import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.datasource.QrScanDataSource
+import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.QrScanReportAllResponse
 import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.QrScanResponse
 import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.QrScannedTicketResponse
+import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.ScanCheckedInResponse
+import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.ScanSearchOrderDetailsResponse
+import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.SearchApiScanResponse
 import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.repository.QrScanRepository
 import javax.inject.Inject
 
@@ -18,5 +22,24 @@ class QrScanRepositoryImpl @Inject constructor(private val qrScanDataSource: QrS
 
     override suspend fun getScanEventDetails(): EventDetailsScanResponse {
        return qrScanDataSource.getScanEventDetails()
+    }
+
+    override suspend fun getScanSearchResponse(orderId: String): SearchApiScanResponse {
+       return qrScanDataSource.getScanSearchResponse(orderId)
+    }
+
+    override suspend fun getScanOrderDetailsResponse(orderId: String): ScanSearchOrderDetailsResponse {
+        return qrScanDataSource.getScanOrderDetailsResponse(orderId)
+    }
+
+    override suspend fun getScanCheckedInResponse(
+        checkedOrderIdList: ArrayList<Int>,
+        orderId: String
+    ): ScanCheckedInResponse {
+        return qrScanDataSource.getScanCheckedInResponse(checkedOrderIdList, orderId)
+    }
+
+    override suspend fun getScanReportAllResponse(type: String): QrScanReportAllResponse {
+        return qrScanDataSource.getScanReportAllResponse(type)
     }
 }
