@@ -22,7 +22,7 @@ import com.example.ticketpartner.feature_login.domain.model.ForgotPasswordSendEm
 import com.example.ticketpartner.utils.CountdownTimerCallback
 import com.example.ticketpartner.utils.CountdownTimerUtil
 import com.example.ticketpartner.utils.DialogProgressUtil
-import com.example.ticketpartner.utils.NavigateFragmentUtil.clearBackStackToDestination
+import com.example.ticketpartner.utils.NavigateFragmentUtil.navigateWithClearAllBackStack
 import com.example.ticketpartner.utils.Utility
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -84,7 +84,7 @@ class ForgotPasswordFragment : Fragment(), CountdownTimerCallback {
         }
 
         binding.tvSignBtn.setOnClickListener {
-            findNavController().clearBackStackToDestination(R.id.signInFragment)
+            findNavController().navigateWithClearAllBackStack(R.id.signInFragment)
         }
 
         binding.tvVerify.setOnClickListener {

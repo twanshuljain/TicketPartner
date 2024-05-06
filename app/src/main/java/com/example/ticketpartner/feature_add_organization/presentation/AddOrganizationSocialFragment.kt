@@ -16,7 +16,7 @@ import com.example.ticketpartner.common.remote.apis.SessionHandlerInterceptor
 import com.example.ticketpartner.databinding.FragmentAddOrganizationSocialBinding
 import com.example.ticketpartner.feature_add_organization.domain.model.AddOrganizationSocialUIState
 import com.example.ticketpartner.utils.DialogProgressUtil
-import com.example.ticketpartner.utils.NavigateFragmentUtil.clearBackStackToDestination
+import com.example.ticketpartner.utils.NavigateFragmentUtil.navigateWithClearAllBackStack
 
 class AddOrganizationSocialFragment : Fragment() {
     private lateinit var binding: FragmentAddOrganizationSocialBinding
@@ -94,7 +94,7 @@ class AddOrganizationSocialFragment : Fragment() {
                 is  AddOrganizationSocialUIState.OnSuccess -> {
                     DialogProgressUtil.dismiss()
                     SnackBarUtil.showSuccessSnackBar(binding.root, it.result.message.toString())
-                    findNavController().clearBackStackToDestination(R.id.signInFragment)
+                    findNavController().navigateWithClearAllBackStack(R.id.signInFragment)
                 }
                 is  AddOrganizationSocialUIState.OnFailure -> {
                     DialogProgressUtil.dismiss()

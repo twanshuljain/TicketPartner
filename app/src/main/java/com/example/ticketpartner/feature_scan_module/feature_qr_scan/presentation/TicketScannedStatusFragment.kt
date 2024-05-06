@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import com.example.ticketpartner.R
 import com.example.ticketpartner.databinding.FragmentTicketScannedStatusBinding
 import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.QrScanUIState
@@ -36,7 +37,7 @@ class TicketScannedStatusFragment : Fragment() {
         binding.tvCurrentTime.text = currentTime
 
         binding.rlContinue.setOnClickListener {
-            viewModel.onContinueClick.value = R.id.scanBottomNavQR
+            findNavController().popBackStack()
         }
 
         viewModel.observeQrScanResponse.observe(viewLifecycleOwner){
@@ -55,6 +56,5 @@ class TicketScannedStatusFragment : Fragment() {
                 }
             }
         }
-
     }
 }

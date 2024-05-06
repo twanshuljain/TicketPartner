@@ -40,8 +40,8 @@ class QrScanViewModel @Inject constructor(
     private val logUtil: LogUtil
 ) : ViewModel() {
 
-    private val _selectedTicketName: MutableLiveData<List<DataItem?>?> = MutableLiveData()
-    val observerSelectedTicketName: LiveData<List<DataItem?>?> = _selectedTicketName
+    private val _selectedTicketName: MutableLiveData<ArrayList<String>> = MutableLiveData()
+    val observerSelectedTicketName: LiveData<ArrayList<String>> = _selectedTicketName
 
     private val _qrScanState: MutableLiveData<QrScanUIState> = MutableLiveData()
     val observeQrScanResponse: LiveData<QrScanUIState> = _qrScanState
@@ -51,6 +51,9 @@ class QrScanViewModel @Inject constructor(
 
     private val _getScanEventDetails: MutableLiveData<EventDetailsScanUIState> = MutableLiveData()
     val observeScanEventDetailsResponse: LiveData<EventDetailsScanUIState> = _getScanEventDetails
+
+    private val _getScanEventDetailsHome: MutableLiveData<EventDetailsScanUIState> = MutableLiveData()
+    val observeScanEventDetailsHomeResponse: LiveData<EventDetailsScanUIState> = _getScanEventDetailsHome
 
     private val _getScanSearchData: MutableLiveData<QrScanSearchItemUIState> = MutableLiveData()
     val observeScanSearchData: LiveData<QrScanSearchItemUIState> = _getScanSearchData
@@ -65,15 +68,16 @@ class QrScanViewModel @Inject constructor(
     private val _getScanReportAllData: MutableLiveData<QrScanReportAllUIState> = MutableLiveData()
     val getScanReportAllData: LiveData<QrScanReportAllUIState> = _getScanReportAllData
 
-    fun putSelectedTicketName(selectedTicketName: ArrayList<DataItem>) {
+    fun putSelectedTicketName(selectedTicketName: ArrayList<String>) {
         _selectedTicketName.value = selectedTicketName
     }
 
     val onContinueClick = MutableLiveData<Int>()
-
     val selectedTicketTypeArrayList = MutableLiveData<ArrayList<String>>()
+    var listSize = 0
     val eventName = MutableLiveData<String>()
     val dateTimeEventDetails = MutableLiveData<String>()
+    val selectedSearchedItemEmailAdd = MutableLiveData<String>()
 
 
     /*  private val _onContinueClick:MutableLiveData<Boolean> = MutableLiveData()
@@ -129,6 +133,22 @@ class QrScanViewModel @Inject constructor(
         }
     }
 
+    fun getEventDetailsHomeData() {
+        _getScanEventDetailsHome.value = EventDetailsScanUIState.IsLoading(true)
+        viewModelScope.launch {
+            getScanEventDetailsDashboardUseCase.invoke().catch {
+                logUtil.log(LoginScanVewModel.TAG, "onError${it.message.toString()}")
+                val error = ErrorResponseHandler(it)
+                _getScanEventDetailsHome.value =
+                    EventDetailsScanUIState.OnFailure(error.getErrors().message.toString())
+            }.collect {
+                logUtil.log(LoginScanVewModel.TAG, "onResponse: $it")
+                _getScanEventDetailsHome.value = EventDetailsScanUIState.OnSuccess(it)
+            }
+        }
+    }
+
+
     fun getSearchData(orderId: String) {
         viewModelScope.launch {
             getQrScanSearchUseCase.invoke(orderId).catch {
@@ -158,7 +178,7 @@ class QrScanViewModel @Inject constructor(
         }
     }
 
-    fun getCheckInOrder(checkedOrderId: ArrayList<Int>, orderId: String) {
+    fun getCheckInOrder(checkedOrderId: ArrayList<Long>, orderId: String) {
         _getScanCheckedInData.value = QrScanCheckedInUIState.IsLoading(true)
         viewModelScope.launch {
             getScanCheckedInUseCase.invoke(checkedOrderId, orderId).catch {

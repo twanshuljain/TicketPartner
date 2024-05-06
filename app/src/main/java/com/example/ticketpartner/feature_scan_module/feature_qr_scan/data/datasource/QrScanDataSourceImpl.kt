@@ -35,7 +35,7 @@ class QrScanDataSourceImpl @Inject constructor(private val restApiService: RestA
     }
 
     override suspend fun getScanCheckedInResponse(
-        checkedOrderIdList: ArrayList<Int>,
+        checkedOrderIdList: ArrayList<Long>,
         orderId: String
     ): ScanCheckedInResponse {
         return restApiService.getQrScanCheckedInData(ScanCheckedInRequest(checkedOrderIdList,orderId))

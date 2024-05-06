@@ -14,7 +14,7 @@ interface QrScanDataSource {
     suspend fun getScanEventDetails(): EventDetailsScanResponse
     suspend fun getScanSearchResponse(orderId: String): SearchApiScanResponse
     suspend fun getScanOrderDetailsResponse(orderId: String): ScanSearchOrderDetailsResponse
-    suspend fun getScanCheckedInResponse(checkedOrderIdList: ArrayList<Int>, orderId: String): ScanCheckedInResponse
+    suspend fun getScanCheckedInResponse(checkedOrderIdList: ArrayList<Long>, orderId: String): ScanCheckedInResponse
     suspend fun getScanReportAllResponse(type: String): QrScanReportAllResponse
 
 }

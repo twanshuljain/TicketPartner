@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 
 class GetScanCheckedInUseCase @Inject constructor(private val qrScanRepository: QrScanRepository) {
-    suspend fun invoke(checkedOrderIdList:ArrayList<Int>,orderId: String): Flow<ScanCheckedInResponse> {
+    suspend fun invoke(checkedOrderIdList:ArrayList<Long>,orderId: String): Flow<ScanCheckedInResponse> {
         return flow {
             emit(qrScanRepository.getScanCheckedInResponse(checkedOrderIdList,orderId))
         }.flowOn(Dispatchers.IO)

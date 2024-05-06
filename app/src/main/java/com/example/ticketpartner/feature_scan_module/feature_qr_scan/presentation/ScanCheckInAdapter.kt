@@ -2,6 +2,7 @@ package com.example.ticketpartner.feature_scan_module.feature_qr_scan.presentati
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,9 +16,10 @@ import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.mode
 class ScanCheckInAdapter(
     private val context: Context,
     private val list: List<Item?>,
-    private val checkedOrderId: (ArrayList<Int>) -> Unit
+    private val checkedOrderId: (ArrayList<Long>) -> Unit
 ) : RecyclerView.Adapter<ScanCheckInAdapter.ViewHolder>() {
-    private var checkedOrderIdList = ArrayList<Int>()
+    private var checkedOrderIdList = ArrayList<Long>()
+    private var checkedItemSize = ArrayList<Int>()
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -36,6 +38,7 @@ class ScanCheckInAdapter(
     override fun onBindViewHolder(holder: ScanCheckInAdapter.ViewHolder, position: Int) {
         list[position]?.is_checked_in.let {
             if (it!!) {
+                list[position]?.order_id?.let { it1 -> checkedItemSize.add(it1) }
                 holder.binding.CheckBox.visibility = View.INVISIBLE
                 holder.binding.tvCheckedIn.visibility = View.VISIBLE
             } else {
@@ -46,11 +49,11 @@ class ScanCheckInAdapter(
         holder.binding.tvOrderId.text =
             context.getString(R.string.order_id) + VERTICAL_DOTS + list[position]?.order_number
 
-        holder.binding.CheckBox.setOnCheckedChangeListener { buttonView, isChecked ->
+        holder.binding.CheckBox.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
-                list[position]?.order_id?.let { checkedOrderIdList.add(it.toInt()) }
+                list[position]?.order_id?.let { checkedOrderIdList.add(it.toLong()) }
             } else {
-                list[position]?.order_number?.let { checkedOrderIdList.remove(it.toInt()) }
+                list[position]?.order_number?.let { checkedOrderIdList.remove(it.toLong()) }
             }
             checkedOrderId(checkedOrderIdList)
         }
@@ -62,6 +65,4 @@ class ScanCheckInAdapter(
 
     class ViewHolder(val binding: ItemScanCheckInLayoutBinding) :
         RecyclerView.ViewHolder(binding.root)
-
-
 }

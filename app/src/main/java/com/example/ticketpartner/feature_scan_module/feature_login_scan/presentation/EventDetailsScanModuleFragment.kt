@@ -7,6 +7,8 @@ import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.NavOptions
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import com.example.ticketpartner.R
 import com.example.ticketpartner.common.COMMA
@@ -17,9 +19,9 @@ import com.example.ticketpartner.databinding.FragmentEventDetailsScanModuleBindi
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.DataItem
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.EventDetailsScanUIState
 import com.example.ticketpartner.utils.DialogProgressUtil
+import com.example.ticketpartner.utils.NavigateFragmentUtil.navigateParentToChildFragment
 import com.example.ticketpartner.utils.getFormattedStartDateForEvent
 import com.example.ticketpartner.utils.getFormattedTimeForEvent
-
 
 class EventDetailsScanModuleFragment : Fragment() {
     private lateinit var binding: FragmentEventDetailsScanModuleBinding
@@ -29,7 +31,6 @@ class EventDetailsScanModuleFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         binding = FragmentEventDetailsScanModuleBinding.inflate(layoutInflater)
         return binding.root
     }
@@ -37,17 +38,17 @@ class EventDetailsScanModuleFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val callback: OnBackPressedCallback =
-            object : OnBackPressedCallback(true) {
-                override fun handleOnBackPressed() {
-                    // Leave empty do disable back press or
-                    // write your code which you want
-                }
-            }
-        requireActivity().onBackPressedDispatcher.addCallback(
-            requireActivity(),
-            callback
-        )
+         val callback: OnBackPressedCallback =
+              object : OnBackPressedCallback(true) {
+                  override fun handleOnBackPressed() {
+                      // Leave empty do disable back press or
+                      // write your code which you want
+                  }
+              }
+          requireActivity().onBackPressedDispatcher.addCallback(
+              requireActivity(),
+              callback
+          )
 
         initView()
         getEventDetailsResponse()
@@ -77,13 +78,12 @@ class EventDetailsScanModuleFragment : Fragment() {
 
     private fun showDetailsData(data: DataItem?) {
         binding.tvEventTitle.text = data?.event?.name
-
-            val startDate = getFormattedStartDateForEvent(data?.event_dates?.event_start_date)
+        val startDate = getFormattedStartDateForEvent(data?.event_dates?.event_start_date)
         val startEndTime =
             getFormattedTimeForEvent(data?.event_dates?.event_start_time) + HYPHEN_CHAR + getFormattedTimeForEvent(
                 data?.event_dates?.event_end_time
             )
-        binding.tvStartDateTime.text = startDate+ VERTICAL_POLE+startEndTime
+        binding.tvStartDateTime.text = startDate + VERTICAL_POLE + startEndTime
 
         val location = data?.event_locations
         binding.tvLocation.text =
@@ -92,15 +92,12 @@ class EventDetailsScanModuleFragment : Fragment() {
     }
 
     private fun initView() {
-            binding.btnContinue.setOnClickListener {
-             /*   val bundle = bundleOf(SCAN_MODULE_EVENT_DETAILS to eventDetails)
-                navController.popBackStack(R.id.eventDetailsScanModuleFragment, true)
-                navController.navigate(R.id.rqScanNavGraph,bundle)*/
-
-                val navController = findNavController()
-               navController.popBackStack(R.id.qr_scan_module_navigation,true)
-                navController.navigate(R.id.rqScanNavGraph)
-                //findNavController().navigate(R.id.action_eventDetailsScanModuleFragment_to_rqScanNavGraph, bundle)
-            }
+        binding.btnContinue.setOnClickListener {
+            findNavController().navigateParentToChildFragment(
+                R.id.eventDetailsScanModuleFragment,
+                R.id.action_eventDetailsScanModuleFragment_to_nested_qr_scan_nav_graph,
+                true
+            )
+        }
     }
 }

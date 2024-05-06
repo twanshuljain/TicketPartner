@@ -4,8 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
+import androidx.appcompat.widget.AppCompatTextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import com.example.ticketpartner.R
 import com.example.ticketpartner.common.SnackBarUtil
 import com.example.ticketpartner.common.ZERO
@@ -14,6 +17,7 @@ import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.mode
 import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.QrScanReportAllUIState
 import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.TicketDataList
 import com.example.ticketpartner.utils.DialogProgressUtil
+import com.example.ticketpartner.utils.NavigateFragmentUtil.navigateWithClearAllBackStack
 
 class QrScanReportFragment : Fragment() {
     private lateinit var binding: FragmentQrScanReportBinding
@@ -23,7 +27,6 @@ class QrScanReportFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         binding = FragmentQrScanReportBinding.inflate(layoutInflater)
         viewModel.getScanReportAllData("all")
         return binding.root
@@ -32,7 +35,6 @@ class QrScanReportFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initView()
-
         observeScanReportAllData()
     }
 
@@ -95,6 +97,12 @@ class QrScanReportFragment : Fragment() {
     }
 
     private fun initView() {
+        val subTitle = activity?.findViewById<AppCompatTextView>(R.id.subTitle)
+        subTitle?.visibility = View.GONE
+
+            val title = activity?.findViewById<AppCompatTextView>(R.id.title)
+            title?.text = getString(R.string.scanReport)
+
         adapter = ScanReportTicketNameAdapter(emptyList())
         binding.includeTitle.ivBack.visibility = View.GONE
 
@@ -190,11 +198,6 @@ class QrScanReportFragment : Fragment() {
                 clAllTicketCount.visibility = View.GONE
             }
         }
-
-       // setAdapter(getResponseList())
-
-
-
     }
 
     private fun setAdapter(getResponseList: List<TicketDataList?>?) {
