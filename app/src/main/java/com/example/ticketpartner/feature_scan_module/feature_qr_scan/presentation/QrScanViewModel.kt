@@ -5,10 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.ticketpartner.common.LogUtil
-import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.DataItem
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.EventDetailsScanUIState
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.QrScanSearchItemUIState
-import com.example.ticketpartner.feature_scan_module.feature_login_scan.presentation.LoginScanVewModel
 import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.QrScanCheckedInUIState
 import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.QrScanOrderDetailsUIState
 import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.QrScanReportAllUIState
@@ -24,7 +22,6 @@ import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.usec
 import com.technotoil.tglivescan.common.retrofit.apis.ErrorResponseHandler
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -52,8 +49,10 @@ class QrScanViewModel @Inject constructor(
     private val _getScanEventDetails: MutableLiveData<EventDetailsScanUIState> = MutableLiveData()
     val observeScanEventDetailsResponse: LiveData<EventDetailsScanUIState> = _getScanEventDetails
 
-    private val _getScanEventDetailsHome: MutableLiveData<EventDetailsScanUIState> = MutableLiveData()
-    val observeScanEventDetailsHomeResponse: LiveData<EventDetailsScanUIState> = _getScanEventDetailsHome
+    private val _getScanEventDetailsHome: MutableLiveData<EventDetailsScanUIState> =
+        MutableLiveData()
+    val observeScanEventDetailsHomeResponse: LiveData<EventDetailsScanUIState> =
+        _getScanEventDetailsHome
 
     private val _getScanSearchData: MutableLiveData<QrScanSearchItemUIState> = MutableLiveData()
     val observeScanSearchData: LiveData<QrScanSearchItemUIState> = _getScanSearchData
@@ -122,12 +121,12 @@ class QrScanViewModel @Inject constructor(
         _getScanEventDetails.value = EventDetailsScanUIState.IsLoading(true)
         viewModelScope.launch {
             getScanEventDetailsDashboardUseCase.invoke().catch {
-                logUtil.log(LoginScanVewModel.TAG, "onError${it.message.toString()}")
+                logUtil.log(TAG, "onError${it.message.toString()}")
                 val error = ErrorResponseHandler(it)
                 _getScanEventDetails.value =
                     EventDetailsScanUIState.OnFailure(error.getErrors().message.toString())
             }.collect {
-                logUtil.log(LoginScanVewModel.TAG, "onResponse: $it")
+                logUtil.log(TAG, "onResponse: $it")
                 _getScanEventDetails.value = EventDetailsScanUIState.OnSuccess(it)
             }
         }
@@ -137,12 +136,12 @@ class QrScanViewModel @Inject constructor(
         _getScanEventDetailsHome.value = EventDetailsScanUIState.IsLoading(true)
         viewModelScope.launch {
             getScanEventDetailsDashboardUseCase.invoke().catch {
-                logUtil.log(LoginScanVewModel.TAG, "onError${it.message.toString()}")
+                logUtil.log(TAG, "onError${it.message.toString()}")
                 val error = ErrorResponseHandler(it)
                 _getScanEventDetailsHome.value =
                     EventDetailsScanUIState.OnFailure(error.getErrors().message.toString())
             }.collect {
-                logUtil.log(LoginScanVewModel.TAG, "onResponse: $it")
+                logUtil.log(TAG, "onResponse: $it")
                 _getScanEventDetailsHome.value = EventDetailsScanUIState.OnSuccess(it)
             }
         }
@@ -193,14 +192,14 @@ class QrScanViewModel @Inject constructor(
     }
 
     fun getScanReportAllData(type: String) {
-      _getScanReportAllData.value = QrScanReportAllUIState.IsLoading(true)
+        _getScanReportAllData.value = QrScanReportAllUIState.IsLoading(true)
         viewModelScope.launch {
             getQrScanReportAllUseCase.invoke(type).catch {
                 logUtil.log(TAG, "onError${it.message.toString()}")
                 val error = ErrorResponseHandler(it)
                 _getScanReportAllData.value =
                     QrScanReportAllUIState.OnFailure(error.getErrors().message.toString())
-            }.collect{
+            }.collect {
                 _getScanReportAllData.value = QrScanReportAllUIState.OnSuccess(it)
             }
         }

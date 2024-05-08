@@ -2,7 +2,6 @@ package com.example.ticketpartner.feature_scan_module.feature_qr_scan.presentati
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,7 +15,8 @@ import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.mode
 class ScanCheckInAdapter(
     private val context: Context,
     private val list: List<Item?>,
-    private val checkedOrderId: (ArrayList<Long>) -> Unit
+    private val checkedOrderId: (ArrayList<Long>) -> Unit,
+    private val position: (Int) -> Unit
 ) : RecyclerView.Adapter<ScanCheckInAdapter.ViewHolder>() {
     private var checkedOrderIdList = ArrayList<Long>()
     private var checkedItemSize = ArrayList<Int>()
@@ -55,6 +55,7 @@ class ScanCheckInAdapter(
             } else {
                 list[position]?.order_number?.let { checkedOrderIdList.remove(it.toLong()) }
             }
+            position(position)
             checkedOrderId(checkedOrderIdList)
         }
     }

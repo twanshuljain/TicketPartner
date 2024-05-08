@@ -27,7 +27,6 @@
         app:layout_constraintTop_toBottomOf="@+id/includeTitle"
         app:layout_constraintBottom_toTopOf="@id/clScanNavLayout"/>
 
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/clScanNavLayout"
         android:layout_width="match_parent"

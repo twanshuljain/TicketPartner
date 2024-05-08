@@ -34,6 +34,7 @@ object QrScanModule {
     @Provides
     fun providesSearchItemByOrderIdUseCase(qrScanRepository: QrScanRepository): GetQrScanSearchUseCase =
         GetQrScanSearchUseCase(qrScanRepository)
+
     @Provides
     fun providesSearchOrderDetailsUseCase(qrScanRepository: QrScanRepository): GetScanOrderDetailsUseCase =
         GetScanOrderDetailsUseCase(qrScanRepository)

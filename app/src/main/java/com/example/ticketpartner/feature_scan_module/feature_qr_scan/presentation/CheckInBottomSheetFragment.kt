@@ -1,24 +1,28 @@
 package com.example.ticketpartner.feature_scan_module.feature_qr_scan.presentation
 
+import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.findNavController
 import com.example.ticketpartner.R
 import com.example.ticketpartner.common.SnackBarUtil
 import com.example.ticketpartner.databinding.FragmentCheckInBottomSheetBinding
+import com.example.ticketpartner.databinding.LayoutScanCheckinAllowedOrdersDialogBinding
 import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.Item
 import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.QrScanCheckedInUIState
-import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.QrScanOrderDetailsUIState
 import com.example.ticketpartner.utils.DialogProgressUtil
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
-class CheckInBottomSheetFragment(rootContext: ConstraintLayout, orderId: String) :
+class CheckInBottomSheetFragment(
+    rootContext: ConstraintLayout,
+    orderId: String,
+    searDetailsResponse: ArrayList<Item>
+) :
     BottomSheetDialogFragment() {
     private lateinit var binding: FragmentCheckInBottomSheetBinding
     private val viewModel: QrScanViewModel by activityViewModels()
@@ -26,7 +30,8 @@ class CheckInBottomSheetFragment(rootContext: ConstraintLayout, orderId: String)
     private var checkedOrderIdList = ArrayList<Long>()
     private val orderId = orderId
     private val context = rootContext
-   private var responseListSize = 0
+    private val searchDetailsResponse = searDetailsResponse
+    private var itemPosition = ArrayList<Int>()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -38,13 +43,11 @@ class CheckInBottomSheetFragment(rootContext: ConstraintLayout, orderId: String)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        adapter = ScanCheckInAdapter(requireContext(), emptyList(), ::checkedOrderId)
+        itemPosition.clear()
+        adapter = ScanCheckInAdapter(requireContext(), emptyList(), ::checkedOrderId, ::position)
         binding.recyclerView.adapter = adapter
         binding.recyclerView.setHasFixedSize(true)
-
-        viewModel.getOrderDetailsResponse(orderId)
-        observeOrderDetailsData()
+        setAdapter(searchDetailsResponse)
 
         binding.btnYes.setOnClickListener {
             viewModel.getCheckInOrder(checkedOrderIdList, orderId)
@@ -65,45 +68,34 @@ class CheckInBottomSheetFragment(rootContext: ConstraintLayout, orderId: String)
                 }
 
                 is QrScanCheckedInUIState.OnSuccess -> {
+                    for (i in 0 until itemPosition.size) {
+                        searchDetailsResponse[itemPosition[i]].is_checked_in = true
+                    }
+
                     DialogProgressUtil.dismiss()
                     SnackBarUtil.showSuccessSnackBar(context, it.onSuccess.message.toString())
                     val bottomSheetDialog = dialog as? BottomSheetDialog
                     bottomSheetDialog?.dismiss()
+                    logoutDialog()
                 }
 
                 is QrScanCheckedInUIState.OnFailure -> {
                     DialogProgressUtil.dismiss()
-                    SnackBarUtil.showErrorSnackBar(binding.root, it.onFailure)
-                }
-            }
-        }
-    }
-
-    private fun observeOrderDetailsData() {
-        viewModel.observeScanOrderDetailsData.observe(viewLifecycleOwner) {
-            when (it) {
-                is QrScanOrderDetailsUIState.IsLoading -> {
-                    DialogProgressUtil.show(childFragmentManager)
-                }
-
-                is QrScanOrderDetailsUIState.OnSuccess -> {
-                    DialogProgressUtil.dismiss()
-                    setAdapter(it.onSuccess.data)
-                   responseListSize = it.onSuccess.data?.size!! ?:0
-                }
-
-                is QrScanOrderDetailsUIState.OnFailure -> {
-                    DialogProgressUtil.dismiss()
-                    SnackBarUtil.showErrorSnackBar(binding.root, it.onFailure)
+                    SnackBarUtil.showErrorSnackBar(context, it.onFailure)
                 }
             }
         }
     }
 
     private fun setAdapter(data: List<Item?>?) {
-        adapter = data?.let { ScanCheckInAdapter(requireContext(), it, ::checkedOrderId) }!!
+        adapter =
+            data?.let { ScanCheckInAdapter(requireContext(), it, ::checkedOrderId, ::position) }!!
         binding.recyclerView.adapter = adapter
         binding.recyclerView.setHasFixedSize(true)
+    }
+
+    private fun position(position: Int) {
+        itemPosition.add(position)
     }
 
     private fun checkedOrderId(list: ArrayList<Long>) {
@@ -118,6 +110,27 @@ class CheckInBottomSheetFragment(rootContext: ConstraintLayout, orderId: String)
                 it.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)
             bottomSheetInternal?.layoutParams?.height = 600 // or specify a fixed size
         }
+    }
+
+    @SuppressLint("SetTextI18n")
+    private fun logoutDialog() {
+        val dialog = BottomSheetDialog(requireContext())
+        val dialogView = LayoutScanCheckinAllowedOrdersDialogBinding.inflate(layoutInflater)
+        dialogView.apply {
+            tvTitle.text = getString(R.string.allowed_orders)
+            tvDescription.text =
+                "${checkedOrderIdList.size} ${requireContext().getString(R.string.people_are_allowed_to_enter)}"
+        }
+        dialogView.btnYes.setOnClickListener {
+            context.findNavController().popBackStack()
+            dialog.dismiss()
+        }
+        dialogView.ivClose.setOnClickListener {
+            dialog.dismiss()
+        }
+        dialog.setCanceledOnTouchOutside(true)
+        dialog.setContentView(dialogView.root)
+        dialog.show()
     }
 
 }

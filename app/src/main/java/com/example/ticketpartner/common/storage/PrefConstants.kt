@@ -8,4 +8,5 @@ object PrefConstants {
     const val ACCESS_TOKEN = "access_token"
     const val BEARER = "Bearer"
     const val LOGGED_USER_DETAILS = "logged_user_details"
+    const val SCAN_SELECTED_TICKET_TYPES_LIST = "scan_selected_ticket_types_list"
 }

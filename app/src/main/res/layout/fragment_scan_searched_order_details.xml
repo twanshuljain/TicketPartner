@@ -8,6 +8,98 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".feature_scan_module.feature_qr_scan.presentation.ScanSearchedOrderDetailsFragment">
 
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_15"
+        android:layout_marginStart="@dimen/margin_15"
+        android:layout_marginEnd="@dimen/margin_15"
+        android:layout_marginBottom="@dimen/margin_15"
+        app:strokeWidth="@dimen/size_1"
+        app:strokeColor="@color/border"
+        app:cardElevation="@dimen/size_10"
+        app:cardBackgroundColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/size_20">
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guidelineStart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_begin="15dp"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guidelineEnd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintGuide_end="@dimen/margin_15" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvName"
+                android:layout_width="@dimen/margin_0"
+                android:layout_height="wrap_content"
+                style="@style/boldPureDarkGreen14"
+                android:layout_marginTop="@dimen/margin_15"
+                app:layout_constraintStart_toStartOf="@id/guidelineStart"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/guidelineEnd" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvEmail"
+                android:layout_width="@dimen/margin_0"
+                android:layout_height="wrap_content"
+                style="@style/boldScanLightGreyText14"
+                android:layout_marginTop="@dimen/margin_8"
+                app:layout_constraintStart_toStartOf="@id/guidelineStart"
+                app:layout_constraintTop_toBottomOf="@id/tvName"
+                app:layout_constraintEnd_toEndOf="@id/guidelineEnd" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvOrderId"
+                android:layout_width="@dimen/margin_0"
+                android:layout_height="wrap_content"
+                style="@style/regularParaText12"
+                android:layout_marginTop="@dimen/margin_8"
+                app:layout_constraintStart_toStartOf="@id/guidelineStart"
+                app:layout_constraintTop_toBottomOf="@id/tvEmail"
+                app:layout_constraintEnd_toEndOf="@id/guidelineEnd" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvPaymentMethod"
+                android:layout_width="@dimen/margin_0"
+                android:layout_height="wrap_content"
+                style="@style/regularParaText12"
+                android:layout_marginTop="@dimen/margin_8"
+                app:layout_constraintStart_toStartOf="@id/guidelineStart"
+                app:layout_constraintTop_toBottomOf="@id/tvOrderId"
+                app:layout_constraintEnd_toEndOf="@id/guidelineEnd" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnCheckIn"
+                android:layout_width="@dimen/margin_0"
+                android:layout_height="@dimen/size_32"
+                style="@style/mediumWhiteText14"
+                android:text="@string/check_in"
+                android:layout_marginTop="@dimen/size_20"
+                android:background="@drawable/btn_design_dark_primary"
+                app:layout_constraintStart_toStartOf="@id/guidelineStart"
+                app:layout_constraintTop_toBottomOf="@id/tvPaymentMethod"
+                app:layout_constraintEnd_toEndOf="@id/guidelineEnd" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvSearchOrderDetails"
         android:layout_width="match_parent"
@@ -18,6 +110,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginTop="@dimen/margin_15"
         android:orientation="vertical"
+        android:visibility="gone"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         tools:listitem="@layout/item_searched_order_details_list"/>
 

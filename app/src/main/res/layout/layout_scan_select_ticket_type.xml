@@ -14,38 +14,50 @@
         android:layout_width="@dimen/margin_0"
         android:layout_height="wrap_content"
         android:paddingStart="@dimen/margin_15"
-        android:text="KTPO, Whitefield, Bengaluru"
         android:textAlignment="textStart"
+        android:singleLine="true"
+        android:maxLines="1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/ivChecked"
+        app:layout_constraintEnd_toStartOf="@id/rlCheckUncheck"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/ivChecked"
+    <RelativeLayout
+        android:id="@+id/rlCheckUncheck"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:scaleType="fitXY"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         android:paddingStart="@dimen/margin_5"
-        android:paddingEnd="@dimen/margin_10"
-        android:visibility="gone"
-        android:src="@drawable/ic_checked_checkbox"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        android:paddingEnd="@dimen/margin_10">
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/ivUnChecked"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:scaleType="fitXY"
-        android:layout_marginEnd="@dimen/margin_15"
-        android:layout_marginBottom="@dimen/margin_5"
-        android:visibility="visible"
-        android:src="@drawable/temp_img_unselected"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivChecked"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleType="fitXY"
+            android:visibility="gone"
+            android:layout_marginTop="@dimen/margin_2"
+            android:layout_marginStart="@dimen/margin_5"
+            android:src="@drawable/ic_checked_checkbox"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
 
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivUnChecked"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleType="fitXY"
+            android:visibility="visible"
+            android:layout_marginTop="@dimen/margin_2"
+            android:layout_marginStart="@dimen/margin_5"
+            android:src="@drawable/temp_img_unselected"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+    </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
