@@ -27,6 +27,7 @@ android {
             isDebuggable = true
             isMinifyEnabled = false
             buildConfigField("String", "API_URL", "\"https://dev.api.myticketpartner.com/\"")
+            buildConfigField("String", "AWS_IMAGE_BASE_URL", "\"https://whitelabel-staging-app.s3.ap-south-1.amazonaws.com/\"")
             buildConfigField("String", "GOOGLE_MAPS_API_KEY", "\"AIzaSyC73yaRGGiQ-W1qpni-3WlKJJ3A1vWtmUs\"")
             proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
         }
@@ -100,12 +101,6 @@ dependencies {
 
     //circular image view
     implementation ("de.hdodenhof:circleimageview:3.1.0")
-
-    implementation ("androidx.camera:camera-core:1.3.2")
-    implementation ("androidx.camera:camera-lifecycle:1.3.2")
-    implementation ("androidx.camera:camera-view:1.3.2")
-    implementation ("androidx.camera:camera-extensions:1.3.2")
-
 
     implementation ("androidx.camera:camera-core:1.3.2")
     implementation ("androidx.camera:camera-lifecycle:1.3.2")
