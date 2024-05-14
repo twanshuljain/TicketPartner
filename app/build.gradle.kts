@@ -6,7 +6,6 @@ plugins {
     id("com.google.dagger.hilt.android")
     id("kotlin-parcelize")
     id("androidx.navigation.safeargs.kotlin")
-
 }
 
 android {
@@ -112,7 +111,6 @@ dependencies {
 
     //for Graph,Pie-chart and Bar chart.
     //implementation ("com.github.PhilJay:MPAndroidChart:v3.1.0")
-
 }
 
 kapt {
