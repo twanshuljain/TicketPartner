@@ -1,5 +1,8 @@
 package com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
 data class SearchApiScanResponse(
     val `data`: List<MData?>?,
     val error: Any?,
@@ -7,9 +10,11 @@ data class SearchApiScanResponse(
     val status_code: Int?
 )
 
+@Parcelize
 data class MData(
     val email: String?,
     val name: String?,
     val order_id: String?,
-    val payment_type: String?
-)
+    val payment_type: String?,
+    val is_checked_in: Boolean? = false
+) : Parcelable

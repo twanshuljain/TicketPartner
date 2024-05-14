@@ -15,6 +15,7 @@ const val UNDERSCORE_CHAR = "_"
 const val COMMA = ","
 const val VERTICAL_POLE = " | "
 const val VERTICAL_DOTS = " : "
+const val COLUMN = ": "
 const val DELAY_TWO_SEC = 2000L
 
 /*
@@ -49,6 +50,7 @@ const val ORGANIZATION_ID = "organization_id"
 const val SELECT_SCAN_TICKET_ARRAY = "scan_selected_ticket_type_name"
 const val SCAN_MODULE_EVENT_DETAILS = "scan_module_event_details"
 const val SELECTED_TICKET_NAME = "selected_ticket_name"
+const val SCAN_SEARCHED_DATA = "scan_searched_Data"
 
 
 //Database keys

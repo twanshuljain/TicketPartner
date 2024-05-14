@@ -2,6 +2,7 @@ package com.example.ticketpartner.feature_scan_module
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,17 +13,16 @@ import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
 import com.example.ticketpartner.R
 import com.example.ticketpartner.common.HYPHEN_CHAR
 import com.example.ticketpartner.common.SnackBarUtil
 import com.example.ticketpartner.common.VERTICAL_POLE
+import com.example.ticketpartner.common.ZERO
 import com.example.ticketpartner.common.storage.MyPreferences
+import com.example.ticketpartner.common.storage.PrefConstants
 import com.example.ticketpartner.databinding.FragmentScanQRLandingBinding
 import com.example.ticketpartner.databinding.LayoutEndScanBottomDialogBinding
-import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.DataItem
-import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.Event
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.EventDates
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.EventDetailsScanUIState
 import com.example.ticketpartner.feature_scan_module.feature_qr_scan.presentation.QrScanViewModel
@@ -38,8 +38,6 @@ class ScanQRLandingFragment : Fragment() {
     private val viewModel: QrScanViewModel by activityViewModels()
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var navController: NavController
-    private var eventDetailsResponse = ArrayList<DataItem>()
-    private var eventData = ArrayList<Event?>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -58,6 +56,7 @@ class ScanQRLandingFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         initBottomNavigation()
         initView()
         makeEventDetailsAPICall()
@@ -84,21 +83,30 @@ class ScanQRLandingFragment : Fragment() {
         binding.scanBottomNav.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.scanBottomQRScanFragment -> {
-                    // Apply the condition only for the Home tab
-                    if (viewModel.listSize != 0) {
+                    // Apply the condition only for the QR Scan tab
+                    val selectedTicketTypeListSize =
+                        MyPreferences.getArrayList(PrefConstants.SCAN_SELECTED_TICKET_TYPES_LIST)
+                    Log.e("TAG", "initBottomNavigation: $selectedTicketTypeListSize")
+                    if (selectedTicketTypeListSize.size > ZERO) {
                         navController.navigate(R.id.scanBottomQRScanFragment)
                         true
                     } else {
-                        SnackBarUtil.showErrorSnackBar(binding.root,"Please select ticket types")
+                        SnackBarUtil.showErrorSnackBar(
+                            binding.root,
+                            getString(R.string.pleases_select_ticket_types)
+                        )
                         false
                     }
                 }
+
                 else -> {
                     navController.navigate(item.itemId)
                     true
                 }
             }
         }
+
+        binding.scanBottomNav.setOnNavigationItemReselectedListener { }
 
         binding.includeTitle.ivBack.setOnClickListener {
             handleOnBackPressedButton()
@@ -115,17 +123,22 @@ class ScanQRLandingFragment : Fragment() {
 
 
     private fun initView() {
-        viewModel.selectedSearchedItemEmailAdd.observe(viewLifecycleOwner){
+        viewModel.selectedSearchedItemEmailAdd.observe(viewLifecycleOwner) {
             binding.includeTitle.subTitle.visibility = View.GONE
             binding.includeTitle.title.text = it.toString()
         }
 
-      viewModel.onContinueClick.observe(viewLifecycleOwner){
-          if (viewModel.listSize != 0) {
-              binding.scanBottomNav.selectedItemId = it
-          } else {
-              SnackBarUtil.showErrorSnackBar(binding.root,"Please select ticket types")
-          }
+        val selectedTicketTypeListSize =
+            MyPreferences.getArrayList(PrefConstants.SCAN_SELECTED_TICKET_TYPES_LIST)
+        viewModel.onContinueClick.observe(viewLifecycleOwner) {
+            if (selectedTicketTypeListSize.size > ZERO) {
+                binding.scanBottomNav.selectedItemId = it
+            } else {
+                SnackBarUtil.showErrorSnackBar(
+                    binding.root,
+                    getString(R.string.pleases_select_ticket_types)
+                )
+            }
         }
 
         binding.includeTitle.ivLogOut.setOnClickListener {
@@ -143,7 +156,6 @@ class ScanQRLandingFragment : Fragment() {
 
                 is EventDetailsScanUIState.OnSuccess -> {
                     DialogProgressUtil.dismiss()
-                    eventData.add(it.onSuccess.data?.event)
                     showDateTimeOnAppBar(it.onSuccess.data?.event_dates)
 
                 }
@@ -198,7 +210,6 @@ class ScanQRLandingFragment : Fragment() {
             BackPressHandler.onBackPressed(requireActivity())
         } else {
             navController.popBackStack()
-            //binding.scanBottomNav.selectedItemId = R.id.scanBottomNavHomeFragment
         }
     }
 }

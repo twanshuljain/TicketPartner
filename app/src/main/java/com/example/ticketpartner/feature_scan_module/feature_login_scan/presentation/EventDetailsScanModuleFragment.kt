@@ -7,8 +7,6 @@ import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.navigation.NavOptions
-import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import com.example.ticketpartner.R
 import com.example.ticketpartner.common.COMMA
@@ -78,6 +76,7 @@ class EventDetailsScanModuleFragment : Fragment() {
 
     private fun showDetailsData(data: DataItem?) {
         binding.tvEventTitle.text = data?.event?.name
+       // binding.ivBanner.setImageBitmap(CameraUtils.uriToBitmap(requireContext(),data?.event.event_cover_image))
         val startDate = getFormattedStartDateForEvent(data?.event_dates?.event_start_date)
         val startEndTime =
             getFormattedTimeForEvent(data?.event_dates?.event_start_time) + HYPHEN_CHAR + getFormattedTimeForEvent(

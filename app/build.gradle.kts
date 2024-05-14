@@ -6,7 +6,6 @@ plugins {
     id("com.google.dagger.hilt.android")
     id("kotlin-parcelize")
     id("androidx.navigation.safeargs.kotlin")
-
 }
 
 android {
@@ -27,6 +26,7 @@ android {
             isDebuggable = true
             isMinifyEnabled = false
             buildConfigField("String", "API_URL", "\"https://dev.api.myticketpartner.com/\"")
+            buildConfigField("String", "AWS_IMAGE_BASE_URL", "\"https://whitelabel-staging-app.s3.ap-south-1.amazonaws.com/\"")
             buildConfigField("String", "GOOGLE_MAPS_API_KEY", "\"AIzaSyC73yaRGGiQ-W1qpni-3WlKJJ3A1vWtmUs\"")
             proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
         }
@@ -106,18 +106,11 @@ dependencies {
     implementation ("androidx.camera:camera-view:1.3.2")
     implementation ("androidx.camera:camera-extensions:1.3.2")
 
-
-    implementation ("androidx.camera:camera-core:1.3.2")
-    implementation ("androidx.camera:camera-lifecycle:1.3.2")
-    implementation ("androidx.camera:camera-view:1.3.2")
-    implementation ("androidx.camera:camera-extensions:1.3.2")
-
     implementation ("com.google.android.gms:play-services-vision-common:19.1.3")
     implementation ("com.google.android.gms:play-services-vision:20.1.3")
 
     //for Graph,Pie-chart and Bar chart.
     //implementation ("com.github.PhilJay:MPAndroidChart:v3.1.0")
-
 }
 
 kapt {

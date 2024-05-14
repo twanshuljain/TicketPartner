@@ -4,11 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.navigation.fragment.findNavController
 import com.example.ticketpartner.R
 import com.example.ticketpartner.common.SnackBarUtil
 import com.example.ticketpartner.common.ZERO
@@ -17,7 +15,6 @@ import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.mode
 import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.QrScanReportAllUIState
 import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.TicketDataList
 import com.example.ticketpartner.utils.DialogProgressUtil
-import com.example.ticketpartner.utils.NavigateFragmentUtil.navigateWithClearAllBackStack
 
 class QrScanReportFragment : Fragment() {
     private lateinit var binding: FragmentQrScanReportBinding
@@ -40,11 +37,12 @@ class QrScanReportFragment : Fragment() {
 
 
     private fun observeScanReportAllData() {
-        viewModel.getScanReportAllData.observe(viewLifecycleOwner){
-            when(it){
+        viewModel.getScanReportAllData.observe(viewLifecycleOwner) {
+            when (it) {
                 is QrScanReportAllUIState.IsLoading -> {
                     DialogProgressUtil.show(childFragmentManager)
                 }
+
                 is QrScanReportAllUIState.OnSuccess -> {
                     DialogProgressUtil.dismiss()
                     it.onSuccess.data.let {
@@ -53,6 +51,7 @@ class QrScanReportFragment : Fragment() {
 
                     setAdapter(it.onSuccess.data?.ticket_data)
                 }
+
                 is QrScanReportAllUIState.OnFailure -> {
                     DialogProgressUtil.dismiss()
                     SnackBarUtil.showErrorSnackBar(binding.root, it.onFailure)
@@ -70,20 +69,23 @@ class QrScanReportFragment : Fragment() {
             tvTotalValue.text = data?.total_tickets.toString()
 
             tvTotalValue.text = data?.total_tickets.toString()
-            tvTotalValueRejected.text = data?.total_tickets.toString()
-            tvTotalValueAccepted.text = data?.total_tickets.toString()
+            tvOutOfValueRejected.text = data?.total_rejected.toString()
+            tvTotalValueRejected.text = "/" + data?.total_tickets.toString()
+            tvTotalValueAccepted.text = "/" + data?.total_tickets.toString()
+            tvOutOfValueAccepted.text = data?.total_accepted.toString()
 
-            progressAccepted.progress = data?.total_accepted ?:0
-            progressRejected.progress = data?.total_rejected ?:0
+
+            progressAccepted.progress = data?.total_accepted ?: 0
+            progressRejected.progress = data?.total_rejected ?: 0
         }
 
-        val acceptedRatio = data?.let { it.total_accepted } ?:0
-        val rejectedRatio = data?.let { it.total_rejected }  ?:0
-        val onlineRatio= data?.let { it.online }  ?:0
-        val physicalRation  = data?.let { it.physical }  ?:0
+        val acceptedRatio = data?.let { it.total_accepted } ?: 0
+        val rejectedRatio = data?.let { it.total_rejected } ?: 0
+        val onlineRatio = data?.let { it.online } ?: 0
+        val physicalRation = data?.let { it.physical } ?: 0
         val totalTickets = data?.let { it.total_tickets }
 
-        data?.let {  }
+        data?.let { }
 
         val progressValues = listOf(
             acceptedRatio to requireContext().getColor(R.color.green_progress_bar),
@@ -92,7 +94,7 @@ class QrScanReportFragment : Fragment() {
             physicalRation to requireContext().getColor(R.color.light_blue_progress_bar)
         )
         data?.total_ticket_ratio?.total?.toInt()
-            ?.let { binding.progress.setProgressValues(progressValues, totalTickets?: ZERO) }
+            ?.let { binding.progress.setProgressValues(progressValues, totalTickets ?: ZERO) }
 
     }
 
@@ -100,17 +102,17 @@ class QrScanReportFragment : Fragment() {
         val subTitle = activity?.findViewById<AppCompatTextView>(R.id.subTitle)
         subTitle?.visibility = View.GONE
 
-            val title = activity?.findViewById<AppCompatTextView>(R.id.title)
-            title?.text = getString(R.string.scanReport)
+        val title = activity?.findViewById<AppCompatTextView>(R.id.title)
+        title?.text = getString(R.string.scanReport)
 
         adapter = ScanReportTicketNameAdapter(emptyList())
         binding.includeTitle.ivBack.visibility = View.GONE
 
-        viewModel.dateTimeEventDetails.observe(viewLifecycleOwner){
+        viewModel.dateTimeEventDetails.observe(viewLifecycleOwner) {
             binding.tvDateTime.text = it
         }
 
-        viewModel.eventName.observe(viewLifecycleOwner){
+        viewModel.eventName.observe(viewLifecycleOwner) {
             binding.tvEventName.text = it
         }
 
@@ -119,6 +121,7 @@ class QrScanReportFragment : Fragment() {
                 progress.visibility = View.VISIBLE
                 progressAccepted.visibility = View.GONE
                 progressRejected.visibility = View.GONE
+                tvOutOfValueAccepted.visibility = View.GONE
 
                 tvTotalTicket.visibility = View.VISIBLE
                 tvTotalValue.visibility = View.VISIBLE
@@ -128,6 +131,7 @@ class QrScanReportFragment : Fragment() {
 
                 tvTotalTicketRejected.visibility = View.GONE
                 tvTotalValueRejected.visibility = View.GONE
+                tvOutOfValueRejected.visibility = View.GONE
 
                 btnAll.background =
                     requireContext().getDrawable(R.drawable.curve_btn_black_back_design)
@@ -154,9 +158,11 @@ class QrScanReportFragment : Fragment() {
 
                 tvTotalTicketAccepted.visibility = View.VISIBLE
                 tvTotalValueAccepted.visibility = View.VISIBLE
+                tvOutOfValueAccepted.visibility = View.VISIBLE
 
                 tvTotalTicketRejected.visibility = View.GONE
                 tvTotalValueRejected.visibility = View.GONE
+                tvOutOfValueRejected.visibility = View.GONE
 
 
                 btnAll.background =
@@ -175,6 +181,7 @@ class QrScanReportFragment : Fragment() {
             binding.apply {
                 progressAccepted.visibility = View.GONE
                 progress.visibility = View.GONE
+                tvOutOfValueAccepted.visibility = View.GONE
                 progressRejected.visibility = View.VISIBLE
 
                 tvTotalTicket.visibility = View.GONE
@@ -185,6 +192,7 @@ class QrScanReportFragment : Fragment() {
 
                 tvTotalTicketRejected.visibility = View.VISIBLE
                 tvTotalValueRejected.visibility = View.VISIBLE
+                tvOutOfValueRejected.visibility = View.VISIBLE
 
                 btnAll.background =
                     requireContext().getDrawable(R.drawable.orange_border_button_design)

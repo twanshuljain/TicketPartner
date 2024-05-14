@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/clRootLayout"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/purple_border"
+    android:background="@color/purple_bg"
     tools:context=".feature_scan_module.feature_qr_scan.presentation.TicketScannedStatusFragment">
 
     <androidx.core.widget.NestedScrollView
@@ -142,6 +143,8 @@
                android:layout_width="wrap_content"
                android:layout_height="match_parent"
               android:layout_centerVertical="true"
+              android:layout_marginStart="@dimen/margin_5"
+              android:layout_marginEnd="@dimen/margin_5"
                android:background="@drawable/dotted_line_ticket_status_light"
                android:layout_toRightOf="@id/leftHalfCircle"
                android:layout_toLeftOf="@id/rightHalfCircle"/>

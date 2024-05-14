@@ -13,7 +13,7 @@ import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.mode
 class ScanSearchOrderAdapter(
    private val context: Context,
     private val searchResponse: List<MData?>,
-    private val isItemClicked: (String) -> Unit
+    private val isItemClicked: (MData) -> Unit
 ) :
     RecyclerView.Adapter<ScanSearchOrderAdapter.ViewHolder>() {
 
@@ -38,7 +38,7 @@ class ScanSearchOrderAdapter(
         view.tvOrderId.text = context.getString(R.string.order_id)+": "+searchResponse[position]?.order_id.toString()
         view.tvPaymentMethod.text = context.getString(R.string.payment_method)+": "+searchResponse[position]?.payment_type.toString()
         view.btnViewDetails.setOnClickListener {
-            isItemClicked(searchResponse[position]?.email.toString())
+            searchResponse[position]?.let { it1 -> isItemClicked(it1) }
         }
     }
 

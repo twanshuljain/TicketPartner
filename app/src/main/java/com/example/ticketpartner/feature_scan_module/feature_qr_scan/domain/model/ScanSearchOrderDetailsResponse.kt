@@ -8,7 +8,7 @@ data class ScanSearchOrderDetailsResponse(
 )
 
 data class Item(
-    val is_checked_in: Boolean?,
+    var is_checked_in: Boolean?,
     val order_id: Int?,
     val order_number: String?
 )

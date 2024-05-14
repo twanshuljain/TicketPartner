@@ -47,6 +47,10 @@
         android:id="@+id/scanSearchedOrderDetailsFragment"
         android:name="com.example.ticketpartner.feature_scan_module.feature_qr_scan.presentation.ScanSearchedOrderDetailsFragment"
         android:label="fragment_scan_searched_order_details"
-        tools:layout="@layout/fragment_scan_searched_order_details" />
+        tools:layout="@layout/fragment_scan_searched_order_details">
+    <argument
+        android:name="searchedItem"
+        app:argType="com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.MData"/>
+    </fragment>
 
 </navigation>

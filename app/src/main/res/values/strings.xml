@@ -178,6 +178,10 @@
     <string name="order_id">Order ID</string>
     <string name="payment_method">Payment method</string>
     <string name="scanReport">Scan Report</string>
-
+    <string name="checked">Checked</string>
+    <string name="okay">Okay</string>
+    <string name="allowed_orders">Allowed Orders</string>
+    <string name="people_are_allowed_to_enter">People are allowed to enter this event.</string>
+    <string name="pleases_select_ticket_types">Please select ticket types</string>
 
 </resources>

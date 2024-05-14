@@ -8,7 +8,7 @@
         be false for the ring to appear with color code "#DDD"-->
         <shape
             android:shape="ring"
-            android:thicknessRatio="15"
+            android:thicknessRatio="30"
             android:useLevel="false">
             <solid android:color="@color/grey_disable" />
         </shape>
@@ -24,7 +24,7 @@
             endColor of the ring.-->
             <shape
                 android:shape="ring"
-                android:thicknessRatio="15"
+                android:thicknessRatio="30"
                 android:useLevel="true">
                 <gradient
                     android:startColor="@color/red_light"

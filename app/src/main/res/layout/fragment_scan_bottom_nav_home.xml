@@ -33,6 +33,7 @@
                 android:elevation="@dimen/margin_8"
                 android:background="@drawable/select_ticket_type_layout_design"
                 android:layout_marginTop="@dimen/margin_18"
+                android:visibility="gone"
                 android:paddingTop="@dimen/margin_2"
                 app:layout_constraintTop_toTopOf="parent">
 

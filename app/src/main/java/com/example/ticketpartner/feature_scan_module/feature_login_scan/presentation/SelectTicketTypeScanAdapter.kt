@@ -35,11 +35,13 @@ class SelectTicketTypeScanAdapter(
         val isSelected = eventTickets?.get(position)?.isSelected ?: false
 
         if (isSelected) {
+            selectedNameList.add(eventTickets?.get(position)?.ticket_name.toString())
             view.ivChecked.visibility = View.VISIBLE
             view.ivUnChecked.visibility = View.GONE
             view.itemLayout.background =
                 context.getDrawable(R.drawable.select_ticket_type_item_purple_design)
         } else {
+            selectedNameList.remove(eventTickets?.get(position)?.ticket_name.toString())
             view.ivChecked.visibility = View.GONE
             view.ivUnChecked.visibility = View.VISIBLE
             view.itemLayout.background =
@@ -68,20 +70,14 @@ class SelectTicketTypeScanAdapter(
             }
             selectedListSize(selectedNameList.size)
         }
-
     }
 
     override fun getItemCount(): Int {
         return eventTickets?.size ?: ZERO
     }
 
-
     class ViewHolder(val binding: LayoutScanSelectTicketTypeBinding) :
         RecyclerView.ViewHolder(binding.root)
-
-    fun  isSelectedNameSize(): Int{
-        return selectedNameList.size
-    }
 
     fun selectAll() {
         try {

@@ -20,6 +20,8 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.ticketpartner.R
 import com.example.ticketpartner.common.VERTICAL_DOTS
+import com.example.ticketpartner.common.storage.MyPreferences
+import com.example.ticketpartner.common.storage.PrefConstants.SCAN_SELECTED_TICKET_TYPES_LIST
 import com.example.ticketpartner.databinding.FragmentScanBottomNavQRScanBinding
 import com.example.ticketpartner.databinding.LayoutEndScanBottomDialogBinding
 import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.QrScanUIState
@@ -174,10 +176,9 @@ class ScanBottomQRScanFragment : Fragment() {
                 requireActivity().runOnUiThread {
                     if (scannedValue.isNotEmpty()) {
                         cameraSource.stop()
-                        viewModel.selectedTicketTypeArrayList.observe(viewLifecycleOwner) {
-                            viewModel.qrScanCode(scannedValue, it)
-                            observeScanTicketResponse()
-                        }
+                        val savedSelectedList = MyPreferences.getArrayList(SCAN_SELECTED_TICKET_TYPES_LIST)
+                        viewModel.qrScanCode(scannedValue, savedSelectedList)
+                        observeScanTicketResponse()
                     }
                 }
             }
