@@ -5,8 +5,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.ticketpartner.common.LogUtil
+import com.example.ticketpartner.feature_local_storage.domain.usecase.GetQrCodeListFromLocalDBUseCase
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.EventDetailsScanUIState
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.QrScanSearchItemUIState
+import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.QrCodeListFromLocalDBUIState
 import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.QrScanCheckedInUIState
 import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.QrScanOrderDetailsUIState
 import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.QrScanReportAllUIState
@@ -34,6 +36,7 @@ class QrScanViewModel @Inject constructor(
     private val getScanOrderDetailsUseCase: GetScanOrderDetailsUseCase,
     private val getScanCheckedInUseCase: GetScanCheckedInUseCase,
     private val getQrScanReportAllUseCase: GetQrScanReportAllUseCase,
+    private val getQrCodeListFromLocalDBUseCase: GetQrCodeListFromLocalDBUseCase,
     private val logUtil: LogUtil
 ) : ViewModel() {
 
@@ -66,6 +69,10 @@ class QrScanViewModel @Inject constructor(
 
     private val _getScanReportAllData: MutableLiveData<QrScanReportAllUIState> = MutableLiveData()
     val getScanReportAllData: LiveData<QrScanReportAllUIState> = _getScanReportAllData
+
+    private val _getQrCodeListFromLocalDB: MutableLiveData<QrCodeListFromLocalDBUIState> =
+        MutableLiveData()
+    val getQrCodeListFromLocalDB: LiveData<QrCodeListFromLocalDBUIState> = _getQrCodeListFromLocalDB
 
     fun putSelectedTicketName(selectedTicketName: ArrayList<String>) {
         _selectedTicketName.value = selectedTicketName
@@ -186,6 +193,7 @@ class QrScanViewModel @Inject constructor(
                 _getScanCheckedInData.value =
                     QrScanCheckedInUIState.OnFailure(error.getErrors().message.toString())
             }.collect {
+                logUtil.log(TAG, "onResponse: ${it.message}")
                 _getScanCheckedInData.value = QrScanCheckedInUIState.OnSuccess(it)
             }
         }
@@ -200,10 +208,24 @@ class QrScanViewModel @Inject constructor(
                 _getScanReportAllData.value =
                     QrScanReportAllUIState.OnFailure(error.getErrors().message.toString())
             }.collect {
+                logUtil.log(TAG, "onResponse: ${it.message}")
                 _getScanReportAllData.value = QrScanReportAllUIState.OnSuccess(it)
             }
         }
+    }
 
+    fun getQrCodeListFromLocalDB() {
+        _getQrCodeListFromLocalDB.value = QrCodeListFromLocalDBUIState.IsLoading(true)
+        viewModelScope.launch {
+            getQrCodeListFromLocalDBUseCase.invoke().catch {
+                logUtil.log(TAG, "onError${it.message.toString()}")
+                _getQrCodeListFromLocalDB.value =
+                    QrCodeListFromLocalDBUIState.OnFailure(it.message.toString())
+            }.collect {
+                logUtil.log(TAG, "onResponse:")
+                _getQrCodeListFromLocalDB.value = QrCodeListFromLocalDBUIState.OnSuccess(it)
+            }
+        }
     }
 
     companion object {

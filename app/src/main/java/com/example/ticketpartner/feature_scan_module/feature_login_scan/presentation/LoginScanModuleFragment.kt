@@ -1,10 +1,10 @@
 package com.example.ticketpartner.feature_scan_module.feature_login_scan.presentation
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
@@ -17,6 +17,7 @@ import com.example.ticketpartner.common.ZERO
 import com.example.ticketpartner.common.storage.MyPreferences
 import com.example.ticketpartner.common.storage.PrefConstants
 import com.example.ticketpartner.databinding.FragmentLoginScanModuleBinding
+import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.GetQrCodeForOffLineScanUIState
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.LoginWithPinResponse
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.LoginWithPinUIState
 import com.example.ticketpartner.utils.BackPressHandler
@@ -53,14 +54,14 @@ class LoginScanModuleFragment : Fragment() {
         requireActivity().onBackPressedDispatcher.addCallback(requireActivity(), callback)
 
         /** restrict user to enter space */
-        Utility.disableSpace(binding.etName)
+        //Utility.disableSpace(binding.etName)
         Utility.disableSpace(binding.etPin)
 
         /** allow char only */
-        Utility.allowCharactersOnly(binding.etName)
+        //  Utility.allowCharactersOnly(binding.etName)
 
-       /* etName = "d"
-        etPin = "108469"*/
+        /* etName = "d"
+         etPin = "108469"*/
 
         binding.etName.doAfterTextChanged {
             etName = it.toString().trim()
@@ -99,15 +100,43 @@ class LoginScanModuleFragment : Fragment() {
                     DialogProgressUtil.dismiss()
                     SnackBarUtil.showSuccessSnackBar(binding.root, it.onSuccess.message.toString())
                     updateUserDetailsToSession(it.onSuccess)
+                    // requireActivity().deleteDatabase(TP_LOCAL_DATABASE)
+                    viewModel.getQrCodeListForOfflineScan()
+                    observeQrCodeListResponseForOfflineScan()
+                }
+
+                is LoginWithPinUIState.OnFailure -> {
+                    DialogProgressUtil.dismiss()
+                    SnackBarUtil.showErrorSnackBar(binding.root, it.onFailure)
+                }
+            }
+        }
+    }
+
+    private fun observeQrCodeListResponseForOfflineScan() {
+        viewModel.getQrCodeListForOfflineScan.observe(viewLifecycleOwner) {
+            when (it) {
+                is GetQrCodeForOffLineScanUIState.IsLoading -> {
+                    Log.e("TAG", "observeQrCodeListResponseForOfflineScan: on-loading  ")
+                }
+
+                is GetQrCodeForOffLineScanUIState.OnSuccess -> {
+                    Log.e("TAG", "observeQrCodeListResponseForOfflineScan: onSuccess  ")
+                    for (i in ZERO until it.onSuccess.data?.size!!) {
+                        it.onSuccess.data[i]?.let { it1 ->
+                            viewModel.insetQrCodeListForOfflineScan(
+                                it1
+                            )
+                        }
+                    }
                     findNavController().navigateWithClearNavGraph(
                         R.id.main_nav_graph,
                         R.id.eventDetailsScanModuleFragment
                     )
                 }
 
-                is LoginWithPinUIState.OnFailure -> {
-                    DialogProgressUtil.dismiss()
-                    SnackBarUtil.showErrorSnackBar(binding.root, it.onFailure)
+                is GetQrCodeForOffLineScanUIState.OnFailure -> {
+                    Log.e("TAG", "observeQrCodeListResponseForOfflineScan: Errorrrr  ")
                 }
             }
         }

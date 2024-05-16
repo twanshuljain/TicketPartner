@@ -1,6 +1,7 @@
 package com.example.ticketpartner.feature_scan_module.feature_qr_scan.presentation
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,8 +17,10 @@ import com.example.ticketpartner.common.storage.MyPreferences
 import com.example.ticketpartner.common.storage.PrefConstants.SCAN_SELECTED_TICKET_TYPES_LIST
 import com.example.ticketpartner.databinding.FragmentScanBottomNavHomeBinding
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.DataItem
+import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.DataItems
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.EventDetailsScanUIState
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.presentation.SelectTicketTypeScanAdapter
+import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.QrCodeListFromLocalDBUIState
 import com.example.ticketpartner.utils.DialogProgressUtil
 import com.example.ticketpartner.utils.getFormattedStartDateForEvent
 import com.example.ticketpartner.utils.getFormattedTimeForEvent
@@ -26,6 +29,8 @@ class ScanBottomNavHomeFragment : Fragment() {
     private lateinit var binding: FragmentScanBottomNavHomeBinding
     private val viewModel: QrScanViewModel by activityViewModels()
     private lateinit var adapter: SelectTicketTypeScanAdapter
+
+    private var getQrCodeListLocalDB = ArrayList<DataItems>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,6 +42,7 @@ class ScanBottomNavHomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        getQrCodeListLocalDB.clear()
         initView()
         makeEventDetailsAPICall()
         viewModel.selectedTicketTypeArrayList.value = null
@@ -133,6 +139,29 @@ class ScanBottomNavHomeFragment : Fragment() {
 
         binding.btnContinue.setOnClickListener {
             viewModel.onContinueClick.value = R.id.scanBottomQRScanFragment
+        }
+        viewModel.getQrCodeListFromLocalDB()
+        observeQrCodeListFromLocalDB()
+    }
+
+    private fun observeQrCodeListFromLocalDB() {
+        viewModel.getQrCodeListFromLocalDB.observe(viewLifecycleOwner){
+            when(it){
+                is QrCodeListFromLocalDBUIState.IsLoading -> {
+                    Log.e("TAG", "observeQrCodeListFromLocalDB: loading ", )
+                }
+                is QrCodeListFromLocalDBUIState.OnSuccess -> {
+                  //  getQrCodeListLocalDB.addAll(it.onSuccess)
+                   for (i in ZERO until it.onSuccess.size){
+                        getQrCodeListLocalDB.add(it.onSuccess[i])
+                    }
+                    Log.e("TAG", "observeQrCodeListFromLocalDB: Success! ${getQrCodeListLocalDB.size} ", )
+                }
+                is QrCodeListFromLocalDBUIState.OnFailure -> {
+                    Log.e("TAG", "observeQrCodeListFromLocalDB: Error.. ", )
+
+                }
+            }
         }
     }
 

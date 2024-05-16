@@ -33,6 +33,7 @@ import com.example.ticketpartner.feature_login.domain.model.VerifyEmailForgotPas
 import com.example.ticketpartner.feature_login.domain.model.VerifyMobileOtpRequest
 import com.example.ticketpartner.feature_login.domain.model.VerifyMobileOtpResponse
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.EventDetailsScanResponse
+import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.GetQrCodeListResponse
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.LoginWithPinRequest
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.LoginWithPinResponse
 import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.QrScanReportAllResponse
@@ -146,6 +147,9 @@ interface RestApiService {
 
     @GET(getQrScanReportAll)
     suspend fun getQrScanReportAllData(@Query ("report_type") type: String): QrScanReportAllResponse
+
+    @GET(getQrCodeListForOfflineScan)
+    suspend fun getQrListForOfflineScan(): GetQrCodeListResponse
 
 
 }
