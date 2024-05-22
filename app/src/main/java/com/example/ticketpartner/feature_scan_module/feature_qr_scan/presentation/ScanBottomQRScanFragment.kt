@@ -20,10 +20,13 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.ticketpartner.R
 import com.example.ticketpartner.common.VERTICAL_DOTS
+import com.example.ticketpartner.common.ZERO
 import com.example.ticketpartner.common.storage.MyPreferences
 import com.example.ticketpartner.common.storage.PrefConstants.SCAN_SELECTED_TICKET_TYPES_LIST
 import com.example.ticketpartner.databinding.FragmentScanBottomNavQRScanBinding
 import com.example.ticketpartner.databinding.LayoutEndScanBottomDialogBinding
+import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.DataItems
+import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.QrCodeListFromLocalDBUIState
 import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.QrScanUIState
 import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.QrScannedTicketUIState
 import com.example.ticketpartner.utils.DialogProgressUtil
@@ -47,6 +50,7 @@ class ScanBottomQRScanFragment : Fragment() {
     private var surfaceHeight: Int = 340
     private var currentZoom = 0f
     private lateinit var imageCapture: ImageCapture
+    private var getQrCodeListLocalDB = ArrayList<DataItems>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -65,6 +69,9 @@ class ScanBottomQRScanFragment : Fragment() {
     }
 
     private fun initView() {
+        getQrCodeListLocalDB.clear()
+        observeQrCodeListFromLocalDB()
+
         viewModel.eventName.observe(viewLifecycleOwner){
             val title = activity?.findViewById<AppCompatTextView>(R.id.title)
             title?.text = it
@@ -117,6 +124,29 @@ class ScanBottomQRScanFragment : Fragment() {
             ) != PackageManager.PERMISSION_GRANTED
         ) askForCameraPermission() else setupControls()
 
+    }
+
+    private fun observeQrCodeListFromLocalDB() {
+        viewModel.getQrCodeListFromLocalDB.observe(viewLifecycleOwner){
+            when(it){
+                is QrCodeListFromLocalDBUIState.IsLoading -> {
+                    Log.e("TAG", "observeQrCodeListFromLocalDB: loading ", )
+                }
+                is QrCodeListFromLocalDBUIState.OnSuccess -> {
+                    //  getQrCodeListLocalDB.addAll(it.onSuccess)
+                    for (i in ZERO until it.onSuccess.size){
+                        getQrCodeListLocalDB.add(it.onSuccess[i])
+                    }
+                }
+                is QrCodeListFromLocalDBUIState.OnFailure -> {
+                    Log.e("TAG", "observeQrCodeListFromLocalDB: Error.. ", )
+                }
+            }
+        }
+
+        for (i in 0 until getQrCodeListLocalDB.size){
+            Log.e("TAG", "observeQrCodeListFromLocalDB: Success! ${getQrCodeListLocalDB[i]} ", )
+        }
     }
 
 

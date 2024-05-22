@@ -15,29 +15,29 @@ data class GetQrCodeListResponse(
 
 @Entity(tableName = GET_QR_CODE_LIST_FOR_OFFLINE_SCAN)
 data class DataItems(
-    @ColumnInfo(name = "event_id")
+    @ColumnInfo(name = "eventId")
     val event_id: Int?,
-    @ColumnInfo(name = "is_scanned")
+    @ColumnInfo(name = "isScanned")
     val is_scanned: Boolean?,
-    @ColumnInfo(name = "is_server_sync")
+    @ColumnInfo(name = "isServerSync")
     val is_server_sync: Boolean?,
-    @ColumnInfo(name = "name_on_tix")
+    @ColumnInfo(name = "nameOnTix")
     val name_on_tix: String?,
-    @ColumnInfo(name = "offline_id")
+    @ColumnInfo(name = "offlineId")
     val offline_id: String?,
-    @ColumnInfo(name = "order_number")
+    @ColumnInfo(name = "orderNumber")
     val order_number: String?,
-    @ColumnInfo(name = "order_tickets_id")
+    @ColumnInfo(name = "orderTicketsId")
     val order_tickets_id: Int?,
-    @ColumnInfo(name = "scan_datetime")
+    @ColumnInfo(name = "scanDatetime")
     val scan_datetime: String?,
-    @ColumnInfo(name = "ticket_name")
+    @ColumnInfo(name = "ticketName")
     val ticket_name: String?,
-    @ColumnInfo(name = "ticket_platform_type")
+    @ColumnInfo(name = "ticketPlatformType")
     val ticket_platform_type: String?,
-    @ColumnInfo(name = "ticket_type")
+    @ColumnInfo(name = "ticketType")
     val ticket_type: String?,
     @PrimaryKey
-    @ColumnInfo(name = "unique_qrcode_uuid")
+    @ColumnInfo(name = "uniqueQrCodeUuid")
     val unique_qrcode_uuid: String
 )

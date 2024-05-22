@@ -56,7 +56,7 @@ const val SCAN_SEARCHED_DATA = "scan_searched_Data"
 //Local Database keys
 const val TP_LOCAL_DATABASE = "tp_local_database"
 const val DATABASE_VERSION = 1
-const val GET_QR_CODE_LIST_FOR_OFFLINE_SCAN = "get_qr_code_list_offline_scan"
+const val GET_QR_CODE_LIST_FOR_OFFLINE_SCAN = "getQrCodeListOfflineScan"
 
 //Regular expressions
 val UPPER_CASE_REGEX = Regex("(?=.*[A-Z])")

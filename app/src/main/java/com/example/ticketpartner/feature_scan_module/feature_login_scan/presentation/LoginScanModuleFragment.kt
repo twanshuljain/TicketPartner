@@ -1,7 +1,6 @@
 package com.example.ticketpartner.feature_scan_module.feature_login_scan.presentation
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -100,7 +99,7 @@ class LoginScanModuleFragment : Fragment() {
                     DialogProgressUtil.dismiss()
                     SnackBarUtil.showSuccessSnackBar(binding.root, it.onSuccess.message.toString())
                     updateUserDetailsToSession(it.onSuccess)
-                    // requireActivity().deleteDatabase(TP_LOCAL_DATABASE)
+                    //requireActivity().deleteDatabase(TP_LOCAL_DATABASE)
                     viewModel.getQrCodeListForOfflineScan()
                     observeQrCodeListResponseForOfflineScan()
                 }
@@ -116,12 +115,9 @@ class LoginScanModuleFragment : Fragment() {
     private fun observeQrCodeListResponseForOfflineScan() {
         viewModel.getQrCodeListForOfflineScan.observe(viewLifecycleOwner) {
             when (it) {
-                is GetQrCodeForOffLineScanUIState.IsLoading -> {
-                    Log.e("TAG", "observeQrCodeListResponseForOfflineScan: on-loading  ")
-                }
+                is GetQrCodeForOffLineScanUIState.IsLoading -> {}
 
                 is GetQrCodeForOffLineScanUIState.OnSuccess -> {
-                    Log.e("TAG", "observeQrCodeListResponseForOfflineScan: onSuccess  ")
                     for (i in ZERO until it.onSuccess.data?.size!!) {
                         it.onSuccess.data[i]?.let { it1 ->
                             viewModel.insetQrCodeListForOfflineScan(
@@ -136,7 +132,6 @@ class LoginScanModuleFragment : Fragment() {
                 }
 
                 is GetQrCodeForOffLineScanUIState.OnFailure -> {
-                    Log.e("TAG", "observeQrCodeListResponseForOfflineScan: Errorrrr  ")
                 }
             }
         }
