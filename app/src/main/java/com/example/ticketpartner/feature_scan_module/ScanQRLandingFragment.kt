@@ -2,7 +2,6 @@ package com.example.ticketpartner.feature_scan_module
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -86,7 +85,6 @@ class ScanQRLandingFragment : Fragment() {
                     // Apply the condition only for the QR Scan tab
                     val selectedTicketTypeListSize =
                         MyPreferences.getArrayList(PrefConstants.SCAN_SELECTED_TICKET_TYPES_LIST)
-                    Log.e("TAG", "initBottomNavigation: $selectedTicketTypeListSize")
                     if (selectedTicketTypeListSize.size > ZERO) {
                         navController.navigate(R.id.scanBottomQRScanFragment)
                         true

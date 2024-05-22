@@ -134,6 +134,7 @@ class ScanBottomNavHomeFragment : Fragment() {
         binding.btnContinue.setOnClickListener {
             viewModel.onContinueClick.value = R.id.scanBottomQRScanFragment
         }
+        viewModel.getQrCodeListFromLocalDB()
     }
 
     private fun setTicketTypesAdapter(data: DataItem?) {

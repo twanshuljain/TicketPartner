@@ -53,8 +53,10 @@ const val SELECTED_TICKET_NAME = "selected_ticket_name"
 const val SCAN_SEARCHED_DATA = "scan_searched_Data"
 
 
-//Database keys
+//Local Database keys
+const val TP_LOCAL_DATABASE = "tp_local_database"
 const val DATABASE_VERSION = 1
+const val GET_QR_CODE_LIST_FOR_OFFLINE_SCAN = "getQrCodeListOfflineScan"
 
 //Regular expressions
 val UPPER_CASE_REGEX = Regex("(?=.*[A-Z])")

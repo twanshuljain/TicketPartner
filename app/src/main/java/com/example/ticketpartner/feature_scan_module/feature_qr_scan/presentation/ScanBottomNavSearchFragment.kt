@@ -92,7 +92,6 @@ class ScanBottomNavSearchFragment : Fragment() {
             adapter = ScanSearchOrderAdapter(requireActivity(), it, ::isItemClicked)
             binding.rvSearchOrder.adapter = adapter
             binding.rvSearchOrder.setHasFixedSize(true)
-            binding.rvSearchOrder.adapter = adapter
         }
     }
 
