@@ -427,6 +427,14 @@
         <item name="android:fontFamily" tools:targetApi="o">@font/lato_bold</item>
     </style>
 
+    <style name="ImageView.Corner" parent="">
+        <item name="cornerSizeTopRight">8dp</item>
+        <item name="cornerSizeTopLeft">8dp</item>
+        <item name="cornerSizeBottomLeft">0dp</item>
+        <item name="cornerSizeBottomRight">0dp</item>
+        <item name="cornerFamily">rounded</item>
+    </style>
+
     //set snackBar background for success
 
     <style name="CustomSnackBarSuccessTheme">

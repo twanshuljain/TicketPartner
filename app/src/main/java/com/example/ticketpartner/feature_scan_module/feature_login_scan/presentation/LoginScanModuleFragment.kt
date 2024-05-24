@@ -16,7 +16,9 @@ import com.example.ticketpartner.common.ZERO
 import com.example.ticketpartner.common.storage.MyPreferences
 import com.example.ticketpartner.common.storage.PrefConstants
 import com.example.ticketpartner.databinding.FragmentLoginScanModuleBinding
+import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.EventDetails
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.GetQrCodeForOffLineScanUIState
+import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.InsertEventDetailsResponse
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.LoginWithPinResponse
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.LoginWithPinUIState
 import com.example.ticketpartner.utils.BackPressHandler
@@ -25,6 +27,7 @@ import com.example.ticketpartner.utils.NavigateFragmentUtil.navigateWithClearNav
 import com.example.ticketpartner.utils.Utility
 import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
+
 
 @AndroidEntryPoint
 class LoginScanModuleFragment : Fragment() {
@@ -58,9 +61,6 @@ class LoginScanModuleFragment : Fragment() {
 
         /** allow char only */
         //  Utility.allowCharactersOnly(binding.etName)
-
-        /* etName = "d"
-         etPin = "108469"*/
 
         binding.etName.doAfterTextChanged {
             etName = it.toString().trim()
@@ -99,9 +99,15 @@ class LoginScanModuleFragment : Fragment() {
                     DialogProgressUtil.dismiss()
                     SnackBarUtil.showSuccessSnackBar(binding.root, it.onSuccess.message.toString())
                     updateUserDetailsToSession(it.onSuccess)
+                    findNavController().navigateWithClearNavGraph(
+                        R.id.main_nav_graph,
+                        R.id.eventDetailsScanModuleFragment
+                    )
+
                     //requireActivity().deleteDatabase(TP_LOCAL_DATABASE)
-                    viewModel.getQrCodeListForOfflineScan()
-                    observeQrCodeListResponseForOfflineScan()
+                   /* insertEventsDetailLocalStorage(it.onSuccess.data?.event)
+                         viewModel.getQrCodeListForOfflineScan()
+                         observeQrCodeListResponseForOfflineScan()*/
                 }
 
                 is LoginWithPinUIState.OnFailure -> {
@@ -109,6 +115,30 @@ class LoginScanModuleFragment : Fragment() {
                     SnackBarUtil.showErrorSnackBar(binding.root, it.onFailure)
                 }
             }
+        }
+    }
+
+    private fun insertEventsDetailLocalStorage(data: EventDetails?) {
+        data?.let { event ->
+            viewModel.insertEventDetailsForOfflineScan(
+                InsertEventDetailsResponse(
+                    event.city,
+                    event.country,
+                    event.door_close_time,
+                    event.door_open_time,
+                    event.event_cover_image,
+                    event.event_end_date,
+                    event.event_end_time,
+                    event.event_start_date,
+                    event.event_start_time,
+                    event.id,
+                    event.name,
+                    event.organization_country_name,
+                    event.organization_logo,
+                    event.organization_name,
+                    event.state
+                )
+            )
         }
     }
 

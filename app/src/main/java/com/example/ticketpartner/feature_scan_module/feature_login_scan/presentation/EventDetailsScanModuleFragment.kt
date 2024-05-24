@@ -8,6 +8,7 @@ import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import com.example.ticketpartner.BuildConfig
 import com.example.ticketpartner.R
 import com.example.ticketpartner.common.COMMA
 import com.example.ticketpartner.common.HYPHEN_CHAR
@@ -16,6 +17,8 @@ import com.example.ticketpartner.common.VERTICAL_POLE
 import com.example.ticketpartner.databinding.FragmentEventDetailsScanModuleBinding
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.DataItem
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.EventDetailsScanUIState
+import com.example.ticketpartner.utils.CameraUtils.Companion.loadCircularImage
+import com.example.ticketpartner.utils.CameraUtils.Companion.loadImageFromUrl
 import com.example.ticketpartner.utils.DialogProgressUtil
 import com.example.ticketpartner.utils.NavigateFragmentUtil.navigateParentToChildFragment
 import com.example.ticketpartner.utils.getFormattedStartDateForEvent
@@ -36,17 +39,17 @@ class EventDetailsScanModuleFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-         val callback: OnBackPressedCallback =
-              object : OnBackPressedCallback(true) {
-                  override fun handleOnBackPressed() {
-                      // Leave empty do disable back press or
-                      // write your code which you want
-                  }
-              }
-          requireActivity().onBackPressedDispatcher.addCallback(
-              requireActivity(),
-              callback
-          )
+        val callback: OnBackPressedCallback =
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    // Leave empty do disable back press or
+                    // write your code which you want
+                }
+            }
+        requireActivity().onBackPressedDispatcher.addCallback(
+            requireActivity(),
+            callback
+        )
 
         initView()
         getEventDetailsResponse()
@@ -75,8 +78,15 @@ class EventDetailsScanModuleFragment : Fragment() {
     }
 
     private fun showDetailsData(data: DataItem?) {
+        loadImageFromUrl(
+            binding.ivBanner,
+            BuildConfig.AWS_IMAGE_BASE_URL + data?.event?.event_cover_image
+        )
+        loadCircularImage(
+            binding.ivOrganizerLogo,
+            BuildConfig.AWS_IMAGE_BASE_URL + data?.organization?.organization_logo
+        )
         binding.tvEventTitle.text = data?.event?.name
-       // binding.ivBanner.setImageBitmap(CameraUtils.uriToBitmap(requireContext(),data?.event.event_cover_image))
         val startDate = getFormattedStartDateForEvent(data?.event_dates?.event_start_date)
         val startEndTime =
             getFormattedTimeForEvent(data?.event_dates?.event_start_time) + HYPHEN_CHAR + getFormattedTimeForEvent(

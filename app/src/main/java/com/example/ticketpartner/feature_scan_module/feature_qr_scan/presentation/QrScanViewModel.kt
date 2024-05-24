@@ -100,6 +100,7 @@ class QrScanViewModel @Inject constructor(
             getQrScanUseCase.invoke(qrId, ticketType).catch {
                 logUtil.log(TAG, "onError${it.message.toString()}")
                 val error = ErrorResponseHandler(it)
+                logUtil.log(TAG, "onErrorQrResponse${error.getErrors().data}")
                 _qrScanState.value =
                     QrScanUIState.OnFailure(error.getErrors().message.toString())
             }.collect {

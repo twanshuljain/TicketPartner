@@ -47,15 +47,15 @@
         app:layout_constraintStart_toStartOf="@id/guidelineStart"
         app:layout_constraintTop_toBottomOf="@id/tvScanning">
 
-        <androidx.appcompat.widget.AppCompatImageView
+        <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/ivBanner"
-            android:layout_width="match_parent"
+            android:layout_width="@dimen/margin_0"
             android:layout_height="wrap_content"
-            android:scaleType="fitXY"
-            android:src="@drawable/temp_event_back"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:maxHeight="@dimen/size_200"
+            app:layout_constraintEnd_toEndOf="@id/materialCardView"
+            app:layout_constraintStart_toStartOf="@id/materialCardView"
+            app:layout_constraintTop_toTopOf="parent"
+            app:shapeAppearanceOverlay="@style/ImageView.Corner" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvEventTitle"
@@ -162,14 +162,23 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tvLocation" />
 
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/ivProfile"
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivOrganizerLogo"
                 android:layout_width="42dp"
-                android:layout_height="44dp"
+                android:layout_height="42dp"
                 android:layout_marginTop="@dimen/margin_15"
-                android:src="@drawable/temp_event_back"
+                android:scaleType="centerCrop"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/viewLineLocation" />
+
+            <!--            <de.hdodenhof.circleimageview.CircleImageView-->
+            <!--                android:id="@+id/ivOrganizerLogo"-->
+            <!--                android:layout_width="42dp"-->
+            <!--                android:layout_height="44dp"-->
+            <!--                android:layout_marginTop="@dimen/margin_15"-->
+            <!--                android:src="@drawable/temp_event_back"-->
+            <!--                app:layout_constraintStart_toStartOf="parent"-->
+            <!--                app:layout_constraintTop_toBottomOf="@id/viewLineLocation" />-->
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvOrganizerName"
@@ -179,8 +188,8 @@
                 android:paddingStart="@dimen/margin_8"
                 android:textAlignment="textStart"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/ivProfile"
-                app:layout_constraintTop_toTopOf="@id/ivProfile" />
+                app:layout_constraintStart_toEndOf="@id/ivOrganizerLogo"
+                app:layout_constraintTop_toTopOf="@id/ivOrganizerLogo" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvProfileType"
@@ -190,9 +199,9 @@
                 android:paddingStart="@dimen/margin_8"
                 android:text="Organizer"
                 android:textAlignment="textStart"
-                app:layout_constraintBottom_toBottomOf="@id/ivProfile"
+                app:layout_constraintBottom_toBottomOf="@id/ivOrganizerLogo"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/ivProfile"
+                app:layout_constraintStart_toEndOf="@id/ivOrganizerLogo"
                 app:layout_constraintTop_toBottomOf="@id/tvOrganizerName" />
 
 
@@ -213,13 +222,11 @@
             android:layout_height="@dimen/size_48"
             android:layout_marginTop="@dimen/margin_20"
             android:layout_marginBottom="@dimen/margin_20"
-            android:textAllCaps="false"
             android:background="@drawable/btn_design_dark_primary"
             android:text="@string/Continue"
+            android:textAllCaps="false"
             android:textColor="@color/white"
-
             app:layout_constraintBottom_toBottomOf="parent" />
 
     </RelativeLayout>
-
 </androidx.constraintlayout.widget.ConstraintLayout>

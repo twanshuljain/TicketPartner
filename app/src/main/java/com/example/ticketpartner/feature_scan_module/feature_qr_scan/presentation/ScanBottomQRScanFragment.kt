@@ -1,5 +1,6 @@
 package com.example.ticketpartner.feature_scan_module.feature_qr_scan.presentation
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.content.pm.PackageManager
 import android.hardware.Camera
@@ -10,15 +11,15 @@ import android.view.LayoutInflater
 import android.view.SurfaceHolder
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.Animation
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.camera.core.ImageCapture
-import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.ticketpartner.R
+import com.example.ticketpartner.common.SnackBarUtil
 import com.example.ticketpartner.common.VERTICAL_DOTS
 import com.example.ticketpartner.common.ZERO
 import com.example.ticketpartner.common.storage.MyPreferences
@@ -42,10 +43,7 @@ class ScanBottomQRScanFragment : Fragment() {
     private val viewModel: QrScanViewModel by activityViewModels()
     private lateinit var cameraSource: CameraSource
     private lateinit var barcodeDetector: BarcodeDetector
-    private val requestCodeCameraPermission = 1001
-    private var aniSlide: Animation? = null
     private var isTorchOn = false
-    private var selectedTicketTypeList = ArrayList<String>()
     private var surfaceWidth: Int = 340
     private var surfaceHeight: Int = 340
     private var currentZoom = 0f
@@ -56,7 +54,6 @@ class ScanBottomQRScanFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         binding = FragmentScanBottomNavQRScanBinding.inflate(layoutInflater)
         return binding.root
     }
@@ -71,13 +68,15 @@ class ScanBottomQRScanFragment : Fragment() {
     private fun initView() {
         getQrCodeListLocalDB.clear()
         observeQrCodeListFromLocalDB()
+        binding.ivZoom.isEnabled = false
+        binding.ivTorch.isEnabled = false
 
-        viewModel.eventName.observe(viewLifecycleOwner){
+        viewModel.eventName.observe(viewLifecycleOwner) {
             val title = activity?.findViewById<AppCompatTextView>(R.id.title)
             title?.text = it
         }
 
-        viewModel.dateTimeEventDetails.observe(viewLifecycleOwner){
+        viewModel.dateTimeEventDetails.observe(viewLifecycleOwner) {
             val subTitle = activity?.findViewById<AppCompatTextView>(R.id.subTitle)
             subTitle?.visibility = View.VISIBLE
             subTitle?.text = it
@@ -91,64 +90,53 @@ class ScanBottomQRScanFragment : Fragment() {
             } else {
                 setFlashMode(Camera.Parameters.FLASH_MODE_TORCH)
                 isTorchOn = true
-                binding.ivTorch.setImageResource(R.drawable.ic_temp_selected_torch)
+                binding.ivTorch.setImageResource(R.drawable.ic_torch_on)
             }
         }
 
         binding.ivZoom.setOnClickListener {
             if (currentZoom == 0f) {
                 currentZoom = 0.5f
-                binding.ivZoom.setImageResource(R.drawable.ic_temp_selected_zoom)
+                binding.ivZoom.setImageResource(R.drawable.ic_1x_zoom)
                 setCameraZoom(cameraSource, 0.5f)
             } else if (currentZoom == 0.5f) {
                 currentZoom = 1f
                 setCameraZoom(cameraSource, 1f)
-                binding.ivZoom.setImageResource(R.drawable.ic_temp_selected_zoom)
+                binding.ivZoom.setImageResource(R.drawable.ic_2x_zoom)
             } else if (currentZoom == 1f) {
                 currentZoom = 0f
                 setCameraZoom(cameraSource, 0f)
-                binding.ivZoom.setImageResource(R.drawable.ic_1x_zoom_grey)
+                binding.ivZoom.setImageResource(R.drawable.ic_default_zoom_grey)
             }
         }
 
         binding.btnEndScan.setOnClickListener {
             openImagePickerBottomSheet()
         }
-
-        // viewModel.qrScanCode("244447224741818",selectedTicketTypeList)
     }
 
     private fun initCameraPermission() {
         if (ContextCompat.checkSelfPermission(
-                requireActivity(), android.Manifest.permission.CAMERA
+                requireActivity(), Manifest.permission.CAMERA
             ) != PackageManager.PERMISSION_GRANTED
         ) askForCameraPermission() else setupControls()
-
     }
 
+
     private fun observeQrCodeListFromLocalDB() {
-        viewModel.getQrCodeListFromLocalDB.observe(viewLifecycleOwner){
-            when(it){
-                is QrCodeListFromLocalDBUIState.IsLoading -> {
-                    Log.e("TAG", "observeQrCodeListFromLocalDB: loading ", )
-                }
+        viewModel.getQrCodeListFromLocalDB.observe(viewLifecycleOwner) {
+            when (it) {
+                is QrCodeListFromLocalDBUIState.IsLoading -> {}
                 is QrCodeListFromLocalDBUIState.OnSuccess -> {
-                    //  getQrCodeListLocalDB.addAll(it.onSuccess)
-                    for (i in ZERO until it.onSuccess.size){
+                    for (i in ZERO until it.onSuccess.size) {
                         getQrCodeListLocalDB.add(it.onSuccess[i])
                     }
                 }
-                is QrCodeListFromLocalDBUIState.OnFailure -> {
-                    Log.e("TAG", "observeQrCodeListFromLocalDB: Error.. ", )
-                }
+
+                is QrCodeListFromLocalDBUIState.OnFailure -> {}
             }
         }
-
-        for (i in 0 until getQrCodeListLocalDB.size){
-            Log.e("TAG", "observeQrCodeListFromLocalDB: Success! ${getQrCodeListLocalDB[i]} ", )
-        }
     }
-
 
     private fun setupControls() {
         barcodeDetector =
@@ -161,8 +149,10 @@ class ScanBottomQRScanFragment : Fragment() {
             .setAutoFocusEnabled(true)
             .build()
 
-        imageCapture = ImageCapture.Builder().build()
+        binding.ivZoom.isEnabled = true
+        binding.ivTorch.isEnabled = true
 
+        imageCapture = ImageCapture.Builder().build()
         binding.surfaceView.holder.addCallback(object : SurfaceHolder.Callback {
             @SuppressLint("MissingPermission")
             override fun surfaceCreated(holder: SurfaceHolder) {
@@ -201,12 +191,11 @@ class ScanBottomQRScanFragment : Fragment() {
                 var scannedValue = ""
                 val barcodes: SparseArray<Barcode> = detections.detectedItems
                 scannedValue = barcodes.valueAt(0).rawValue
-
-                //Don't forget to add this line printing value or finishing activity must run on main thread
                 requireActivity().runOnUiThread {
                     if (scannedValue.isNotEmpty()) {
                         cameraSource.stop()
-                        val savedSelectedList = MyPreferences.getArrayList(SCAN_SELECTED_TICKET_TYPES_LIST)
+                        val savedSelectedList =
+                            MyPreferences.getArrayList(SCAN_SELECTED_TICKET_TYPES_LIST)
                         viewModel.qrScanCode(scannedValue, savedSelectedList)
                         observeScanTicketResponse()
                     }
@@ -241,11 +230,13 @@ class ScanBottomQRScanFragment : Fragment() {
     }
 
     private fun askForCameraPermission() {
-        ActivityCompat.requestPermissions(
-            requireActivity(),
-            arrayOf(android.Manifest.permission.CAMERA),
-            requestCodeCameraPermission
-        )
+        if (ContextCompat.checkSelfPermission(
+                requireActivity(),
+                Manifest.permission.CAMERA
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            requestPermission.launch(Manifest.permission.CAMERA)
+        }
     }
 
     @SuppressLint("SetTextI18n")
@@ -275,57 +266,47 @@ class ScanBottomQRScanFragment : Fragment() {
         }
     }
 
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == requestCodeCameraPermission) {
-            if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+
+    @SuppressLint("MissingPermission")
+    private val requestPermission =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
+            if (isGranted) {
                 setupControls()
+                if (this::cameraSource.isInitialized) {
+                    cameraSource.start(binding.surfaceView.holder)
+                }
             } else {
-                // Permission was denied
-                // Handle the case where the user denies the permission
+                SnackBarUtil.showErrorSnackBar(
+                    binding.root,
+                    getString(R.string.cameraPermissionRequired)
+                )
             }
         }
-    }
-
-    /*
-
-        private fun applyZoom(scaleFactor: Float) {
-            if (currentZoom != scaleFactor) {
-                matrix.setScale(scaleFactor, scaleFactor, imageView.width / 2f, imageView.height / 2f)
-                imageView.imageMatrix = matrix
-                currentZoom = scaleFactor
-            }
-        }
-    */
 
     private fun setFlashMode(mode: String) {
         val declaredFields = CameraSource::class.java.declaredFields
-
         for (field in declaredFields) {
             if (field.type == Camera::class.java) {
                 field.isAccessible = true
-                val camera = field.get(cameraSource) as Camera?
-
-                if (camera != null) {
-                    try {
-                        val params = camera.parameters
-                        params.flashMode = mode
-                        camera.parameters = params
-                        field.set(cameraSource, camera)
-                    } catch (e: Exception) {
-                        Log.e("setFlashMode", "Error setting camera flash mode", e)
+                if (this::cameraSource.isInitialized) {
+                    val camera = field.get(cameraSource) as Camera?
+                    if (camera != null) {
+                        try {
+                            val params = camera.parameters
+                            params.flashMode = mode
+                            camera.parameters = params
+                            field.set(cameraSource, camera)
+                        } catch (e: Exception) {
+                            Log.e("setFlashMode", "Error setting camera flash mode", e)
+                        }
+                        break
                     }
-                    break
                 }
             }
         }
     }
 
-    fun setCameraZoom(cameraSource: CameraSource, zoomFactor: Float) {
+    private fun setCameraZoom(cameraSource: CameraSource, zoomFactor: Float) {
         val cameraField =
             cameraSource::class.java.declaredFields.firstOrNull { it.type == Camera::class.java }
         cameraField?.let {

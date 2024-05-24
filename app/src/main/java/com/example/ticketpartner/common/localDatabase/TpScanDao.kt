@@ -6,6 +6,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.example.ticketpartner.common.GET_QR_CODE_LIST_FOR_OFFLINE_SCAN
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.DataItems
+import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.InsertEventDetailsResponse
 
 @Dao
 interface TpScanDao {
@@ -14,4 +15,7 @@ interface TpScanDao {
 
     @Query("SELECT * FROM $GET_QR_CODE_LIST_FOR_OFFLINE_SCAN")
     suspend fun getQrCodeListFromLocalDB(): List<DataItems>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertEventDetailsResponse(insertEventDetailsResponse: InsertEventDetailsResponse): Long
 }

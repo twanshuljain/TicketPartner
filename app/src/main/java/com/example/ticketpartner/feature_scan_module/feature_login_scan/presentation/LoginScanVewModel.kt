@@ -11,11 +11,14 @@ import com.example.ticketpartner.feature_local_storage.domain.usecase.InsertQrCo
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.DataItems
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.EventDetailsScanUIState
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.GetQrCodeForOffLineScanUIState
+import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.InsertEventDetailsResponse
+import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.InsertEventDetailsUIState
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.InsertQrCodeForOffLineScanUIState
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.LoginWithPinUIState
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.usecase.GetLoginWithPinUseCase
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.usecase.GetQrCodeListUseCase
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.usecase.GetScanEventDetailsUseCase
+import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.usecase.InsertEventDetailsUseCase
 import com.technotoil.tglivescan.common.retrofit.apis.ErrorResponseHandler
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.catch
@@ -28,6 +31,7 @@ class LoginScanVewModel @Inject constructor(
     private val getScanEventDetailsUseCase: GetScanEventDetailsUseCase,
     private val getQrCodeListUseCase: GetQrCodeListUseCase,
     private val insertQrCodeListUseCase: InsertQrCodeListUseCase,
+    private val insertEventDetailsUseCase: InsertEventDetailsUseCase,
     private val logUtil: LogUtil
 ) :
     ViewModel() {
@@ -51,6 +55,11 @@ class LoginScanVewModel @Inject constructor(
         MutableLiveData()
     val insertQrCodeListForOfflineScan: LiveData<InsertQrCodeForOffLineScanUIState> =
         _insertQrCodeListForOfflineScan
+
+    private val _insertEventDetailsOfflineScan: MutableLiveData<InsertEventDetailsUIState> =
+        MutableLiveData()
+    val insertEventDetailsOfflineScan: LiveData<InsertEventDetailsUIState> =
+        _insertEventDetailsOfflineScan
 
 
     fun loginWithPin(name: String, scanPin: String) {
@@ -92,6 +101,40 @@ class LoginScanVewModel @Inject constructor(
         }
     }
 
+    fun getCheckInDataForOfflineScan() {
+
+    }
+
+    fun insertEventDetailsForOfflineScan(insertEventDetailsResponse: InsertEventDetailsResponse) {
+        _insertEventDetailsOfflineScan.value = InsertEventDetailsUIState.IsLoading(true)
+        viewModelScope.launch {
+            insertEventDetailsUseCase.invoke(insertEventDetailsResponse).catch {
+                logUtil.log(TAG, "onError${it.message.toString()}")
+                _insertEventDetailsOfflineScan.value =
+                    InsertEventDetailsUIState.OnFailure(it.message.toString())
+            }.collect {
+                _insertEventDetailsOfflineScan.value =
+                    InsertEventDetailsUIState.OnSuccess("Event Detail's data inserted successfully!")
+            }
+        }
+    }
+
+    fun insetQrCodeListForOfflineScan(getQrCodeListResponse: DataItems) {
+        _insertQrCodeListForOfflineScan.value = InsertQrCodeForOffLineScanUIState.IsLoading(true)
+        viewModelScope.launch {
+            insertQrCodeListUseCase.invoke(getQrCodeListResponse).catch {
+                logUtil.log(TAG, "onError${it.message.toString()}")
+                    //val error = ErrorResponseHandler(it)
+                _insertQrCodeListForOfflineScan.value =
+                    InsertQrCodeForOffLineScanUIState.OnFailure(it.message.toString())
+            }.collect {
+                logUtil.log(TAG, "onResponse: $it")
+                _insertQrCodeListForOfflineScan.value =
+                    InsertQrCodeForOffLineScanUIState.OnSuccess("Data inserted successfully!")
+            }
+        }
+    }
+
     fun getQrCodeListForOfflineScan() {
         _getQrCodeListForOfflineScan.value = GetQrCodeForOffLineScanUIState.IsLoading(true)
         viewModelScope.launch {
@@ -103,25 +146,6 @@ class LoginScanVewModel @Inject constructor(
             }.collect {
                 logUtil.log(TAG, "onResponse: $it")
                 _getQrCodeListForOfflineScan.value = GetQrCodeForOffLineScanUIState.OnSuccess(it)
-            }
-        }
-    }
-
-    fun getCheckInDataForOfflineScan(){
-
-    }
-
-    fun insetQrCodeListForOfflineScan(getQrCodeListResponse: DataItems) {
-        _insertQrCodeListForOfflineScan.value = InsertQrCodeForOffLineScanUIState.IsLoading(true)
-        viewModelScope.launch {
-            insertQrCodeListUseCase.invoke(getQrCodeListResponse).catch {
-                logUtil.log(TAG, "onError${it.message.toString()}")
-            //    val error = ErrorResponseHandler(it)
-                _insertQrCodeListForOfflineScan.value =
-                    InsertQrCodeForOffLineScanUIState.OnFailure(it.message.toString())
-            }.collect {
-                logUtil.log(TAG, "onResponse: $it")
-                _insertQrCodeListForOfflineScan.value = InsertQrCodeForOffLineScanUIState.OnSuccess("Data inserted successfully!")
             }
         }
     }
