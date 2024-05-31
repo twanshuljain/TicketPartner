@@ -21,5 +21,5 @@ data class InsertEventDetailsResponse(
     val organizationCountryName: String?,
     val organizationLogo: String?,
     val organizationName: String?,
-    val state: String?
+    val state: String?,
 )

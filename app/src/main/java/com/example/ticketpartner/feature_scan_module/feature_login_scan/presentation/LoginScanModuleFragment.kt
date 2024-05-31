@@ -19,6 +19,7 @@ import com.example.ticketpartner.databinding.FragmentLoginScanModuleBinding
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.EventDetails
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.GetQrCodeForOffLineScanUIState
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.InsertEventDetailsResponse
+import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.InsertTicketTypeListResponse
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.LoginWithPinResponse
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.LoginWithPinUIState
 import com.example.ticketpartner.utils.BackPressHandler
@@ -75,6 +76,9 @@ class LoginScanModuleFragment : Fragment() {
             }
         }
 
+        etName = "saurabh"
+        etPin = "789121"
+
         binding.ivClearText.setOnClickListener {
             binding.etPin.setText(EMPTY_STRING)
             etPin = EMPTY_STRING
@@ -99,15 +103,22 @@ class LoginScanModuleFragment : Fragment() {
                     DialogProgressUtil.dismiss()
                     SnackBarUtil.showSuccessSnackBar(binding.root, it.onSuccess.message.toString())
                     updateUserDetailsToSession(it.onSuccess)
-                    findNavController().navigateWithClearNavGraph(
+              /*      findNavController().navigateWithClearNavGraph(
                         R.id.main_nav_graph,
                         R.id.eventDetailsScanModuleFragment
-                    )
+                    )*/
 
                     //requireActivity().deleteDatabase(TP_LOCAL_DATABASE)
-                   /* insertEventsDetailLocalStorage(it.onSuccess.data?.event)
+                    insertEventsDetailLocalStorage(it.onSuccess.data?.event)
+
+                    //qr code list
                          viewModel.getQrCodeListForOfflineScan()
-                         observeQrCodeListResponseForOfflineScan()*/
+                         observeQrCodeListResponseForOfflineScan()
+
+                    //get ticket type list
+                    viewModel.insertTicketTypesOfflineScan(InsertTicketTypeListResponse(0,"Hello"))
+
+
                 }
 
                 is LoginWithPinUIState.OnFailure -> {

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,214 +8,228 @@
     android:background="@color/white"
     tools:context=".feature_scan_module.feature_login_scan.presentation.EventDetailsScanModuleFragment">
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guidelineStart"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_begin="15dp"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guidelineEnd"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/margin_0"
+        android:fillViewport="true"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintGuide_end="@dimen/margin_15" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvScanning"
-        style="@style/boldDarkPrimaryText24"
-        android:layout_width="@dimen/margin_0"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_20"
-        android:layout_marginBottom="@dimen/margin_10"
-        android:text="@string/are_you_scanning_for_this_event"
-        android:textAlignment="textStart"
-        app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
-        app:layout_constraintStart_toStartOf="@id/guidelineStart"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/materialCardView"
-        android:layout_width="@dimen/margin_0"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_20"
-        android:background="@drawable/corner_curve_layout_design_orange_border"
-        android:elevation="@dimen/margin_5"
-        app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
-        app:layout_constraintStart_toStartOf="@id/guidelineStart"
-        app:layout_constraintTop_toBottomOf="@id/tvScanning">
-
-        <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/ivBanner"
-            android:layout_width="@dimen/margin_0"
-            android:layout_height="wrap_content"
-            android:maxHeight="@dimen/size_200"
-            app:layout_constraintEnd_toEndOf="@id/materialCardView"
-            app:layout_constraintStart_toStartOf="@id/materialCardView"
-            app:layout_constraintTop_toTopOf="parent"
-            app:shapeAppearanceOverlay="@style/ImageView.Corner" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvEventTitle"
-            style="@style/boldDarkPrimaryText16"
-            android:layout_width="@dimen/margin_0"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/margin_10"
-            android:background="@color/orange_light_back"
-            android:padding="@dimen/margin_15"
-            android:textAlignment="textStart"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/ivBanner" />
-
-        <View
-            android:layout_width="@dimen/margin_0"
-            android:layout_height="@dimen/size_1"
-            android:background="@color/light_orange_border"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvEventTitle" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/rlBtncontinue">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingStart="@dimen/margin_15"
-            android:paddingTop="@dimen/margin_15"
-            android:paddingBottom="@dimen/margin_15"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvEventTitle">
+            android:layout_height="wrap_content">
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/ivCalendar"
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guidelineStart"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:scaleType="fitXY"
-                android:src="@drawable/ic_calendar_grey"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                android:orientation="vertical"
+                app:layout_constraintGuide_begin="15dp"
+                app:layout_constraintStart_toStartOf="parent" />
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvStartDateTime"
-                style="@style/mediumParaText12"
-                android:layout_width="@dimen/margin_0"
-                android:layout_height="wrap_content"
-                android:paddingStart="@dimen/margin_8"
-                android:textAlignment="textStart"
-                app:layout_constraintBottom_toBottomOf="@id/ivCalendar"
-                app:layout_constraintStart_toEndOf="@id/ivCalendar"
-                app:layout_constraintTop_toTopOf="@id/ivCalendar" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvStartEndTime"
-                style="@style/mediumParaText12"
-                android:layout_width="@dimen/margin_0"
-                android:layout_height="wrap_content"
-                android:paddingStart="@dimen/margin_8"
-                android:textAlignment="textStart"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/tvStartDate"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <View
-                android:id="@+id/viewLineDateTime"
-                android:layout_width="@dimen/margin_0"
-                android:layout_height="@dimen/size_1"
-                android:layout_marginTop="@dimen/margin_15"
-                android:background="@color/border"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/ivCalendar" />
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/ivLocationPin"
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guidelineEnd"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_15"
-                android:scaleType="fitXY"
-                android:src="@drawable/ic_location_pin_grey"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/viewLineDateTime" />
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintGuide_end="@dimen/margin_15" />
 
             <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvLocation"
-                style="@style/mediumParaText12"
+                android:id="@+id/tvScanning"
+                style="@style/boldDarkPrimaryText24"
                 android:layout_width="@dimen/margin_0"
                 android:layout_height="wrap_content"
-                android:paddingStart="@dimen/margin_8"
+                android:layout_marginTop="@dimen/margin_20"
+                android:layout_marginBottom="@dimen/margin_10"
+                android:text="@string/are_you_scanning_for_this_event"
                 android:textAlignment="textStart"
-                app:layout_constraintBottom_toBottomOf="@id/ivLocationPin"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/ivLocationPin"
-                app:layout_constraintTop_toTopOf="@id/ivLocationPin" />
+                app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
+                app:layout_constraintStart_toStartOf="@id/guidelineStart"
+                app:layout_constraintTop_toTopOf="parent" />
 
-            <View
-                android:id="@+id/viewLineLocation"
-                android:layout_width="@dimen/margin_0"
-                android:layout_height="@dimen/size_1"
-                android:layout_marginTop="@dimen/margin_15"
-                android:background="@color/border"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tvLocation" />
-
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/ivOrganizerLogo"
-                android:layout_width="42dp"
-                android:layout_height="42dp"
-                android:layout_marginTop="@dimen/margin_15"
-                android:scaleType="centerCrop"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/viewLineLocation" />
-
-            <!--            <de.hdodenhof.circleimageview.CircleImageView-->
-            <!--                android:id="@+id/ivOrganizerLogo"-->
-            <!--                android:layout_width="42dp"-->
-            <!--                android:layout_height="44dp"-->
-            <!--                android:layout_marginTop="@dimen/margin_15"-->
-            <!--                android:src="@drawable/temp_event_back"-->
-            <!--                app:layout_constraintStart_toStartOf="parent"-->
-            <!--                app:layout_constraintTop_toBottomOf="@id/viewLineLocation" />-->
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvOrganizerName"
-                style="@style/mediumDarkPrimaryText14"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/materialCardView"
                 android:layout_width="@dimen/margin_0"
                 android:layout_height="wrap_content"
-                android:paddingStart="@dimen/margin_8"
-                android:textAlignment="textStart"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/ivOrganizerLogo"
-                app:layout_constraintTop_toTopOf="@id/ivOrganizerLogo" />
+                android:layout_marginTop="@dimen/margin_20"
+                android:background="@drawable/corner_curve_layout_design_orange_border"
+                android:elevation="@dimen/margin_5"
+                app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
+                app:layout_constraintStart_toStartOf="@id/guidelineStart"
+                app:layout_constraintTop_toBottomOf="@id/tvScanning">
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvProfileType"
-                style="@style/regularParaText12"
-                android:layout_width="@dimen/margin_0"
-                android:layout_height="wrap_content"
-                android:paddingStart="@dimen/margin_8"
-                android:text="Organizer"
-                android:textAlignment="textStart"
-                app:layout_constraintBottom_toBottomOf="@id/ivOrganizerLogo"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/ivOrganizerLogo"
-                app:layout_constraintTop_toBottomOf="@id/tvOrganizerName" />
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/ivBanner"
+                    android:layout_width="@dimen/margin_0"
+                    android:layout_height="@dimen/size_200"
+                    android:maxHeight="@dimen/size_200"
+                    android:scaleType="fitXY"
+                    app:layout_constraintEnd_toEndOf="@id/materialCardView"
+                    app:layout_constraintStart_toStartOf="@id/materialCardView"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:shapeAppearanceOverlay="@style/ImageView.Corner" />
 
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvEventTitle"
+                    style="@style/boldDarkPrimaryText16"
+                    android:layout_width="@dimen/margin_0"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/margin_10"
+                    android:background="@color/orange_light_back"
+                    android:padding="@dimen/margin_15"
+                    android:textAlignment="textStart"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/ivBanner" />
+
+                <View
+                    android:layout_width="@dimen/margin_0"
+                    android:layout_height="@dimen/size_1"
+                    android:background="@color/light_orange_border"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvEventTitle" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="@dimen/margin_15"
+                    android:paddingTop="@dimen/margin_15"
+                    android:paddingBottom="@dimen/margin_15"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tvEventTitle">
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ivCalendar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/ic_calendar_grey"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvStartDateTime"
+                        style="@style/mediumParaText12"
+                        android:layout_width="@dimen/margin_0"
+                        android:layout_height="wrap_content"
+                        android:paddingStart="@dimen/margin_8"
+                        android:textAlignment="textStart"
+                        app:layout_constraintBottom_toBottomOf="@id/ivCalendar"
+                        app:layout_constraintStart_toEndOf="@id/ivCalendar"
+                        app:layout_constraintTop_toTopOf="@id/ivCalendar" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvStartEndTime"
+                        style="@style/mediumParaText12"
+                        android:layout_width="@dimen/margin_0"
+                        android:layout_height="wrap_content"
+                        android:paddingStart="@dimen/margin_8"
+                        android:textAlignment="textStart"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/tvStartDateTime"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <View
+                        android:id="@+id/viewLineDateTime"
+                        android:layout_width="@dimen/margin_0"
+                        android:layout_height="@dimen/size_1"
+                        android:layout_marginTop="@dimen/margin_15"
+                        android:background="@color/border"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/ivCalendar" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ivLocationPin"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_15"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/ic_location_pin_grey"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/viewLineDateTime" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvLocation"
+                        style="@style/mediumParaText12"
+                        android:layout_width="@dimen/margin_0"
+                        android:layout_height="wrap_content"
+                        android:paddingStart="@dimen/margin_8"
+                        android:textAlignment="textStart"
+                        app:layout_constraintBottom_toBottomOf="@id/ivLocationPin"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/ivLocationPin"
+                        app:layout_constraintTop_toTopOf="@id/ivLocationPin" />
+
+                    <View
+                        android:id="@+id/viewLineLocation"
+                        android:layout_width="@dimen/margin_0"
+                        android:layout_height="@dimen/size_1"
+                        android:layout_marginTop="@dimen/margin_15"
+                        android:background="@color/border"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/tvLocation" />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ivOrganizerLogo"
+                        android:layout_width="42dp"
+                        android:layout_height="42dp"
+                        android:layout_marginTop="@dimen/margin_15"
+                        android:scaleType="centerCrop"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/viewLineLocation" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvOrganizerName"
+                        style="@style/mediumDarkPrimaryText14"
+                        android:layout_width="@dimen/margin_0"
+                        android:layout_height="wrap_content"
+                        android:paddingStart="@dimen/margin_8"
+                        android:textAlignment="textStart"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/ivOrganizerLogo"
+                        app:layout_constraintTop_toTopOf="@id/ivOrganizerLogo" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvProfileType"
+                        style="@style/regularParaText12"
+                        android:layout_width="@dimen/margin_0"
+                        android:layout_height="wrap_content"
+                        android:paddingStart="@dimen/margin_8"
+                        android:text="Organizer"
+                        android:textAlignment="textStart"
+                        app:layout_constraintBottom_toBottomOf="@id/ivOrganizerLogo"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/ivOrganizerLogo"
+                        app:layout_constraintTop_toBottomOf="@id/tvOrganizerName" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+
 
     <RelativeLayout
+        android:id="@+id/rlBtncontinue"
         android:layout_width="@dimen/margin_0"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_15"
+        android:layout_marginEnd="@dimen/margin_15"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
-        app:layout_constraintStart_toStartOf="@id/guidelineStart">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnContinue"
@@ -229,4 +244,5 @@
             app:layout_constraintBottom_toBottomOf="parent" />
 
     </RelativeLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

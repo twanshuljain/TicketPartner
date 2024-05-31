@@ -17,6 +17,8 @@ import com.example.ticketpartner.common.VERTICAL_POLE
 import com.example.ticketpartner.databinding.FragmentEventDetailsScanModuleBinding
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.DataItem
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.EventDetailsScanUIState
+import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.GetEventDetailsOfflineScanUIState
+import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.InsertEventDetailsResponse
 import com.example.ticketpartner.utils.CameraUtils.Companion.loadCircularImage
 import com.example.ticketpartner.utils.CameraUtils.Companion.loadImageFromUrl
 import com.example.ticketpartner.utils.DialogProgressUtil
@@ -38,6 +40,8 @@ class EventDetailsScanModuleFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        //   getEventDetailsResponse()
+        getEventDetailsLocalStorage()
 
         val callback: OnBackPressedCallback =
             object : OnBackPressedCallback(true) {
@@ -50,9 +54,31 @@ class EventDetailsScanModuleFragment : Fragment() {
             requireActivity(),
             callback
         )
-
         initView()
-        getEventDetailsResponse()
+
+    }
+
+    private fun getEventDetailsLocalStorage() {
+        viewModel.getEventDetailsOfflineScan()
+        viewModel.getEventDetailsOfflineScan.observe(viewLifecycleOwner){
+            when(it){
+                is GetEventDetailsOfflineScanUIState.IsLoading -> {
+                    DialogProgressUtil.show(childFragmentManager)
+                }
+                is GetEventDetailsOfflineScanUIState.OnSuccess -> {
+                    DialogProgressUtil.dismiss()
+                    showDetailsData(it.onSuccess)
+                 /*  it.onSuccess?.let{res ->
+                       Log.e("TAG", "getEventDetailsLocalStorage: ${res.name.toString()}", )
+                      binding.tvEventTitle.text = res.name.toString()
+                   }*/
+                }
+                is GetEventDetailsOfflineScanUIState.OnFailure -> {
+                    DialogProgressUtil.dismiss()
+                    SnackBarUtil.showErrorSnackBar(binding.root, it.onFailure)
+                }
+            }
+        }
     }
 
     private fun getEventDetailsResponse() {
@@ -65,7 +91,7 @@ class EventDetailsScanModuleFragment : Fragment() {
 
                 is EventDetailsScanUIState.OnSuccess -> {
                     DialogProgressUtil.dismiss()
-                    showDetailsData(it.onSuccess.data)
+                   // showDetailsData(it.onSuccess.data)
                     it.onSuccess.data?.let { data -> eventDetails.add(data) }
                 }
 
@@ -77,7 +103,29 @@ class EventDetailsScanModuleFragment : Fragment() {
         }
     }
 
-    private fun showDetailsData(data: DataItem?) {
+    private fun showDetailsData(data: InsertEventDetailsResponse?) {
+        loadImageFromUrl(
+            binding.ivBanner,
+            BuildConfig.AWS_IMAGE_BASE_URL +data?.eventCoverImage
+        )
+        loadCircularImage(
+            binding.ivOrganizerLogo,
+            BuildConfig.AWS_IMAGE_BASE_URL + data?.organizationLogo
+        )
+        binding.tvEventTitle.text = data?.name
+        val startDate = getFormattedStartDateForEvent(data?.eventStartDate)
+        val startEndTime =
+            getFormattedTimeForEvent(data?.eventStartTime) + HYPHEN_CHAR + getFormattedTimeForEvent(
+                data?.eventEndTime
+            )
+        binding.tvStartDateTime.text = startDate + VERTICAL_POLE + startEndTime
+
+        binding.tvLocation.text =
+            data?.city + COMMA + data?.state + COMMA + data?.country
+        binding.tvOrganizerName.text = data?.organizationName?.toString()
+    }
+
+    /*private fun showDetailsData(data: DataItem?) {
         loadImageFromUrl(
             binding.ivBanner,
             BuildConfig.AWS_IMAGE_BASE_URL + data?.event?.event_cover_image
@@ -98,7 +146,7 @@ class EventDetailsScanModuleFragment : Fragment() {
         binding.tvLocation.text =
             location?.city + COMMA + location?.state + COMMA + location?.country
         binding.tvOrganizerName.text = data?.organization?.name.toString()
-    }
+    }*/
 
     private fun initView() {
         binding.btnContinue.setOnClickListener {

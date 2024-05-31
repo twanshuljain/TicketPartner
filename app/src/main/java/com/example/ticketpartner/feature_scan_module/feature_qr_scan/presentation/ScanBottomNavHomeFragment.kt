@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -32,6 +33,14 @@ class ScanBottomNavHomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentScanBottomNavHomeBinding.inflate(layoutInflater)
+
+        viewModel.networkStateLiveData.observe(viewLifecycleOwner){ isConnected ->
+            if (isConnected){
+                Toast.makeText(requireContext(), "Network available", Toast.LENGTH_SHORT).show()
+            }else{
+                Toast.makeText(requireContext(), "Network failed", Toast.LENGTH_SHORT).show()
+            }
+        }
         return binding.root
     }
 

@@ -83,7 +83,7 @@ class SelectTicketTypeScanAdapter(
         try {
             if (!eventTickets.isNullOrEmpty()) {
                 selectedNameList.clear()
-                for (i in 0 until eventTickets?.size!!) {
+                for (i in ZERO until eventTickets?.size!!) {
                     eventTickets?.get(i)?.isSelected = true
                     selectedNameList.add(eventTickets?.get(i)?.ticket_name.toString())
                 }

@@ -4,6 +4,7 @@ import com.example.ticketpartner.feature_local_storage.domain.datasourse.LocalSt
 import com.example.ticketpartner.feature_local_storage.domain.repository.LocalStorageRepository
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.DataItems
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.InsertEventDetailsResponse
+import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.InsertTicketTypeListResponse
 import javax.inject.Inject
 
 class LocalStorageRepositoryImpl @Inject constructor(private val localStorageDataSource: LocalStorageDataSource):
@@ -19,5 +20,13 @@ class LocalStorageRepositoryImpl @Inject constructor(private val localStorageDat
     override suspend fun insertEventDetailsLocalDB(insertEventDetailsResponse: InsertEventDetailsResponse): Long {
         return localStorageDataSource.insertEventDetailsLocalDB(insertEventDetailsResponse)
 
+    }
+
+    override suspend fun getEventDetailsLocalDB(): InsertEventDetailsResponse {
+        return localStorageDataSource.getEventDetailsLocalDB()
+    }
+
+    override suspend fun insertTicketTypesLocalDB(ticketName: InsertTicketTypeListResponse): Long {
+        return localStorageDataSource.insertTicketTypesLocalDB(ticketName)
     }
 }
