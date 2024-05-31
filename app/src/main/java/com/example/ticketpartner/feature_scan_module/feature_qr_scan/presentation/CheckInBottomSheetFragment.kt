@@ -10,6 +10,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
 import com.example.ticketpartner.R
 import com.example.ticketpartner.common.SnackBarUtil
+import com.example.ticketpartner.common.ZERO
 import com.example.ticketpartner.databinding.FragmentCheckInBottomSheetBinding
 import com.example.ticketpartner.databinding.LayoutScanCheckinAllowedOrdersDialogBinding
 import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.Item
@@ -68,7 +69,7 @@ class CheckInBottomSheetFragment(
                 }
 
                 is QrScanCheckedInUIState.OnSuccess -> {
-                    for (i in 0 until itemPosition.size) {
+                    for (i in ZERO until itemPosition.size) {
                         searchDetailsResponse[itemPosition[i]].is_checked_in = true
                     }
 

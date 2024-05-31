@@ -168,7 +168,6 @@ object Utility {
                 return null
             }
         }
-
         editText.filters = arrayOf(filter)
     }
 

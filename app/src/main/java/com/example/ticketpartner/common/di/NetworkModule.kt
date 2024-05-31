@@ -1,12 +1,15 @@
 package com.example.ticketpartner.common.di
 
 import android.app.Application
+import android.content.Context
+import android.net.ConnectivityManager
 import com.example.ticketpartner.BuildConfig
 import com.example.ticketpartner.common.LogUtil
 import com.example.ticketpartner.common.remote.apis.RestApiService
 import com.example.ticketpartner.common.remote.apis.SessionHandlerInterceptor
 import com.example.ticketpartner.common.remote.apis.SessionManager
 import com.example.ticketpartner.common.remote.apis.TIMEOUT_60_SEC
+import com.example.ticketpartner.utils.NetworkMonitor
 import com.technotoil.ticket.common.storage.UserPreference
 import dagger.Module
 import dagger.Provides
@@ -90,5 +93,17 @@ class NetworkModule {
         userPreference,
         context
     )
+
+    @Provides
+    @Singleton
+    fun provideConnectivityManager(application: Application): ConnectivityManager {
+        return application.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+    }
+
+    @Provides
+    @Singleton
+    fun provideNetworkMonitor(application: Application, connectivityManager: ConnectivityManager): NetworkMonitor {
+        return NetworkMonitor(application, connectivityManager)
+    }
 
 }

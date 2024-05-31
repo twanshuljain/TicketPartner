@@ -21,6 +21,7 @@ import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.usec
 import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.usecase.GetScanCheckedInUseCase
 import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.usecase.GetScanEventDetailsDashboardUseCase
 import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.usecase.GetScanOrderDetailsUseCase
+import com.example.ticketpartner.utils.NetworkMonitor
 import com.technotoil.tglivescan.common.retrofit.apis.ErrorResponseHandler
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.catch
@@ -37,8 +38,10 @@ class QrScanViewModel @Inject constructor(
     private val getScanCheckedInUseCase: GetScanCheckedInUseCase,
     private val getQrScanReportAllUseCase: GetQrScanReportAllUseCase,
     private val getQrCodeListFromLocalDBUseCase: GetQrCodeListFromLocalDBUseCase,
+    private val networkMonitor: NetworkMonitor,
     private val logUtil: LogUtil
 ) : ViewModel() {
+    val networkStateLiveData = networkMonitor
 
     private val _selectedTicketName: MutableLiveData<ArrayList<String>> = MutableLiveData()
     val observerSelectedTicketName: LiveData<ArrayList<String>> = _selectedTicketName
@@ -100,6 +103,7 @@ class QrScanViewModel @Inject constructor(
             getQrScanUseCase.invoke(qrId, ticketType).catch {
                 logUtil.log(TAG, "onError${it.message.toString()}")
                 val error = ErrorResponseHandler(it)
+                logUtil.log(TAG, "onErrorQrResponse${error.getErrors().data}")
                 _qrScanState.value =
                     QrScanUIState.OnFailure(error.getErrors().message.toString())
             }.collect {

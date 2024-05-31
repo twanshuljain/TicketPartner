@@ -6,7 +6,10 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Environment
+import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.content.FileProvider
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.example.ticketpartner.common.APP_NAME
 import com.example.ticketpartner.common.APP_PACKAGE_NANE
 import com.example.ticketpartner.common.IMAGE_EXTENSION
@@ -75,6 +78,20 @@ class CameraUtils {
                 e.printStackTrace()
             }
             return null
+        }
+
+        fun loadImageFromUrl(imageView: AppCompatImageView, imageUrl: String) {
+            Glide.with(imageView.context)
+                .load(imageUrl)
+                .into(imageView)
+        }
+
+
+        fun loadCircularImage(imageView: AppCompatImageView, imageUrl: String) {
+            Glide.with(imageView.context)
+                .load(imageUrl)
+                .transform(CircleCrop())
+                .into(imageView)
         }
 
         // Convert File to Uri and return the Uri

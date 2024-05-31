@@ -62,7 +62,7 @@ class ScanSearchedOrderDetailsFragment : Fragment() {
             tvPaymentMethod.text =
                 requireContext().getString(R.string.payment_method) + COLUMN + searchDetails?.payment_type.toString()
         }
-       /* searchDetails?.is_checked_in.let {
+        searchDetails?.is_checked_in.let {
             if (it!!) {
                 binding.btnCheckIn.apply {
                     isEnabled = false
@@ -74,7 +74,7 @@ class ScanSearchedOrderDetailsFragment : Fragment() {
                     text = requireContext().getString(R.string.check_in)
                 }
             }
-        }*/
+        }
 
         searchDetails?.order_id?.let { viewModel.getOrderDetailsResponse(it) }
         observeOrderDetailsData()

@@ -126,9 +126,9 @@ class ScanQRLandingFragment : Fragment() {
             binding.includeTitle.title.text = it.toString()
         }
 
-        val selectedTicketTypeListSize =
-            MyPreferences.getArrayList(PrefConstants.SCAN_SELECTED_TICKET_TYPES_LIST)
         viewModel.onContinueClick.observe(viewLifecycleOwner) {
+            val selectedTicketTypeListSize =
+                MyPreferences.getArrayList(PrefConstants.SCAN_SELECTED_TICKET_TYPES_LIST)
             if (selectedTicketTypeListSize.size > ZERO) {
                 binding.scanBottomNav.selectedItemId = it
             } else {

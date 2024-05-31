@@ -178,6 +178,7 @@
     <string name="order_id">Order ID</string>
     <string name="payment_method">Payment method</string>
     <string name="scanReport">Scan Report</string>
+    <string name="cameraPermissionRequired">Camera permission is required to use the camera.</string>
     <string name="checked">Checked</string>
     <string name="okay">Okay</string>
     <string name="allowed_orders">Allowed Orders</string>

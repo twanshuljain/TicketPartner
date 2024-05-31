@@ -64,6 +64,9 @@ dependencies {
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 
+    implementation ("androidx.fragment:fragment-ktx:1.2.0")
+    implementation ("androidx.activity:activity-ktx:1.3.0")
+
     //dagger - hilt
     implementation("com.google.dagger:hilt-android:2.45")
     kapt("com.google.dagger:hilt-android-compiler:2.45")
