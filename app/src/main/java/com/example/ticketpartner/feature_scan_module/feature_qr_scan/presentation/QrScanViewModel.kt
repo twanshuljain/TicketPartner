@@ -8,6 +8,7 @@ import com.example.ticketpartner.common.LogUtil
 import com.example.ticketpartner.feature_local_storage.domain.usecase.GetQrCodeListFromLocalDBUseCase
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.EventDetailsScanUIState
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.QrScanSearchItemUIState
+import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.TicketTypesListOfflineScanUIState
 import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.QrCodeListFromLocalDBUIState
 import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.QrScanCheckedInUIState
 import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.QrScanOrderDetailsUIState
@@ -21,6 +22,7 @@ import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.usec
 import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.usecase.GetScanCheckedInUseCase
 import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.usecase.GetScanEventDetailsDashboardUseCase
 import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.usecase.GetScanOrderDetailsUseCase
+import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.usecase.GetTicketTypeListOfflineScanUseCase
 import com.example.ticketpartner.utils.NetworkMonitor
 import com.technotoil.tglivescan.common.retrofit.apis.ErrorResponseHandler
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -38,6 +40,7 @@ class QrScanViewModel @Inject constructor(
     private val getScanCheckedInUseCase: GetScanCheckedInUseCase,
     private val getQrScanReportAllUseCase: GetQrScanReportAllUseCase,
     private val getQrCodeListFromLocalDBUseCase: GetQrCodeListFromLocalDBUseCase,
+    private val getTicketTypeListOfflineScanUseCase: GetTicketTypeListOfflineScanUseCase,
     private val networkMonitor: NetworkMonitor,
     private val logUtil: LogUtil
 ) : ViewModel() {
@@ -76,6 +79,10 @@ class QrScanViewModel @Inject constructor(
     private val _getQrCodeListFromLocalDB: MutableLiveData<QrCodeListFromLocalDBUIState> =
         MutableLiveData()
     val getQrCodeListFromLocalDB: LiveData<QrCodeListFromLocalDBUIState> = _getQrCodeListFromLocalDB
+
+    private val _getTicketTypesListFromLocalDB: MutableLiveData<TicketTypesListOfflineScanUIState> =
+        MutableLiveData()
+    val getTicketTypesListFromLocalDB: LiveData<TicketTypesListOfflineScanUIState> = _getTicketTypesListFromLocalDB
 
     fun putSelectedTicketName(selectedTicketName: ArrayList<String>) {
         _selectedTicketName.value = selectedTicketName
@@ -228,6 +235,18 @@ class QrScanViewModel @Inject constructor(
             }.collect {
                 logUtil.log(TAG, "onResponse:")
                 _getQrCodeListFromLocalDB.value = QrCodeListFromLocalDBUIState.OnSuccess(it)
+            }
+        }
+    }
+
+    fun getTicketTypesList(){
+        _getTicketTypesListFromLocalDB.value = TicketTypesListOfflineScanUIState.IsLoading(true)
+        viewModelScope.launch {
+            getTicketTypeListOfflineScanUseCase.invoke().catch {
+                logUtil.log(TAG, "onError${it.message.toString()}")
+                _getTicketTypesListFromLocalDB.value = TicketTypesListOfflineScanUIState.OnFailure(it.message.toString())
+            }.collect{
+                _getTicketTypesListFromLocalDB.value = TicketTypesListOfflineScanUIState.OnSuccess(it)
             }
         }
     }

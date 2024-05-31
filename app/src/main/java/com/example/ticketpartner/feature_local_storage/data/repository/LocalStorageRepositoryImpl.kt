@@ -29,4 +29,8 @@ class LocalStorageRepositoryImpl @Inject constructor(private val localStorageDat
     override suspend fun insertTicketTypesLocalDB(ticketName: InsertTicketTypeListResponse): Long {
         return localStorageDataSource.insertTicketTypesLocalDB(ticketName)
     }
+
+    override suspend fun getTicketTypesListLocalDB(): List<InsertTicketTypeListResponse> {
+        return localStorageDataSource.getTicketTypesListLocalDB()
+    }
 }

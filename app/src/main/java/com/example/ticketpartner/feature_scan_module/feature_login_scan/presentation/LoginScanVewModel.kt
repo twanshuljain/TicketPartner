@@ -23,10 +23,14 @@ import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.u
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.usecase.GetScanEventDetailsUseCase
 import com.example.ticketpartner.feature_local_storage.domain.usecase.InsertEventDetailsUseCase
 import com.example.ticketpartner.feature_local_storage.domain.usecase.InsertTicketTypesOfflineUseCase
+import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.GetCheckInDataOfflineScanResponse
+import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.GetCheckInListOfflineUIState
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.InsertTicketTypeListResponse
+import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.usecase.GetCheckInListOfflineUseCase
 import com.technotoil.tglivescan.common.retrofit.apis.ErrorResponseHandler
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -39,6 +43,7 @@ class LoginScanVewModel @Inject constructor(
     private val insertEventDetailsUseCase: InsertEventDetailsUseCase,
     private val getEventDetailsLocalDBUseCase: GetEventDetailsLocalDBUseCase,
     private val insertTicketTypesOfflineUseCase: InsertTicketTypesOfflineUseCase,
+    private val getCheckInListOfflineUseCase: GetCheckInListOfflineUseCase,
     private val logUtil: LogUtil
 ) :
     ViewModel() {
@@ -52,11 +57,6 @@ class LoginScanVewModel @Inject constructor(
         MutableLiveData()
     val getQrCodeListForOfflineScan: LiveData<GetQrCodeForOffLineScanUIState> =
         _getQrCodeListForOfflineScan
-
-    private val _getCheckInDataForOfflineScan: MutableLiveData<GetQrCodeForOffLineScanUIState> =
-        MutableLiveData()
-    val getCheckInDataForOfflineScan: LiveData<GetQrCodeForOffLineScanUIState> =
-        _getCheckInDataForOfflineScan
 
     private val _insertQrCodeListForOfflineScan: MutableLiveData<InsertQrCodeForOffLineScanUIState> =
         MutableLiveData()
@@ -77,6 +77,16 @@ class LoginScanVewModel @Inject constructor(
         MutableLiveData()
     val insertTicketTypesOfflineScan: LiveData<GetTicketTypesOfflineScanUIState> =
         _insertTicketTypesOfflineScan
+
+    private val _getCheckInListOfflineScan: MutableLiveData<GetCheckInListOfflineUIState> =
+        MutableLiveData()
+    val getCheckInListOfflineScan: LiveData<GetCheckInListOfflineUIState> =
+        _getCheckInListOfflineScan
+
+    /*private val _insertCheckInDataForScan: MutableLiveData<GetCheckInListOfflineUIState> =
+        MutableLiveData()
+    val insertCheckInDataForScan: LiveData<GetCheckInListOfflineUIState> =
+        _insertCheckInDataForScan*/
 
 
     fun loginWithPin(name: String, scanPin: String) {
@@ -190,6 +200,23 @@ class LoginScanVewModel @Inject constructor(
                     GetTicketTypesOfflineScanUIState.OnSuccess("Data inserted successfully!")
             }
         }
+    }
+
+    fun getCheckInListDataForOfflineScan(){
+        _getCheckInListOfflineScan.value = GetCheckInListOfflineUIState.IsLoading(true)
+        viewModelScope.launch {
+            getCheckInListOfflineUseCase.invoke().catch {
+                logUtil.log(TAG, "onError${it.message.toString()}")
+                _getCheckInListOfflineScan.value = GetCheckInListOfflineUIState.OnFailure(it.message.toString())
+            }.collect{
+                logUtil.log(TAG, "onResponse: $it")
+                _getCheckInListOfflineScan.value = GetCheckInListOfflineUIState.OnSuccess(it)
+            }
+        }
+    }
+
+    fun insertCheckInDataForQrScan(){
+
     }
 
     companion object {

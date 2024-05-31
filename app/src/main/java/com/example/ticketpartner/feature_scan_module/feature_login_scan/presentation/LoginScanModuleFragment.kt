@@ -1,6 +1,7 @@
 package com.example.ticketpartner.feature_scan_module.feature_login_scan.presentation
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,6 +18,7 @@ import com.example.ticketpartner.common.storage.MyPreferences
 import com.example.ticketpartner.common.storage.PrefConstants
 import com.example.ticketpartner.databinding.FragmentLoginScanModuleBinding
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.EventDetails
+import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.GetCheckInListOfflineUIState
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.GetQrCodeForOffLineScanUIState
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.InsertEventDetailsResponse
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.InsertTicketTypeListResponse
@@ -76,8 +78,8 @@ class LoginScanModuleFragment : Fragment() {
             }
         }
 
-        etName = "saurabh"
-        etPin = "789121"
+        etName = "sonu"
+        etPin = "650504"
 
         binding.ivClearText.setOnClickListener {
             binding.etPin.setText(EMPTY_STRING)
@@ -103,28 +105,50 @@ class LoginScanModuleFragment : Fragment() {
                     DialogProgressUtil.dismiss()
                     SnackBarUtil.showSuccessSnackBar(binding.root, it.onSuccess.message.toString())
                     updateUserDetailsToSession(it.onSuccess)
-              /*      findNavController().navigateWithClearNavGraph(
-                        R.id.main_nav_graph,
-                        R.id.eventDetailsScanModuleFragment
-                    )*/
 
-                    //requireActivity().deleteDatabase(TP_LOCAL_DATABASE)
+                   // requireActivity().deleteDatabase(TP_LOCAL_DATABASE)
+
+                    /** insert eventDetails into local database */
                     insertEventsDetailLocalStorage(it.onSuccess.data?.event)
 
-                    //qr code list
-                         viewModel.getQrCodeListForOfflineScan()
-                         observeQrCodeListResponseForOfflineScan()
+                    /** make API call for offline qrcode list */
+                    viewModel.getQrCodeListForOfflineScan()
+                    observeQrCodeListResponseForOfflineScan()
 
-                    //get ticket type list
-                    viewModel.insertTicketTypesOfflineScan(InsertTicketTypeListResponse(0,"Hello"))
+                    viewModel.getCheckInListDataForOfflineScan()
+                    observeCheckInDataResponse()
 
-
+                    /** insert ticket types list into local database */
+                    val ticketTypeList = it.onSuccess.data?.event?.event_tickets
+                    if (ticketTypeList != null) {
+                        for (i in ZERO until ticketTypeList?.size!!) {
+                            //get ticket type list
+                            viewModel.insertTicketTypesOfflineScan(
+                                InsertTicketTypeListResponse(
+                                    ticketTypeList[i]?.ticket_name.toString()
+                                )
+                            )
+                        }
+                    }
                 }
 
                 is LoginWithPinUIState.OnFailure -> {
                     DialogProgressUtil.dismiss()
                     SnackBarUtil.showErrorSnackBar(binding.root, it.onFailure)
                 }
+            }
+        }
+    }
+
+    private fun observeCheckInDataResponse() {
+        viewModel.getCheckInListOfflineScan.observe(viewLifecycleOwner){
+            when(it){
+                is GetCheckInListOfflineUIState.IsLoading -> {}
+                is GetCheckInListOfflineUIState.OnSuccess -> {
+                    viewModel.insertEventDetailsOfflineScan
+                    Log.e("TAG", "observeCheckInDataResponseOffline -> : ${it.onSuccess.data}", )
+                }
+                is GetCheckInListOfflineUIState.OnFailure -> {}
             }
         }
     }
@@ -166,10 +190,10 @@ class LoginScanModuleFragment : Fragment() {
                             )
                         }
                     }
-                    findNavController().navigateWithClearNavGraph(
+                /*   findNavController().navigateWithClearNavGraph(
                         R.id.main_nav_graph,
                         R.id.eventDetailsScanModuleFragment
-                    )
+                    )*/
                 }
 
                 is GetQrCodeForOffLineScanUIState.OnFailure -> {

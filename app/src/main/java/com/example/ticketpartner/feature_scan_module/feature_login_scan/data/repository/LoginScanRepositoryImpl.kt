@@ -2,6 +2,7 @@ package com.example.ticketpartner.feature_scan_module.feature_login_scan.data.re
 
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.datasource.LoginScanDataSource
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.EventDetailsScanResponse
+import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.GetCheckInDataOfflineScanResponse
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.GetQrCodeListResponse
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.LoginWithPinResponse
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.repository.LoginScanRepository
@@ -19,5 +20,9 @@ class LoginScanRepositoryImpl @Inject constructor(private val loginScanDataSourc
 
     override suspend fun getQrCodeListForOfflineScan(): GetQrCodeListResponse {
         return loginScanDataSource.getQrCodeListForOfflineScan()
+    }
+
+    override suspend fun getCheckInDataForOfflineScan(): GetCheckInDataOfflineScanResponse {
+       return loginScanDataSource.getCheckInDataForOfflineScan()
     }
 }

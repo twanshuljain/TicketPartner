@@ -6,6 +6,5 @@ import com.example.ticketpartner.common.GET_TICKET_TYPES_LIST
 
 @Entity(tableName = GET_TICKET_TYPES_LIST)
 data class InsertTicketTypeListResponse(
-    @PrimaryKey(autoGenerate = true)
-    val id:Int?,
-    val ticketName: String?)
+    @PrimaryKey()
+    val ticketName: String = "")

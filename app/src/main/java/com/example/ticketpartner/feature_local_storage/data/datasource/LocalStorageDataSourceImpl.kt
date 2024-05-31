@@ -27,4 +27,8 @@ class LocalStorageDataSourceImpl @Inject constructor(private val tpScanDao: TpSc
     override suspend fun insertTicketTypesLocalDB(ticketName: InsertTicketTypeListResponse): Long {
         return tpScanDao.insertTicketTypes(ticketName)
     }
+
+    override suspend fun getTicketTypesListLocalDB(): List<InsertTicketTypeListResponse> {
+        return tpScanDao.getTicketTypesListFromLocalDB()
+    }
 }

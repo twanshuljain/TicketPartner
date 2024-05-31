@@ -10,5 +10,6 @@ interface LocalStorageDataSource {
     suspend fun insertEventDetailsLocalDB(insertEventDetailsResponse: InsertEventDetailsResponse): Long
     suspend fun getEventDetailsLocalDB(): InsertEventDetailsResponse
     suspend fun insertTicketTypesLocalDB(ticketName: InsertTicketTypeListResponse): Long
+    suspend fun getTicketTypesListLocalDB(): List<InsertTicketTypeListResponse>
 
 }

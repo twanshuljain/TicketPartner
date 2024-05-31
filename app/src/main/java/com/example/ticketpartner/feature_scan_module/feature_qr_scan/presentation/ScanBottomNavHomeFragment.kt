@@ -1,6 +1,7 @@
 package com.example.ticketpartner.feature_scan_module.feature_qr_scan.presentation
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,6 +20,7 @@ import com.example.ticketpartner.databinding.FragmentScanBottomNavHomeBinding
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.DataItem
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.EventDetailsScanUIState
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.presentation.SelectTicketTypeScanAdapter
+import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.TicketTypesListOfflineScanUIState
 import com.example.ticketpartner.utils.DialogProgressUtil
 import com.example.ticketpartner.utils.getFormattedStartDateForEvent
 import com.example.ticketpartner.utils.getFormattedTimeForEvent
@@ -33,26 +35,42 @@ class ScanBottomNavHomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentScanBottomNavHomeBinding.inflate(layoutInflater)
-
-        viewModel.networkStateLiveData.observe(viewLifecycleOwner){ isConnected ->
-            if (isConnected){
+     /*   viewModel.networkStateLiveData.observe(viewLifecycleOwner) { isConnected ->
+            if (isConnected) {
                 Toast.makeText(requireContext(), "Network available", Toast.LENGTH_SHORT).show()
-            }else{
+            } else {
                 Toast.makeText(requireContext(), "Network failed", Toast.LENGTH_SHORT).show()
+                viewModel.getTicketTypesListFromLocalDB
+                observeTicketTypesListOfflineScan()
             }
-        }
+        }*/
         return binding.root
     }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initView()
-        makeEventDetailsAPICall()
+
+        viewModel.getTicketTypesList()
+        observeTicketTypesListOfflineScan()
+
+       // makeEventDetailsAPICall()
+
         viewModel.selectedTicketTypeArrayList.value = null
         binding.btnContinue.isEnabled = false
         viewModel.listSize = 0
     }
 
+    private fun observeTicketTypesListOfflineScan() {
+        viewModel.getTicketTypesListFromLocalDB.observe(viewLifecycleOwner) {
+            when (it) {
+                is TicketTypesListOfflineScanUIState.IsLoading -> {}
+                is TicketTypesListOfflineScanUIState.OnSuccess -> {
+                    Log.e("TAG", "observeTicketTypesListOfflineScan: ${it.onSuccess}", )
+                }
+                is TicketTypesListOfflineScanUIState.OnFailure -> {}
+            }
+        }
+    }
     private fun makeEventDetailsAPICall() {
         adapter =
             SelectTicketTypeScanAdapter(
@@ -86,7 +104,9 @@ class ScanBottomNavHomeFragment : Fragment() {
                         }
                     }
                     setTicketTypesAdapter(it.onSuccess.data)
-                    setDetailsOnCard(it.onSuccess.data)
+
+                    /** show event details card on home page */
+                   // setDetailsOnCard(it.onSuccess.data)
                 }
 
                 is EventDetailsScanUIState.OnFailure -> {
