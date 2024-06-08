@@ -29,6 +29,7 @@ const val getQrOrderDetailsData = "ticket-scan/get-orders/details/?"
 const val getQrCheckedIn = "ticket-scan/check-in/"
 const val getQrScanReportAll = "ticket-scan/reports/"
 const val getQrCodeListForOfflineScan = "ticket-scan/offline/qr-code/data/retrieve"
+const val getCheckInList = "ticket-scan/offline/check-in/data/retrieve"
 
 //scan module
 const val loginWithPin = "ticket-scan/login/"

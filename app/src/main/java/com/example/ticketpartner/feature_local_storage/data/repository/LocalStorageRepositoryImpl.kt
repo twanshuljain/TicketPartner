@@ -2,6 +2,7 @@ package com.example.ticketpartner.feature_local_storage.data.repository
 
 import com.example.ticketpartner.feature_local_storage.domain.datasourse.LocalStorageDataSource
 import com.example.ticketpartner.feature_local_storage.domain.repository.LocalStorageRepository
+import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.CheckInData
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.DataItems
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.InsertEventDetailsResponse
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.InsertTicketTypeListResponse
@@ -28,5 +29,17 @@ class LocalStorageRepositoryImpl @Inject constructor(private val localStorageDat
 
     override suspend fun insertTicketTypesLocalDB(ticketName: InsertTicketTypeListResponse): Long {
         return localStorageDataSource.insertTicketTypesLocalDB(ticketName)
+    }
+
+    override suspend fun getTicketTypesListLocalDB(): List<InsertTicketTypeListResponse> {
+        return localStorageDataSource.getTicketTypesListLocalDB()
+    }
+
+    override suspend fun insertCheckInLocalDB(checkInData: CheckInData): Long {
+        return localStorageDataSource.insertCheckInLocalDB(checkInData)
+    }
+
+    override suspend fun getCheckInDataLocalDb(): List<CheckInData> {
+        return localStorageDataSource.getCheckInDataLocalDb()
     }
 }

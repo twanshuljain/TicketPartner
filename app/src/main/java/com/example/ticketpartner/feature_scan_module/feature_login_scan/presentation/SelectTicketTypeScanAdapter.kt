@@ -8,11 +8,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.ticketpartner.R
 import com.example.ticketpartner.common.ZERO
 import com.example.ticketpartner.databinding.LayoutScanSelectTicketTypeBinding
-import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.EventTicket
+import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.InsertTicketTypeListResponse
 
 class SelectTicketTypeScanAdapter(
     private val context: Context,
-    private val eventTickets: List<EventTicket?>?,
+    private val eventTickets: ArrayList<InsertTicketTypeListResponse>?,
     private val selectedTicketName: (ArrayList<String>) -> Unit,
     private val selectedListSize: (Int) -> Unit
 ) :
@@ -31,17 +31,18 @@ class SelectTicketTypeScanAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val view = holder.binding
-        view.tvTicketName.text = eventTickets?.get(position)?.ticket_name
+
+        view.tvTicketName.text = eventTickets?.get(position)?.ticketName
         val isSelected = eventTickets?.get(position)?.isSelected ?: false
 
         if (isSelected) {
-            selectedNameList.add(eventTickets?.get(position)?.ticket_name.toString())
+            selectedNameList.add(eventTickets?.get(position)?.ticketName.toString())
             view.ivChecked.visibility = View.VISIBLE
             view.ivUnChecked.visibility = View.GONE
             view.itemLayout.background =
                 context.getDrawable(R.drawable.select_ticket_type_item_purple_design)
         } else {
-            selectedNameList.remove(eventTickets?.get(position)?.ticket_name.toString())
+            selectedNameList.remove(eventTickets?.get(position)?.ticketName.toString())
             view.ivChecked.visibility = View.GONE
             view.ivUnChecked.visibility = View.VISIBLE
             view.itemLayout.background =
@@ -54,14 +55,14 @@ class SelectTicketTypeScanAdapter(
                 if (isSelected) {
                     view.ivChecked.visibility = View.GONE
                     view.ivUnChecked.visibility = View.VISIBLE
-                    selectedNameList.remove(eventTickets?.get(position)?.ticket_name.toString())
+                    selectedNameList.remove(eventTickets?.get(position)?.ticketName.toString())
                     eventTickets?.get(position)?.isSelected = false
                     view.itemLayout.background =
                         context.getDrawable(R.drawable.select_ticket_type_item_light_purple_design)
                 } else {
                     view.ivChecked.visibility = View.VISIBLE
                     view.ivUnChecked.visibility = View.GONE
-                    selectedNameList.add(eventTickets?.get(position)?.ticket_name.toString())
+                    selectedNameList.add(eventTickets?.get(position)?.ticketName.toString())
                     eventTickets?.get(position)?.isSelected = true
                     view.itemLayout.background =
                         context.getDrawable(R.drawable.select_ticket_type_item_purple_design)
@@ -85,7 +86,7 @@ class SelectTicketTypeScanAdapter(
                 selectedNameList.clear()
                 for (i in ZERO until eventTickets?.size!!) {
                     eventTickets?.get(i)?.isSelected = true
-                    selectedNameList.add(eventTickets?.get(i)?.ticket_name.toString())
+                    selectedNameList.add(eventTickets?.get(i)?.ticketName.toString())
                 }
                 selectedTicketName(selectedNameList)
             }

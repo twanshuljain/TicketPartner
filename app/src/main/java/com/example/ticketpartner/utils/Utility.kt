@@ -12,6 +12,9 @@ import android.text.Spanned
 import android.text.style.ForegroundColorSpan
 import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.AppCompatEditText
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.Observer
 import com.example.ticketpartner.common.ZERO
 import java.io.File
 import java.io.FileOutputStream
@@ -169,6 +172,15 @@ object Utility {
             }
         }
         editText.filters = arrayOf(filter)
+    }
+
+    fun <T> LiveData<T>.observeOnce(lifecycleOwner: LifecycleOwner, observer: Observer<T>) {
+        observe(lifecycleOwner, object : Observer<T> {
+            override fun onChanged(value: T) {
+                observer.onChanged(value)
+                removeObserver(this)
+            }
+        })
     }
 
 }

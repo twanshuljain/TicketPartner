@@ -5,15 +5,23 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.ticketpartner.common.LogUtil
+import com.example.ticketpartner.common.ZERO
 import com.example.ticketpartner.feature_local_storage.domain.usecase.GetQrCodeListFromLocalDBUseCase
+import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.CheckInData
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.EventDetailsScanUIState
+import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.InsertCheckInDataOfflineUIState
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.QrScanSearchItemUIState
+import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.usecase.InsertCheckInDataOfflineUseCase
+import com.example.ticketpartner.feature_scan_module.feature_login_scan.presentation.LoginScanVewModel
+import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.GetCheckInDataLocalDBUIState
+import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.GetTicketTypesListOfflineUIState
 import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.QrCodeListFromLocalDBUIState
 import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.QrScanCheckedInUIState
 import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.QrScanOrderDetailsUIState
 import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.QrScanReportAllUIState
 import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.QrScanUIState
 import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.QrScannedTicketUIState
+import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.usecase.GetCheckInDataOfflineUseCase
 import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.usecase.GetQrScanReportAllUseCase
 import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.usecase.GetQrScanSearchUseCase
 import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.usecase.GetQrScanUseCase
@@ -21,6 +29,7 @@ import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.usec
 import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.usecase.GetScanCheckedInUseCase
 import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.usecase.GetScanEventDetailsDashboardUseCase
 import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.usecase.GetScanOrderDetailsUseCase
+import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.usecase.GetTicketTypesListOfflineUseCase
 import com.example.ticketpartner.utils.NetworkMonitor
 import com.technotoil.tglivescan.common.retrofit.apis.ErrorResponseHandler
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -38,7 +47,10 @@ class QrScanViewModel @Inject constructor(
     private val getScanCheckedInUseCase: GetScanCheckedInUseCase,
     private val getQrScanReportAllUseCase: GetQrScanReportAllUseCase,
     private val getQrCodeListFromLocalDBUseCase: GetQrCodeListFromLocalDBUseCase,
+    private val getTicketTypesListOfflineUseCase: GetTicketTypesListOfflineUseCase,
     private val networkMonitor: NetworkMonitor,
+    private val getCheckInDataOfflineUseCase: GetCheckInDataOfflineUseCase,
+    private val insertCheckInDataOfflineUseCase: InsertCheckInDataOfflineUseCase,
     private val logUtil: LogUtil
 ) : ViewModel() {
     val networkStateLiveData = networkMonitor
@@ -77,13 +89,29 @@ class QrScanViewModel @Inject constructor(
         MutableLiveData()
     val getQrCodeListFromLocalDB: LiveData<QrCodeListFromLocalDBUIState> = _getQrCodeListFromLocalDB
 
+    private val _getTicketTypesListFromLocalDB: MutableLiveData<GetTicketTypesListOfflineUIState> =
+        MutableLiveData()
+    val getTicketTypesListFromLocalDB: LiveData<GetTicketTypesListOfflineUIState> =
+        _getTicketTypesListFromLocalDB
+
+    private val _getCheckInFromLocalDB: MutableLiveData<GetCheckInDataLocalDBUIState> =
+        MutableLiveData()
+    val getCheckInFromLocalDB: LiveData<GetCheckInDataLocalDBUIState> =
+        _getCheckInFromLocalDB
+
+    private val _insertCheckInDataOfflineScan: MutableLiveData<InsertCheckInDataOfflineUIState> =
+        MutableLiveData()
+    val insertCheckInDataOfflineScan: LiveData<InsertCheckInDataOfflineUIState> =
+        _insertCheckInDataOfflineScan
+
+
     fun putSelectedTicketName(selectedTicketName: ArrayList<String>) {
         _selectedTicketName.value = selectedTicketName
     }
 
     val onContinueClick = MutableLiveData<Int>()
     val selectedTicketTypeArrayList = MutableLiveData<ArrayList<String>>()
-    var listSize = 0
+    var listSize = ZERO
     val eventName = MutableLiveData<String>()
     val dateTimeEventDetails = MutableLiveData<String>()
     val selectedSearchedItemEmailAdd = MutableLiveData<String>()
@@ -228,6 +256,51 @@ class QrScanViewModel @Inject constructor(
             }.collect {
                 logUtil.log(TAG, "onResponse:")
                 _getQrCodeListFromLocalDB.value = QrCodeListFromLocalDBUIState.OnSuccess(it)
+            }
+        }
+    }
+
+    fun getTicketTypesListFromLocal() {
+        _getTicketTypesListFromLocalDB.value = GetTicketTypesListOfflineUIState.IsLoading(true)
+        viewModelScope.launch {
+            getTicketTypesListOfflineUseCase.invoke().catch {
+                logUtil.log(TAG, "onError${it.message.toString()}")
+                _getTicketTypesListFromLocalDB.value =
+                    GetTicketTypesListOfflineUIState.OnFailure(it.message.toString())
+            }.collect {
+                logUtil.log(TAG, "onResponse:$it")
+                _getTicketTypesListFromLocalDB.value =
+                    GetTicketTypesListOfflineUIState.OnSuccess(it)
+            }
+        }
+    }
+
+    fun getCheckInDataFromLocalDB() {
+        _getCheckInFromLocalDB.value = GetCheckInDataLocalDBUIState.IsLoading(true)
+        viewModelScope.launch {
+            getCheckInDataOfflineUseCase.invoke().catch {
+                logUtil.log(TAG, "onError${it.message.toString()}")
+                _getCheckInFromLocalDB.value =
+                    GetCheckInDataLocalDBUIState.OnFailure(it.message.toString())
+            }.collect {
+                logUtil.log(TAG, "onResponse:$it")
+                _getCheckInFromLocalDB.value =
+                    GetCheckInDataLocalDBUIState.OnSuccess(it)
+            }
+        }
+    }
+
+    fun insertCheckInDataOfflineScan(checkInData: CheckInData) {
+        _insertCheckInDataOfflineScan.value = InsertCheckInDataOfflineUIState.IsLoading(true)
+        viewModelScope.launch {
+            insertCheckInDataOfflineUseCase.invoke(checkInData).catch {
+                logUtil.log(LoginScanVewModel.TAG, "onError${it.message.toString()}")
+                _insertCheckInDataOfflineScan.value =
+                    InsertCheckInDataOfflineUIState.OnFailure(it.message.toString())
+            }.collect {
+                logUtil.log(LoginScanVewModel.TAG, "onResponse: $it")
+                _insertCheckInDataOfflineScan.value =
+                    InsertCheckInDataOfflineUIState.OnSuccess("Data inserted successfully!")
             }
         }
     }
