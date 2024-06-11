@@ -16,7 +16,6 @@ import com.example.ticketpartner.common.storage.MyPreferences
 import com.example.ticketpartner.common.storage.PrefConstants
 import com.example.ticketpartner.common.storage.PrefConstants.SCAN_SELECTED_TICKET_TYPES_LIST
 import com.example.ticketpartner.databinding.FragmentScanBottomNavHomeBinding
-import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.DataItem
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.EventDetailsScanUIState
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.InsertTicketTypeListResponse
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.presentation.SelectTicketTypeScanAdapter
@@ -43,6 +42,7 @@ class ScanBottomNavHomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.btnContinue.isEnabled = false
+        setDetailsOnCard()
         initView()
 
         /* viewModel.networkStateLiveData.observe(viewLifecycleOwner){ isConnected ->
@@ -55,6 +55,7 @@ class ScanBottomNavHomeFragment : Fragment() {
                  observeTicketTypesListFromLocalDB()
              }
          }*/
+
         //  makeEventDetailsAPICall()
         viewModel.getTicketTypesListFromLocal()
         observeTicketTypesListFromLocalDB()
@@ -103,7 +104,7 @@ class ScanBottomNavHomeFragment : Fragment() {
                     }
 
                     setTicketTypesAdapter(ticketTypesList)
-                    setDetailsOnCard(it.onSuccess.data)
+                    // setDetailsOnCard(it.onSuccess.data)
                 }
 
                 is EventDetailsScanUIState.OnFailure -> {
@@ -128,16 +129,16 @@ class ScanBottomNavHomeFragment : Fragment() {
 
     private fun selectedListSize(size: Int) {}
 
-    private fun setDetailsOnCard(data: DataItem?) {
-        viewModel.eventName.value = data?.event?.name
-        binding.tvTitle.text = data?.event?.name
+    private fun setDetailsOnCard() {
+        val userLoginDetails = MyPreferences.getUserDetails()
+        viewModel.eventName.value = userLoginDetails?.data?.event?.name
+        binding.tvTitle.text = userLoginDetails?.data?.event?.name
         val startDate =
-            getFormattedStartDateForEvent(data?.event_dates?.event_start_date) + VERTICAL_POLE
-        binding.tvStartDate.text = startDate
+            getFormattedStartDateForEvent(userLoginDetails?.data?.event?.event_start_date) + VERTICAL_POLE
 
         val startEndTime =
-            getFormattedTimeForEvent(data?.event_dates?.event_start_time) + HYPHEN_CHAR + getFormattedTimeForEvent(
-                data?.event_dates?.event_end_time
+            getFormattedTimeForEvent(userLoginDetails?.data?.event?.event_start_time) + HYPHEN_CHAR + getFormattedTimeForEvent(
+                userLoginDetails?.data?.event?.event_end_time
             )
         viewModel.dateTimeEventDetails.value = startDate + startEndTime
     }

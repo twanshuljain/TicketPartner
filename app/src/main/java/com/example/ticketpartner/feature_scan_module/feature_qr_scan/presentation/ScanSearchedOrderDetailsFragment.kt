@@ -13,19 +13,25 @@ import com.example.ticketpartner.R
 import com.example.ticketpartner.common.COLUMN
 import com.example.ticketpartner.common.SCAN_SEARCHED_DATA
 import com.example.ticketpartner.common.SnackBarUtil
+import androidx.lifecycle.Observer
 import com.example.ticketpartner.common.ZERO
 import com.example.ticketpartner.databinding.FragmentScanSearchedOrderDetailsBinding
+import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.SearchData
 import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.Item
 import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.MData
 import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.QrScanOrderDetailsUIState
 import com.example.ticketpartner.utils.DialogProgressUtil
+import com.example.ticketpartner.utils.NetworkConnectionLiveData
+import com.example.ticketpartner.utils.Utility.observeOnce
 
 
 class ScanSearchedOrderDetailsFragment : Fragment() {
     private lateinit var binding: FragmentScanSearchedOrderDetailsBinding
     private val viewModel: QrScanViewModel by activityViewModels()
+    private lateinit var networkConnectionLiveData: NetworkConnectionLiveData
     private var searchDetails: MData? = null
-    private val searDetailsResponse = ArrayList<Item>()
+    private var searchDetailsOffline: SearchData? = null
+    private val searchDetailsResponse = ArrayList<Item>()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -36,11 +42,66 @@ class ScanSearchedOrderDetailsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            searchDetails = arguments?.getParcelable(SCAN_SEARCHED_DATA, MData::class.java)
-        } else {
-            searchDetails = arguments?.getParcelable<MData>(SCAN_SEARCHED_DATA)
+        networkConnectionLiveData = NetworkConnectionLiveData(requireContext())
+
+        viewModel.isOnlineMode.observe(viewLifecycleOwner) {
+            if (it) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                    searchDetails = arguments?.getParcelable(SCAN_SEARCHED_DATA, MData::class.java)
+                } else {
+                    searchDetails = arguments?.getParcelable<MData>(SCAN_SEARCHED_DATA)
+                }
+
+                binding.apply {
+                    tvName.text = searchDetails?.name.toString()
+                    tvEmail.text = searchDetails?.email.toString()
+                    tvOrderId.text =
+                        requireContext().getString(R.string.order_id) + COLUMN + searchDetails?.order_id.toString()
+                    tvPaymentMethod.text =
+                        requireContext().getString(R.string.payment_method) + COLUMN + searchDetails?.payment_type.toString()
+                }
+
+                viewModel.isAllChecked.observe(viewLifecycleOwner) { isChecked ->
+                    visibleCheckedInButton(isChecked)
+                }
+                networkConnectionLiveData.observeOnce(
+                    viewLifecycleOwner,
+                    Observer { isConnected ->
+                        if (isConnected) {
+                            searchDetails?.order_id?.let { viewModel.getOrderDetailsResponse(it) }
+                            observeOrderDetailsData()
+                        } else {
+                            SnackBarUtil.showErrorSnackBar(binding.root, getString(R.string.check_network_availability))
+                        }
+                    })
+
+
+            } else {
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                    searchDetailsOffline =
+                        arguments?.getParcelable(SCAN_SEARCHED_DATA, SearchData::class.java)
+                } else {
+                    searchDetailsOffline = arguments?.getParcelable<SearchData>(SCAN_SEARCHED_DATA)
+                }
+                binding.apply {
+                    tvName.text = searchDetailsOffline?.name.toString()
+                    tvEmail.text = searchDetailsOffline?.email.toString()
+                    tvOrderId.text =
+                        requireContext().getString(R.string.order_id) + COLUMN + searchDetailsOffline?.order_ticket_id.toString()
+                    tvPaymentMethod.text =
+                        requireContext().getString(R.string.payment_method) + COLUMN + searchDetailsOffline?.payment_type.toString()
+                }
+                viewModel.selectedSearchOrderListData.observe(viewLifecycleOwner) { list ->
+                    if (list.all { it?.is_checked_in == true }) {
+                        visibleCheckedInButton(true)
+                    } else {
+                        visibleCheckedInButton(false)
+                    }
+                }
+            }
         }
+
         initView()
 
         viewModel.selectedSearchedItemEmailAdd.observe(viewLifecycleOwner) {
@@ -54,7 +115,7 @@ class ScanSearchedOrderDetailsFragment : Fragment() {
         val subTitle = activity?.findViewById<AppCompatTextView>(R.id.subTitle)
         subTitle?.visibility = View.GONE
 
-        binding.apply {
+        /*binding.apply {
             tvName.text = searchDetails?.name.toString()
             tvEmail.text = searchDetails?.email.toString()
             tvOrderId.text =
@@ -62,32 +123,77 @@ class ScanSearchedOrderDetailsFragment : Fragment() {
             tvPaymentMethod.text =
                 requireContext().getString(R.string.payment_method) + COLUMN + searchDetails?.payment_type.toString()
         }
-        searchDetails?.is_checked_in.let {
-            if (it!!) {
-                binding.btnCheckIn.apply {
-                    isEnabled = false
-                    text = requireContext().getString(R.string.checked)
-                }
-            } else {
-                binding.btnCheckIn.apply {
-                    isEnabled = true
-                    text = requireContext().getString(R.string.check_in)
-                }
-            }
-        }
 
-        searchDetails?.order_id?.let { viewModel.getOrderDetailsResponse(it) }
-        observeOrderDetailsData()
+        searchDetails?.is_checked_in?.let {
+            visibleCheckedInButton(it)
+        }
+*/
+        /*searchDetails?.order_id?.let { viewModel.getOrderDetailsResponse(it) }
+        observeOrderDetailsData()*/
 
         binding.btnCheckIn.setOnClickListener {
-            val bottomSheet =
-                searchDetails?.order_id?.let { id ->
-                    CheckInBottomSheetFragment(
-                        binding.root,
-                        id, searDetailsResponse
-                    )
+            viewModel.isOnlineMode.observe(viewLifecycleOwner) {
+                if (it) {
+                    networkConnectionLiveData.observeOnce(
+                        viewLifecycleOwner,
+                        Observer { isConnected ->
+                            if (isConnected) {
+                                val bottomSheet =
+                                    searchDetails?.order_id?.let { id ->
+                                        CheckInBottomSheetFragment(
+                                            binding.root,
+                                            id, searchDetailsResponse
+                                        )
+                                    }
+                                bottomSheet?.show(
+                                    requireActivity().supportFragmentManager,
+                                    bottomSheet.tag
+                                )
+
+                            } else {
+                                SnackBarUtil.showErrorSnackBar(
+                                    binding.root,getString(R.string.check_network_availability))
+                            }
+                        })
+
+                } else {
+                    searchDetailsResponse.clear()
+                    viewModel.selectedSearchOrderListData.observe(viewLifecycleOwner) { list ->
+                        for (i in list) {
+                            searchDetailsResponse.add(
+                                Item(
+                                    i.is_checked_in,
+                                    i.order_ticket_id,
+                                    i.order_number
+                                )
+                            )
+                        }
+                    }
+                    val bottomSheet =
+                        searchDetailsOffline?.order_ticket_id?.let { id ->
+                            CheckInBottomSheetFragment(
+                                binding.root,
+                                id.toString(), searchDetailsResponse
+                            )
+                        }
+                    bottomSheet?.show(requireActivity().supportFragmentManager, bottomSheet.tag)
                 }
-            bottomSheet?.show(requireActivity().supportFragmentManager, bottomSheet.tag)
+            }
+
+        }
+    }
+
+    private fun visibleCheckedInButton(value: Boolean) {
+        if (value) {
+            binding.btnCheckIn.apply {
+                isEnabled = false
+                text = requireContext().getString(R.string.checked)
+            }
+        } else {
+            binding.btnCheckIn.apply {
+                isEnabled = true
+                text = requireContext().getString(R.string.check_in)
+            }
         }
     }
 
@@ -102,7 +208,7 @@ class ScanSearchedOrderDetailsFragment : Fragment() {
                     DialogProgressUtil.dismiss()
                     if (it.onSuccess.data?.size!! > ZERO) {
                         for (i in ZERO until it.onSuccess.data?.size!!)
-                            it.onSuccess.data[i]?.let { it1 -> searDetailsResponse.add(it1) }
+                            it.onSuccess.data[i]?.let { it1 -> searchDetailsResponse.add(it1) }
                     }
                 }
 

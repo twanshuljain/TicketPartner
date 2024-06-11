@@ -7,11 +7,15 @@ import androidx.room.Query
 import com.example.ticketpartner.common.GET_CHECK_IN_LIST
 import com.example.ticketpartner.common.GET_EVENT_DETAILS
 import com.example.ticketpartner.common.GET_QR_CODE_LIST_FOR_OFFLINE_SCAN
+import com.example.ticketpartner.common.GET_SCAN_LOG_LIST
+import com.example.ticketpartner.common.GET_SEARCH_LIST
 import com.example.ticketpartner.common.GET_TICKET_TYPES_LIST
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.CheckInData
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.DataItems
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.InsertEventDetailsResponse
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.InsertTicketTypeListResponse
+import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.SearchData
+import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.ScanLog
 
 @Dao
 interface TpScanDao {
@@ -38,4 +42,20 @@ interface TpScanDao {
 
     @Query("SELECT * FROM $GET_CHECK_IN_LIST")
     suspend fun getCheckInDataFromLocalDB(): List<CheckInData>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertSearchDataList(searchData: SearchData): Long
+
+    @Query("SELECT * FROM $GET_SEARCH_LIST")
+    suspend fun getSearchDataFromLocalDB(): List<SearchData>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertScanLogDataList(scanLog: ScanLog): Long
+
+    @Query("SELECT * FROM $GET_SCAN_LOG_LIST")
+    suspend fun getScanLogDataFromLocalDB(): List<ScanLog>
+
+    @Query("DELETE FROM $GET_SCAN_LOG_LIST")
+    suspend fun deleteScanLogDataFromLocalDB(): Int
+
 }

@@ -22,13 +22,19 @@ import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.m
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.InsertEventDetailsResponse
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.InsertEventDetailsUIState
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.InsertQrCodeForOffLineScanUIState
+import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.InsertSearchDataOfflineUIState
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.InsertTicketTypeListResponse
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.LoginWithPinUIState
+import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.SearchData
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.usecase.GetCheckInListOfflineUseCase
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.usecase.GetLoginWithPinUseCase
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.usecase.GetQrCodeListUseCase
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.usecase.GetScanEventDetailsUseCase
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.usecase.InsertCheckInDataOfflineUseCase
+import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.usecase.InsertSearchDataOfflineUseCase
+import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.GetScanSearchDataOfflineUIState
+import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.usecase.GetQrScanSearchUseCase
+import com.example.ticketpartner.feature_scan_module.feature_qr_scan.presentation.QrScanViewModel
 import com.technotoil.tglivescan.common.retrofit.apis.ErrorResponseHandler
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.catch
@@ -46,6 +52,8 @@ class LoginScanVewModel @Inject constructor(
     private val insertTicketTypesOfflineUseCase: InsertTicketTypesOfflineUseCase,
     private val getCheckInListOfflineUseCase: GetCheckInListOfflineUseCase,
     private val insertCheckInDataOfflineUseCase: InsertCheckInDataOfflineUseCase,
+    private val insertSearchDataOfflineUseCase: InsertSearchDataOfflineUseCase,
+    private val getQrScanSearchUseCase: GetQrScanSearchUseCase,
     private val logUtil: LogUtil
 ) :
     ViewModel() {
@@ -90,6 +98,15 @@ class LoginScanVewModel @Inject constructor(
     val insertCheckInDataOfflineScan: LiveData<InsertCheckInDataOfflineUIState> =
         _insertCheckInDataOfflineScan
 
+    private val _insertSearchDataOfflineScan: MutableLiveData<InsertSearchDataOfflineUIState> =
+        MutableLiveData()
+    val insertSearchDataOfflineScan: LiveData<InsertSearchDataOfflineUIState> =
+        _insertSearchDataOfflineScan
+
+    private val _getScanSearchData: MutableLiveData<GetScanSearchDataOfflineUIState> =
+        MutableLiveData()
+    val observeScanSearchData: LiveData<GetScanSearchDataOfflineUIState> = _getScanSearchData
+
     fun loginWithPin(name: String, scanPin: String) {
         _pinLoginState.value = LoginWithPinUIState.IsLoading(true)
         viewModelScope.launch {
@@ -129,7 +146,7 @@ class LoginScanVewModel @Inject constructor(
         }
     }
 
-    fun getCheckInDataForOffline(){
+    fun getCheckInDataForOffline() {
         _getCheckInDataForOfflineScan.value = GetCheckInDataOfflineScanUIState.IsLoading(true)
         viewModelScope.launch {
             getCheckInListOfflineUseCase.invoke().catch {
@@ -137,7 +154,7 @@ class LoginScanVewModel @Inject constructor(
                 val error = ErrorResponseHandler(it)
                 _getCheckInDataForOfflineScan.value =
                     GetCheckInDataOfflineScanUIState.OnFailure(error.getErrors().message.toString())
-            }.collect{
+            }.collect {
                 logUtil.log(TAG, "onResponse: $it")
                 _getCheckInDataForOfflineScan.value = GetCheckInDataOfflineScanUIState.OnSuccess(it)
             }
@@ -168,6 +185,7 @@ class LoginScanVewModel @Inject constructor(
                 _insertEventDetailsOfflineScan.value =
                     InsertEventDetailsUIState.OnFailure(it.message.toString())
             }.collect {
+                logUtil.log(TAG, "onResponse: $it")
                 _insertEventDetailsOfflineScan.value =
                     InsertEventDetailsUIState.OnSuccess("Event Detail's data inserted successfully!")
             }
@@ -191,7 +209,6 @@ class LoginScanVewModel @Inject constructor(
     }
 
 
-
     fun getEventDetailsOfflineScan() {
         _getEventDetailsOfflineScan.value = GetEventDetailsOfflineScanUIState.IsLoading(true)
         viewModelScope.launch {
@@ -213,7 +230,7 @@ class LoginScanVewModel @Inject constructor(
                 logUtil.log(TAG, "onError${it.message.toString()}")
                 _insertTicketTypesOfflineScan.value =
                     GetTicketTypesOfflineScanUIState.OnFailure(it.message.toString())
-            }.collect{
+            }.collect {
                 logUtil.log(TAG, "onResponse: $it")
                 _insertTicketTypesOfflineScan.value =
                     GetTicketTypesOfflineScanUIState.OnSuccess("Data inserted successfully!")
@@ -221,14 +238,14 @@ class LoginScanVewModel @Inject constructor(
         }
     }
 
-    fun insertCheckInDataOfflineScan(checkInData: CheckInData){
+    fun insertCheckInDataOfflineScan(checkInData: CheckInData) {
         _insertCheckInDataOfflineScan.value = InsertCheckInDataOfflineUIState.IsLoading(true)
         viewModelScope.launch {
             insertCheckInDataOfflineUseCase.invoke(checkInData).catch {
                 logUtil.log(TAG, "onError${it.message.toString()}")
                 _insertCheckInDataOfflineScan.value =
                     InsertCheckInDataOfflineUIState.OnFailure(it.message.toString())
-            }.collect{
+            }.collect {
                 logUtil.log(TAG, "onResponse: $it")
                 _insertCheckInDataOfflineScan.value =
                     InsertCheckInDataOfflineUIState.OnSuccess("Data inserted successfully!")
@@ -236,6 +253,34 @@ class LoginScanVewModel @Inject constructor(
         }
     }
 
+    fun getSearchData() {
+        viewModelScope.launch {
+            getQrScanSearchUseCase.invokeAllData().catch {
+                logUtil.log(QrScanViewModel.TAG, "onError${it.message.toString()}")
+                val error = ErrorResponseHandler(it)
+                _getScanSearchData.value =
+                    GetScanSearchDataOfflineUIState.OnFailure(error.getErrors().message.toString())
+            }.collect {
+                logUtil.log(QrScanViewModel.TAG, "onResponse: $it")
+                _getScanSearchData.value = GetScanSearchDataOfflineUIState.OnSuccess(it.data)
+            }
+        }
+    }
+
+    fun insertSearchDataOfflineScan(searchData: SearchData) {
+        _insertSearchDataOfflineScan.value = InsertSearchDataOfflineUIState.IsLoading(true)
+        viewModelScope.launch {
+            insertSearchDataOfflineUseCase.invoke(searchData).catch {
+                logUtil.log(TAG, "onError${it.message.toString()}")
+                _insertSearchDataOfflineScan.value =
+                    InsertSearchDataOfflineUIState.OnFailure(it.message.toString())
+            }.collect {
+                logUtil.log(TAG, "onResponse: $it")
+                _insertSearchDataOfflineScan.value =
+                    InsertSearchDataOfflineUIState.OnSuccess("Data inserted successfully!")
+            }
+        }
+    }
 
 
     companion object {

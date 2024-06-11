@@ -25,11 +25,13 @@ const val getCreateEventTicketList = "ticket/ticket-list/{eventId}"
 const val getScanEventDetails = "ticket-scan/event/detail/"
 const val getQrScannedTicketData = "ticket-scan/runtime-reports/"
 const val getQrScannedSearchData = "ticket-scan/get-orders/?"
+const val getQrScannedSearchDataOffline = "ticket-scan/offline/search-data/retrieve/"
 const val getQrOrderDetailsData = "ticket-scan/get-orders/details/?"
 const val getQrCheckedIn = "ticket-scan/check-in/"
 const val getQrScanReportAll = "ticket-scan/reports/"
 const val getQrCodeListForOfflineScan = "ticket-scan/offline/qr-code/data/retrieve"
 const val getCheckInList = "ticket-scan/offline/check-in/data/retrieve"
+const val getUploadScanLogData = "ticket-scan/offline/scan-log/data/sync/"
 
 //scan module
 const val loginWithPin = "ticket-scan/login/"

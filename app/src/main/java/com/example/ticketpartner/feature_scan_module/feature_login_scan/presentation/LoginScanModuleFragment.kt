@@ -9,6 +9,7 @@ import androidx.activity.OnBackPressedCallback
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.example.ticketpartner.R
 import com.example.ticketpartner.common.EMPTY_STRING
@@ -17,7 +18,6 @@ import com.example.ticketpartner.common.ZERO
 import com.example.ticketpartner.common.storage.MyPreferences
 import com.example.ticketpartner.common.storage.PrefConstants
 import com.example.ticketpartner.databinding.FragmentLoginScanModuleBinding
-import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.DataItems
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.EventDetails
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.GetCheckInDataOfflineScanUIState
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.GetQrCodeForOffLineScanUIState
@@ -25,10 +25,14 @@ import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.m
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.InsertTicketTypeListResponse
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.LoginWithPinResponse
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.LoginWithPinUIState
+import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.GetScanSearchDataOfflineUIState
 import com.example.ticketpartner.utils.BackPressHandler
 import com.example.ticketpartner.utils.DialogProgressUtil
 import com.example.ticketpartner.utils.NavigateFragmentUtil.navigateWithClearNavGraph
+import com.example.ticketpartner.utils.NetworkConnectionLiveData
 import com.example.ticketpartner.utils.Utility
+import com.example.ticketpartner.utils.Utility.hideKeyboard
+import com.example.ticketpartner.utils.Utility.observeOnce
 import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -39,10 +43,10 @@ class LoginScanModuleFragment : Fragment() {
     private val viewModel: LoginScanVewModel by activityViewModels()
     private var etName = EMPTY_STRING
     private var etPin = EMPTY_STRING
+    private lateinit var networkConnectionLiveData: NetworkConnectionLiveData
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
         binding = FragmentLoginScanModuleBinding.inflate(layoutInflater)
@@ -52,6 +56,7 @@ class LoginScanModuleFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        networkConnectionLiveData = NetworkConnectionLiveData(requireContext())
         val callback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 handleOnBackPressedButton()
@@ -79,9 +84,9 @@ class LoginScanModuleFragment : Fragment() {
             }
         }
 
-        etName = "staff"
-        etPin = "104038"
-
+        /*  etName = "sonu"
+          etPin = "139048"
+  */
         binding.ivClearText.setOnClickListener {
             binding.etPin.setText(EMPTY_STRING)
             etPin = EMPTY_STRING
@@ -89,10 +94,18 @@ class LoginScanModuleFragment : Fragment() {
 
         binding.rlContinue.setOnClickListener {
             if (isAllFieldsValid()) {
-                //  requireActivity().deleteDatabase(TP_LOCAL_DATABASE)
+                //requireActivity().deleteDatabase(TP_LOCAL_DATABASE)
+                networkConnectionLiveData.observeOnce(viewLifecycleOwner, Observer { isConnected ->
+                    if (isConnected) {
+                        viewModel.loginWithPin(etName, etPin)
+                        observeLoginResponse()
 
-                viewModel.loginWithPin(etName, etPin)
-                observeLoginResponse()
+                    } else {
+                        SnackBarUtil.showErrorSnackBar(
+                            binding.root, getString(R.string.check_network_availability)
+                        )
+                    }
+                })
             }
         }
     }
@@ -105,7 +118,6 @@ class LoginScanModuleFragment : Fragment() {
                 }
 
                 is LoginWithPinUIState.OnSuccess -> {
-                    DialogProgressUtil.dismiss()
 
 
                     /** update user login session */
@@ -117,57 +129,39 @@ class LoginScanModuleFragment : Fragment() {
                     /** insert ticket types list in local DB */
                     val eventTickets = it.onSuccess.data?.event?.event_tickets
                     if (!eventTickets.isNullOrEmpty()) {
-                        for (i in eventTickets)
-                            i?.ticket_name?.let { name ->
-                                viewModel.insertTicketTypesOfflineScan(
-                                    InsertTicketTypeListResponse(
-                                        name
-                                    )
+                        for (i in eventTickets) i?.ticket_name?.let { name ->
+                            viewModel.insertTicketTypesOfflineScan(
+                                InsertTicketTypeListResponse(
+                                    name
                                 )
-                            }
+                            )
+                        }
                     }
+
+                    /*  findNavController().navigateWithClearNavGraph(
+                          R.id.main_nav_graph,
+                          R.id.eventDetailsScanModuleFragment
+                      )*/
 
                     /** make API call for qr code list and insert data in local DB */
                     viewModel.getQrCodeListForOfflineScan()
                     observeQrCodeListResponseForOfflineScan()
 
+                    /* viewModel.getSearchData()
+                     observeSearchDataOffline()
+                     DialogProgressUtil.dismiss()
+ */
                     /** observe check-In list data and insert data in local DB */
                     //  viewModel.getCheckInDataForOffline()
                     //getCheckInDataOffline()
 
                     SnackBarUtil.showSuccessSnackBar(binding.root, it.onSuccess.message.toString())
-
                 }
 
                 is LoginWithPinUIState.OnFailure -> {
                     DialogProgressUtil.dismiss()
                     SnackBarUtil.showErrorSnackBar(binding.root, it.onFailure)
                 }
-            }
-        }
-    }
-
-    private fun getCheckInDataOffline() {
-        viewModel.getCheckInDataForOfflineScan.observe(viewLifecycleOwner) {
-            when (it) {
-                is GetCheckInDataOfflineScanUIState.IsLoading -> {}
-                is GetCheckInDataOfflineScanUIState.OnSuccess -> {
-                    if (!it.onSuccess.data.isNullOrEmpty())
-                        for (i in ZERO until it.onSuccess.data.size) {
-                            it.onSuccess.data[i]?.let { item ->
-                                viewModel.insertCheckInDataOfflineScan(
-                                    item
-                                )
-                            }
-                        }
-                    findNavController().navigateWithClearNavGraph(
-                        R.id.main_nav_graph,
-                        R.id.eventDetailsScanModuleFragment
-                    )
-                    Log.e("TAG", "getCheckInDataOffline: ${it.onSuccess} ")
-                }
-
-                is GetCheckInDataOfflineScanUIState.OnFailure -> {}
             }
         }
     }
@@ -209,25 +203,6 @@ class LoginScanModuleFragment : Fragment() {
                             )
                         }
                     }
-
-                    /** testing purpose */
-                    viewModel.insetQrCodeListForOfflineScan(
-                        DataItems(
-                            4,
-                            false,
-                            false,
-                            "tax",
-                            "",
-                            "1353537",
-                            1234,
-                            "",
-                            "paid",
-                            "offline",
-                            "paid",
-                            "9644756516"
-                        )
-                    )
-
                     viewModel.getCheckInDataForOffline()
                     getCheckInDataOffline()
                 }
@@ -237,6 +212,63 @@ class LoginScanModuleFragment : Fragment() {
             }
         }
     }
+
+    private fun getCheckInDataOffline() {
+        viewModel.getCheckInDataForOfflineScan.observe(viewLifecycleOwner) {
+            when (it) {
+                is GetCheckInDataOfflineScanUIState.IsLoading -> {}
+                is GetCheckInDataOfflineScanUIState.OnSuccess -> {
+                    if (!it.onSuccess.data.isNullOrEmpty()) for (i in ZERO until it.onSuccess.data.size) {
+                        it.onSuccess.data[i]?.let { item ->
+                            viewModel.insertCheckInDataOfflineScan(
+                                item
+                            )
+                        }
+                    }
+                    viewModel.getSearchData()
+                    observeSearchDataOffline()/* findNavController().navigateWithClearNavGraph(
+                         R.id.main_nav_graph,
+                         R.id.eventDetailsScanModuleFragment
+                     )*/
+                    Log.e("TAG", "getCheckInDataOffline: ${it.onSuccess} ")
+                }
+
+                is GetCheckInDataOfflineScanUIState.OnFailure -> {}
+            }
+        }
+    }
+
+    private fun observeSearchDataOffline() {
+        viewModel.observeScanSearchData.observe(viewLifecycleOwner) {
+            when (it) {
+                is GetScanSearchDataOfflineUIState.IsLoading -> {
+                    DialogProgressUtil.show(childFragmentManager)
+                }
+
+                is GetScanSearchDataOfflineUIState.OnSuccess -> {
+                    if (it.onSuccess?.size!! > ZERO) {
+                        for (i in ZERO until it.onSuccess?.size!!) {
+                            it.onSuccess[i]?.let { it1 ->
+                                viewModel.insertSearchDataOfflineScan(
+                                    it1
+                                )
+                            }
+                        }
+                    }
+                    hideKeyboard(requireActivity())
+                    DialogProgressUtil.dismiss()
+                    findNavController().navigateWithClearNavGraph(
+                        R.id.main_nav_graph, R.id.eventDetailsScanModuleFragment
+                    )
+                }
+
+                is GetScanSearchDataOfflineUIState.OnFailure -> {
+                    DialogProgressUtil.dismiss()
+                }
+            }
+        }
+    }
+
 
     private fun updateUserDetailsToSession(loginData: LoginWithPinResponse) {
         loginData.let {

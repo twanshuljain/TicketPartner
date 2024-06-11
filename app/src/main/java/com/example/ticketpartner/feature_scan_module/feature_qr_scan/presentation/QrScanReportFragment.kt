@@ -8,18 +8,32 @@ import androidx.appcompat.widget.AppCompatTextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.example.ticketpartner.R
+import com.example.ticketpartner.common.HYPHEN_CHAR
 import com.example.ticketpartner.common.SnackBarUtil
+import com.example.ticketpartner.common.VERTICAL_POLE
 import com.example.ticketpartner.common.ZERO
+import com.example.ticketpartner.common.storage.MyPreferences
 import com.example.ticketpartner.databinding.FragmentQrScanReportBinding
 import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.DataList
+import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.GetScanLogOfflineUIState
 import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.QrScanReportAllUIState
+import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.ScanLog
+import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.SendScanLogOfflineRequest
 import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.TicketDataList
+import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.UploadScanDataServerUIState
 import com.example.ticketpartner.utils.DialogProgressUtil
+import com.example.ticketpartner.utils.NetworkConnectionLiveData
+import com.example.ticketpartner.utils.Utility.observeOnce
+import com.example.ticketpartner.utils.getFormattedStartDateForEvent
+import com.example.ticketpartner.utils.getFormattedTimeForEvent
 
 class QrScanReportFragment : Fragment() {
     private lateinit var binding: FragmentQrScanReportBinding
     private lateinit var adapter: ScanReportTicketNameAdapter
     private val viewModel: QrScanViewModel by activityViewModels()
+    private val scanLogDataOffline = ArrayList<ScanLog>()
+    private lateinit var networkConnectionLiveData: NetworkConnectionLiveData
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -33,6 +47,22 @@ class QrScanReportFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         initView()
         observeScanReportAllData()
+        observeScanReportOffline()
+    }
+
+    private fun observeScanReportOffline() {
+        viewModel.getScanLogListData()
+        scanLogDataOffline.clear()
+        viewModel.getScanLogLocalDB.observe(viewLifecycleOwner){
+            when(it){
+                is GetScanLogOfflineUIState.IsLoading -> {}
+                is GetScanLogOfflineUIState.OnSuccess -> {
+                    for (i in it.onSuccess)
+                        scanLogDataOffline.add(i)
+                }
+                is GetScanLogOfflineUIState.OnFailure -> {}
+            }
+        }
     }
 
 
@@ -99,6 +129,21 @@ class QrScanReportFragment : Fragment() {
     }
 
     private fun initView() {
+        val userLoginDetails = MyPreferences.getUserDetails()
+        networkConnectionLiveData = NetworkConnectionLiveData(requireContext())
+
+        binding.tvEventName.text = userLoginDetails?.data?.event?.name
+
+        val startDate =
+            getFormattedStartDateForEvent(userLoginDetails?.data?.event?.event_start_date) + VERTICAL_POLE
+
+        val startEndTime =
+            getFormattedTimeForEvent(userLoginDetails?.data?.event?.event_start_time) + HYPHEN_CHAR + getFormattedTimeForEvent(
+               userLoginDetails?.data?.event?.event_end_time
+            )
+
+        binding.tvDateTime.text = startDate+startEndTime
+
         val subTitle = activity?.findViewById<AppCompatTextView>(R.id.subTitle)
         subTitle?.visibility = View.GONE
 
@@ -204,6 +249,53 @@ class QrScanReportFragment : Fragment() {
                 btnAccepted.setTextColor(requireContext().getColor(R.color.orange))
                 btnRejected.setTextColor(requireContext().getColor(R.color.white))
                 clAllTicketCount.visibility = View.GONE
+            }
+        }
+
+        binding.btnUploadDataServer.setOnClickListener {
+            networkConnectionLiveData.observeOnce(
+                viewLifecycleOwner) { isConnected ->
+                if (isConnected) {
+                    if (scanLogDataOffline.size > ZERO) {
+                        viewModel.uploadScanLogDataOnServer(
+                            SendScanLogOfflineRequest(
+                                scanLogDataOffline
+                            )
+                        )
+                        observeUploadDataOnServerResponse()
+                    } else {
+                        SnackBarUtil.showErrorSnackBar(
+                            binding.root,
+                            getString(R.string.you_do_not_have_data)
+                        )
+                    }
+                } else {
+                    SnackBarUtil.showErrorSnackBar(
+                        binding.root,
+                        getString(R.string.check_network_availability)
+                    )
+                }
+                }
+            }
+    }
+
+    private fun observeUploadDataOnServerResponse() {
+        viewModel.uploadScanLogDataOnServer.observe(viewLifecycleOwner){
+            when(it){
+                is UploadScanDataServerUIState.IsLoading -> {
+                    DialogProgressUtil.show(childFragmentManager)
+                }
+                is UploadScanDataServerUIState.OnSuccess -> {
+                    scanLogDataOffline.clear()
+                    DialogProgressUtil.dismiss()
+                    SnackBarUtil.showSuccessSnackBar(binding.root, it.onSuccess.message.toString())
+                    viewModel.deleteScanLogDataFromLocalDB()
+                    viewModel.getScannedTicketData()
+                }
+                is UploadScanDataServerUIState.OnFailure -> {
+                    DialogProgressUtil.dismiss()
+                    SnackBarUtil.showErrorSnackBar(binding.root, it.onFailure.toString())
+                }
             }
         }
     }

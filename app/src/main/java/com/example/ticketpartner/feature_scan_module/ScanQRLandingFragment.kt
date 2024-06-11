@@ -192,6 +192,8 @@ class ScanQRLandingFragment : Fragment() {
                 R.id.nested_qr_scan_nav_graph,
                 R.id.loginScanModuleFragment
             )
+            /// requireActivity().deleteDatabase(TP_LOCAL_DATABASE)
+            viewModel.clearAndRecreateDatabase(requireActivity())
             MyPreferences.clearpref()
             dialog.dismiss()
         }

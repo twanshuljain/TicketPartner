@@ -12,9 +12,9 @@ data class SearchApiScanResponse(
 
 @Parcelize
 data class MData(
-    val email: String?,
-    val name: String?,
-    val order_id: String?,
-    val payment_type: String?,
-    val is_checked_in: Boolean? = false
+    var email: String?,
+    var name: String?,
+    var order_id: String = "",
+    var payment_type: String?,
+    var is_checked_in: Boolean? = false
 ) : Parcelable

@@ -4,6 +4,7 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.content.pm.PackageManager
 import android.hardware.Camera
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.util.SparseArray
@@ -13,6 +14,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.camera.core.ImageCapture
 import androidx.core.content.ContextCompat
@@ -32,11 +34,16 @@ import com.example.ticketpartner.databinding.LayoutEndScanBottomDialogBinding
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.CheckInData
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.DataItems
 import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.GetCheckInDataLocalDBUIState
+import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.NameData
 import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.QrCodeListFromLocalDBUIState
+import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.QrScanResponse
 import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.QrScanUIState
 import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.QrScannedTicketUIState
+import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.ScanLog
 import com.example.ticketpartner.utils.DialogProgressUtil
 import com.example.ticketpartner.utils.NetworkConnectionLiveData
+import com.example.ticketpartner.utils.TimePickerUtility
+import com.example.ticketpartner.utils.Utility
 import com.example.ticketpartner.utils.Utility.observeOnce
 import com.google.android.gms.vision.CameraSource
 import com.google.android.gms.vision.Detector
@@ -60,6 +67,7 @@ class ScanBottomQRScanFragment : Fragment() {
     private var getCheckInItemListLocalDB = ArrayList<CheckInData>()
     private var getCheckInOrderTicketIdListLocalDB = ArrayList<String>()
     private lateinit var networkConnectionLiveData: NetworkConnectionLiveData
+    private var isObserved = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -79,24 +87,6 @@ class ScanBottomQRScanFragment : Fragment() {
     private fun initView() {
         getQrCodeListItemLocalDB.clear()
         qrCodeListLocalDB.clear()
-        getCheckInItemListLocalDB.clear()
-        getCheckInOrderTicketIdListLocalDB.clear()
-
-        viewModel.insertCheckInDataOfflineScan(
-            CheckInData(
-                4,
-                false,
-                false,
-                "testRaj",
-                "rajneesh",
-                "staff",
-                "12000",
-                1234,
-                "",
-                5
-            )
-        )
-
         observeQrCodeListFromLocalDB()
         observeCheckInDataFromLocalDB()
         binding.ivZoom.isEnabled = false
@@ -148,6 +138,9 @@ class ScanBottomQRScanFragment : Fragment() {
     }
 
     private fun observeCheckInDataFromLocalDB() {
+        getCheckInItemListLocalDB.clear()
+        getCheckInOrderTicketIdListLocalDB.clear()
+
         viewModel.getCheckInFromLocalDB.observe(viewLifecycleOwner) {
             when (it) {
                 is GetCheckInDataLocalDBUIState.IsLoading -> {}
@@ -202,6 +195,8 @@ class ScanBottomQRScanFragment : Fragment() {
             .setAutoFocusEnabled(true)
             .build()
 
+        networkConnectionLiveData = NetworkConnectionLiveData(requireContext())
+
         binding.ivZoom.isEnabled = true
         binding.ivTorch.isEnabled = true
 
@@ -240,76 +235,170 @@ class ScanBottomQRScanFragment : Fragment() {
                 cameraSource.release()
             }
 
+            @RequiresApi(Build.VERSION_CODES.O)
             override fun receiveDetections(detections: Detector.Detections<Barcode>) {
                 var scannedValue = EMPTY_STRING
                 val barcodes: SparseArray<Barcode> = detections.detectedItems
                 scannedValue = barcodes.valueAt(ZERO).rawValue
 
-                var count = 0
                 requireActivity().runOnUiThread {
-                    scannedValue = "93027513091069"
                     if (scannedValue.isNotEmpty()) {
                         cameraSource.stop()
-                        val savedSelectedList =
-                            MyPreferences.getArrayList(SCAN_SELECTED_TICKET_TYPES_LIST)
-                        networkConnectionLiveData = NetworkConnectionLiveData(requireContext())
+                        /** Observe network connection status only once */
                         networkConnectionLiveData.observeOnce(
                             viewLifecycleOwner,
                             Observer { isConnected ->
-
-                                if (isConnected) {
-                                    viewModel.qrScanCode(scannedValue, savedSelectedList)
-                                    observeScanTicketResponse()
-                                    Toast.makeText(requireContext(), "online", Toast.LENGTH_SHORT)
-                                        .show()
-
-                                } else {
-
-                                    if (scannedValue.isNotEmpty()) {
-                                        val getQrCodeIndex = qrCodeListLocalDB.indexOf(scannedValue)
-
-                                        /** if we have qrCode in local db */
-                                        if (getQrCodeIndex != -1) {
-
-                                            /** get orderTicketId of scanned qr code*/
-                                            val orderTicketIdQrCode =
-                                                getQrCodeListItemLocalDB[getQrCodeIndex].order_tickets_id.toString()
-
-                                            if (orderTicketIdQrCode.isNotEmpty()) {
-                                                val indexOfCheckInListWithTicketId =
-                                                    getCheckInOrderTicketIdListLocalDB.indexOf(
-                                                        orderTicketIdQrCode
-                                                    )
-
-                                                /** check isScanned true/false */
-                                                if (getCheckInItemListLocalDB[indexOfCheckInListWithTicketId].is_checked_in == true) {
-                                                    Toast.makeText(
-                                                        requireContext(),
-                                                        "Already scan",
-                                                        Toast.LENGTH_SHORT
-                                                    ).show()
-                                                } else {
-                                                    getCheckInItemListLocalDB[indexOfCheckInListWithTicketId].is_checked_in = true
-                                                    viewModel.insertCheckInDataOfflineScan(
-                                                   getCheckInItemListLocalDB[indexOfCheckInListWithTicketId]
-                                                )
-
-                                                    Toast.makeText(
-                                                        requireContext(),
-                                                        "Scanned successfully!",
-                                                        Toast.LENGTH_SHORT
-                                                    ).show()
-                                                }
-                                            }
-                                        }
-                                    }
-                                    scannedValue = EMPTY_STRING
+                                if (!isObserved) {
+                                    handleNetworkConnection(isConnected, scannedValue)
+                                    isObserved = true
                                 }
                             })
                     }
                 }
             }
         })
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun handleNetworkConnection(isConnected: Boolean, scannedValue: String) {
+        val savedSelectedList =
+            MyPreferences.getArrayList(SCAN_SELECTED_TICKET_TYPES_LIST)
+        val userLoginDetails = MyPreferences.getUserDetails()
+        if (isConnected) {
+            viewModel.qrScanCode(scannedValue, savedSelectedList)
+            observeScanTicketResponse()
+        } else {
+            if (scannedValue.isNotEmpty()) {
+                val getQrCodeIndex = qrCodeListLocalDB.indexOf(scannedValue)
+
+                /** if we have qrCode in local db */
+                if (getQrCodeIndex != -1) {
+
+                    /** get orderTicketId of scanned qr code*/
+                    val orderTicketIdQrCode =
+                        getQrCodeListItemLocalDB[getQrCodeIndex].order_tickets_id.toString()
+
+                    if (orderTicketIdQrCode.isNotEmpty()) {
+                        val indexOfCheckInListWithTicketId =
+                            getCheckInOrderTicketIdListLocalDB.indexOf(orderTicketIdQrCode)
+
+                        if (indexOfCheckInListWithTicketId != 1) {
+                            /** check isScanned true/false */
+                            if (getCheckInItemListLocalDB[indexOfCheckInListWithTicketId].is_checked_in == true) {
+
+                                    viewModel.insertScanLogOffline(
+                                    ScanLog(
+                                        "Already scanned",
+                                        userLoginDetails?.data?.event?.id,
+                                        false,
+                                        "",
+                                        Utility.getDeviceUUID(requireContext()).toString(),
+                                        userLoginDetails?.data?.event?.name,
+                                        getCheckInItemListLocalDB[indexOfCheckInListWithTicketId].order_number,
+                                        getCheckInItemListLocalDB[indexOfCheckInListWithTicketId].order_tickets_id,
+                                        scannedValue,
+                                        TimePickerUtility.getCurrentDateTimeForServer(),
+                                        userLoginDetails?.data?.scan_key_id,
+                                        true,
+                                        "",
+                                        "Offline",
+                                        ""
+                                    )
+                                )
+                                viewModel._qrScanState.value = QrScanUIState.IsLoading(false)
+                                viewModel._qrScanState.value =
+                                    QrScanUIState.OnFailure("Already scanned")
+                                navigateToStatusTicket()
+
+                            } else {
+                                getCheckInItemListLocalDB[indexOfCheckInListWithTicketId].is_checked_in =
+                                    true
+                                viewModel.insertCheckInDataOfflineScan(
+                                    getCheckInItemListLocalDB[indexOfCheckInListWithTicketId]
+                                )
+                                viewModel.insertScanLogOffline(
+                                    ScanLog(
+                                        "Scanned successfully",
+                                        userLoginDetails?.data?.event?.id,
+                                        false,
+                                        "",
+                                        Utility.getDeviceUUID(requireContext()).toString(),
+                                        userLoginDetails?.data?.event?.name,
+                                        getCheckInItemListLocalDB[indexOfCheckInListWithTicketId].order_number,
+                                        getCheckInItemListLocalDB[indexOfCheckInListWithTicketId].order_tickets_id,
+                                        scannedValue,
+                                        TimePickerUtility.getCurrentDateTimeForServer(),
+                                        userLoginDetails?.data?.scan_key_id,
+                                        true,
+                                        "",
+                                        "Offline",
+                                        ""
+                                    )
+                                )
+                                viewModel._qrScanState.value = QrScanUIState.OnSuccess(
+                                    QrScanResponse(
+                                        NameData("rajneesh"),
+                                        "200",
+                                        "Scanned successfully",
+                                        200
+                                    )
+                                )
+                                navigateToStatusTicket()
+                                Toast.makeText(
+                                    requireContext(),
+                                    "Scanned successfully!",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
+                        } else {
+                            viewModel.insertScanLogOffline(
+                                ScanLog(
+                                    "Invalid Ticket",
+                                    userLoginDetails?.data?.event?.id,
+                                    false,
+                                    "",
+                                    Utility.getDeviceUUID(requireContext()).toString(),
+                                    userLoginDetails?.data?.event?.name,
+                                    "",
+                                    null,
+                                    scannedValue,
+                                    TimePickerUtility.getCurrentDateTimeForServer(),
+                                    userLoginDetails?.data?.scan_key_id,
+                                    false,
+                                    "",
+                                    "Offline",
+                                    ""
+                                )
+                            )
+                            viewModel._qrScanState.value = QrScanUIState.OnFailure("Invalid Ticket")
+                            navigateToStatusTicket()
+                        }
+                    }
+                }
+            } else {
+                viewModel.insertScanLogOffline(
+                    ScanLog(
+                        "Invalid Ticket",
+                        userLoginDetails?.data?.event?.id,
+                        false,
+                        "",
+                        Utility.getDeviceUUID(requireContext()).toString(),
+                        userLoginDetails?.data?.event?.name,
+                        "",
+                        null,
+                        scannedValue,
+                        TimePickerUtility.getCurrentDateTimeForServer(),
+                        userLoginDetails?.data?.scan_key_id,
+                        false,
+                        "",
+                        "Offline",
+                        ""
+                    )
+                )
+                viewModel._qrScanState.value = QrScanUIState.OnFailure("Invalid Ticket")
+                navigateToStatusTicket()
+            }
+        }
     }
 
     private fun observeScanTicketResponse() {
@@ -430,6 +519,11 @@ class ScanBottomQRScanFragment : Fragment() {
                 }
             }
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        isObserved = false
     }
 
     private fun openImagePickerBottomSheet() {

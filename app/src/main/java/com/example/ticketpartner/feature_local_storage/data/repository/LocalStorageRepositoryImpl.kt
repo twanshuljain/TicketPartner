@@ -6,9 +6,11 @@ import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.m
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.DataItems
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.InsertEventDetailsResponse
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.InsertTicketTypeListResponse
+import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.SearchData
+import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.ScanLog
 import javax.inject.Inject
 
-class LocalStorageRepositoryImpl @Inject constructor(private val localStorageDataSource: LocalStorageDataSource):
+class LocalStorageRepositoryImpl @Inject constructor(private val localStorageDataSource: LocalStorageDataSource) :
     LocalStorageRepository {
     override suspend fun insertQrCodeList(getQrCodeListResponse: DataItems): Long {
         return localStorageDataSource.insertQrCodeList(getQrCodeListResponse)
@@ -41,5 +43,25 @@ class LocalStorageRepositoryImpl @Inject constructor(private val localStorageDat
 
     override suspend fun getCheckInDataLocalDb(): List<CheckInData> {
         return localStorageDataSource.getCheckInDataLocalDb()
+    }
+
+    override suspend fun insertSearchDataLocalDB(searchData: SearchData): Long {
+        return localStorageDataSource.insertSearchDataLocalDB(searchData)
+    }
+
+    override suspend fun getSearchDataLocalDb(): List<SearchData> {
+        return localStorageDataSource.getSearchDataLocalDb()
+    }
+
+    override suspend fun insertScanLogDataLocalDB(scanLog: ScanLog): Long {
+        return localStorageDataSource.insertScanLogDataLocalDB(scanLog)
+    }
+
+    override suspend fun getScanLogDataLocalDb(): List<ScanLog> {
+        return localStorageDataSource.getScanLogDataLocalDb()
+    }
+
+    override suspend fun deleteScanLogDataLocalDB(): Int {
+        return localStorageDataSource.deleteScanLogDataLocalDB()
     }
 }

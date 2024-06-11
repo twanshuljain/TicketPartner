@@ -47,13 +47,13 @@ class ScanCheckInAdapter(
             }
         }
         holder.binding.tvOrderId.text =
-            context.getString(R.string.order_id) + VERTICAL_DOTS + list[position]?.order_number
+            context.getString(R.string.order_id) + VERTICAL_DOTS + list[position]?.order_id
 
         holder.binding.CheckBox.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
                 list[position]?.order_id?.let { checkedOrderIdList.add(it.toLong()) }
             } else {
-                list[position]?.order_number?.let { checkedOrderIdList.remove(it.toLong()) }
+                list[position]?.order_id?.let { checkedOrderIdList.remove(it.toLong()) }
             }
             position(position)
             checkedOrderId(checkedOrderIdList)
