@@ -104,7 +104,7 @@ class CheckInBottomSheetFragment(
                                         userLoginDetails?.data?.event?.id,
                                         false,
                                         "",
-                                        Utility.getDeviceUUID(requireContext()).toString(),
+                                        Utility.getDeviceUUID().toString(),
                                         userLoginDetails?.data?.event?.name,
                                         data.order_number,
                                         data.order_ticket_id,

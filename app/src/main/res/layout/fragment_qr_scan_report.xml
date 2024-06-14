@@ -25,7 +25,6 @@
         app:layout_constraintBottom_toTopOf="@id/btnUploadDataServer"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginBottom="@dimen/margin_30"
         app:layout_constraintTop_toBottomOf="@id/includeTitle">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -134,8 +133,8 @@
 
                     <com.example.ticketpartner.utils.CircularProgressBar
                         android:id="@+id/progress"
-                        android:layout_width="@dimen/size_180"
-                        android:layout_height="@dimen/size_180"
+                        android:layout_width="@dimen/size_140"
+                        android:layout_height="@dimen/size_140"
                         android:layout_marginTop="@dimen/margin_20"
                         android:progressDrawable="@drawable/circle"
                         android:visibility="visible"
@@ -169,8 +168,8 @@
                     <ProgressBar
                         android:id="@+id/progress_accepted"
                         style="@style/CircularDeterminateProgressBar"
-                        android:layout_width="@dimen/size_200"
-                        android:layout_height="@dimen/size_200"
+                        android:layout_width="@dimen/size_180"
+                        android:layout_height="@dimen/size_180"
                         android:indeterminateOnly="false"
                         android:progressDrawable="@drawable/progress_accepted_circle"
                         android:layout_marginTop="@dimen/margin_20"
@@ -222,8 +221,8 @@
                     <ProgressBar
                         android:id="@+id/progress_rejected"
                         style="@style/CircularDeterminateProgressBar"
-                        android:layout_width="@dimen/size_200"
-                        android:layout_height="@dimen/size_200"
+                        android:layout_width="@dimen/size_180"
+                        android:layout_height="@dimen/size_180"
                         android:indeterminateOnly="false"
                         android:progressDrawable="@drawable/progress_circle_rejected"
                         android:layout_marginTop="@dimen/margin_20"
@@ -435,7 +434,6 @@
                     app:layout_constraintStart_toStartOf="@id/guidelineStart"
                     app:layout_constraintTop_toBottomOf="@id/cvProgress"
                     android:orientation="vertical"
-                    android:layout_marginBottom="@dimen/margin_15"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     tools:listitem="@layout/item_scan_report_ticket_name" />
 

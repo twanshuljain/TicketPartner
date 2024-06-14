@@ -29,10 +29,12 @@ import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.m
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.usecase.GetCheckInListOfflineUseCase
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.usecase.GetLoginWithPinUseCase
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.usecase.GetQrCodeListUseCase
+import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.usecase.GetQrScanAllReportLoginUseCase
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.usecase.GetScanEventDetailsUseCase
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.usecase.InsertCheckInDataOfflineUseCase
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.usecase.InsertSearchDataOfflineUseCase
 import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.GetScanSearchDataOfflineUIState
+import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.QrScanReportAllUIState
 import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.usecase.GetQrScanSearchUseCase
 import com.example.ticketpartner.feature_scan_module.feature_qr_scan.presentation.QrScanViewModel
 import com.technotoil.tglivescan.common.retrofit.apis.ErrorResponseHandler
@@ -54,6 +56,7 @@ class LoginScanVewModel @Inject constructor(
     private val insertCheckInDataOfflineUseCase: InsertCheckInDataOfflineUseCase,
     private val insertSearchDataOfflineUseCase: InsertSearchDataOfflineUseCase,
     private val getQrScanSearchUseCase: GetQrScanSearchUseCase,
+    private val getQrScanAllReportLoginUseCase: GetQrScanAllReportLoginUseCase,
     private val logUtil: LogUtil
 ) :
     ViewModel() {
@@ -106,6 +109,10 @@ class LoginScanVewModel @Inject constructor(
     private val _getScanSearchData: MutableLiveData<GetScanSearchDataOfflineUIState> =
         MutableLiveData()
     val observeScanSearchData: LiveData<GetScanSearchDataOfflineUIState> = _getScanSearchData
+
+    private val _getScanReportAllDataLogin: MutableLiveData<QrScanReportAllUIState> = MutableLiveData()
+    val getScanReportAllDataLogin: LiveData<QrScanReportAllUIState> = _getScanReportAllDataLogin
+
 
     fun loginWithPin(name: String, scanPin: String) {
         _pinLoginState.value = LoginWithPinUIState.IsLoading(true)
@@ -278,6 +285,21 @@ class LoginScanVewModel @Inject constructor(
                 logUtil.log(TAG, "onResponse: $it")
                 _insertSearchDataOfflineScan.value =
                     InsertSearchDataOfflineUIState.OnSuccess("Data inserted successfully!")
+            }
+        }
+    }
+
+    fun getScanReportAllData(type: String) {
+        _getScanReportAllDataLogin.value = QrScanReportAllUIState.IsLoading(true)
+        viewModelScope.launch {
+            getQrScanAllReportLoginUseCase.invoke(type).catch {
+                logUtil.log(QrScanViewModel.TAG, "onError${it.message.toString()}")
+                val error = ErrorResponseHandler(it)
+                _getScanReportAllDataLogin.value =
+                    QrScanReportAllUIState.OnFailure(error.getErrors().message.toString())
+            }.collect {
+                logUtil.log(QrScanViewModel.TAG, "onResponse: ${it.message}")
+                _getScanReportAllDataLogin.value = QrScanReportAllUIState.OnSuccess(it)
             }
         }
     }

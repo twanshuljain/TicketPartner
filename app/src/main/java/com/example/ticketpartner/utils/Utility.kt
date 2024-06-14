@@ -6,7 +6,6 @@ import android.graphics.Color
 import android.net.Uri
 import android.nfc.tech.MifareClassic.BLOCK_SIZE
 import android.os.Build
-import android.provider.Settings
 import android.text.InputFilter
 import android.text.Spannable
 import android.text.SpannableString
@@ -28,6 +27,7 @@ import java.text.SimpleDateFormat
 import java.time.LocalDateTime
 import java.util.Calendar
 import java.util.Locale
+import java.util.UUID
 
 object Utility {
 
@@ -241,8 +241,8 @@ object Utility {
         return sortedList.takeIf { it.isNotEmpty() }?.let { listOf(it.first()) } ?: emptyList()
     }
 
-    fun getDeviceUUID(context: Context): String {
-        return Settings.Secure.getString(context.contentResolver, Settings.Secure.ANDROID_ID)
+    fun getDeviceUUID(): String {
+            return UUID.randomUUID().toString()
     }
 
     fun hideKeyboard(activity: Activity) {

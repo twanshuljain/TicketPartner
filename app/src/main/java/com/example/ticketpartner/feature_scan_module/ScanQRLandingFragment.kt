@@ -1,6 +1,5 @@
 package com.example.ticketpartner.feature_scan_module
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -22,12 +21,13 @@ import com.example.ticketpartner.common.storage.MyPreferences
 import com.example.ticketpartner.common.storage.PrefConstants
 import com.example.ticketpartner.databinding.FragmentScanQRLandingBinding
 import com.example.ticketpartner.databinding.LayoutEndScanBottomDialogBinding
-import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.EventDates
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.EventDetailsScanUIState
+import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.GetScanLogOfflineUIState
 import com.example.ticketpartner.feature_scan_module.feature_qr_scan.presentation.QrScanViewModel
 import com.example.ticketpartner.utils.BackPressHandler
 import com.example.ticketpartner.utils.DialogProgressUtil
 import com.example.ticketpartner.utils.NavigateFragmentUtil.navigateWithClearNavGraph
+import com.example.ticketpartner.utils.NetworkConnectionLiveData
 import com.example.ticketpartner.utils.getFormattedStartDateForEvent
 import com.example.ticketpartner.utils.getFormattedTimeForEvent
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -37,6 +37,7 @@ class ScanQRLandingFragment : Fragment() {
     private val viewModel: QrScanViewModel by activityViewModels()
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var navController: NavController
+    private lateinit var networkConnectionLiveData: NetworkConnectionLiveData
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -55,10 +56,51 @@ class ScanQRLandingFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        checkInternetConnectivity()
         initBottomNavigation()
         initView()
-        makeEventDetailsAPICall()
+
+        //   makeEventDetailsAPICall()
+    }
+
+    private fun observeLocalDBScanLog() {
+        viewModel.getScanLogListData()
+        viewModel.getScanLogLocalDB.observe(viewLifecycleOwner) {
+            when (it) {
+                is GetScanLogOfflineUIState.IsLoading -> {}
+                is GetScanLogOfflineUIState.OnSuccess -> {
+                    for (i in it.onSuccess) {
+                        viewModel.scanLogListSize = it.onSuccess.size
+                    }
+                }
+
+                is GetScanLogOfflineUIState.OnFailure -> {}
+            }
+        }
+    }
+
+    private fun checkInternetConnectivity() {
+        networkConnectionLiveData = NetworkConnectionLiveData(requireContext())
+        networkConnectionLiveData.observe(
+            viewLifecycleOwner
+        ) { isConnected ->
+            if (isConnected) {
+                viewModel.isNetworkAvailableObserver.value = true
+                viewModel.isNetworkAvailable = true
+                observeLocalDBScanLog()
+                SnackBarUtil.showSuccessSnackBar(
+                    binding.root,
+                    getString(R.string.you_are_online)
+                )
+            } else {
+                viewModel.isNetworkAvailableObserver.value = false
+                viewModel.isNetworkAvailable = false
+                SnackBarUtil.showErrorSnackBar(
+                    binding.root,
+                    getString(R.string.you_are_offline)
+                )
+            }
+        }
     }
 
     private fun initBottomNavigation() {
@@ -121,6 +163,8 @@ class ScanQRLandingFragment : Fragment() {
 
 
     private fun initView() {
+        showDateTimeOnAppBar()
+
         viewModel.selectedSearchedItemEmailAdd.observe(viewLifecycleOwner) {
             binding.includeTitle.subTitle.visibility = View.GONE
             binding.includeTitle.title.text = it.toString()
@@ -140,7 +184,19 @@ class ScanQRLandingFragment : Fragment() {
         }
 
         binding.includeTitle.ivLogOut.setOnClickListener {
-            logoutDialog()
+            if (viewModel.isNetworkAvailable) {
+                if (viewModel.scanLogListSize > ZERO) {
+                    logoutDialog("Are you sure you want to log out and clear all data?")
+                } else {
+                    logoutDialog("Are you sure you want to log out?")
+                }
+            } else {
+                SnackBarUtil.showErrorSnackBar(
+                    binding.root,
+                    getString(R.string.check_network_availability)
+                )
+            }
+
         }
     }
 
@@ -154,7 +210,7 @@ class ScanQRLandingFragment : Fragment() {
 
                 is EventDetailsScanUIState.OnSuccess -> {
                     DialogProgressUtil.dismiss()
-                    showDateTimeOnAppBar(it.onSuccess.data?.event_dates)
+                    //showDateTimeOnAppBar(it.onSuccess.data?.event_dates)
 
                 }
 
@@ -166,23 +222,27 @@ class ScanQRLandingFragment : Fragment() {
         }
     }
 
-    @SuppressLint("SetTextI18n")
-    private fun showDateTimeOnAppBar(eventDates: EventDates?) {
+
+    private fun showDateTimeOnAppBar() {
+        val userLoginDetails = MyPreferences.getUserDetails()
         val startDate =
-            getFormattedStartDateForEvent(eventDates?.event_start_date)
+            getFormattedStartDateForEvent(userLoginDetails?.data?.event?.event_start_date) + VERTICAL_POLE
+
         val startEndTime =
-            getFormattedTimeForEvent(eventDates?.event_start_time) + HYPHEN_CHAR + getFormattedTimeForEvent(
-                eventDates?.event_end_time
+            getFormattedTimeForEvent(userLoginDetails?.data?.event?.event_start_time) + HYPHEN_CHAR + getFormattedTimeForEvent(
+                userLoginDetails?.data?.event?.event_end_time
             )
+
         binding.includeTitle.subTitle.text = startDate + VERTICAL_POLE + startEndTime
     }
 
-    private fun logoutDialog() {
+    private fun logoutDialog(message: String) {
         val dialog = BottomSheetDialog(requireContext())
         val dialogView = LayoutEndScanBottomDialogBinding.inflate(layoutInflater)
         dialogView.apply {
             tvTitle.text = getString(R.string.logout)
-            tvDescription.text = getString(R.string.are_you_sure_logout)
+            // tvDescription.text = getString(R.string.are_you_sure_logout)
+            tvDescription.text = message
         }
         dialogView.btnNo.setOnClickListener {
             dialog.dismiss()

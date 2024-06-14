@@ -26,6 +26,7 @@ import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.m
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.LoginWithPinResponse
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.LoginWithPinUIState
 import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.GetScanSearchDataOfflineUIState
+import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.QrScanReportAllUIState
 import com.example.ticketpartner.utils.BackPressHandler
 import com.example.ticketpartner.utils.DialogProgressUtil
 import com.example.ticketpartner.utils.NavigateFragmentUtil.navigateWithClearNavGraph
@@ -107,6 +108,14 @@ class LoginScanModuleFragment : Fragment() {
                     }
                 })
             }
+        }
+
+        binding.ivTpLogo.setOnClickListener {
+            SnackBarUtil.showCustomSnackBar(binding.root,"You have logged in successfully !")
+        }
+        binding.rlLearnHowToUse.setOnClickListener {
+            SnackBarUtil.showCustomSnackBar(binding.root,"Have some issue while login please check.",false)
+
         }
     }
 
@@ -257,13 +266,40 @@ class LoginScanModuleFragment : Fragment() {
                     }
                     hideKeyboard(requireActivity())
                     DialogProgressUtil.dismiss()
-                    findNavController().navigateWithClearNavGraph(
-                        R.id.main_nav_graph, R.id.eventDetailsScanModuleFragment
-                    )
+                    viewModel.getScanReportAllData("all")
+                    observeScanReportAllData()
+
                 }
 
                 is GetScanSearchDataOfflineUIState.OnFailure -> {
                     DialogProgressUtil.dismiss()
+                }
+            }
+        }
+    }
+
+    private fun observeScanReportAllData() {
+        viewModel.getScanReportAllDataLogin.observe(viewLifecycleOwner) {
+            when (it) {
+                is QrScanReportAllUIState.IsLoading -> {
+                    DialogProgressUtil.show(childFragmentManager)
+                }
+
+                is QrScanReportAllUIState.OnSuccess -> {
+                    DialogProgressUtil.dismiss()
+                    findNavController().navigateWithClearNavGraph(
+                        R.id.main_nav_graph, R.id.eventDetailsScanModuleFragment
+                    )
+                    it.onSuccess.data.let {
+                       // setProgressBarForAll(it)
+                    }
+
+                  //  setAdapter(it.onSuccess.data?.ticket_data)
+                }
+
+                is QrScanReportAllUIState.OnFailure -> {
+                    DialogProgressUtil.dismiss()
+                    SnackBarUtil.showErrorSnackBar(binding.root, it.onFailure)
                 }
             }
         }

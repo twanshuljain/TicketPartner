@@ -12,7 +12,7 @@ import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.m
 
 class ScanSearchOrderOfflineAdapter(
     private val context: Context,
-    private val searchResponse: List<SearchData?>,
+    private var searchResponse: List<SearchData?>,
     private val isItemClicked: (SearchData) -> Unit
 ):
 RecyclerView.Adapter<ScanSearchOrderOfflineAdapter.ViewHolder>() {
@@ -44,6 +44,13 @@ RecyclerView.Adapter<ScanSearchOrderOfflineAdapter.ViewHolder>() {
 
     override fun getItemCount(): Int {
         return searchResponse.size ?: ZERO
+    }
+
+    fun clearSearchResponse(){
+        if (searchResponse.isNotEmpty()){
+            searchResponse = emptyList<SearchData>()
+        }
+
     }
 
     class ViewHolder(val binding: ItemScanOrderSearchBinding) :

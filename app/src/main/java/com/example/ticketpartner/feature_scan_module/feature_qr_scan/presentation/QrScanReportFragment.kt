@@ -15,6 +15,7 @@ import com.example.ticketpartner.common.ZERO
 import com.example.ticketpartner.common.storage.MyPreferences
 import com.example.ticketpartner.databinding.FragmentQrScanReportBinding
 import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.DataList
+import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.DeleteScanLogDataUIState
 import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.GetScanLogOfflineUIState
 import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.QrScanReportAllUIState
 import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.ScanLog
@@ -23,7 +24,6 @@ import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.mode
 import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.UploadScanDataServerUIState
 import com.example.ticketpartner.utils.DialogProgressUtil
 import com.example.ticketpartner.utils.NetworkConnectionLiveData
-import com.example.ticketpartner.utils.Utility.observeOnce
 import com.example.ticketpartner.utils.getFormattedStartDateForEvent
 import com.example.ticketpartner.utils.getFormattedTimeForEvent
 
@@ -39,27 +39,40 @@ class QrScanReportFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentQrScanReportBinding.inflate(layoutInflater)
-        viewModel.getScanReportAllData("all")
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initView()
-        observeScanReportAllData()
+
+        viewModel.isNetworkAvailableObserver.observe(viewLifecycleOwner)
+        {
+            if (it) {
+                viewModel.getScanReportAllData("all")
+                observeScanReportAllData()
+                binding.btnUploadDataServer.visibility = View.VISIBLE
+            } else {
+                binding.btnUploadDataServer.visibility = View.GONE
+
+            }
+        }
         observeScanReportOffline()
     }
 
     private fun observeScanReportOffline() {
-        viewModel.getScanLogListData()
-        scanLogDataOffline.clear()
-        viewModel.getScanLogLocalDB.observe(viewLifecycleOwner){
-            when(it){
+        // viewModel.getScanLogListData()
+        // scanLogDataOffline.clear()
+        viewModel.getScanLogLocalDB.observe(viewLifecycleOwner) {
+            when (it) {
                 is GetScanLogOfflineUIState.IsLoading -> {}
                 is GetScanLogOfflineUIState.OnSuccess -> {
-                    for (i in it.onSuccess)
+                    scanLogDataOffline.clear()
+                    for (i in it.onSuccess) {
                         scanLogDataOffline.add(i)
+                    }
                 }
+
                 is GetScanLogOfflineUIState.OnFailure -> {}
             }
         }
@@ -139,10 +152,10 @@ class QrScanReportFragment : Fragment() {
 
         val startEndTime =
             getFormattedTimeForEvent(userLoginDetails?.data?.event?.event_start_time) + HYPHEN_CHAR + getFormattedTimeForEvent(
-               userLoginDetails?.data?.event?.event_end_time
+                userLoginDetails?.data?.event?.event_end_time
             )
 
-        binding.tvDateTime.text = startDate+startEndTime
+        binding.tvDateTime.text = startDate + startEndTime
 
         val subTitle = activity?.findViewById<AppCompatTextView>(R.id.subTitle)
         subTitle?.visibility = View.GONE
@@ -209,7 +222,6 @@ class QrScanReportFragment : Fragment() {
                 tvTotalValueRejected.visibility = View.GONE
                 tvOutOfValueRejected.visibility = View.GONE
 
-
                 btnAll.background =
                     requireContext().getDrawable(R.drawable.orange_border_button_design)
                 btnAccepted.background =
@@ -253,48 +265,68 @@ class QrScanReportFragment : Fragment() {
         }
 
         binding.btnUploadDataServer.setOnClickListener {
-            networkConnectionLiveData.observeOnce(
-                viewLifecycleOwner) { isConnected ->
-                if (isConnected) {
-                    if (scanLogDataOffline.size > ZERO) {
-                        viewModel.uploadScanLogDataOnServer(
-                            SendScanLogOfflineRequest(
-                                scanLogDataOffline
-                            )
+            if (viewModel.isNetworkAvailable) {
+                if (scanLogDataOffline.size > ZERO) {
+                    viewModel.uploadScanLogDataOnServer(
+                        SendScanLogOfflineRequest(
+                            scanLogDataOffline
                         )
-                        observeUploadDataOnServerResponse()
-                    } else {
-                        SnackBarUtil.showErrorSnackBar(
-                            binding.root,
-                            getString(R.string.you_do_not_have_data)
-                        )
-                    }
+                    )
+                    observeUploadDataOnServerResponse()
                 } else {
                     SnackBarUtil.showErrorSnackBar(
                         binding.root,
-                        getString(R.string.check_network_availability)
+                        getString(R.string.you_do_not_have_data)
                     )
                 }
-                }
+            } else {
+                SnackBarUtil.showErrorSnackBar(
+                    binding.root,
+                    getString(R.string.check_network_availability)
+                )
             }
+        }
     }
 
     private fun observeUploadDataOnServerResponse() {
-        viewModel.uploadScanLogDataOnServer.observe(viewLifecycleOwner){
-            when(it){
+        viewModel.uploadScanLogDataOnServer.observe(viewLifecycleOwner) {
+            when (it) {
                 is UploadScanDataServerUIState.IsLoading -> {
                     DialogProgressUtil.show(childFragmentManager)
                 }
+
                 is UploadScanDataServerUIState.OnSuccess -> {
                     scanLogDataOffline.clear()
-                    DialogProgressUtil.dismiss()
+                    viewModel.getScanLogListData()
                     SnackBarUtil.showSuccessSnackBar(binding.root, it.onSuccess.message.toString())
                     viewModel.deleteScanLogDataFromLocalDB()
-                    viewModel.getScannedTicketData()
+                    observeScanLogDeleteResponse()
+                    viewModel.deleteScanLogDataFromLocalDB
+                    DialogProgressUtil.dismiss()
                 }
+
                 is UploadScanDataServerUIState.OnFailure -> {
                     DialogProgressUtil.dismiss()
                     SnackBarUtil.showErrorSnackBar(binding.root, it.onFailure.toString())
+                }
+            }
+        }
+    }
+
+    private fun observeScanLogDeleteResponse() {
+        viewModel.deleteScanLogDataFromLocalDB.observe(viewLifecycleOwner) {
+            when (it) {
+                is DeleteScanLogDataUIState.IsLoading -> {
+                    DialogProgressUtil.show(childFragmentManager)
+                }
+
+                is DeleteScanLogDataUIState.OnSuccess -> {
+                    DialogProgressUtil.dismiss()
+                    viewModel.scanLogListSize = ZERO
+                }
+
+                is DeleteScanLogDataUIState.OnFailure -> {
+                    DialogProgressUtil.dismiss()
                 }
             }
         }

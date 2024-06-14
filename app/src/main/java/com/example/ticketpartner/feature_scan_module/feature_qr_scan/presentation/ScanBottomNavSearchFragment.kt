@@ -84,7 +84,7 @@ class ScanBottomNavSearchFragment : Fragment() {
 
 
         binding.etSearch.addTextChangedListener {
-            if (it.toString().length > ZERO) {
+            if (it.toString().length > 2) {
                 binding.rvSearchOrder.visibility = View.VISIBLE
                 binding.etSearchLayout.setBackgroundResource(R.drawable.edit_text_design_search_bar_puple)
                 binding.icClear.visibility = View.VISIBLE
@@ -108,6 +108,7 @@ class ScanBottomNavSearchFragment : Fragment() {
     }
 
     private fun observeSearchItemResponse(orderId: String) {
+        setAdapterOffline(emptyList<SearchData>())
         searchedItem = orderId
         searchOfflineDataList.clear()
         /** Observe network connection status only once */
@@ -174,6 +175,7 @@ class ScanBottomNavSearchFragment : Fragment() {
                 ScanSearchOrderOfflineAdapter(requireActivity(), it, ::isItemClickedOffline)
             binding.rvSearchOrderOffline.adapter = adapterOffline
             binding.rvSearchOrderOffline.setHasFixedSize(true)
+            adapterOffline.notifyDataSetChanged()
         }
     }
 
@@ -182,6 +184,7 @@ class ScanBottomNavSearchFragment : Fragment() {
             adapter = ScanSearchOrderAdapter(requireActivity(), it, ::isItemClicked)
             binding.rvSearchOrder.adapter = adapter
             binding.rvSearchOrder.setHasFixedSize(true)
+            adapter.notifyDataSetChanged()
         }
     }
 

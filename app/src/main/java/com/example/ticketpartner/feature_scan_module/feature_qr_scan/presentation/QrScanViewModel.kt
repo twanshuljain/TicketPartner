@@ -169,6 +169,9 @@ class QrScanViewModel @Inject constructor(
     val selectedSearchedItemEmailAdd = MutableLiveData<String>()
     val isOnlineMode = MutableLiveData<Boolean>()
     val isAllChecked = MutableLiveData<Boolean>()
+    val isNetworkAvailableObserver = MutableLiveData<Boolean>()
+    var isNetworkAvailable: Boolean = false
+    var scanLogListSize: Int = ZERO
 
 
     /*  private val _onContinueClick:MutableLiveData<Boolean> = MutableLiveData()
@@ -352,7 +355,7 @@ class QrScanViewModel @Inject constructor(
                 _insertCheckInDataOfflineScan.value =
                     InsertCheckInDataOfflineUIState.OnFailure(it.message.toString())
             }.collect {
-                logUtil.log(LoginScanVewModel.TAG, "onResponse: $it")
+                logUtil.log(LoginScanVewModel.TAG, "onResponse checkedINScanQR: $it")
                 _insertCheckInDataOfflineScan.value =
                     InsertCheckInDataOfflineUIState.OnSuccess("Data inserted successfully!")
             }
