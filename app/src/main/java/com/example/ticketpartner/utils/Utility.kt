@@ -11,14 +11,21 @@ import android.text.Spannable
 import android.text.SpannableString
 import android.text.Spanned
 import android.text.style.ForegroundColorSpan
+import android.util.Log
 import android.view.inputmethod.InputMethodManager
 import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
+import androidx.room.Room
+import com.example.ticketpartner.common.TP_LOCAL_DATABASE
 import com.example.ticketpartner.common.ZERO
+import com.example.ticketpartner.common.localDatabase.TPLocalDatabase
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.SearchData
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
@@ -250,6 +257,18 @@ object Utility {
         val currentFocus = activity.currentFocus
         if (currentFocus != null) {
             imm.hideSoftInputFromWindow(currentFocus.windowToken, 0)
+        }
+    }
+
+    // Function to clear all tables
+    fun clearLocalDatabase(context: Context) {
+        CoroutineScope(Dispatchers.IO).launch {
+            val db = Room.databaseBuilder(
+                context.applicationContext,
+                TPLocalDatabase::class.java, TP_LOCAL_DATABASE
+            ).build()
+            db.clearAllTables()
+            Log.e("TAG", "database has been cleared")
         }
     }
 }

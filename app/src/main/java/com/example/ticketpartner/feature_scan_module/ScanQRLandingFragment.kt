@@ -28,6 +28,7 @@ import com.example.ticketpartner.utils.BackPressHandler
 import com.example.ticketpartner.utils.DialogProgressUtil
 import com.example.ticketpartner.utils.NavigateFragmentUtil.navigateWithClearNavGraph
 import com.example.ticketpartner.utils.NetworkConnectionLiveData
+import com.example.ticketpartner.utils.Utility
 import com.example.ticketpartner.utils.getFormattedStartDateForEvent
 import com.example.ticketpartner.utils.getFormattedTimeForEvent
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -232,7 +233,6 @@ class ScanQRLandingFragment : Fragment() {
             getFormattedTimeForEvent(userLoginDetails?.data?.event?.event_start_time) + HYPHEN_CHAR + getFormattedTimeForEvent(
                 userLoginDetails?.data?.event?.event_end_time
             )
-
         binding.includeTitle.subTitle.text = startDate + VERTICAL_POLE + startEndTime
     }
 
@@ -241,20 +241,18 @@ class ScanQRLandingFragment : Fragment() {
         val dialogView = LayoutEndScanBottomDialogBinding.inflate(layoutInflater)
         dialogView.apply {
             tvTitle.text = getString(R.string.logout)
-            // tvDescription.text = getString(R.string.are_you_sure_logout)
             tvDescription.text = message
         }
         dialogView.btnNo.setOnClickListener {
             dialog.dismiss()
         }
         dialogView.btnYes.setOnClickListener {
+            Utility.clearLocalDatabase(requireActivity())
+           MyPreferences.clearpref()
             findNavController().navigateWithClearNavGraph(
                 R.id.nested_qr_scan_nav_graph,
                 R.id.loginScanModuleFragment
             )
-            /// requireActivity().deleteDatabase(TP_LOCAL_DATABASE)
-            viewModel.clearAndRecreateDatabase(requireActivity())
-            MyPreferences.clearpref()
             dialog.dismiss()
         }
         dialogView.ivClose.setOnClickListener {

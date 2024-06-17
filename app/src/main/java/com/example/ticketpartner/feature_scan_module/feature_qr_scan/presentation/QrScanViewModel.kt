@@ -1,12 +1,10 @@
 package com.example.ticketpartner.feature_scan_module.feature_qr_scan.presentation
 
-import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.ticketpartner.common.LogUtil
-import com.example.ticketpartner.common.TP_LOCAL_DATABASE
 import com.example.ticketpartner.common.ZERO
 import com.example.ticketpartner.common.localDatabase.TPLocalDatabase
 import com.example.ticketpartner.feature_local_storage.domain.usecase.GetQrCodeListFromLocalDBUseCase
@@ -48,7 +46,6 @@ import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.usec
 import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.usecase.GetTicketTypesListOfflineUseCase
 import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.usecase.InsertScanLogOfflineUseCase
 import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.usecase.UploadScanLogDataServerUseCase
-import com.example.ticketpartner.utils.NetworkMonitor
 import com.technotoil.tglivescan.common.retrofit.apis.ErrorResponseHandler
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.catch
@@ -66,7 +63,6 @@ class QrScanViewModel @Inject constructor(
     private val getQrScanReportAllUseCase: GetQrScanReportAllUseCase,
     private val getQrCodeListFromLocalDBUseCase: GetQrCodeListFromLocalDBUseCase,
     private val getTicketTypesListOfflineUseCase: GetTicketTypesListOfflineUseCase,
-    private val networkMonitor: NetworkMonitor,
     private val getCheckInDataOfflineUseCase: GetCheckInDataOfflineUseCase,
     private val insertCheckInDataOfflineUseCase: InsertCheckInDataOfflineUseCase,
     private val getSearchDataOfflineUseCase: GetSearchDataOfflineUseCase,
@@ -78,7 +74,6 @@ class QrScanViewModel @Inject constructor(
     private val logUtil: LogUtil,
     private val database: TPLocalDatabase
 ) : ViewModel() {
-    val networkStateLiveData = networkMonitor
 
     val _qrScanState: MutableLiveData<QrScanUIState> = MutableLiveData()
     val observeQrScanResponse: LiveData<QrScanUIState> = _qrScanState
@@ -449,16 +444,6 @@ class QrScanViewModel @Inject constructor(
             }
         }
     }
-
-    fun clearAndRecreateDatabase(context: Context) {
-        // Delete the database file
-        context.deleteDatabase(TP_LOCAL_DATABASE)
-
-        // Recreate the database
-        // database.close()
-        database.openHelper.writableDatabase // This recreates the database
-    }
-
 
     companion object {
         val TAG = QrScanViewModel::class.java.simpleName

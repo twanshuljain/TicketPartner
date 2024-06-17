@@ -95,7 +95,6 @@ class LoginScanModuleFragment : Fragment() {
 
         binding.rlContinue.setOnClickListener {
             if (isAllFieldsValid()) {
-                //requireActivity().deleteDatabase(TP_LOCAL_DATABASE)
                 networkConnectionLiveData.observeOnce(viewLifecycleOwner, Observer { isConnected ->
                     if (isConnected) {
                         viewModel.loginWithPin(etName, etPin)
