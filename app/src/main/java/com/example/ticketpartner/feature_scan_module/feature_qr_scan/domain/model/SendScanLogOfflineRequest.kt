@@ -11,6 +11,8 @@ data class SendScanLogOfflineRequest(
 )
 @Entity(tableName = GET_SCAN_LOG_LIST)
 data class ScanLog(
+   /* @PrimaryKey(autoGenerate = true)
+    val uniqueId: Int = 0,*/
     val errorDetail: String? = EMPTY_STRING,
     val eventID: Int? = ZERO,
     val isServerSync: Boolean? = false,

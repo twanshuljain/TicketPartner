@@ -53,7 +53,7 @@ interface TpScanDao {
     @Query("SELECT * FROM $GET_SEARCH_LIST")
     suspend fun getSearchDataFromLocalDB(): List<SearchData>
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertScanLogDataList(scanLog: ScanLog): Long
 
     @Query("SELECT * FROM $GET_SCAN_LOG_LIST")

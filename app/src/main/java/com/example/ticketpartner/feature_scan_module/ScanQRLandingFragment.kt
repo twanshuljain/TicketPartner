@@ -15,6 +15,7 @@ import androidx.navigation.ui.setupWithNavController
 import com.example.ticketpartner.R
 import com.example.ticketpartner.common.HYPHEN_CHAR
 import com.example.ticketpartner.common.SnackBarUtil
+import com.example.ticketpartner.common.TP_LOCAL_DATABASE
 import com.example.ticketpartner.common.VERTICAL_POLE
 import com.example.ticketpartner.common.ZERO
 import com.example.ticketpartner.common.storage.MyPreferences
@@ -28,6 +29,7 @@ import com.example.ticketpartner.utils.DialogProgressUtil
 import com.example.ticketpartner.utils.DialogUtils
 import com.example.ticketpartner.utils.NavigateFragmentUtil.navigateWithClearNavGraph
 import com.example.ticketpartner.utils.NetworkConnectionLiveData
+import com.example.ticketpartner.utils.Utility
 import com.example.ticketpartner.utils.getFormattedStartDateForEvent
 import com.example.ticketpartner.utils.getFormattedTimeForEvent
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -245,6 +247,8 @@ class ScanQRLandingFragment : Fragment() {
         )
         dialog.btnYes.setOnClickListener {
             bottomSheetDialog.dismiss()
+            Utility.clearLocalDatabase(requireActivity())
+            MyPreferences.clearpref()
             findNavController().navigateWithClearNavGraph(
                 R.id.nested_qr_scan_nav_graph,
                 R.id.loginScanModuleFragment
