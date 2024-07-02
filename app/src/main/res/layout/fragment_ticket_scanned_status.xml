@@ -57,6 +57,8 @@
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:textAlignment="center"
+          android:paddingStart="@dimen/margin_10"
+          android:paddingEnd="@dimen/margin_10"
           android:layout_marginTop="@dimen/margin_5"
           app:layout_constraintStart_toStartOf="parent"
           app:layout_constraintEnd_toEndOf="parent"

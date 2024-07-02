@@ -5,9 +5,13 @@ import com.example.ticketpartner.feature_local_storage.domain.datasourse.LocalSt
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.CheckInData
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.DataItems
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.InsertEventDetailsResponse
+import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.InsertScanReportDataResponse
+import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.InsertSearchDataResponse
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.InsertTicketTypeListResponse
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.SearchData
+import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.DataList
 import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.ScanLog
+import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.TicketDataList
 import javax.inject.Inject
 
 class LocalStorageDataSourceImpl @Inject constructor(private val tpScanDao: TpScanDao) :
@@ -62,5 +66,21 @@ class LocalStorageDataSourceImpl @Inject constructor(private val tpScanDao: TpSc
 
     override suspend fun deleteScanLogDataLocalDB(): Int {
         return tpScanDao.deleteScanLogDataFromLocalDB()
+    }
+
+    override suspend fun insertScanReportDataLocalDB(insertScanReportDataResponse: InsertScanReportDataResponse): Long {
+        return tpScanDao.insertScanReportData(insertScanReportDataResponse)
+    }
+
+    override suspend fun insertScanReportTicketListDataLocalDB(ticketDataList: TicketDataList): Long {
+        return tpScanDao.insertScanReportTicketListData(ticketDataList)
+    }
+
+    override suspend fun getScanReportDataLocalDb(): List<InsertScanReportDataResponse> {
+        return tpScanDao.getScanReportDataFromLocalDB()
+    }
+
+    override suspend fun getScanReportTicketListLocalDb(): List<TicketDataList> {
+        return tpScanDao.getScanReportTicketListFromLocalDB()
     }
 }

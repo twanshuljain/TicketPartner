@@ -49,6 +49,7 @@ const val COUNTRY_ID = "country_id"
  * Https status code
  */
 const val BAD_REQUEST = 400
+const val UNAUTHORIZED_USER = 401
 const val FORBIDDEN_ACCESS = 403
 const val UNKNOWN_HOST_EXCEPTION = 500
 const val HTTP_SUCCESS = 200

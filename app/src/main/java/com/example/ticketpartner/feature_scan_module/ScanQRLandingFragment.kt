@@ -26,6 +26,7 @@ import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.mode
 import com.example.ticketpartner.feature_scan_module.feature_qr_scan.presentation.QrScanViewModel
 import com.example.ticketpartner.utils.BackPressHandler
 import com.example.ticketpartner.utils.DialogProgressUtil
+import com.example.ticketpartner.utils.DialogUtils
 import com.example.ticketpartner.utils.NavigateFragmentUtil.navigateWithClearNavGraph
 import com.example.ticketpartner.utils.NetworkConnectionLiveData
 import com.example.ticketpartner.utils.Utility
@@ -237,7 +238,22 @@ class ScanQRLandingFragment : Fragment() {
     }
 
     private fun logoutDialog(message: String) {
-        val dialog = BottomSheetDialog(requireContext())
+        val bottomSheetDialog = BottomSheetDialog(requireContext())
+       val dialog =  DialogUtils.showLogoutDialog(
+            context = requireContext(),
+            layoutInflater = layoutInflater,
+            dialog = bottomSheetDialog,
+            message = message
+        )
+        dialog.btnYes.setOnClickListener {
+            bottomSheetDialog.dismiss()
+            findNavController().navigateWithClearNavGraph(
+                R.id.nested_qr_scan_nav_graph,
+                R.id.loginScanModuleFragment
+            )
+        }
+
+    /*    val dialog = BottomSheetDialog(requireContext())
         val dialogView = LayoutEndScanBottomDialogBinding.inflate(layoutInflater)
         dialogView.apply {
             tvTitle.text = getString(R.string.logout)
@@ -260,7 +276,7 @@ class ScanQRLandingFragment : Fragment() {
         }
         dialog.setCanceledOnTouchOutside(true)
         dialog.setContentView(dialogView.root)
-        dialog.show()
+        dialog.show()*/
     }
 
     private fun handleOnBackPressedButton() {

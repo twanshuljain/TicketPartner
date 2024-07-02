@@ -71,10 +71,9 @@ class ScanSearchedOrderDetailsFragment : Fragment() {
                             searchDetails?.order_id?.let { viewModel.getOrderDetailsResponse(it) }
                             observeOrderDetailsData()
                         } else {
-                            SnackBarUtil.showErrorSnackBar(binding.root, getString(R.string.check_network_availability))
+                            //SnackBarUtil.showErrorSnackBar(binding.root, getString(R.string.check_network_availability))
                         }
                     })
-
 
             } else {
 

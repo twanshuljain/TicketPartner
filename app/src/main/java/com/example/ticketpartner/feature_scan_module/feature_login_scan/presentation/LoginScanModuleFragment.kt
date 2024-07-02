@@ -22,6 +22,7 @@ import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.m
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.GetCheckInDataOfflineScanUIState
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.GetQrCodeForOffLineScanUIState
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.InsertEventDetailsResponse
+import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.InsertScanReportDataResponse
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.InsertTicketTypeListResponse
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.LoginWithPinResponse
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.LoginWithPinUIState
@@ -99,7 +100,6 @@ class LoginScanModuleFragment : Fragment() {
                     if (isConnected) {
                         viewModel.loginWithPin(etName, etPin)
                         observeLoginResponse()
-
                     } else {
                         SnackBarUtil.showErrorSnackBar(
                             binding.root, getString(R.string.check_network_availability)
@@ -109,13 +109,17 @@ class LoginScanModuleFragment : Fragment() {
             }
         }
 
-        binding.ivTpLogo.setOnClickListener {
-            SnackBarUtil.showCustomSnackBar(binding.root,"You have logged in successfully !")
+     /*   binding.ivTpLogo.setOnClickListener {
+            SnackBarUtil.showCustomSnackBar(binding.root, "You have logged in successfully !")
         }
         binding.rlLearnHowToUse.setOnClickListener {
-            SnackBarUtil.showCustomSnackBar(binding.root,"Have some issue while login please check.",false)
+            SnackBarUtil.showCustomSnackBar(
+                binding.root,
+                "Have some issue while login please check.",
+                false
+            )
 
-        }
+        }*/
     }
 
     private fun observeLoginResponse() {
@@ -146,23 +150,9 @@ class LoginScanModuleFragment : Fragment() {
                         }
                     }
 
-                    /*  findNavController().navigateWithClearNavGraph(
-                          R.id.main_nav_graph,
-                          R.id.eventDetailsScanModuleFragment
-                      )*/
-
                     /** make API call for qr code list and insert data in local DB */
                     viewModel.getQrCodeListForOfflineScan()
                     observeQrCodeListResponseForOfflineScan()
-
-                    /* viewModel.getSearchData()
-                     observeSearchDataOffline()
-                     DialogProgressUtil.dismiss()
- */
-                    /** observe check-In list data and insert data in local DB */
-                    //  viewModel.getCheckInDataForOffline()
-                    //getCheckInDataOffline()
-
                     SnackBarUtil.showSuccessSnackBar(binding.root, it.onSuccess.message.toString())
                 }
 
@@ -234,11 +224,7 @@ class LoginScanModuleFragment : Fragment() {
                         }
                     }
                     viewModel.getSearchData()
-                    observeSearchDataOffline()/* findNavController().navigateWithClearNavGraph(
-                         R.id.main_nav_graph,
-                         R.id.eventDetailsScanModuleFragment
-                     )*/
-                    Log.e("TAG", "getCheckInDataOffline: ${it.onSuccess} ")
+                    observeSearchDataOffline()
                 }
 
                 is GetCheckInDataOfflineScanUIState.OnFailure -> {}
@@ -286,14 +272,30 @@ class LoginScanModuleFragment : Fragment() {
 
                 is QrScanReportAllUIState.OnSuccess -> {
                     DialogProgressUtil.dismiss()
+                    val resData = it.onSuccess.data
+                    resData?.let {
+                        viewModel.insertScanReportDataOffline(
+                            InsertScanReportDataResponse(
+                                ZERO,
+                                resData.online,
+                                resData.physical,
+                                resData.total_scanned,
+                                resData.total_accepted,
+                                resData.total_rejected,
+                                resData.total_tickets,
+                            )
+                        )
+                    }
+                    resData?.ticket_data?.let {ticketList ->
+                       for (i in ticketList){
+                           if (i != null) {
+                               viewModel.insertScanReportTicketListOffline(i)
+                           }
+                       }
+                    }
                     findNavController().navigateWithClearNavGraph(
                         R.id.main_nav_graph, R.id.eventDetailsScanModuleFragment
                     )
-                    it.onSuccess.data.let {
-                       // setProgressBarForAll(it)
-                    }
-
-                  //  setAdapter(it.onSuccess.data?.ticket_data)
                 }
 
                 is QrScanReportAllUIState.OnFailure -> {

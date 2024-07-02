@@ -1,6 +1,7 @@
 package com.example.ticketpartner.feature_scan_module.feature_qr_scan.presentation
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -45,74 +46,10 @@ class ScanBottomNavHomeFragment : Fragment() {
         setDetailsOnCard()
         initView()
 
-        /* viewModel.networkStateLiveData.observe(viewLifecycleOwner){ isConnected ->
-             if (isConnected){
-                 Toast.makeText(requireContext(), "Network available", Toast.LENGTH_SHORT).show()
-              //   makeEventDetailsAPICall()
-             }else{
-                 Toast.makeText(requireContext(), "Network failed", Toast.LENGTH_SHORT).show()
-                 viewModel.getTicketTypesListFromLocal()
-                 observeTicketTypesListFromLocalDB()
-             }
-         }*/
-
-        //  makeEventDetailsAPICall()
         viewModel.getTicketTypesListFromLocal()
         observeTicketTypesListFromLocalDB()
         viewModel.selectedTicketTypeArrayList.value = null
         viewModel.listSize = ZERO
-    }
-
-    private fun makeEventDetailsAPICall() {
-        adapter =
-            SelectTicketTypeScanAdapter(
-                requireActivity(),
-                ticketTypesList,
-                ::selectedTicketNameList, ::selectedListSize
-            )
-        binding.rvSelectTicketType.adapter = adapter
-        binding.rvSelectTicketType.setHasFixedSize(true)
-
-        viewModel.getEventDetailsHomeData()
-        viewModel.observeScanEventDetailsHomeResponse.observe(viewLifecycleOwner) {
-            when (it) {
-                is EventDetailsScanUIState.IsLoading -> {
-                    DialogProgressUtil.show(childFragmentManager)
-                }
-
-                is EventDetailsScanUIState.OnSuccess -> {
-                    DialogProgressUtil.dismiss()
-                    val savedSelectedList =
-                        MyPreferences.getArrayList(SCAN_SELECTED_TICKET_TYPES_LIST)
-
-                    if (savedSelectedList.size > ZERO)
-                        isContinueButtonEnable(true)
-                    else
-                        isContinueButtonEnable(false)
-
-                    for (i in ZERO until it.onSuccess.data?.event_tickets?.size!!) {
-                        if (savedSelectedList.contains(it.onSuccess.data.event_tickets[i]?.ticket_name)) {
-                            it.onSuccess.data.event_tickets[i]?.isSelected = true
-                        }
-                    }
-                    for (i in it.onSuccess.data.event_tickets) {
-                        i?.ticket_name?.let { name ->
-                            InsertTicketTypeListResponse(
-                                name, i?.isSelected
-                            )
-                        }?.let { item -> ticketTypesList.add(item) }
-                    }
-
-                    setTicketTypesAdapter(ticketTypesList)
-                    // setDetailsOnCard(it.onSuccess.data)
-                }
-
-                is EventDetailsScanUIState.OnFailure -> {
-                    DialogProgressUtil.dismiss()
-                    SnackBarUtil.showErrorSnackBar(binding.root, it.onFailure)
-                }
-            }
-        }
     }
 
     private fun isContinueButtonEnable(value: Boolean) {
@@ -217,16 +154,6 @@ class ScanBottomNavHomeFragment : Fragment() {
         binding.rvSelectTicketType.setHasFixedSize(true)
     }
 
-    /*  private fun setTicketTypesAdapter(data: DataItem?) {
-          adapter = SelectTicketTypeScanAdapter(
-              requireActivity(),
-              data?.event_tickets,
-              ::selectedTicketNameList, ::selectedListSize
-          )
-          binding.rvSelectTicketType.adapter = adapter
-          binding.rvSelectTicketType.setHasFixedSize(true)
-      }*/
-
     private fun selectedTicketNameList(list: ArrayList<String>) {
         viewModel.selectedTicketTypeArrayList.value = list
 
@@ -242,5 +169,6 @@ class ScanBottomNavHomeFragment : Fragment() {
             MyPreferences.clearArrayList(SCAN_SELECTED_TICKET_TYPES_LIST)
             isContinueButtonEnable(false)
         }
+
     }
 }

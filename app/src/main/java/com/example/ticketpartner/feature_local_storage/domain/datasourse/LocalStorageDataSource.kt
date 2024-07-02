@@ -3,9 +3,13 @@ package com.example.ticketpartner.feature_local_storage.domain.datasourse
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.CheckInData
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.DataItems
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.InsertEventDetailsResponse
+import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.InsertScanReportDataResponse
+import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.InsertSearchDataResponse
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.InsertTicketTypeListResponse
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.SearchData
+import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.DataList
 import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.ScanLog
+import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.TicketDataList
 
 interface LocalStorageDataSource {
     suspend fun insertQrCodeList(getQrCodeListResponse: DataItems): Long
@@ -21,5 +25,9 @@ interface LocalStorageDataSource {
     suspend fun insertScanLogDataLocalDB(scanLog: ScanLog): Long
     suspend fun getScanLogDataLocalDb(): List<ScanLog>
     suspend fun deleteScanLogDataLocalDB(): Int
+    suspend fun insertScanReportDataLocalDB(insertScanReportDataResponse: InsertScanReportDataResponse): Long
+    suspend fun insertScanReportTicketListDataLocalDB(ticketDataList: TicketDataList): Long
+    suspend fun getScanReportDataLocalDb(): List<InsertScanReportDataResponse>
+    suspend fun getScanReportTicketListLocalDb(): List<TicketDataList>
 
 }

@@ -12,6 +12,7 @@ import android.view.LayoutInflater
 import android.view.SurfaceHolder
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.AppCompatTextView
@@ -26,13 +27,16 @@ import com.example.ticketpartner.common.EMPTY_STRING
 import com.example.ticketpartner.common.SnackBarUtil
 import com.example.ticketpartner.common.VERTICAL_DOTS
 import com.example.ticketpartner.common.ZERO
+import com.example.ticketpartner.common.remote.apis.UNAUTHORIZED_USER
 import com.example.ticketpartner.common.storage.MyPreferences
 import com.example.ticketpartner.common.storage.PrefConstants.SCAN_SELECTED_TICKET_TYPES_LIST
 import com.example.ticketpartner.databinding.FragmentScanBottomNavQRScanBinding
 import com.example.ticketpartner.databinding.LayoutEndScanBottomDialogBinding
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.CheckInData
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.DataItems
+import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.InsertScanReportDataResponse
 import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.GetCheckInDataLocalDBUIState
+import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.GetScanReportDataOfflineUIState
 import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.NameData
 import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.QrCodeListFromLocalDBUIState
 import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.QrScanResponse
@@ -80,7 +84,35 @@ class ScanBottomQRScanFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         initView()
         initCameraPermission()
-        getScannedTicketData()
+
+        viewModel.isNetworkAvailableObserver.observe(viewLifecycleOwner){
+            if (it){
+                getScannedTicketData()
+            }else{
+                getScannedTicketDataOffline()
+            }
+        }
+    }
+
+    private fun getScannedTicketDataOffline() {
+        viewModel.getScanReportDataFromLocalDB()
+        viewModel.getScanReportDataFromLocalDB.observe(viewLifecycleOwner) {
+            when (it) {
+                is GetScanReportDataOfflineUIState.IsLoading -> {}
+                is GetScanReportDataOfflineUIState.OnSuccess -> {
+                    val res = it.onSuccess[ZERO]
+                    viewModel.totalScanned = res?.total_scanned ?: ZERO
+                    viewModel.totalAccepted = res?.total_accepted ?: ZERO
+                    viewModel.totalRejected = res?.total_rejected ?: ZERO
+                }
+                is GetScanReportDataOfflineUIState.OnFailure -> {}
+            }
+            binding.tvTotalScanned.text = getString(R.string.total_scanned) + VERTICAL_DOTS + viewModel.totalScanned.toString()
+            binding.tvAccepted.text =
+                getString(R.string.accepted) + VERTICAL_DOTS +viewModel.totalAccepted.toString()
+            binding.tvRejected.text =
+                getString(R.string.rejected) + VERTICAL_DOTS + viewModel.totalRejected.toString()
+        }
     }
 
     private fun initView() {
@@ -168,8 +200,11 @@ class ScanBottomQRScanFragment : Fragment() {
     private fun observeQrCodeListFromLocalDB() {
         viewModel.getQrCodeListFromLocalDB.observe(viewLifecycleOwner) {
             when (it) {
-                is QrCodeListFromLocalDBUIState.IsLoading -> {}
+                is QrCodeListFromLocalDBUIState.IsLoading -> {
+                    DialogProgressUtil.show(childFragmentManager)
+                }
                 is QrCodeListFromLocalDBUIState.OnSuccess -> {
+                    DialogProgressUtil.dismiss()
                     if (!it.onSuccess.isNullOrEmpty()) {
                         for (i in ZERO until it.onSuccess.size) {
                             getQrCodeListItemLocalDB.add(it.onSuccess[i])
@@ -177,8 +212,9 @@ class ScanBottomQRScanFragment : Fragment() {
                         }
                     }
                 }
-
-                is QrCodeListFromLocalDBUIState.OnFailure -> {}
+                is QrCodeListFromLocalDBUIState.OnFailure -> {
+                    DialogProgressUtil.dismiss()
+                }
             }
         }
     }
@@ -244,14 +280,21 @@ class ScanBottomQRScanFragment : Fragment() {
                     if (scannedValue.isNotEmpty()) {
                         cameraSource.stop()
                         /** Observe network connection status only once */
-                        networkConnectionLiveData.observeOnce(
+                        viewModel.isNetworkAvailableObserver.observe(viewLifecycleOwner){isConnected ->
+                            if (!isObserved) {
+                                handleNetworkConnection(isConnected, scannedValue)
+                                isObserved = true
+                            }
+                        }
+
+                     /*   networkConnectionLiveData.observeOnce(
                             viewLifecycleOwner,
                             Observer { isConnected ->
                                 if (!isObserved) {
                                     handleNetworkConnection(isConnected, scannedValue)
                                     isObserved = true
                                 }
-                            })
+                            })*/
                     }
                 }
             }
@@ -269,11 +312,9 @@ class ScanBottomQRScanFragment : Fragment() {
         } else {
             if (scannedValue.isNotEmpty()) {
                 val getQrCodeIndex = qrCodeListLocalDB.indexOf(scannedValue)
-                //  Toast.makeText(requireContext(), getQrCodeIndex.toString(), Toast.LENGTH_SHORT).show()
 
                 /** if we have qrCode in local db */
                 if (getQrCodeIndex != -1) {
-                    //  Toast.makeText(requireContext(), getQrCodeListItemLocalDB[getQrCodeIndex].unique_qrcode_uuid.toString(), Toast.LENGTH_SHORT).show()
                     /** get orderTicketId of scanned qr code*/
                     val orderTicketIdQrCode =
                         getQrCodeListItemLocalDB[getQrCodeIndex].order_tickets_id.toString()
@@ -477,6 +518,13 @@ class ScanBottomQRScanFragment : Fragment() {
 
                 is QrScannedTicketUIState.OnFailure -> {
                     DialogProgressUtil.dismiss()
+                    if (it.onFailure == UNAUTHORIZED_USER.toString()){
+                        Toast.makeText(
+                            requireContext(),
+                            "User session has been expired!",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
                 }
             }
         }

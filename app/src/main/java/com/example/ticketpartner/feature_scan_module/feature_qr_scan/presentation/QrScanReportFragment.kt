@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -14,9 +15,12 @@ import com.example.ticketpartner.common.VERTICAL_POLE
 import com.example.ticketpartner.common.ZERO
 import com.example.ticketpartner.common.storage.MyPreferences
 import com.example.ticketpartner.databinding.FragmentQrScanReportBinding
+import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.InsertScanReportDataResponse
 import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.DataList
 import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.DeleteScanLogDataUIState
 import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.GetScanLogOfflineUIState
+import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.GetScanReportDataOfflineUIState
+import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.GetScanReportTicketListOfflineUIState
 import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.QrScanReportAllUIState
 import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.ScanLog
 import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.SendScanLogOfflineRequest
@@ -45,6 +49,7 @@ class QrScanReportFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initView()
+        observeScanReportDataLocalDB()
 
         viewModel.isNetworkAvailableObserver.observe(viewLifecycleOwner)
         {
@@ -54,10 +59,37 @@ class QrScanReportFragment : Fragment() {
                 binding.btnUploadDataServer.visibility = View.VISIBLE
             } else {
                 binding.btnUploadDataServer.visibility = View.GONE
-
+                observeScanReportOffline()
             }
         }
-        observeScanReportOffline()
+    }
+
+    private fun observeScanReportDataLocalDB() {
+        viewModel.getScanReportDataFromLocalDB()
+        viewModel.getScanReportTicketListOffline()
+
+        viewModel.getScanReportDataFromLocalDB.observe(viewLifecycleOwner) {
+            when (it) {
+                is GetScanReportDataOfflineUIState.IsLoading -> {}
+                is GetScanReportDataOfflineUIState.OnSuccess -> {
+                    val value = it.onSuccess[ZERO]
+                  //  setProgressBarForAll(value)
+                }
+                is GetScanReportDataOfflineUIState.OnFailure -> {}
+            }
+        }
+
+        viewModel.getScanReportTicketListFromLocalDB.observe(viewLifecycleOwner) {
+            when(it){
+                is GetScanReportTicketListOfflineUIState.IsLoading -> {}
+                is GetScanReportTicketListOfflineUIState.OnSuccess -> {
+                    it.onSuccess?.let {ticketList ->
+                        setAdapter(ticketList)
+                    }
+                }
+                is GetScanReportTicketListOfflineUIState.OnFailure -> {}
+            }
+        }
     }
 
     private fun observeScanReportOffline() {
@@ -89,9 +121,19 @@ class QrScanReportFragment : Fragment() {
                 is QrScanReportAllUIState.OnSuccess -> {
                     DialogProgressUtil.dismiss()
                     it.onSuccess.data.let {
-                        setProgressBarForAll(it)
+                        it?.let {
+                            val value = InsertScanReportDataResponse(
+                                0,
+                                it.online,
+                                it.physical,
+                                it.total_scanned,
+                                it.total_accepted,
+                                it.total_rejected,
+                                it.total_tickets
+                            )
+                            setProgressBarForAll(value)
+                        }
                     }
-
                     setAdapter(it.onSuccess.data?.ticket_data)
                 }
 
@@ -103,7 +145,7 @@ class QrScanReportFragment : Fragment() {
         }
     }
 
-    private fun setProgressBarForAll(data: DataList?) {
+    private fun setProgressBarForAll(data: InsertScanReportDataResponse?) {
         binding.apply {
             tvAcceptedCount.text = data?.total_accepted.toString()
             tvRejectedCount.text = data?.total_rejected.toString()
@@ -136,8 +178,8 @@ class QrScanReportFragment : Fragment() {
             onlineRatio to requireContext().getColor(R.color.yellow_progress_bar),
             physicalRation to requireContext().getColor(R.color.light_blue_progress_bar)
         )
-        data?.total_ticket_ratio?.total?.toInt()
-            ?.let { binding.progress.setProgressValues(progressValues, totalTickets ?: ZERO) }
+
+        binding.progress.setProgressValues(progressValues, totalTickets ?: ZERO)
 
     }
 
@@ -264,6 +306,7 @@ class QrScanReportFragment : Fragment() {
             }
         }
 
+        /** upload store locally scan data to server */
         binding.btnUploadDataServer.setOnClickListener {
             if (viewModel.isNetworkAvailable) {
                 if (scanLogDataOffline.size > ZERO) {
@@ -288,6 +331,7 @@ class QrScanReportFragment : Fragment() {
         }
     }
 
+    /** Observe response of upload store locally scan data to server */
     private fun observeUploadDataOnServerResponse() {
         viewModel.uploadScanLogDataOnServer.observe(viewLifecycleOwner) {
             when (it) {
@@ -313,6 +357,7 @@ class QrScanReportFragment : Fragment() {
         }
     }
 
+    /** Observe delete scan-log data from local storage */
     private fun observeScanLogDeleteResponse() {
         viewModel.deleteScanLogDataFromLocalDB.observe(viewLifecycleOwner) {
             when (it) {

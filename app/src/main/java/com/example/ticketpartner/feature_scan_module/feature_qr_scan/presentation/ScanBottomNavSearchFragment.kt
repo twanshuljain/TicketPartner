@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
@@ -14,6 +15,7 @@ import com.example.ticketpartner.R
 import com.example.ticketpartner.common.EMPTY_STRING
 import com.example.ticketpartner.common.SCAN_SEARCHED_DATA
 import com.example.ticketpartner.common.ZERO
+import com.example.ticketpartner.common.remote.apis.UNAUTHORIZED_USER
 import com.example.ticketpartner.databinding.FragmentScanBottomNavSearchBinding
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.QrScanSearchItemUIState
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.SearchData
@@ -112,7 +114,63 @@ class ScanBottomNavSearchFragment : Fragment() {
         searchedItem = orderId
         searchOfflineDataList.clear()
         /** Observe network connection status only once */
-        networkConnectionLiveData.observeOnce(
+        viewModel.isNetworkAvailableObserver.observe(viewLifecycleOwner){
+            if (it){
+                binding.rvSearchOrder.visibility = View.VISIBLE
+                binding.rvSearchOrderOffline.visibility = View.GONE
+
+                viewModel.getSearchData(orderId)
+                viewModel.observeScanSearchData.observe(viewLifecycleOwner) {
+                    when (it) {
+                        is QrScanSearchItemUIState.IsLoading -> {
+                            DialogProgressUtil.show(childFragmentManager)
+                        }
+
+                        is QrScanSearchItemUIState.OnSuccess -> {
+                            DialogProgressUtil.dismiss()
+                            it.onSuccess.data?.let { list ->
+                                setAdapter(list)
+                            }
+                        }
+
+                        is QrScanSearchItemUIState.OnFailure -> {
+                            DialogProgressUtil.dismiss()
+                            if (it.onFailure == UNAUTHORIZED_USER.toString()){
+                               /* Toast.makeText(
+                                    requireContext(),
+                                    "User session has been expired!",
+                                    Toast.LENGTH_SHORT
+                                ).show()*/
+                            }
+                            // SnackBarUtil.showErrorSnackBar(binding.root, it.onFailure)
+                        }
+                    }
+                }
+            }else{
+
+                binding.rvSearchOrder.visibility = View.GONE
+                binding.rvSearchOrderOffline.visibility = View.VISIBLE
+
+                viewModel.getScanSearchDataFromLocalDB.observe(viewLifecycleOwner) {
+                    when (it) {
+                        is GetScanSearchDataOfflineUIState.IsLoading -> {}
+                        is GetScanSearchDataOfflineUIState.OnSuccess -> {
+                            it.onSuccess?.let { data ->
+                                for (i in data!!) {
+                                    if (i != null) {
+                                        searchOfflineDataList.add(i)
+                                    }
+                                }
+                            }
+                        }
+
+                        is GetScanSearchDataOfflineUIState.OnFailure -> {}
+                    }
+                }
+            }
+        }
+
+     /*   networkConnectionLiveData.observeOnce(
             viewLifecycleOwner,
             Observer { isConnected ->
                 if (isConnected) {
@@ -135,6 +193,13 @@ class ScanBottomNavSearchFragment : Fragment() {
 
                             is QrScanSearchItemUIState.OnFailure -> {
                                 DialogProgressUtil.dismiss()
+                                if (it.onFailure == UNAUTHORIZED_USER.toString()){
+                                    Toast.makeText(
+                                        requireContext(),
+                                        "User session has been expired!",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                }
                                 // SnackBarUtil.showErrorSnackBar(binding.root, it.onFailure)
                             }
                         }
@@ -159,10 +224,10 @@ class ScanBottomNavSearchFragment : Fragment() {
                             is GetScanSearchDataOfflineUIState.OnFailure -> {}
                         }
                     }
-
                 }
 
-            })
+            })*/
+
         sortedFilteredList = filterAndSortOrderList(searchOfflineDataList, orderId)
         sortedFilteredList?.let { list ->
             setAdapterOffline(list)
@@ -247,7 +312,6 @@ class ScanBottomNavSearchFragment : Fragment() {
                             setAdapterOffline(uniqueArrayList)
                         }
                     }
-
                     is GetScanSearchDataOfflineUIState.OnFailure -> {}
                 }
             }

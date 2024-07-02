@@ -5,9 +5,13 @@ import com.example.ticketpartner.feature_local_storage.domain.repository.LocalSt
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.CheckInData
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.DataItems
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.InsertEventDetailsResponse
+import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.InsertScanReportDataResponse
+import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.InsertSearchDataResponse
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.InsertTicketTypeListResponse
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.SearchData
+import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.DataList
 import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.ScanLog
+import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.TicketDataList
 import javax.inject.Inject
 
 class LocalStorageRepositoryImpl @Inject constructor(private val localStorageDataSource: LocalStorageDataSource) :
@@ -63,5 +67,21 @@ class LocalStorageRepositoryImpl @Inject constructor(private val localStorageDat
 
     override suspend fun deleteScanLogDataLocalDB(): Int {
         return localStorageDataSource.deleteScanLogDataLocalDB()
+    }
+
+    override suspend fun insertScanReportDataLocalDB(insertScanReportDataResponse: InsertScanReportDataResponse): Long {
+        return localStorageDataSource.insertScanReportDataLocalDB(insertScanReportDataResponse)
+    }
+
+    override suspend fun insertScanReportTicketListDataLocalDB(ticketDataList: TicketDataList): Long {
+        return localStorageDataSource.insertScanReportTicketListDataLocalDB(ticketDataList)
+    }
+
+    override suspend fun getScanReportDataLocalDb(): List<InsertScanReportDataResponse> {
+        return localStorageDataSource.getScanReportDataLocalDb()
+    }
+
+    override suspend fun getScanReportTicketListLocalDb(): List<TicketDataList> {
+        return localStorageDataSource.getScanReportTicketListLocalDb()
     }
 }

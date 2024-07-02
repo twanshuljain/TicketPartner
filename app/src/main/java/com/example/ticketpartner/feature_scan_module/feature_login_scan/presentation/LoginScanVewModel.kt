@@ -22,6 +22,9 @@ import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.m
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.InsertEventDetailsResponse
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.InsertEventDetailsUIState
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.InsertQrCodeForOffLineScanUIState
+import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.InsertScanReportDataResponse
+import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.InsertScanReportDataUIState
+import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.InsertScanReportTicketListUIState
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.InsertSearchDataOfflineUIState
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.InsertTicketTypeListResponse
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.LoginWithPinUIState
@@ -32,14 +35,18 @@ import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.u
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.usecase.GetQrScanAllReportLoginUseCase
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.usecase.GetScanEventDetailsUseCase
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.usecase.InsertCheckInDataOfflineUseCase
+import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.usecase.InsertScanReportDataUseCase
+import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.usecase.InsertScanReportTicketListUSeCase
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.usecase.InsertSearchDataOfflineUseCase
 import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.GetScanSearchDataOfflineUIState
 import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.QrScanReportAllUIState
+import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.TicketDataList
 import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.usecase.GetQrScanSearchUseCase
 import com.example.ticketpartner.feature_scan_module.feature_qr_scan.presentation.QrScanViewModel
 import com.technotoil.tglivescan.common.retrofit.apis.ErrorResponseHandler
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -57,6 +64,8 @@ class LoginScanVewModel @Inject constructor(
     private val insertSearchDataOfflineUseCase: InsertSearchDataOfflineUseCase,
     private val getQrScanSearchUseCase: GetQrScanSearchUseCase,
     private val getQrScanAllReportLoginUseCase: GetQrScanAllReportLoginUseCase,
+    private val insertScanReportDataUseCase: InsertScanReportDataUseCase,
+    private val insertScanReportTicketListUSeCase: InsertScanReportTicketListUSeCase,
     private val logUtil: LogUtil
 ) :
     ViewModel() {
@@ -112,6 +121,12 @@ class LoginScanVewModel @Inject constructor(
 
     private val _getScanReportAllDataLogin: MutableLiveData<QrScanReportAllUIState> = MutableLiveData()
     val getScanReportAllDataLogin: LiveData<QrScanReportAllUIState> = _getScanReportAllDataLogin
+
+    private val _insertScanReportDataOffline: MutableLiveData<InsertScanReportDataUIState> = MutableLiveData()
+    val insertScanReportDataOffline: LiveData<InsertScanReportDataUIState> = _insertScanReportDataOffline
+
+    private val _insertScanReportTicketListDataOffline: MutableLiveData<InsertScanReportTicketListUIState> = MutableLiveData()
+    val insertScanReportTicketListDataOffline: LiveData<InsertScanReportTicketListUIState> = _insertScanReportTicketListDataOffline
 
 
     fun loginWithPin(name: String, scanPin: String) {
@@ -215,7 +230,6 @@ class LoginScanVewModel @Inject constructor(
         }
     }
 
-
     fun getEventDetailsOfflineScan() {
         _getEventDetailsOfflineScan.value = GetEventDetailsOfflineScanUIState.IsLoading(true)
         viewModelScope.launch {
@@ -304,6 +318,34 @@ class LoginScanVewModel @Inject constructor(
         }
     }
 
+    fun insertScanReportDataOffline(insertScanReportDataResponse: InsertScanReportDataResponse){
+        _insertScanReportDataOffline.value = InsertScanReportDataUIState.IsLoading(true)
+        viewModelScope.launch{
+            insertScanReportDataUseCase.invoke(insertScanReportDataResponse).catch {
+                logUtil.log(QrScanViewModel.TAG, "onError${it.message.toString()}")
+                _insertScanReportDataOffline.value =
+                    InsertScanReportDataUIState.OnFailure(it.message.toString())
+            }.collect{
+                logUtil.log(QrScanViewModel.TAG, "onResponse: $it")
+                _insertSearchDataOfflineScan.value =
+                    InsertSearchDataOfflineUIState.OnSuccess("Data inserted successfully!")
+            }
+        }
+    }
+
+    fun insertScanReportTicketListOffline(ticketDataList: TicketDataList){
+        _insertScanReportTicketListDataOffline.value = InsertScanReportTicketListUIState.IsLoading(true)
+        viewModelScope.launch {
+            insertScanReportTicketListUSeCase.invoke(ticketDataList).catch {
+                logUtil.log(QrScanViewModel.TAG, "onError${it.message.toString()}")
+                _insertScanReportTicketListDataOffline.value =
+                    InsertScanReportTicketListUIState.OnFailure(it.message.toString())
+            }.collect{
+                logUtil.log(QrScanViewModel.TAG, "onResponse: $it")
+                InsertScanReportTicketListUIState.OnSuccess("Data inserted successfully!")
+            }
+        }
+    }
 
     companion object {
         val TAG = LoginScanVewModel::class.java.simpleName
