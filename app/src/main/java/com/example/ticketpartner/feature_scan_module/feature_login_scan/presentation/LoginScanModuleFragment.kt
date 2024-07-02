@@ -1,7 +1,6 @@
 package com.example.ticketpartner.feature_scan_module.feature_login_scan.presentation
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup

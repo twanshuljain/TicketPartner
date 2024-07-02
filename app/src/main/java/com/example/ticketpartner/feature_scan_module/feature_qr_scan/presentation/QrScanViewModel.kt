@@ -1,6 +1,5 @@
 package com.example.ticketpartner.feature_scan_module.feature_qr_scan.presentation
 
-import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -13,7 +12,6 @@ import com.example.ticketpartner.feature_local_storage.domain.usecase.GetQrCodeL
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.CheckInData
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.EventDetailsScanUIState
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.InsertCheckInDataOfflineUIState
-import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.InsertScanReportDataResponse
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.InsertSearchDataOfflineUIState
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.QrScanSearchItemUIState
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.SearchData
@@ -56,7 +54,6 @@ import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.usec
 import com.technotoil.tglivescan.common.retrofit.apis.ErrorResponseHandler
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -123,8 +120,7 @@ class QrScanViewModel @Inject constructor(
 
     private val _getCheckInFromLocalDB: MutableLiveData<GetCheckInDataLocalDBUIState> =
         MutableLiveData()
-    val getCheckInFromLocalDB: LiveData<GetCheckInDataLocalDBUIState> =
-        _getCheckInFromLocalDB
+    val getCheckInFromLocalDB: LiveData<GetCheckInDataLocalDBUIState> = _getCheckInFromLocalDB
 
     private val _insertCheckInDataOfflineScan: MutableLiveData<InsertCheckInDataOfflineUIState> =
         MutableLiveData()
@@ -146,11 +142,15 @@ class QrScanViewModel @Inject constructor(
     private val _selectedSearchOrderListData: MutableLiveData<List<SearchData>> = MutableLiveData()
     val selectedSearchOrderListData: LiveData<List<SearchData>> = _selectedSearchOrderListData
 
-    private val _getScanReportDataFromLocalDB: MutableLiveData<GetScanReportDataOfflineUIState> = MutableLiveData()
-    val getScanReportDataFromLocalDB: LiveData<GetScanReportDataOfflineUIState> = _getScanReportDataFromLocalDB
+    private val _getScanReportDataFromLocalDB: MutableLiveData<GetScanReportDataOfflineUIState> =
+        MutableLiveData()
+    val getScanReportDataFromLocalDB: LiveData<GetScanReportDataOfflineUIState> =
+        _getScanReportDataFromLocalDB
 
-    private val _getScanReportTicketListFromLocalDB: MutableLiveData<GetScanReportTicketListOfflineUIState> = MutableLiveData()
-    val getScanReportTicketListFromLocalDB: LiveData<GetScanReportTicketListOfflineUIState> = _getScanReportTicketListFromLocalDB
+    private val _getScanReportTicketListFromLocalDB: MutableLiveData<GetScanReportTicketListOfflineUIState> =
+        MutableLiveData()
+    val getScanReportTicketListFromLocalDB: LiveData<GetScanReportTicketListOfflineUIState> =
+        _getScanReportTicketListFromLocalDB
 
     fun putSelectedOrderList(searchFilterData: List<SearchData>) {
         _selectedSearchOrderListData.value = searchFilterData
@@ -205,8 +205,7 @@ class QrScanViewModel @Inject constructor(
                 logUtil.log(TAG, "onError${it.message.toString()}")
                 val error = ErrorResponseHandler(it)
                 logUtil.log(TAG, "onErrorQrResponse${error.getErrors().data}")
-                _qrScanState.value =
-                    QrScanUIState.OnFailure(error.getErrors().message.toString())
+                _qrScanState.value = QrScanUIState.OnFailure(error.getErrors().message.toString())
             }.collect {
                 logUtil.log(TAG, "onResponse: $it")
                 _qrScanState.value = QrScanUIState.OnSuccess(it)
@@ -220,10 +219,10 @@ class QrScanViewModel @Inject constructor(
             getQrScannedTicketDataUseCase.invoke().catch {
                 val error = ErrorResponseHandler(it)
                 logUtil.log(TAG, "onError -->> ${error.getErrors()}")
-                if (error.getErrors().status_code == UNAUTHORIZED_USER.toString()){
+                if (error.getErrors().status_code == UNAUTHORIZED_USER.toString()) {
                     _getScannedTicketState.value =
                         QrScannedTicketUIState.OnFailure(UNAUTHORIZED_USER.toString())
-                }else{
+                } else {
                     _getScannedTicketState.value =
                         QrScannedTicketUIState.OnFailure(error.getErrors().message.toString())
                 }
@@ -271,10 +270,10 @@ class QrScanViewModel @Inject constructor(
                 logUtil.log(TAG, "onError${it.message.toString()}")
                 val error = ErrorResponseHandler(it)
 
-                if (error.getErrors().status_code == UNAUTHORIZED_USER.toString()){
+                if (error.getErrors().status_code == UNAUTHORIZED_USER.toString()) {
                     _getScanSearchData.value =
                         QrScanSearchItemUIState.OnFailure(UNAUTHORIZED_USER.toString())
-                }else{
+                } else {
                     _getScanSearchData.value =
                         QrScanSearchItemUIState.OnFailure(error.getErrors().message.toString())
                 }
@@ -368,8 +367,7 @@ class QrScanViewModel @Inject constructor(
                     GetCheckInDataLocalDBUIState.OnFailure(it.message.toString())
             }.collect {
                 logUtil.log(TAG, "onResponse:$it")
-                _getCheckInFromLocalDB.value =
-                    GetCheckInDataLocalDBUIState.OnSuccess(it)
+                _getCheckInFromLocalDB.value = GetCheckInDataLocalDBUIState.OnSuccess(it)
             }
         }
     }
@@ -398,8 +396,7 @@ class QrScanViewModel @Inject constructor(
                     GetScanSearchDataOfflineUIState.OnFailure(it.message.toString())
             }.collect {
                 logUtil.log(LoginScanVewModel.TAG, "onResponse: $it")
-                _getScanSearchDataFromLocalDB.value =
-                    GetScanSearchDataOfflineUIState.OnSuccess(it)
+                _getScanSearchDataFromLocalDB.value = GetScanSearchDataOfflineUIState.OnSuccess(it)
             }
         }
     }
@@ -477,28 +474,32 @@ class QrScanViewModel @Inject constructor(
         }
     }
 
-    fun getScanReportDataFromLocalDB(){
+    fun getScanReportDataFromLocalDB() {
         _getScanReportDataFromLocalDB.value = GetScanReportDataOfflineUIState.IsLoading(true)
         viewModelScope.launch {
             getScanReportDataOfflineUseCase.invoke().catch {
                 logUtil.log(LoginScanVewModel.TAG, "onError${it.message.toString()}")
-                _getScanReportDataFromLocalDB.value = GetScanReportDataOfflineUIState.OnFailure(it.message.toString())
-            }.collect{
+                _getScanReportDataFromLocalDB.value =
+                    GetScanReportDataOfflineUIState.OnFailure(it.message.toString())
+            }.collect {
                 logUtil.log(LoginScanVewModel.TAG, "onResponse: $it")
                 _getScanReportDataFromLocalDB.value = GetScanReportDataOfflineUIState.OnSuccess(it)
             }
         }
     }
 
-    fun getScanReportTicketListOffline(){
-        _getScanReportTicketListFromLocalDB.value = GetScanReportTicketListOfflineUIState.IsLoading(true)
+    fun getScanReportTicketListOffline() {
+        _getScanReportTicketListFromLocalDB.value =
+            GetScanReportTicketListOfflineUIState.IsLoading(true)
         viewModelScope.launch {
             getScanReportTicketListOfflineUseCase.invoke().catch {
                 logUtil.log(LoginScanVewModel.TAG, "onError${it.message.toString()}")
-                _getScanReportTicketListFromLocalDB.value = GetScanReportTicketListOfflineUIState.OnFailure(it.message.toString())
-            }.collect{
+                _getScanReportTicketListFromLocalDB.value =
+                    GetScanReportTicketListOfflineUIState.OnFailure(it.message.toString())
+            }.collect {
                 logUtil.log(LoginScanVewModel.TAG, "onResponse: $it")
-                _getScanReportTicketListFromLocalDB.value = GetScanReportTicketListOfflineUIState.OnSuccess(it)
+                _getScanReportTicketListFromLocalDB.value =
+                    GetScanReportTicketListOfflineUIState.OnSuccess(it)
             }
         }
     }

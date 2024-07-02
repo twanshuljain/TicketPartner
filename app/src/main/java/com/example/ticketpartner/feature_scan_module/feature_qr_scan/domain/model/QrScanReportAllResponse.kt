@@ -3,7 +3,6 @@ package com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.mod
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.example.ticketpartner.common.GET_SCAN_REPORT_DATA
 import com.example.ticketpartner.common.GET_SCAN_REPORT_TICKET_LIST
 
 data class QrScanReportAllResponse(
