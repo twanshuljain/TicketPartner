@@ -395,6 +395,6 @@ class SignInFragment : Fragment(), CountdownTimerCallback {
     /** stop countDown on destroy current activity/fragment */
     override fun onDestroy() {
         super.onDestroy()
-        countdownTimerUtil.stop()
+      //  countdownTimerUtil.stop()
     }
 }

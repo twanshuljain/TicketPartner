@@ -4,6 +4,7 @@ import com.example.ticketpartner.common.remote.apis.BAD_REQUEST
 import com.example.ticketpartner.common.remote.apis.HTTP_SERVICE_UNAVAILABLE
 import com.example.ticketpartner.common.remote.apis.PARSING_ERROR_MSG
 import com.example.ticketpartner.common.remote.apis.SERVICE_NOT_AVAILABLE_MSG
+import com.example.ticketpartner.common.remote.apis.UNAUTHORIZED_USER
 import com.google.gson.Gson
 import com.technotoil.tglivescan.common.retrofit.model.ErrorResponse
 import okhttp3.ResponseBody
@@ -28,15 +29,27 @@ class ErrorResponseHandler constructor(it: Throwable) {
         var errorCode = ErrorResponse()
         when (it) {
             is HttpException -> {
-                if (it.code() == HTTP_SERVICE_UNAVAILABLE)
-                    errorCode = ErrorResponse(
-                        BAD_REQUEST.toString(),
-                        SERVICE_NOT_AVAILABLE_MSG
-                    )
-                else
-                    it.response()?.let {
-                        errorCode = createErrorResponse(it.errorBody(), it.code())
+                when (it.code()) {
+                    HTTP_SERVICE_UNAVAILABLE -> {
+                        errorCode = ErrorResponse(
+                            BAD_REQUEST.toString(),
+                            SERVICE_NOT_AVAILABLE_MSG
+                        )
                     }
+
+                    UNAUTHORIZED_USER -> {
+                        errorCode = ErrorResponse(
+                            status_code = UNAUTHORIZED_USER.toString(),
+                            message = "Unauthorized. Please log in again."
+                        )
+                    }
+
+                    else ->
+                        it.response()?.let {
+                            errorCode = createErrorResponse(it.errorBody(), it.code())
+                        }
+                }
+
             }
 
             is UnknownHostException -> errorCode = ErrorResponse()

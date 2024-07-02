@@ -2,9 +2,11 @@ package com.example.ticketpartner.feature_scan_module.feature_login_scan.data.re
 
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.datasource.LoginScanDataSource
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.EventDetailsScanResponse
+import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.GetCheckInDataOfflineResponse
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.GetQrCodeListResponse
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.LoginWithPinResponse
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.repository.LoginScanRepository
+import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.QrScanReportAllResponse
 import javax.inject.Inject
 
 class LoginScanRepositoryImpl @Inject constructor(private val loginScanDataSource: LoginScanDataSource) :
@@ -19,5 +21,13 @@ class LoginScanRepositoryImpl @Inject constructor(private val loginScanDataSourc
 
     override suspend fun getQrCodeListForOfflineScan(): GetQrCodeListResponse {
         return loginScanDataSource.getQrCodeListForOfflineScan()
+    }
+
+    override suspend fun getCheckInListOffline(): GetCheckInDataOfflineResponse {
+        return loginScanDataSource.getCheckInListOffline()
+    }
+
+    override suspend fun getAllScanReportOffline(type: String): QrScanReportAllResponse {
+        return loginScanDataSource.getAllScanReportOffline(type)
     }
 }

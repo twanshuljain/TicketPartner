@@ -1,5 +1,6 @@
 package com.example.ticketpartner.utils
 
+import android.app.Activity
 import android.content.Context
 import android.graphics.Color
 import android.net.Uri
@@ -10,9 +11,21 @@ import android.text.Spannable
 import android.text.SpannableString
 import android.text.Spanned
 import android.text.style.ForegroundColorSpan
+import android.util.Log
+import android.view.inputmethod.InputMethodManager
 import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.AppCompatEditText
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.Observer
+import androidx.room.Room
+import com.example.ticketpartner.common.TP_LOCAL_DATABASE
 import com.example.ticketpartner.common.ZERO
+import com.example.ticketpartner.common.localDatabase.TPLocalDatabase
+import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.SearchData
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
@@ -21,6 +34,7 @@ import java.text.SimpleDateFormat
 import java.time.LocalDateTime
 import java.util.Calendar
 import java.util.Locale
+import java.util.UUID
 
 object Utility {
 
@@ -171,4 +185,90 @@ object Utility {
         editText.filters = arrayOf(filter)
     }
 
+    // Extension function to observe LiveData only once
+    fun <T> LiveData<T>.observeOnce(lifecycleOwner: LifecycleOwner, observer: Observer<T>) {
+        val wrappedObserver = object : Observer<T> {
+            private var isObserved = false
+            override fun onChanged(t: T) {
+                if (!isObserved) {
+                    t?.let {
+                        observer.onChanged(it)
+                        isObserved = true
+                        removeObserver(this)
+                    }
+                }
+            }
+        }
+        observe(lifecycleOwner, wrappedObserver)
+    }
+
+    /*  fun filterAndSortOrderList(
+          orderList: List<SearchData>,
+          searchQuery: String
+      ): List<SearchData> {
+          // Filter the list based on the search query
+          val filteredList = orderList.filter { item ->
+              item.name?.contains(searchQuery, ignoreCase = true) ?: false ||
+                      item.order_number.toString().contains(searchQuery, ignoreCase = true) ||
+                      item.email?.contains(searchQuery, ignoreCase = true) ?: false
+          }
+
+          // Rank each item based on the search query
+          return filteredList.sortedByDescending { item ->
+              val nameMatch = if (item.name?.contains(searchQuery, ignoreCase = true) == true) 1 else 0
+              val orderIdMatch = if (item.order_ticket_id.toString().contains(searchQuery, ignoreCase = true)) 1 else 0
+              val emailMatch = if (item.email?.contains(searchQuery, ignoreCase = true) == true) 1 else 0
+              nameMatch + orderIdMatch + emailMatch
+          }
+      }*/
+
+    fun filterAndSortOrderList(
+        orderList: List<SearchData>,
+        searchQuery: String
+    ): List<SearchData> {
+        // Filter the list based on the search query
+        val filteredList = orderList.filter { item ->
+            item.name?.contains(searchQuery, ignoreCase = true) ?: false ||
+                    item.order_number.toString().contains(searchQuery, ignoreCase = true) ||
+                    item.email?.contains(searchQuery, ignoreCase = true) ?: false
+        }
+
+        // Rank each item based on the search query
+        val sortedList = filteredList.sortedByDescending { item ->
+            val nameMatch =
+                if (item.name?.contains(searchQuery, ignoreCase = true) == true) 1 else 0
+            val orderIdMatch =
+                if (item.order_number.toString().contains(searchQuery, ignoreCase = true)) 1 else 0
+            val emailMatch =
+                if (item.email?.contains(searchQuery, ignoreCase = true) == true) 1 else 0
+            nameMatch + orderIdMatch + emailMatch
+        }
+
+        // Return a list containing the single top-ranked item, or an empty list if sortedList is empty
+        return sortedList.takeIf { it.isNotEmpty() }?.let { listOf(it.first()) } ?: emptyList()
+    }
+
+    fun getDeviceUUID(): String {
+            return UUID.randomUUID().toString()
+    }
+
+    fun hideKeyboard(activity: Activity) {
+        val imm = activity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        val currentFocus = activity.currentFocus
+        if (currentFocus != null) {
+            imm.hideSoftInputFromWindow(currentFocus.windowToken, 0)
+        }
+    }
+
+    // Function to clear all tables
+    fun clearLocalDatabase(context: Context) {
+        CoroutineScope(Dispatchers.IO).launch {
+            val db = Room.databaseBuilder(
+                context.applicationContext,
+                TPLocalDatabase::class.java, TP_LOCAL_DATABASE
+            ).build()
+            db.clearAllTables()
+            Log.e("TAG", "database has been cleared")
+        }
+    }
 }

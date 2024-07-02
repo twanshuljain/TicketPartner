@@ -4,11 +4,22 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import com.example.ticketpartner.common.GET_CHECK_IN_LIST
 import com.example.ticketpartner.common.GET_EVENT_DETAILS
 import com.example.ticketpartner.common.GET_QR_CODE_LIST_FOR_OFFLINE_SCAN
+import com.example.ticketpartner.common.GET_SCAN_LOG_LIST
+import com.example.ticketpartner.common.GET_SCAN_REPORT_DATA
+import com.example.ticketpartner.common.GET_SCAN_REPORT_TICKET_LIST
+import com.example.ticketpartner.common.GET_SEARCH_LIST
+import com.example.ticketpartner.common.GET_TICKET_TYPES_LIST
+import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.CheckInData
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.DataItems
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.InsertEventDetailsResponse
+import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.InsertScanReportDataResponse
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.InsertTicketTypeListResponse
+import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.SearchData
+import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.ScanLog
+import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.TicketDataList
 
 @Dao
 interface TpScanDao {
@@ -26,4 +37,41 @@ interface TpScanDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertTicketTypes(ticketName: InsertTicketTypeListResponse): Long
+
+    @Query("SELECT * FROM $GET_TICKET_TYPES_LIST")
+    suspend fun getTicketTypes(): List<InsertTicketTypeListResponse>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertCheckInList(checkInData: CheckInData): Long
+
+    @Query("SELECT * FROM $GET_CHECK_IN_LIST")
+    suspend fun getCheckInDataFromLocalDB(): List<CheckInData>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertSearchDataList(searchData: SearchData): Long
+
+    @Query("SELECT * FROM $GET_SEARCH_LIST")
+    suspend fun getSearchDataFromLocalDB(): List<SearchData>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertScanLogDataList(scanLog: ScanLog): Long
+
+    @Query("SELECT * FROM $GET_SCAN_LOG_LIST")
+    suspend fun getScanLogDataFromLocalDB(): List<ScanLog>
+
+    @Query("DELETE FROM $GET_SCAN_LOG_LIST")
+    suspend fun deleteScanLogDataFromLocalDB(): Int
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertScanReportData(insertScanReportDataResponse: InsertScanReportDataResponse): Long
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertScanReportTicketListData(ticketDataList: TicketDataList): Long
+
+    @Query("SELECT * FROM $GET_SCAN_REPORT_DATA")
+    suspend fun getScanReportDataFromLocalDB(): List<InsertScanReportDataResponse>
+
+    @Query("SELECT * FROM $GET_SCAN_REPORT_TICKET_LIST")
+    suspend fun getScanReportTicketListFromLocalDB(): List<TicketDataList>
+
 }

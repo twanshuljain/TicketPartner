@@ -8,22 +8,12 @@ import com.example.ticketpartner.feature_create_event.domain.model.CreateEventGe
 import com.example.ticketpartner.feature_create_event.domain.model.CreateEventTicketListResponse
 import com.example.ticketpartner.feature_create_event.domain.model.CreateEventTypesResponse
 import com.example.ticketpartner.feature_create_event.domain.model.CreateEventVenueStateResponse
-import com.example.ticketpartner.feature_signup.domain.model.CreateUserAccountRequest
-import com.example.ticketpartner.feature_signup.domain.model.CreateUserAccountResponse
 import com.example.ticketpartner.feature_login.domain.model.ForgotPassSendEmailRequest
 import com.example.ticketpartner.feature_login.domain.model.ForgotPassSendEmailResponse
 import com.example.ticketpartner.feature_login.domain.model.ResetPasswordRequest
 import com.example.ticketpartner.feature_login.domain.model.ResetPasswordResponse
 import com.example.ticketpartner.feature_login.domain.model.SendEmailLinkForgotPasswordRequest
 import com.example.ticketpartner.feature_login.domain.model.SendEmailLinkForgotPasswordResponse
-import com.example.ticketpartner.feature_signup.domain.model.SendEmailOtpSignUpResponse
-import com.example.ticketpartner.feature_signup.domain.model.SendEmailOtpSignUpRequest
-import com.example.ticketpartner.feature_signup.domain.model.SendEmailOtpVerifyRequest
-import com.example.ticketpartner.feature_signup.domain.model.SendEmailOtpVerifyResponse
-import com.example.ticketpartner.feature_signup.domain.model.SendPhoneSignUpOtpResponse
-import com.example.ticketpartner.feature_signup.domain.model.SendPhoneSignUpOtpVerifyRequest
-import com.example.ticketpartner.feature_signup.domain.model.SendPhoneSignUpOtpVerifyResponse
-import com.example.ticketpartner.feature_signup.domain.model.SendSignUpPhoneOtpRequest
 import com.example.ticketpartner.feature_login.domain.model.UserEmailLoginRequest
 import com.example.ticketpartner.feature_login.domain.model.UserLoginPhoneRequest
 import com.example.ticketpartner.feature_login.domain.model.UserLoginPhoneResponse
@@ -33,7 +23,9 @@ import com.example.ticketpartner.feature_login.domain.model.VerifyEmailForgotPas
 import com.example.ticketpartner.feature_login.domain.model.VerifyMobileOtpRequest
 import com.example.ticketpartner.feature_login.domain.model.VerifyMobileOtpResponse
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.EventDetailsScanResponse
+import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.GetCheckInDataOfflineResponse
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.GetQrCodeListResponse
+import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.InsertSearchDataResponse
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.LoginWithPinRequest
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.LoginWithPinResponse
 import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.QrScanReportAllResponse
@@ -44,6 +36,18 @@ import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.mode
 import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.ScanCheckedInResponse
 import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.ScanSearchOrderDetailsResponse
 import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.SearchApiScanResponse
+import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.SendScanLogOfflineRequest
+import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.UploadScanLogDataServerResponse
+import com.example.ticketpartner.feature_signup.domain.model.CreateUserAccountRequest
+import com.example.ticketpartner.feature_signup.domain.model.CreateUserAccountResponse
+import com.example.ticketpartner.feature_signup.domain.model.SendEmailOtpSignUpRequest
+import com.example.ticketpartner.feature_signup.domain.model.SendEmailOtpSignUpResponse
+import com.example.ticketpartner.feature_signup.domain.model.SendEmailOtpVerifyRequest
+import com.example.ticketpartner.feature_signup.domain.model.SendEmailOtpVerifyResponse
+import com.example.ticketpartner.feature_signup.domain.model.SendPhoneSignUpOtpResponse
+import com.example.ticketpartner.feature_signup.domain.model.SendPhoneSignUpOtpVerifyRequest
+import com.example.ticketpartner.feature_signup.domain.model.SendPhoneSignUpOtpVerifyResponse
+import com.example.ticketpartner.feature_signup.domain.model.SendSignUpPhoneOtpRequest
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.http.Body
@@ -139,6 +143,9 @@ interface RestApiService {
     @GET(getQrScannedSearchData)
     suspend fun getQrScannedSearchData(@Query("search") orderId: String): SearchApiScanResponse
 
+    @GET(getQrScannedSearchDataOffline)
+    suspend fun getQrScannedSearchAllDataOffline(): InsertSearchDataResponse
+
     @GET(getQrOrderDetailsData)
     suspend fun getQrScanOrderDetailsData(@Query("order_id") orderId: String): ScanSearchOrderDetailsResponse
 
@@ -146,10 +153,15 @@ interface RestApiService {
     suspend fun getQrScanCheckedInData(@Body scanCheckedInRequest: ScanCheckedInRequest): ScanCheckedInResponse
 
     @GET(getQrScanReportAll)
-    suspend fun getQrScanReportAllData(@Query ("report_type") type: String): QrScanReportAllResponse
+    suspend fun getQrScanReportAllData(@Query("report_type") type: String): QrScanReportAllResponse
 
     @GET(getQrCodeListForOfflineScan)
     suspend fun getQrListForOfflineScan(): GetQrCodeListResponse
 
+    @GET(getCheckInList)
+    suspend fun getCheckInListForOffline(): GetCheckInDataOfflineResponse
+
+    @POST(getUploadScanLogData)
+    suspend fun uploadScanLogDataServer(@Body sendScanLogOfflineRequest: SendScanLogOfflineRequest): UploadScanLogDataServerResponse
 
 }

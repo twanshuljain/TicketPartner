@@ -2,7 +2,11 @@ package com.example.ticketpartner.utils
 
 import android.app.TimePickerDialog
 import android.content.Context
+import android.os.Build
+import androidx.annotation.RequiresApi
 import java.text.SimpleDateFormat
+import java.time.OffsetDateTime
+import java.time.format.DateTimeFormatter
 import java.util.Calendar
 import java.util.Date
 import java.util.Locale
@@ -32,6 +36,13 @@ class TimePickerUtility {
         fun getCurrentTimeWithAmPm(): String {
             val dateFormat = SimpleDateFormat(CURRENT_TIME_PATTERN, Locale.getDefault())
             return dateFormat.format(Date())
+        }
+
+        @RequiresApi(Build.VERSION_CODES.O)
+        fun getCurrentDateTimeForServer(): String {
+            val current = OffsetDateTime.now()
+            val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX")
+            return current.format(formatter)
         }
     }
 }

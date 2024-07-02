@@ -76,7 +76,7 @@
             app:layout_constraintBottom_toBottomOf="parent" />
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btnYes"
+            android:id="@+id/btnCheckIn"
             style="@style/boldDarkPrimaryText14"
             android:layout_width="@dimen/margin_0"
             android:layout_height="@dimen/size_40"

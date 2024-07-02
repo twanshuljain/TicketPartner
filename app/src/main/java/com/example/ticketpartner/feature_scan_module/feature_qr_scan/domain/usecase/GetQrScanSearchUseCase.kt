@@ -1,5 +1,6 @@
 package com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.usecase
 
+import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.InsertSearchDataResponse
 import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.SearchApiScanResponse
 import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.repository.QrScanRepository
 import kotlinx.coroutines.Dispatchers
@@ -14,4 +15,11 @@ class GetQrScanSearchUseCase @Inject constructor(private val qrScanRepository: Q
             emit(qrScanRepository.getScanSearchResponse(orderId))
         }.flowOn(Dispatchers.IO)
     }
+
+    suspend fun invokeAllData(): Flow<InsertSearchDataResponse> {
+        return flow {
+            emit(qrScanRepository.getScanAllSearchResponse())
+        }.flowOn(Dispatchers.IO)
+    }
+
 }

@@ -2,6 +2,6 @@ package com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.
 
 sealed class GetCheckInDataOfflineScanUIState {
     data class IsLoading(val isLoading: Boolean) : GetCheckInDataOfflineScanUIState()
-    data class OnSuccess(val onSuccess: GetQrCodeListResponse) : GetCheckInDataOfflineScanUIState()
+    data class OnSuccess(val onSuccess: GetCheckInDataOfflineResponse) : GetCheckInDataOfflineScanUIState()
     data class OnFailure(val onFailure: String) : GetCheckInDataOfflineScanUIState()
 }

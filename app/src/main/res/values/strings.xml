@@ -184,5 +184,12 @@
     <string name="allowed_orders">Allowed Orders</string>
     <string name="people_are_allowed_to_enter">People are allowed to enter this event.</string>
     <string name="pleases_select_ticket_types">Please select ticket types</string>
+    <string name="upload_on_live_server">Upload on live server</string>
+    <string name="check_network_availability">Please check you network availability</string>
+    <string name="you_do_not_have_data">"You don't have data to upload on server"</string>
+    <string name="please_select_order_id">"Please select order Id"</string>
+    <string name="scanned_successfully">"Scanned Successfully"</string>
+    <string name="you_are_offline">"You are offline"</string>
+    <string name="you_are_online">"You are online"</string>
 
 </resources>

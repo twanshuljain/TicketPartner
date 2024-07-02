@@ -9,7 +9,6 @@ import com.example.ticketpartner.common.remote.apis.RestApiService
 import com.example.ticketpartner.common.remote.apis.SessionHandlerInterceptor
 import com.example.ticketpartner.common.remote.apis.SessionManager
 import com.example.ticketpartner.common.remote.apis.TIMEOUT_60_SEC
-import com.example.ticketpartner.utils.NetworkMonitor
 import com.technotoil.ticket.common.storage.UserPreference
 import dagger.Module
 import dagger.Provides
@@ -100,10 +99,10 @@ class NetworkModule {
         return application.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
     }
 
-    @Provides
+ /*   @Provides
     @Singleton
     fun provideNetworkMonitor(application: Application, connectivityManager: ConnectivityManager): NetworkMonitor {
         return NetworkMonitor(application, connectivityManager)
     }
-
+*/
 }

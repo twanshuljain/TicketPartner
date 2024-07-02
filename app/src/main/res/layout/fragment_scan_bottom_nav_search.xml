@@ -87,6 +87,16 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/mediumDarkPrimaryText14"
+        android:text="No data found"
+        android:layout_marginTop="@dimen/margin_15"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/clSearchBar"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvSearchOrder"
         android:layout_width="match_parent"
@@ -95,6 +105,20 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/clSearchBar"
         app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="@dimen/margin_15"
+        android:orientation="vertical"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:listitem="@layout/item_scan_order_search"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvSearchOrderOffline"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/margin_0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/clSearchBar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:visibility="gone"
         android:layout_marginTop="@dimen/margin_15"
         android:orientation="vertical"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"

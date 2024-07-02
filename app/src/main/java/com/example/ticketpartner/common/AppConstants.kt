@@ -59,6 +59,11 @@ const val DATABASE_VERSION = 1
 const val GET_QR_CODE_LIST_FOR_OFFLINE_SCAN = "getQrCodeListOfflineScan"
 const val GET_EVENT_DETAILS = "getEventDetails"
 const val GET_TICKET_TYPES_LIST = "getTicketTypesList"
+const val GET_CHECK_IN_LIST = "getCheckInList"
+const val GET_SEARCH_LIST = "getSearchList"
+const val GET_SCAN_LOG_LIST = "getScanLogList"
+const val GET_SCAN_REPORT_DATA = "getScanReportData"
+const val GET_SCAN_REPORT_TICKET_LIST = "getScanReportTicketList"
 
 //Regular expressions
 val UPPER_CASE_REGEX = Regex("(?=.*[A-Z])")
