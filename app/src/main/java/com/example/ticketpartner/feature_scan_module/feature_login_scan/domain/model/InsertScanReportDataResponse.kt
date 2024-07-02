@@ -15,11 +15,11 @@ data class InsertScanReportDataResponse(
     @ColumnInfo(name = "physical")
     val physical: Int,
     @ColumnInfo(name = "totalScanned")
-    val total_scanned: Int,
+    var total_scanned: Int,
     @ColumnInfo(name = "totalAccepted")
-    val total_accepted: Int,
+    var total_accepted: Int,
     @ColumnInfo(name = "totalRejected")
-    val total_rejected: Int,
+    var total_rejected: Int,
     @ColumnInfo(name = "totalTickets")
     val total_tickets: Int
 )

@@ -13,6 +13,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.ticketpartner.R
 import com.example.ticketpartner.common.EMPTY_STRING
 import com.example.ticketpartner.common.SnackBarUtil
+import com.example.ticketpartner.common.TP_LOCAL_DATABASE
 import com.example.ticketpartner.common.ZERO
 import com.example.ticketpartner.common.storage.MyPreferences
 import com.example.ticketpartner.common.storage.PrefConstants
@@ -94,6 +95,7 @@ class LoginScanModuleFragment : Fragment() {
         }
 
         binding.rlContinue.setOnClickListener {
+           // requireActivity().deleteDatabase(TP_LOCAL_DATABASE)
             if (isAllFieldsValid()) {
                 networkConnectionLiveData.observeOnce(viewLifecycleOwner, Observer { isConnected ->
                     if (isConnected) {

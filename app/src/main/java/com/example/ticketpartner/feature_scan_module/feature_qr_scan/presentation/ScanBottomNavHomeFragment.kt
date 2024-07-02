@@ -1,6 +1,7 @@
 package com.example.ticketpartner.feature_scan_module.feature_qr_scan.presentation
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -120,6 +121,8 @@ class ScanBottomNavHomeFragment : Fragment() {
                 is GetTicketTypesListOfflineUIState.OnSuccess -> {
                     val savedSelectedList =
                         MyPreferences.getArrayList(SCAN_SELECTED_TICKET_TYPES_LIST)
+                    Log.e("TAG", "observeTicketTypesListFromLocalDB: $it ", )
+                    ticketTypesList.clear()
                     for (data in it.onSuccess)
                         ticketTypesList.add(
                             (InsertTicketTypeListResponse(

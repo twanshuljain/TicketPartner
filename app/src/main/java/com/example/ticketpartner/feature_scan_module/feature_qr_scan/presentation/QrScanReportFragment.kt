@@ -54,6 +54,7 @@ class QrScanReportFragment : Fragment() {
             if (it) {
                 viewModel.getScanReportAllData("all")
                 observeScanReportAllData()
+                observeScanReportOffline()
                 binding.btnUploadDataServer.visibility = View.VISIBLE
             } else {
                 binding.btnUploadDataServer.visibility = View.GONE
@@ -71,7 +72,7 @@ class QrScanReportFragment : Fragment() {
                 is GetScanReportDataOfflineUIState.IsLoading -> {}
                 is GetScanReportDataOfflineUIState.OnSuccess -> {
                     val value = it.onSuccess[ZERO]
-                  //  setProgressBarForAll(value)
+                    setProgressBarForAll(value)
                 }
                 is GetScanReportDataOfflineUIState.OnFailure -> {}
             }
@@ -92,7 +93,8 @@ class QrScanReportFragment : Fragment() {
 
     private fun observeScanReportOffline() {
         // viewModel.getScanLogListData()
-        // scanLogDataOffline.clear()
+         scanLogDataOffline.clear()
+       viewModel.getScanLogListData()
         viewModel.getScanLogLocalDB.observe(viewLifecycleOwner) {
             when (it) {
                 is GetScanLogOfflineUIState.IsLoading -> {}
@@ -129,6 +131,9 @@ class QrScanReportFragment : Fragment() {
                                 it.total_rejected,
                                 it.total_tickets
                             )
+                             viewModel.totalScanned = it.total_scanned
+                            viewModel.totalAccepted = it.total_accepted
+                            viewModel.totalRejected = it.total_rejected
                             setProgressBarForAll(value)
                         }
                     }
@@ -145,6 +150,10 @@ class QrScanReportFragment : Fragment() {
 
     private fun setProgressBarForAll(data: InsertScanReportDataResponse?) {
         binding.apply {
+            data?.total_scanned = viewModel.totalScanned
+            data?.total_accepted = viewModel.totalAccepted
+            data?.total_rejected = viewModel.totalRejected
+
             tvAcceptedCount.text = data?.total_accepted.toString()
             tvRejectedCount.text = data?.total_rejected.toString()
             tvOnlineCount.text = data?.online.toString()
@@ -162,8 +171,13 @@ class QrScanReportFragment : Fragment() {
             progressRejected.progress = data?.total_rejected ?: 0
         }
 
-        val acceptedRatio = data?.let { it.total_accepted } ?: 0
-        val rejectedRatio = data?.let { it.total_rejected } ?: 0
+       /* val acceptedRatio = data?.let { it.total_accepted } ?: 0
+        val rejectedRatio = data?.let { it.total_rejected } ?: 0*/
+
+
+        val acceptedRatio = data?.let { viewModel.totalAccepted } ?: 0
+        val rejectedRatio = data?.let { viewModel.totalRejected } ?: 0
+
         val onlineRatio = data?.let { it.online } ?: 0
         val physicalRation = data?.let { it.physical } ?: 0
         val totalTickets = data?.let { it.total_tickets }
@@ -344,6 +358,7 @@ class QrScanReportFragment : Fragment() {
                     viewModel.deleteScanLogDataFromLocalDB()
                     observeScanLogDeleteResponse()
                     viewModel.deleteScanLogDataFromLocalDB
+                    viewModel.getScannedTicketData()
                     DialogProgressUtil.dismiss()
                 }
 

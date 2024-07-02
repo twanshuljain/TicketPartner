@@ -68,6 +68,7 @@ class ScanBottomQRScanFragment : Fragment() {
     private var getCheckInOrderTicketIdListLocalDB = ArrayList<String>()
     private lateinit var networkConnectionLiveData: NetworkConnectionLiveData
     private var isObserved = false
+    private var isDialogVisible = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -97,18 +98,35 @@ class ScanBottomQRScanFragment : Fragment() {
             when (it) {
                 is GetScanReportDataOfflineUIState.IsLoading -> {}
                 is GetScanReportDataOfflineUIState.OnSuccess -> {
-                    val res = it.onSuccess[ZERO]
+
+                    if (viewModel.totalScanned.toString().isNullOrEmpty()){
+                        val res = it.onSuccess[ZERO]
+                        binding.tvTotalScanned.text = getString(R.string.total_scanned) + VERTICAL_DOTS + res?.total_scanned .toString()
+                        binding.tvAccepted.text =
+                            getString(R.string.accepted) + VERTICAL_DOTS +res?.total_accepted.toString()
+                        binding.tvRejected.text =
+                            getString(R.string.rejected) + VERTICAL_DOTS + res?.total_rejected .toString()
+                    }else{
+                        binding.tvTotalScanned.text = getString(R.string.total_scanned) + VERTICAL_DOTS + viewModel.totalScanned.toString()
+                        binding.tvAccepted.text =
+                            getString(R.string.accepted) + VERTICAL_DOTS +viewModel.totalAccepted.toString()
+                        binding.tvRejected.text =
+                            getString(R.string.rejected) + VERTICAL_DOTS + viewModel.totalRejected.toString()
+                    }
+
+
+                 /*   val res = it.onSuccess[ZERO]
                     viewModel.totalScanned = res?.total_scanned ?: ZERO
                     viewModel.totalAccepted = res?.total_accepted ?: ZERO
-                    viewModel.totalRejected = res?.total_rejected ?: ZERO
+                    viewModel.totalRejected = res?.total_rejected ?: ZERO*/
                 }
                 is GetScanReportDataOfflineUIState.OnFailure -> {}
             }
-            binding.tvTotalScanned.text = getString(R.string.total_scanned) + VERTICAL_DOTS + viewModel.totalScanned.toString()
+     /*       binding.tvTotalScanned.text = getString(R.string.total_scanned) + VERTICAL_DOTS + viewModel.totalScanned.toString()
             binding.tvAccepted.text =
                 getString(R.string.accepted) + VERTICAL_DOTS +viewModel.totalAccepted.toString()
             binding.tvRejected.text =
-                getString(R.string.rejected) + VERTICAL_DOTS + viewModel.totalRejected.toString()
+                getString(R.string.rejected) + VERTICAL_DOTS + viewModel.totalRejected.toString()*/
         }
     }
 
@@ -160,7 +178,7 @@ class ScanBottomQRScanFragment : Fragment() {
         }
 
         binding.btnEndScan.setOnClickListener {
-            openImagePickerBottomSheet()
+            openScanReportBottomSheet()
         }
 
     }
@@ -501,10 +519,14 @@ class ScanBottomQRScanFragment : Fragment() {
                 is QrScannedTicketUIState.IsLoading -> {
                     DialogProgressUtil.show(childFragmentManager)
                 }
-
                 is QrScannedTicketUIState.OnSuccess -> {
                     DialogProgressUtil.dismiss()
                     val res = it.onSuccess.data
+
+                    viewModel.totalScanned = res?.total_scanned ?: ZERO
+                    viewModel.totalAccepted = res?.total_accepted ?: ZERO
+                    viewModel.totalRejected = res?.total_rejected ?: ZERO
+
                     binding.tvTotalScanned.text =
                         getString(R.string.total_scanned) + VERTICAL_DOTS + res?.total_scanned.toString()
                     binding.tvAccepted.text =
@@ -590,7 +612,10 @@ class ScanBottomQRScanFragment : Fragment() {
         isObserved = false
     }
 
-    private fun openImagePickerBottomSheet() {
+    private fun openScanReportBottomSheet() {
+        if (isDialogVisible) return // Prevent opening multiple dialogs
+        isDialogVisible = true
+
         val dialog = BottomSheetDialog(requireContext())
         val dialogView = LayoutEndScanBottomDialogBinding.inflate(layoutInflater)
         dialogView.apply {
@@ -608,6 +633,9 @@ class ScanBottomQRScanFragment : Fragment() {
         }
         dialogView.ivClose.setOnClickListener {
             dialog.dismiss()
+        }
+        dialog.setOnDismissListener {
+            isDialogVisible = false
         }
         dialog.setCanceledOnTouchOutside(true)
         dialog.setContentView(dialogView.root)
