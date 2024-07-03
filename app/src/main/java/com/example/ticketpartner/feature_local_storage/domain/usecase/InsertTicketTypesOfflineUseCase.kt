@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 
 class InsertTicketTypesOfflineUseCase @Inject constructor(private val localStorageRepository: LocalStorageRepository) {
-    suspend fun invoke(ticketName: InsertTicketTypeListResponse): Flow<Long>{
+    suspend fun invoke(ticketName: ArrayList<InsertTicketTypeListResponse>): Flow<List<Long>>{
         return flow {
             emit(localStorageRepository.insertTicketTypesLocalDB(ticketName))
         }.flowOn(Dispatchers.IO)

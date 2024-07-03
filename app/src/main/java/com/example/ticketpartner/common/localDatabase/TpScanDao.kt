@@ -24,7 +24,7 @@ import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.mode
 @Dao
 interface TpScanDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertOfflineScanData(getQrCodeListResponse: DataItems): Long
+    suspend fun insertOfflineScanData(getQrCodeListResponse: ArrayList<DataItems>): List<Long>
 
     @Query("SELECT * FROM $GET_QR_CODE_LIST_FOR_OFFLINE_SCAN")
     suspend fun getQrCodeListFromLocalDB(): List<DataItems>
@@ -36,19 +36,19 @@ interface TpScanDao {
     suspend fun getEventDetailsFromLocalDB(): InsertEventDetailsResponse
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertTicketTypes(ticketName: InsertTicketTypeListResponse): Long
+    suspend fun insertTicketTypes(ticketName: ArrayList<InsertTicketTypeListResponse>): List<Long>
 
     @Query("SELECT * FROM $GET_TICKET_TYPES_LIST")
     suspend fun getTicketTypes(): List<InsertTicketTypeListResponse>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertCheckInList(checkInData: CheckInData): Long
+    suspend fun insertCheckInList(checkInData: ArrayList<CheckInData>): List<Long>
 
     @Query("SELECT * FROM $GET_CHECK_IN_LIST")
     suspend fun getCheckInDataFromLocalDB(): List<CheckInData>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertSearchDataList(searchData: SearchData): Long
+    suspend fun insertSearchDataList(searchData: ArrayList<SearchData>): List<Long>
 
     @Query("SELECT * FROM $GET_SEARCH_LIST")
     suspend fun getSearchDataFromLocalDB(): List<SearchData>
@@ -66,7 +66,7 @@ interface TpScanDao {
     suspend fun insertScanReportData(insertScanReportDataResponse: InsertScanReportDataResponse): Long
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertScanReportTicketListData(ticketDataList: TicketDataList): Long
+    suspend fun insertScanReportTicketListData(ticketDataList: ArrayList<TicketDataList>): List<Long>
 
     @Query("SELECT * FROM $GET_SCAN_REPORT_DATA")
     suspend fun getScanReportDataFromLocalDB(): List<InsertScanReportDataResponse>

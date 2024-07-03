@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 
 class InsertCheckInDataOfflineUseCase @Inject constructor(private val localStorageRepository: LocalStorageRepository) {
-    suspend fun invoke(checkInData: CheckInData): Flow<Long>{
+    suspend fun invoke(checkInData: ArrayList<CheckInData>): Flow<List<Long>>{
         return flow {
             emit(localStorageRepository.insertCheckInLocalDB(checkInData))
         }.flowOn(Dispatchers.IO)

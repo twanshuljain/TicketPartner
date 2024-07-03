@@ -14,7 +14,7 @@ import javax.inject.Inject
 
 class LocalStorageDataSourceImpl @Inject constructor(private val tpScanDao: TpScanDao) :
     LocalStorageDataSource {
-    override suspend fun insertQrCodeList(getQrCodeListResponse: DataItems): Long {
+    override suspend fun insertQrCodeList(getQrCodeListResponse: ArrayList<DataItems>): List<Long> {
         return tpScanDao.insertOfflineScanData(getQrCodeListResponse)
     }
 
@@ -30,7 +30,7 @@ class LocalStorageDataSourceImpl @Inject constructor(private val tpScanDao: TpSc
         return tpScanDao.getEventDetailsFromLocalDB()
     }
 
-    override suspend fun insertTicketTypesLocalDB(ticketName: InsertTicketTypeListResponse): Long {
+    override suspend fun insertTicketTypesLocalDB(ticketName: ArrayList<InsertTicketTypeListResponse>): List<Long> {
         return tpScanDao.insertTicketTypes(ticketName)
     }
 
@@ -38,7 +38,7 @@ class LocalStorageDataSourceImpl @Inject constructor(private val tpScanDao: TpSc
         return tpScanDao.getTicketTypes()
     }
 
-    override suspend fun insertCheckInLocalDB(checkInData: CheckInData): Long {
+    override suspend fun insertCheckInLocalDB(checkInData: ArrayList<CheckInData>): List<Long> {
         return tpScanDao.insertCheckInList(checkInData)
     }
 
@@ -46,7 +46,7 @@ class LocalStorageDataSourceImpl @Inject constructor(private val tpScanDao: TpSc
         return tpScanDao.getCheckInDataFromLocalDB()
     }
 
-    override suspend fun insertSearchDataLocalDB(searchData: SearchData): Long {
+    override suspend fun insertSearchDataLocalDB(searchData: ArrayList<SearchData>): List<Long> {
         return tpScanDao.insertSearchDataList(searchData)
     }
 
@@ -70,7 +70,7 @@ class LocalStorageDataSourceImpl @Inject constructor(private val tpScanDao: TpSc
         return tpScanDao.insertScanReportData(insertScanReportDataResponse)
     }
 
-    override suspend fun insertScanReportTicketListDataLocalDB(ticketDataList: TicketDataList): Long {
+    override suspend fun insertScanReportTicketListDataLocalDB(ticketDataList: ArrayList<TicketDataList>): List<Long> {
         return tpScanDao.insertScanReportTicketListData(ticketDataList)
     }
 

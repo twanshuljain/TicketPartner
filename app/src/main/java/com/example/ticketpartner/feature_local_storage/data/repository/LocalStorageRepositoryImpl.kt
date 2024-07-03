@@ -14,7 +14,7 @@ import javax.inject.Inject
 
 class LocalStorageRepositoryImpl @Inject constructor(private val localStorageDataSource: LocalStorageDataSource) :
     LocalStorageRepository {
-    override suspend fun insertQrCodeList(getQrCodeListResponse: DataItems): Long {
+    override suspend fun insertQrCodeList(getQrCodeListResponse: ArrayList<DataItems>): List<Long> {
         return localStorageDataSource.insertQrCodeList(getQrCodeListResponse)
     }
 
@@ -31,7 +31,7 @@ class LocalStorageRepositoryImpl @Inject constructor(private val localStorageDat
         return localStorageDataSource.getEventDetailsLocalDB()
     }
 
-    override suspend fun insertTicketTypesLocalDB(ticketName: InsertTicketTypeListResponse): Long {
+    override suspend fun insertTicketTypesLocalDB(ticketName: ArrayList<InsertTicketTypeListResponse>): List<Long> {
         return localStorageDataSource.insertTicketTypesLocalDB(ticketName)
     }
 
@@ -39,7 +39,7 @@ class LocalStorageRepositoryImpl @Inject constructor(private val localStorageDat
         return localStorageDataSource.getTicketTypesListLocalDB()
     }
 
-    override suspend fun insertCheckInLocalDB(checkInData: CheckInData): Long {
+    override suspend fun insertCheckInLocalDB(checkInData: ArrayList<CheckInData>): List<Long> {
         return localStorageDataSource.insertCheckInLocalDB(checkInData)
     }
 
@@ -47,7 +47,7 @@ class LocalStorageRepositoryImpl @Inject constructor(private val localStorageDat
         return localStorageDataSource.getCheckInDataLocalDb()
     }
 
-    override suspend fun insertSearchDataLocalDB(searchData: SearchData): Long {
+    override suspend fun insertSearchDataLocalDB(searchData: ArrayList<SearchData>): List<Long> {
         return localStorageDataSource.insertSearchDataLocalDB(searchData)
     }
 
@@ -71,7 +71,7 @@ class LocalStorageRepositoryImpl @Inject constructor(private val localStorageDat
         return localStorageDataSource.insertScanReportDataLocalDB(insertScanReportDataResponse)
     }
 
-    override suspend fun insertScanReportTicketListDataLocalDB(ticketDataList: TicketDataList): Long {
+    override suspend fun insertScanReportTicketListDataLocalDB(ticketDataList: ArrayList<TicketDataList>): List<Long> {
         return localStorageDataSource.insertScanReportTicketListDataLocalDB(ticketDataList)
     }
 

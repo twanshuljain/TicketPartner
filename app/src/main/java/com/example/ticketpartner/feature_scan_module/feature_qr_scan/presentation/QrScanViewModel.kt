@@ -373,9 +373,12 @@ class QrScanViewModel @Inject constructor(
     }
 
     fun insertCheckInDataOfflineScan(checkInData: CheckInData) {
+        val arrayList = ArrayList<CheckInData>()
+        if (arrayList.size> ZERO) arrayList.clear()
+        arrayList.add(checkInData)
         _insertCheckInDataOfflineScan.value = InsertCheckInDataOfflineUIState.IsLoading(true)
         viewModelScope.launch {
-            insertCheckInDataOfflineUseCase.invoke(checkInData).catch {
+            insertCheckInDataOfflineUseCase.invoke(arrayList).catch {
                 logUtil.log(LoginScanVewModel.TAG, "onError${it.message.toString()}")
                 _insertCheckInDataOfflineScan.value =
                     InsertCheckInDataOfflineUIState.OnFailure(it.message.toString())
@@ -402,9 +405,12 @@ class QrScanViewModel @Inject constructor(
     }
 
     fun insertSearchDataOfflineScan(searchData: SearchData) {
+        val arrayList = ArrayList<SearchData>()
+        if (arrayList.size > ZERO) arrayList.clear()
+        arrayList.add(searchData)
         _insertSearchDataOfflineScan.value = InsertSearchDataOfflineUIState.IsLoading(true)
         viewModelScope.launch {
-            insertSearchDataOfflineUseCase.invoke(searchData).catch {
+            insertSearchDataOfflineUseCase.invoke(arrayList).catch {
                 logUtil.log(LoginScanVewModel.TAG, "onError${it.message.toString()}")
                 _insertSearchDataOfflineScan.value =
                     InsertSearchDataOfflineUIState.OnFailure(it.message.toString())

@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 
 class InsertQrCodeListUseCase @Inject constructor(private val localStorageRepository: LocalStorageRepository){
-    suspend fun invoke(getQrCodeListResponse: DataItems): Flow<Long> {
+    suspend fun invoke(getQrCodeListResponse: ArrayList<DataItems>): Flow<List<Long>> {
         return flow { emit(localStorageRepository.insertQrCodeList(getQrCodeListResponse)) }.flowOn(Dispatchers.IO)
     }
 }

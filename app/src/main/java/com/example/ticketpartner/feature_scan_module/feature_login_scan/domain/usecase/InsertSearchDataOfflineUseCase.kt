@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 
 class InsertSearchDataOfflineUseCase @Inject constructor(private val localStorageRepository: LocalStorageRepository) {
-    suspend fun invoke(searchData: SearchData): Flow<Long> {
+    suspend fun invoke(searchData: ArrayList<SearchData>): Flow<List<Long>> {
         return flow {
             emit(localStorageRepository.insertSearchDataLocalDB(searchData))
         }.flowOn(Dispatchers.IO)
