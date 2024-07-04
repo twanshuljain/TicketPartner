@@ -17,7 +17,6 @@ import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.m
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.GetCheckInDataOfflineScanUIState
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.GetEventDetailsOfflineScanUIState
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.GetQrCodeForOffLineScanUIState
-import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.InsertTicketTypesOfflineScanUIState
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.InsertCheckInDataOfflineUIState
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.InsertEventDetailsResponse
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.InsertEventDetailsUIState
@@ -27,6 +26,7 @@ import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.m
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.InsertScanReportTicketListUIState
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.InsertSearchDataOfflineUIState
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.InsertTicketTypeListResponse
+import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.InsertTicketTypesOfflineScanUIState
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.LoginWithPinUIState
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.SearchData
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.usecase.GetCheckInListOfflineUseCase
@@ -133,7 +133,7 @@ class LoginScanVewModel @Inject constructor(
         _insertScanReportTicketListDataOffline
 
 
-  fun loginWithPin(name: String, scanPin: String) {
+    fun loginWithPin(name: String, scanPin: String) {
         _pinLoginState.value = LoginWithPinUIState.IsLoading(true)
         viewModelScope.launch {
             getPinLoginUseCase.invoke(name, scanPin).catch {
@@ -347,7 +347,8 @@ class LoginScanVewModel @Inject constructor(
                     InsertScanReportTicketListUIState.OnFailure(it.message.toString())
             }.collect {
                 logUtil.log(QrScanViewModel.TAG, "onResponse: $it")
-                InsertScanReportTicketListUIState.OnSuccess("Data inserted successfully!")
+                _insertScanReportTicketListDataOffline.value =
+                    InsertScanReportTicketListUIState.OnSuccess("Data inserted successfully!")
             }
         }
     }

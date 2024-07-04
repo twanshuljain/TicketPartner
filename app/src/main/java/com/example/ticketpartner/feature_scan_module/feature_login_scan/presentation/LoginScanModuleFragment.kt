@@ -4,12 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import com.example.ticketpartner.R
 import com.example.ticketpartner.common.EMPTY_STRING
 import com.example.ticketpartner.common.SnackBarUtil
@@ -39,6 +39,7 @@ import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.mode
 import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.TicketDataList
 import com.example.ticketpartner.utils.BackPressHandler
 import com.example.ticketpartner.utils.DialogProgressUtil
+import com.example.ticketpartner.utils.NavigateFragmentUtil.navigateWithClearNavGraph
 import com.example.ticketpartner.utils.NetworkConnectionLiveData
 import com.example.ticketpartner.utils.Utility
 import com.example.ticketpartner.utils.Utility.hideKeyboard
@@ -61,6 +62,7 @@ class LoginScanModuleFragment : Fragment() {
     private val insertCheckInDataList = ArrayList<CheckInData>()
     private val insertSearchDataList = ArrayList<SearchData>()
     private val insertScanReportTicketDataList = ArrayList<TicketDataList>()
+    private var hasScanReportApiCalled = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -109,6 +111,7 @@ class LoginScanModuleFragment : Fragment() {
                     if (isConnected) {
                         viewModel.loginWithPin(etName, etPin)
                         observeLoginResponse()
+                        hasScanReportApiCalled = false
                     } else {
                         SnackBarUtil.showErrorSnackBar(
                             binding.root, getString(R.string.check_network_availability)
@@ -154,7 +157,7 @@ class LoginScanModuleFragment : Fragment() {
                         }
                     }
                     insertTicketTypesInLocalDB(insertTicketTypesList)
-                    SnackBarUtil.showSuccessSnackBar(binding.root, it.onSuccess.message.toString())
+                   SnackBarUtil.showSuccessSnackBar(binding.root, it.onSuccess.message.toString())
                 }
 
                 is LoginWithPinUIState.OnFailure -> {
@@ -164,7 +167,6 @@ class LoginScanModuleFragment : Fragment() {
             }
         }
     }
-
 
     private fun insertEventsDetailLocalStorage(data: EventDetails?) {
         data?.let { event ->
@@ -251,7 +253,6 @@ class LoginScanModuleFragment : Fragment() {
                         }
                     }
                     insertSearchDataListLocalDB(insertSearchDataList)
-
                     hideKeyboard(requireActivity())
                     DialogProgressUtil.dismiss()
                 }
@@ -374,20 +375,18 @@ class LoginScanModuleFragment : Fragment() {
     }
 
     private fun insertCheckInDataLocalDB(insertCheckInDataList: java.util.ArrayList<CheckInData>) {
-        if (insertCheckInDataList.size > ZERO) {
-            viewModel.insertCheckInDataOfflineScan(
-                insertCheckInDataList
-            )
-            viewModel.insertCheckInDataOfflineScan.observe(viewLifecycleOwner) {
-                when (it) {
-                    is InsertCheckInDataOfflineUIState.IsLoading -> {}
-                    is InsertCheckInDataOfflineUIState.OnSuccess -> {
-                        viewModel.getSearchData()
-                        observeSearchDataOffline()
-                    }
-
-                    is InsertCheckInDataOfflineUIState.OnFailure -> {}
+        viewModel.insertCheckInDataOfflineScan(
+            insertCheckInDataList
+        )
+        viewModel.insertCheckInDataOfflineScan.observe(viewLifecycleOwner) {
+            when (it) {
+                is InsertCheckInDataOfflineUIState.IsLoading -> {}
+                is InsertCheckInDataOfflineUIState.OnSuccess -> {
+                    viewModel.getSearchData()
+                    observeSearchDataOffline()
                 }
+
+                is InsertCheckInDataOfflineUIState.OnFailure -> {}
             }
         }
     }
@@ -401,13 +400,17 @@ class LoginScanModuleFragment : Fragment() {
                 when (it) {
                     is InsertSearchDataOfflineUIState.IsLoading -> {}
                     is InsertSearchDataOfflineUIState.OnSuccess -> {
-                        viewModel.getScanReportAllData("all")
-                        observeScanReportAllData()
+                        if (!hasScanReportApiCalled){
+                            hasScanReportApiCalled = true
+                            viewModel.getScanReportAllData("all")
+                        }
                     }
 
                     is InsertSearchDataOfflineUIState.OnFailure -> {}
                 }
             }
+
+            observeScanReportAllData()
         }
     }
 
@@ -418,20 +421,13 @@ class LoginScanModuleFragment : Fragment() {
                 when (it) {
                     is InsertScanReportTicketListUIState.IsLoading -> {}
                     is InsertScanReportTicketListUIState.OnSuccess -> {
-                        Toast.makeText(
-                            requireContext(),
-                            it.onSuccess.toString(),
-                            Toast.LENGTH_SHORT
-                        ).show()
-                        /* findNavController().navigateWithClearNavGraph(
-                             R.id.main_nav_graph, R.id.eventDetailsScanModuleFragment
-                         )*/
+                        findNavController().navigateWithClearNavGraph(
+                            R.id.main_nav_graph, R.id.eventDetailsScanModuleFragment
+                        )
                     }
-
                     is InsertScanReportTicketListUIState.OnFailure -> {}
                 }
             }
         }
     }
-
 }
