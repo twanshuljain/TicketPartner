@@ -15,7 +15,6 @@ import androidx.navigation.ui.setupWithNavController
 import com.example.ticketpartner.R
 import com.example.ticketpartner.common.HYPHEN_CHAR
 import com.example.ticketpartner.common.SnackBarUtil
-import com.example.ticketpartner.common.TP_LOCAL_DATABASE
 import com.example.ticketpartner.common.VERTICAL_POLE
 import com.example.ticketpartner.common.ZERO
 import com.example.ticketpartner.common.storage.MyPreferences
@@ -90,17 +89,11 @@ class ScanQRLandingFragment : Fragment() {
                 viewModel.isNetworkAvailableObserver.value = true
                 viewModel.isNetworkAvailable = true
                 observeLocalDBScanLog()
-                SnackBarUtil.showSuccessSnackBar(
-                    binding.root,
-                    getString(R.string.you_are_online)
-                )
+                SnackBarUtil.showCustomSnackBar(binding.root,getString(R.string.you_are_online),true)
             } else {
                 viewModel.isNetworkAvailableObserver.value = false
                 viewModel.isNetworkAvailable = false
-                SnackBarUtil.showErrorSnackBar(
-                    binding.root,
-                    getString(R.string.you_are_offline)
-                )
+                SnackBarUtil.showCustomSnackBar(binding.root,getString(R.string.you_are_offline))
             }
         }
     }
@@ -133,10 +126,7 @@ class ScanQRLandingFragment : Fragment() {
                         navController.navigate(R.id.scanBottomQRScanFragment)
                         true
                     } else {
-                        SnackBarUtil.showErrorSnackBar(
-                            binding.root,
-                            getString(R.string.pleases_select_ticket_types)
-                        )
+                        SnackBarUtil.showCustomSnackBar(binding.root,getString(R.string.pleases_select_ticket_types))
                         false
                     }
                 }
@@ -178,10 +168,7 @@ class ScanQRLandingFragment : Fragment() {
             if (selectedTicketTypeListSize.size > ZERO) {
                 binding.scanBottomNav.selectedItemId = it
             } else {
-                SnackBarUtil.showErrorSnackBar(
-                    binding.root,
-                    getString(R.string.pleases_select_ticket_types)
-                )
+                SnackBarUtil.showCustomSnackBar(binding.root,getString(R.string.pleases_select_ticket_types))
             }
         }
 
@@ -193,12 +180,8 @@ class ScanQRLandingFragment : Fragment() {
                     logoutDialog("Are you sure you want to log out?")
                 }
             } else {
-                SnackBarUtil.showErrorSnackBar(
-                    binding.root,
-                    getString(R.string.check_network_availability)
-                )
+                SnackBarUtil.showCustomSnackBar(binding.root,getString(R.string.check_network_availability))
             }
-
         }
     }
 
@@ -218,7 +201,7 @@ class ScanQRLandingFragment : Fragment() {
 
                 is EventDetailsScanUIState.OnFailure -> {
                     DialogProgressUtil.dismiss()
-                    SnackBarUtil.showErrorSnackBar(binding.root, it.onFailure)
+                    SnackBarUtil.showCustomSnackBar(binding.root,it.onFailure)
                 }
             }
         }
@@ -254,31 +237,6 @@ class ScanQRLandingFragment : Fragment() {
                 R.id.loginScanModuleFragment
             )
         }
-
-    /*    val dialog = BottomSheetDialog(requireContext())
-        val dialogView = LayoutEndScanBottomDialogBinding.inflate(layoutInflater)
-        dialogView.apply {
-            tvTitle.text = getString(R.string.logout)
-            tvDescription.text = message
-        }
-        dialogView.btnNo.setOnClickListener {
-            dialog.dismiss()
-        }
-        dialogView.btnYes.setOnClickListener {
-            Utility.clearLocalDatabase(requireActivity())
-           MyPreferences.clearpref()
-            findNavController().navigateWithClearNavGraph(
-                R.id.nested_qr_scan_nav_graph,
-                R.id.loginScanModuleFragment
-            )
-            dialog.dismiss()
-        }
-        dialogView.ivClose.setOnClickListener {
-            dialog.dismiss()
-        }
-        dialog.setCanceledOnTouchOutside(true)
-        dialog.setContentView(dialogView.root)
-        dialog.show()*/
     }
 
     private fun handleOnBackPressedButton() {

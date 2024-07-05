@@ -66,7 +66,7 @@ class LoginScanVewModel @Inject constructor(
     private val insertScanReportDataUseCase: InsertScanReportDataUseCase,
     private val insertScanReportTicketListUSeCase: InsertScanReportTicketListUSeCase,
     private val logUtil: LogUtil
-) :
+    ) :
     ViewModel() {
     private val _pinLoginState: MutableLiveData<LoginWithPinUIState> = MutableLiveData()
     val observePinLoginResponse: LiveData<LoginWithPinUIState> = _pinLoginState

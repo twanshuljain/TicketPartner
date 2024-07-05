@@ -114,22 +114,6 @@ class ScanSearchedOrderDetailsFragment : Fragment() {
         val subTitle = activity?.findViewById<AppCompatTextView>(R.id.subTitle)
         subTitle?.visibility = View.GONE
 
-        /*binding.apply {
-            tvName.text = searchDetails?.name.toString()
-            tvEmail.text = searchDetails?.email.toString()
-            tvOrderId.text =
-                requireContext().getString(R.string.order_id) + COLUMN + searchDetails?.order_id.toString()
-            tvPaymentMethod.text =
-                requireContext().getString(R.string.payment_method) + COLUMN + searchDetails?.payment_type.toString()
-        }
-
-        searchDetails?.is_checked_in?.let {
-            visibleCheckedInButton(it)
-        }
-*/
-        /*searchDetails?.order_id?.let { viewModel.getOrderDetailsResponse(it) }
-        observeOrderDetailsData()*/
-
         binding.btnCheckIn.setOnClickListener {
             viewModel.isOnlineMode.observe(viewLifecycleOwner) {
                 if (it) {
@@ -150,8 +134,7 @@ class ScanSearchedOrderDetailsFragment : Fragment() {
                                 )
 
                             } else {
-                                SnackBarUtil.showErrorSnackBar(
-                                    binding.root,getString(R.string.check_network_availability))
+                                SnackBarUtil.showCustomSnackBar(binding.root,getString(R.string.check_network_availability))
                             }
                         })
 
@@ -213,7 +196,7 @@ class ScanSearchedOrderDetailsFragment : Fragment() {
 
                 is QrScanOrderDetailsUIState.OnFailure -> {
                     DialogProgressUtil.dismiss()
-                    SnackBarUtil.showErrorSnackBar(binding.root, it.onFailure)
+                    SnackBarUtil.showCustomSnackBar(binding.root,it.onFailure)
                 }
             }
         }

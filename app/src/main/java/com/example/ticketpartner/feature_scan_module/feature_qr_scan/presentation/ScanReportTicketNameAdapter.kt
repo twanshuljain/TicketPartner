@@ -11,7 +11,6 @@ import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.mode
 class ScanReportTicketNameAdapter(private val res: List<TicketDataList?>?) :
     RecyclerView.Adapter<ScanReportTicketNameAdapter.ViewHolder>() {
 
-
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int

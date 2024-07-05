@@ -98,12 +98,6 @@ class ScanBottomNavSearchFragment : Fragment() {
         binding.icClear.setOnClickListener {
             binding.etSearch.text?.clear()
         }
-
-        /* viewModel.searchFilterData.observe(viewLifecycleOwner){
-             setAdapterOffline(it)
-             Log.e("TAG", "initView: $it ", )
-         }*/
-
     }
 
     private fun observeSearchItemResponse(orderId: String) {
@@ -166,64 +160,6 @@ class ScanBottomNavSearchFragment : Fragment() {
                 }
             }
         }
-
-     /*   networkConnectionLiveData.observeOnce(
-            viewLifecycleOwner,
-            Observer { isConnected ->
-                if (isConnected) {
-                    binding.rvSearchOrder.visibility = View.VISIBLE
-                    binding.rvSearchOrderOffline.visibility = View.GONE
-
-                    viewModel.getSearchData(orderId)
-                    viewModel.observeScanSearchData.observe(viewLifecycleOwner) {
-                        when (it) {
-                            is QrScanSearchItemUIState.IsLoading -> {
-                                DialogProgressUtil.show(childFragmentManager)
-                            }
-
-                            is QrScanSearchItemUIState.OnSuccess -> {
-                                DialogProgressUtil.dismiss()
-                                it.onSuccess.data?.let { list ->
-                                    setAdapter(list)
-                                }
-                            }
-
-                            is QrScanSearchItemUIState.OnFailure -> {
-                                DialogProgressUtil.dismiss()
-                                if (it.onFailure == UNAUTHORIZED_USER.toString()){
-                                    Toast.makeText(
-                                        requireContext(),
-                                        "User session has been expired!",
-                                        Toast.LENGTH_SHORT
-                                    ).show()
-                                }
-                                // SnackBarUtil.showErrorSnackBar(binding.root, it.onFailure)
-                            }
-                        }
-                    }
-                } else {
-                    binding.rvSearchOrder.visibility = View.GONE
-                    binding.rvSearchOrderOffline.visibility = View.VISIBLE
-
-                    viewModel.getScanSearchDataFromLocalDB.observe(viewLifecycleOwner) {
-                        when (it) {
-                            is GetScanSearchDataOfflineUIState.IsLoading -> {}
-                            is GetScanSearchDataOfflineUIState.OnSuccess -> {
-                                it.onSuccess?.let { data ->
-                                    for (i in data!!) {
-                                        if (i != null) {
-                                            searchOfflineDataList.add(i)
-                                        }
-                                    }
-                                }
-                            }
-
-                            is GetScanSearchDataOfflineUIState.OnFailure -> {}
-                        }
-                    }
-                }
-
-            })*/
 
         sortedFilteredList = filterAndSortOrderList(searchOfflineDataList, orderId)
         sortedFilteredList?.let { list ->

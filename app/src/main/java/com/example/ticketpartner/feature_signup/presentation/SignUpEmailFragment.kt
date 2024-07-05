@@ -57,9 +57,7 @@ class SignUpEmailFragment : Fragment() {
 
         binding.btnSignUp.setOnClickListener {
             if (!ContactUsInputFieldValidator.isEmailValidPattern(etEmail)) {
-                SnackBarUtil.showErrorSnackBar(
-                    binding.root, getString(R.string.please_enter_valid_email)
-                )
+                SnackBarUtil.showCustomSnackBar(binding.root,getString(R.string.please_enter_valid_email))
             } else {
                 val bundle = Bundle()
                 bundle.putString(EMAIL_KEY, etEmail)

@@ -6,7 +6,6 @@ import android.content.pm.PackageManager
 import android.hardware.Camera
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.util.SparseArray
 import android.view.LayoutInflater
 import android.view.SurfaceHolder
@@ -42,7 +41,6 @@ import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.mode
 import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.QrScannedTicketUIState
 import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.ScanLog
 import com.example.ticketpartner.utils.DialogProgressUtil
-import com.example.ticketpartner.utils.NetworkConnectionLiveData
 import com.example.ticketpartner.utils.TimePickerUtility
 import com.example.ticketpartner.utils.Utility
 import com.google.android.gms.vision.CameraSource
@@ -66,7 +64,6 @@ class ScanBottomQRScanFragment : Fragment() {
     private var qrCodeListLocalDB = ArrayList<String>()
     private var getCheckInItemListLocalDB = ArrayList<CheckInData>()
     private var getCheckInOrderTicketIdListLocalDB = ArrayList<String>()
-    private lateinit var networkConnectionLiveData: NetworkConnectionLiveData
     private var isObserved = false
     private var isDialogVisible = false
 
@@ -113,20 +110,9 @@ class ScanBottomQRScanFragment : Fragment() {
                         binding.tvRejected.text =
                             getString(R.string.rejected) + VERTICAL_DOTS + viewModel.totalRejected.toString()
                     }
-
-
-                 /*   val res = it.onSuccess[ZERO]
-                    viewModel.totalScanned = res?.total_scanned ?: ZERO
-                    viewModel.totalAccepted = res?.total_accepted ?: ZERO
-                    viewModel.totalRejected = res?.total_rejected ?: ZERO*/
                 }
                 is GetScanReportDataOfflineUIState.OnFailure -> {}
             }
-     /*       binding.tvTotalScanned.text = getString(R.string.total_scanned) + VERTICAL_DOTS + viewModel.totalScanned.toString()
-            binding.tvAccepted.text =
-                getString(R.string.accepted) + VERTICAL_DOTS +viewModel.totalAccepted.toString()
-            binding.tvRejected.text =
-                getString(R.string.rejected) + VERTICAL_DOTS + viewModel.totalRejected.toString()*/
         }
     }
 
@@ -245,8 +231,6 @@ class ScanBottomQRScanFragment : Fragment() {
             .setAutoFocusEnabled(true)
             .build()
 
-        networkConnectionLiveData = NetworkConnectionLiveData(requireContext())
-
         binding.ivZoom.isEnabled = true
         binding.ivTorch.isEnabled = true
 
@@ -301,15 +285,6 @@ class ScanBottomQRScanFragment : Fragment() {
                                 isObserved = true
                             }
                         }
-
-                     /*   networkConnectionLiveData.observeOnce(
-                            viewLifecycleOwner,
-                            Observer { isConnected ->
-                                if (!isObserved) {
-                                    handleNetworkConnection(isConnected, scannedValue)
-                                    isObserved = true
-                                }
-                            })*/
                     }
                 }
             }
@@ -559,10 +534,7 @@ class ScanBottomQRScanFragment : Fragment() {
                     cameraSource.start(binding.surfaceView.holder)
                 }
             } else {
-                SnackBarUtil.showErrorSnackBar(
-                    binding.root,
-                    getString(R.string.cameraPermissionRequired)
-                )
+                SnackBarUtil.showCustomSnackBar(binding.root,getString(R.string.cameraPermissionRequired))
             }
         }
 
@@ -580,7 +552,7 @@ class ScanBottomQRScanFragment : Fragment() {
                             camera.parameters = params
                             field.set(cameraSource, camera)
                         } catch (e: Exception) {
-                            Log.e("setFlashMode", "Error setting camera flash mode", e)
+                            print(e.printStackTrace())
                         }
                         break
                     }

@@ -142,7 +142,8 @@ class QrScanReportFragment : Fragment() {
 
                 is QrScanReportAllUIState.OnFailure -> {
                     DialogProgressUtil.dismiss()
-                    SnackBarUtil.showErrorSnackBar(binding.root, it.onFailure)
+                    SnackBarUtil.showCustomSnackBar(binding.root,it.onFailure)
+
                 }
             }
         }
@@ -329,16 +330,10 @@ class QrScanReportFragment : Fragment() {
                     )
                     observeUploadDataOnServerResponse()
                 } else {
-                    SnackBarUtil.showErrorSnackBar(
-                        binding.root,
-                        getString(R.string.you_do_not_have_data)
-                    )
+                    SnackBarUtil.showCustomSnackBar(binding.root,getString(R.string.you_do_not_have_data))
                 }
             } else {
-                SnackBarUtil.showErrorSnackBar(
-                    binding.root,
-                    getString(R.string.check_network_availability)
-                )
+                SnackBarUtil.showCustomSnackBar(binding.root,getString(R.string.check_network_availability))
             }
         }
     }
@@ -354,7 +349,7 @@ class QrScanReportFragment : Fragment() {
                 is UploadScanDataServerUIState.OnSuccess -> {
                     scanLogDataOffline.clear()
                     viewModel.getScanLogListData()
-                    SnackBarUtil.showSuccessSnackBar(binding.root, it.onSuccess.message.toString())
+                    SnackBarUtil.showCustomSnackBar(binding.root,it.onSuccess.message.toString(),true)
                     viewModel.deleteScanLogDataFromLocalDB()
                     observeScanLogDeleteResponse()
                     viewModel.deleteScanLogDataFromLocalDB
@@ -364,7 +359,7 @@ class QrScanReportFragment : Fragment() {
 
                 is UploadScanDataServerUIState.OnFailure -> {
                     DialogProgressUtil.dismiss()
-                    SnackBarUtil.showErrorSnackBar(binding.root, it.onFailure.toString())
+                    SnackBarUtil.showCustomSnackBar(binding.root,it.onFailure)
                 }
             }
         }

@@ -92,7 +92,7 @@ class AddOrganizationChangeLogoFragment : Fragment() {
 
                 is AddOrganizationUIState.OnSuccess -> {
                     DialogProgressUtil.dismiss()
-                    SnackBarUtil.showSuccessSnackBar(binding.root, it.result.message.toString())
+                    SnackBarUtil.showCustomSnackBar(binding.root,it.result.message.toString(),true)
                     val bundle = Bundle()
                     bundle.putString(ORGANIZATION_ID, it.result.data?.id.toString())
                     findNavController().navigate(R.id.addOrganizationSocialFragment, bundle)
@@ -100,7 +100,7 @@ class AddOrganizationChangeLogoFragment : Fragment() {
 
                 is AddOrganizationUIState.OnFailure -> {
                     DialogProgressUtil.dismiss()
-                    SnackBarUtil.showErrorSnackBar(binding.root, it.onFailure)
+                    SnackBarUtil.showCustomSnackBar(binding.root,it.onFailure)
                 }
             }
         }
@@ -197,24 +197,15 @@ class AddOrganizationChangeLogoFragment : Fragment() {
     private fun checkValidation(): Boolean {
         var isValid = true
         if (organizationName.isEmpty()) {
-            SnackBarUtil.showErrorSnackBar(
-                binding.root,
-                getString(R.string.please_enter_organization_name)
-            )
+            SnackBarUtil.showCustomSnackBar(binding.root,getString(R.string.please_enter_organization_name))
             return false
         }
         if (countryId.isEmpty()) {
-            SnackBarUtil.showErrorSnackBar(
-                binding.root,
-                getString(R.string.please_select_country)
-            )
+            SnackBarUtil.showCustomSnackBar(binding.root,getString(R.string.please_select_country))
             return false
         }
         if (selectedFileUri.isEmpty()) {
-            SnackBarUtil.showErrorSnackBar(
-                binding.root,
-                getString(R.string.select_change_logo_image)
-            )
+            SnackBarUtil.showCustomSnackBar(binding.root,getString(R.string.select_change_logo_image))
             return false
         }
         return isValid

@@ -1,7 +1,6 @@
 package com.example.ticketpartner.feature_scan_module.feature_qr_scan.presentation
 
 import android.annotation.SuppressLint
-import android.content.DialogInterface
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -125,7 +124,7 @@ class CheckInBottomSheetFragment(
                         }
                     })
             }else{
-                SnackBarUtil.showErrorSnackBar(context,getString(R.string.please_select_order_id))
+                SnackBarUtil.showCustomSnackBar(binding.root,getString(R.string.please_select_order_id))
             }
         }
 
@@ -147,7 +146,8 @@ class CheckInBottomSheetFragment(
                             searchDetailsResponse[itemPosition[i]].is_checked_in = true
                         }
                         DialogProgressUtil.dismiss()
-                        SnackBarUtil.showSuccessSnackBar(context, it.onSuccess.message.toString())
+                        SnackBarUtil.showCustomSnackBar(binding.root,it.onSuccess.message.toString(),true)
+
                         val bottomSheetDialog = dialog as? BottomSheetDialog
                         bottomSheetDialog?.dismiss()
                         dialogAllowPeople()
@@ -155,7 +155,7 @@ class CheckInBottomSheetFragment(
 
                     is QrScanCheckedInUIState.OnFailure -> {
                         DialogProgressUtil.dismiss()
-                        SnackBarUtil.showErrorSnackBar(context, it.onFailure)
+                        SnackBarUtil.showCustomSnackBar(binding.root,it.onFailure)
                     }
                 }
             }
@@ -182,16 +182,6 @@ class CheckInBottomSheetFragment(
         }
 
         private fun checkedOrderId(list: ArrayList<Long>) {
-           /* viewModel.isOnlineMode.observe(viewLifecycleOwner) {
-                if (!it) {
-                    searchDataForUpdate.clear()
-                    for (i in ZERO until list.size) {
-                        val index = orderList.indexOf(list[i].toString())
-                        searchItemData[index].is_checked_in = true
-                        searchDataForUpdate.add(searchItemData[index])
-                    }
-                }
-            }*/
             checkedOrderIdList = list
         }
 
@@ -225,10 +215,5 @@ class CheckInBottomSheetFragment(
             dialog.setContentView(dialogView.root)
             dialog.show()
         }
-
-    override fun onDismiss(dialog: DialogInterface) {
-        super.onDismiss(dialog)
-
-    }
 
     }
