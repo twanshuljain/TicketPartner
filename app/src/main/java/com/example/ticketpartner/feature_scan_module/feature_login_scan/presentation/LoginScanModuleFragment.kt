@@ -13,7 +13,6 @@ import androidx.navigation.fragment.findNavController
 import com.example.ticketpartner.R
 import com.example.ticketpartner.common.EMPTY_STRING
 import com.example.ticketpartner.common.SnackBarUtil
-import com.example.ticketpartner.common.TP_LOCAL_DATABASE
 import com.example.ticketpartner.common.ZERO
 import com.example.ticketpartner.common.storage.MyPreferences
 import com.example.ticketpartner.common.storage.PrefConstants
@@ -112,17 +111,19 @@ class LoginScanModuleFragment : Fragment() {
                         observeLoginResponse()
                         hasScanReportApiCalled = false
                     } else {
-                        SnackBarUtil.showCustomSnackBar(binding.root,getString(R.string.check_network_availability))
+                        SnackBarUtil.showCustomSnackBar(
+                            binding.root,
+                            getString(R.string.check_network_availability)
+                        )
                     }
                 })
             }
         }
 
-        binding.ivTpLogo.setOnClickListener {
-            SnackBarUtil.showCustomSnackBar(binding.root, "Your local data has been clear!")
-            requireActivity().deleteDatabase(TP_LOCAL_DATABASE)
-        }
-
+        /*   binding.ivTpLogo.setOnClickListener {
+               SnackBarUtil.showCustomSnackBar(binding.root, "Your local data has been clear!")
+               requireActivity().deleteDatabase(TP_LOCAL_DATABASE)
+           }*/
     }
 
     private fun observeLoginResponse() {
@@ -147,7 +148,11 @@ class LoginScanModuleFragment : Fragment() {
                         }
                     }
                     insertTicketTypesInLocalDB(insertTicketTypesList)
-                    SnackBarUtil.showCustomSnackBar(binding.root,it.onSuccess.message.toString(),true)
+                    SnackBarUtil.showCustomSnackBar(
+                        binding.root,
+                        it.onSuccess.message.toString(),
+                        true
+                    )
                 }
 
                 is LoginWithPinUIState.OnFailure -> {
@@ -291,7 +296,7 @@ class LoginScanModuleFragment : Fragment() {
 
                 is QrScanReportAllUIState.OnFailure -> {
                     DialogProgressUtil.dismiss()
-                    SnackBarUtil.showCustomSnackBar(binding.root,it.onFailure)
+                    SnackBarUtil.showCustomSnackBar(binding.root, it.onFailure)
                 }
             }
         }
@@ -307,7 +312,10 @@ class LoginScanModuleFragment : Fragment() {
 
     private fun isAllFieldsValid(): Boolean {
         if (etName.isNullOrEmpty()) {
-            SnackBarUtil.showCustomSnackBar(binding.root,getString(R.string.please_enter_your_name))
+            SnackBarUtil.showCustomSnackBar(
+                binding.root,
+                getString(R.string.please_enter_your_name)
+            )
             return false
         }
         if (etPin.isNullOrEmpty()) {
@@ -387,7 +395,7 @@ class LoginScanModuleFragment : Fragment() {
                 when (it) {
                     is InsertSearchDataOfflineUIState.IsLoading -> {}
                     is InsertSearchDataOfflineUIState.OnSuccess -> {
-                        if (!hasScanReportApiCalled){
+                        if (!hasScanReportApiCalled) {
                             hasScanReportApiCalled = true
                             viewModel.getScanReportAllData("all")
                         }
@@ -412,6 +420,7 @@ class LoginScanModuleFragment : Fragment() {
                             R.id.main_nav_graph, R.id.eventDetailsScanModuleFragment
                         )
                     }
+
                     is InsertScanReportTicketListUIState.OnFailure -> {}
                 }
             }

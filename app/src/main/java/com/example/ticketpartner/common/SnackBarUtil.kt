@@ -75,7 +75,7 @@ object SnackBarUtil {
 
         val snackIcon = customView.findViewById<AppCompatImageView>(R.id.ivIcon)
         if (isSuccess) {
-            customView.setBackgroundColor(ContextCompat.getColor(view.context, R.color.light_green))
+            customView.setBackgroundColor(ContextCompat.getColor(view.context, R.color.green))
             snackIcon.setImageResource(R.drawable.img_correct_white_circle) // Set your success icon here
         } else {
             customView.setBackgroundColor(ContextCompat.getColor(view.context, R.color.red_light))
