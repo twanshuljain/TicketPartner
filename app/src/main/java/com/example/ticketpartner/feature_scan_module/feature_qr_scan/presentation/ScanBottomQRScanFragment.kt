@@ -11,7 +11,6 @@ import android.view.LayoutInflater
 import android.view.SurfaceHolder
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.AppCompatTextView
@@ -41,6 +40,7 @@ import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.mode
 import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.QrScannedTicketUIState
 import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.ScanLog
 import com.example.ticketpartner.utils.DialogProgressUtil
+import com.example.ticketpartner.utils.DialogUtils
 import com.example.ticketpartner.utils.TimePickerUtility
 import com.example.ticketpartner.utils.Utility
 import com.google.android.gms.vision.CameraSource
@@ -80,10 +80,10 @@ class ScanBottomQRScanFragment : Fragment() {
         initView()
         initCameraPermission()
 
-        viewModel.isNetworkAvailableObserver.observe(viewLifecycleOwner){
-            if (it){
+        viewModel.isNetworkAvailableObserver.observe(viewLifecycleOwner) {
+            if (it) {
                 getScannedTicketData()
-            }else{
+            } else {
                 getScannedTicketDataOffline()
             }
         }
@@ -96,21 +96,24 @@ class ScanBottomQRScanFragment : Fragment() {
                 is GetScanReportDataOfflineUIState.IsLoading -> {}
                 is GetScanReportDataOfflineUIState.OnSuccess -> {
 
-                    if (viewModel.totalScanned.toString().isNullOrEmpty()){
+                    if (viewModel.totalScanned.toString().isNullOrEmpty()) {
                         val res = it.onSuccess[ZERO]
-                        binding.tvTotalScanned.text = getString(R.string.total_scanned) + VERTICAL_DOTS + res?.total_scanned .toString()
+                        binding.tvTotalScanned.text =
+                            getString(R.string.total_scanned) + VERTICAL_DOTS + res?.total_scanned.toString()
                         binding.tvAccepted.text =
-                            getString(R.string.accepted) + VERTICAL_DOTS +res?.total_accepted.toString()
+                            getString(R.string.accepted) + VERTICAL_DOTS + res?.total_accepted.toString()
                         binding.tvRejected.text =
-                            getString(R.string.rejected) + VERTICAL_DOTS + res?.total_rejected .toString()
-                    }else{
-                        binding.tvTotalScanned.text = getString(R.string.total_scanned) + VERTICAL_DOTS + viewModel.totalScanned.toString()
+                            getString(R.string.rejected) + VERTICAL_DOTS + res?.total_rejected.toString()
+                    } else {
+                        binding.tvTotalScanned.text =
+                            getString(R.string.total_scanned) + VERTICAL_DOTS + viewModel.totalScanned.toString()
                         binding.tvAccepted.text =
-                            getString(R.string.accepted) + VERTICAL_DOTS +viewModel.totalAccepted.toString()
+                            getString(R.string.accepted) + VERTICAL_DOTS + viewModel.totalAccepted.toString()
                         binding.tvRejected.text =
                             getString(R.string.rejected) + VERTICAL_DOTS + viewModel.totalRejected.toString()
                     }
                 }
+
                 is GetScanReportDataOfflineUIState.OnFailure -> {}
             }
         }
@@ -204,6 +207,7 @@ class ScanBottomQRScanFragment : Fragment() {
                 is QrCodeListFromLocalDBUIState.IsLoading -> {
                     DialogProgressUtil.show(childFragmentManager)
                 }
+
                 is QrCodeListFromLocalDBUIState.OnSuccess -> {
                     DialogProgressUtil.dismiss()
                     if (!it.onSuccess.isNullOrEmpty()) {
@@ -213,6 +217,7 @@ class ScanBottomQRScanFragment : Fragment() {
                         }
                     }
                 }
+
                 is QrCodeListFromLocalDBUIState.OnFailure -> {
                     DialogProgressUtil.dismiss()
                 }
@@ -279,7 +284,7 @@ class ScanBottomQRScanFragment : Fragment() {
                     if (scannedValue.isNotEmpty()) {
                         cameraSource.stop()
                         /** Observe network connection status only once */
-                        viewModel.isNetworkAvailableObserver.observe(viewLifecycleOwner){isConnected ->
+                        viewModel.isNetworkAvailableObserver.observe(viewLifecycleOwner) { isConnected ->
                             if (!isObserved) {
                                 handleNetworkConnection(isConnected, scannedValue)
                                 isObserved = true
@@ -494,6 +499,7 @@ class ScanBottomQRScanFragment : Fragment() {
                 is QrScannedTicketUIState.IsLoading -> {
                     DialogProgressUtil.show(childFragmentManager)
                 }
+
                 is QrScannedTicketUIState.OnSuccess -> {
                     DialogProgressUtil.dismiss()
                     val res = it.onSuccess.data
@@ -512,16 +518,24 @@ class ScanBottomQRScanFragment : Fragment() {
 
                 is QrScannedTicketUIState.OnFailure -> {
                     DialogProgressUtil.dismiss()
-                    if (it.onFailure == UNAUTHORIZED_USER.toString()){
-                        Toast.makeText(
-                            requireContext(),
-                            "User session has been expired!",
-                            Toast.LENGTH_SHORT
-                        ).show()
+                    if (it.onFailure == UNAUTHORIZED_USER.toString()) {
+                        expireSession()
                     }
                 }
             }
         }
+    }
+
+    private fun expireSession() {
+        val builder = DialogUtils.sessionExpiredDialog(requireContext())
+        builder.setPositiveButton("OK") { dialog, _ ->
+            dialog.dismiss()
+            Utility.clearLocalDatabase(requireActivity())
+            MyPreferences.clearpref()
+        }
+        val mDialog = builder.create()
+        mDialog.setCanceledOnTouchOutside(false)
+        mDialog.show()
     }
 
 
@@ -534,7 +548,10 @@ class ScanBottomQRScanFragment : Fragment() {
                     cameraSource.start(binding.surfaceView.holder)
                 }
             } else {
-                SnackBarUtil.showCustomSnackBar(binding.root,getString(R.string.cameraPermissionRequired))
+                SnackBarUtil.showCustomSnackBar(
+                    binding.root,
+                    getString(R.string.cameraPermissionRequired)
+                )
             }
         }
 

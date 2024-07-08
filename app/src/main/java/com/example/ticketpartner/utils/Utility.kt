@@ -268,7 +268,7 @@ object Utility {
                 TPLocalDatabase::class.java, TP_LOCAL_DATABASE
             ).build()
             db.clearAllTables()
-            Log.e("TAG", "database has been cleared")
+            Log.d("TAG", "database has been cleared")
         }
     }
 }

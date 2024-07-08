@@ -120,6 +120,7 @@ class LoginScanModuleFragment : Fragment() {
             }
         }
 
+        /** For delete local data forcefully! */
         /*   binding.ivTpLogo.setOnClickListener {
                SnackBarUtil.showCustomSnackBar(binding.root, "Your local data has been clear!")
                requireActivity().deleteDatabase(TP_LOCAL_DATABASE)
