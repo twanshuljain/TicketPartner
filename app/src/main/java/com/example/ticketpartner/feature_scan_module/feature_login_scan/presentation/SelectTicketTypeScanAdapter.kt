@@ -1,7 +1,6 @@
 package com.example.ticketpartner.feature_scan_module.feature_login_scan.presentation
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -53,12 +52,9 @@ class SelectTicketTypeScanAdapter(
 
         view.itemLayout.setOnClickListener {
             val isSelected = eventTickets?.get(position)?.isSelected
-            val selectedName = eventTickets?.get(position)?.ticketName
-           // Toast.makeText(context, selectedName.toString(), Toast.LENGTH_SHORT).show()
 
             if (isSelected != null) {
                 if (isSelected) {
-                    Log.e("TAG", "position: size-->> $position")
                     view.ivChecked.visibility = View.GONE
                     view.ivUnChecked.visibility = View.VISIBLE
                     eventTickets?.get(position)?.isSelected = false
@@ -74,10 +70,8 @@ class SelectTicketTypeScanAdapter(
                         context.getDrawable(R.drawable.select_ticket_type_item_purple_design)
                 }
             }
-
             selectedListSize(selectedNameList.size)
             selectedTicketName(selectedNameList)
-            Log.e("TAG", "list: size-->> $selectedNameList")
         }
     }
 
@@ -103,6 +97,5 @@ class SelectTicketTypeScanAdapter(
         } catch (e: Exception) {
             e.printStackTrace()
         }
-        Log.e("TAG", "list: size-->> $selectedNameList")
     }
 }

@@ -14,13 +14,16 @@ import com.example.ticketpartner.common.EMPTY_STRING
 import com.example.ticketpartner.common.SCAN_SEARCHED_DATA
 import com.example.ticketpartner.common.ZERO
 import com.example.ticketpartner.common.remote.apis.UNAUTHORIZED_USER
+import com.example.ticketpartner.common.storage.MyPreferences
 import com.example.ticketpartner.databinding.FragmentScanBottomNavSearchBinding
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.QrScanSearchItemUIState
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.SearchData
 import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.GetScanSearchDataOfflineUIState
 import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.MData
 import com.example.ticketpartner.utils.DialogProgressUtil
+import com.example.ticketpartner.utils.DialogUtils
 import com.example.ticketpartner.utils.NetworkConnectionLiveData
+import com.example.ticketpartner.utils.Utility
 import com.example.ticketpartner.utils.Utility.filterAndSortOrderList
 
 class ScanBottomNavSearchFragment : Fragment() {
@@ -98,12 +101,6 @@ class ScanBottomNavSearchFragment : Fragment() {
         binding.icClear.setOnClickListener {
             binding.etSearch.text?.clear()
         }
-
-        /* viewModel.searchFilterData.observe(viewLifecycleOwner){
-             setAdapterOffline(it)
-             Log.e("TAG", "initView: $it ", )
-         }*/
-
     }
 
     private fun observeSearchItemResponse(orderId: String) {
@@ -111,8 +108,8 @@ class ScanBottomNavSearchFragment : Fragment() {
         searchedItem = orderId
         searchOfflineDataList.clear()
         /** Observe network connection status only once */
-        viewModel.isNetworkAvailableObserver.observe(viewLifecycleOwner){
-            if (it){
+        viewModel.isNetworkAvailableObserver.observe(viewLifecycleOwner){res ->
+            if (res){
                 binding.rvSearchOrder.visibility = View.VISIBLE
                 binding.rvSearchOrderOffline.visibility = View.GONE
 
@@ -133,13 +130,8 @@ class ScanBottomNavSearchFragment : Fragment() {
                         is QrScanSearchItemUIState.OnFailure -> {
                             DialogProgressUtil.dismiss()
                             if (it.onFailure == UNAUTHORIZED_USER.toString()){
-                               /* Toast.makeText(
-                                    requireContext(),
-                                    "User session has been expired!",
-                                    Toast.LENGTH_SHORT
-                                ).show()*/
+                                expireSession()
                             }
-                            // SnackBarUtil.showErrorSnackBar(binding.root, it.onFailure)
                         }
                     }
                 }
@@ -166,64 +158,6 @@ class ScanBottomNavSearchFragment : Fragment() {
                 }
             }
         }
-
-     /*   networkConnectionLiveData.observeOnce(
-            viewLifecycleOwner,
-            Observer { isConnected ->
-                if (isConnected) {
-                    binding.rvSearchOrder.visibility = View.VISIBLE
-                    binding.rvSearchOrderOffline.visibility = View.GONE
-
-                    viewModel.getSearchData(orderId)
-                    viewModel.observeScanSearchData.observe(viewLifecycleOwner) {
-                        when (it) {
-                            is QrScanSearchItemUIState.IsLoading -> {
-                                DialogProgressUtil.show(childFragmentManager)
-                            }
-
-                            is QrScanSearchItemUIState.OnSuccess -> {
-                                DialogProgressUtil.dismiss()
-                                it.onSuccess.data?.let { list ->
-                                    setAdapter(list)
-                                }
-                            }
-
-                            is QrScanSearchItemUIState.OnFailure -> {
-                                DialogProgressUtil.dismiss()
-                                if (it.onFailure == UNAUTHORIZED_USER.toString()){
-                                    Toast.makeText(
-                                        requireContext(),
-                                        "User session has been expired!",
-                                        Toast.LENGTH_SHORT
-                                    ).show()
-                                }
-                                // SnackBarUtil.showErrorSnackBar(binding.root, it.onFailure)
-                            }
-                        }
-                    }
-                } else {
-                    binding.rvSearchOrder.visibility = View.GONE
-                    binding.rvSearchOrderOffline.visibility = View.VISIBLE
-
-                    viewModel.getScanSearchDataFromLocalDB.observe(viewLifecycleOwner) {
-                        when (it) {
-                            is GetScanSearchDataOfflineUIState.IsLoading -> {}
-                            is GetScanSearchDataOfflineUIState.OnSuccess -> {
-                                it.onSuccess?.let { data ->
-                                    for (i in data!!) {
-                                        if (i != null) {
-                                            searchOfflineDataList.add(i)
-                                        }
-                                    }
-                                }
-                            }
-
-                            is GetScanSearchDataOfflineUIState.OnFailure -> {}
-                        }
-                    }
-                }
-
-            })*/
 
         sortedFilteredList = filterAndSortOrderList(searchOfflineDataList, orderId)
         sortedFilteredList?.let { list ->
@@ -313,6 +247,17 @@ class ScanBottomNavSearchFragment : Fragment() {
                 }
             }
         }
+    }
+    private fun expireSession() {
+        val builder =   DialogUtils.sessionExpiredDialog(requireContext())
+        builder.setPositiveButton("OK") { dialog, _ ->
+            dialog.dismiss()
+            Utility.clearLocalDatabase(requireActivity())
+            MyPreferences.clearpref()
+        }
+        val mDialog = builder.create()
+        mDialog.setCanceledOnTouchOutside(false)
+        mDialog.show()
     }
 }
 

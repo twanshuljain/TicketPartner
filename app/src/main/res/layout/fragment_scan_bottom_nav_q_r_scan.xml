@@ -29,6 +29,7 @@
             app:layout_constraintGuide_percent="0.5" />
 
         <RelativeLayout
+            android:id="@+id/rlQrCode"
             android:layout_width="@dimen/margin_0"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/margin_7"
@@ -39,8 +40,8 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <RadioButton
-                android:id="@+id/radioEmail"
-                style="@style/mediumPurplek14"
+                android:id="@+id/radioBtnQrCode"
+                style="@style/mediumPurple14"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -51,23 +52,23 @@
 
         </RelativeLayout>
 
+        <!--android:background="@drawable/select_ticket_type_item_disable_design"-->
         <RelativeLayout
+            android:id="@+id/rlRfid"
             android:layout_width="@dimen/margin_0"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_7"
-            android:background="@drawable/select_ticket_type_item_disable_design"
+            android:background="@drawable/select_ticket_type_item_light_purple_design"
             android:paddingStart="@dimen/margin_10"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@id/guidelineVerticalCenter"
             app:layout_constraintTop_toTopOf="parent">
 
             <RadioButton
-                android:id="@+id/radioPhone"
+                android:id="@+id/radioBtnRfid"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:clickable="false"
-                android:focusable="false"
                 android:buttonTint="@color/secondary"
                 android:paddingStart="@dimen/margin_10"
                 android:text="@string/rfid" />
@@ -137,6 +138,8 @@
                     android:layout_marginEnd="@dimen/margin_15"
                     android:layout_marginBottom="@dimen/margin_15"
                     app:cardBackgroundColor="@color/white"
+                    android:visibility="visible"
+                    app:cardCornerRadius="@dimen/size_10"
                     app:cardElevation="@dimen/margin_5"
                     app:layout_constraintDimensionRatio="1:1"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -147,15 +150,25 @@
                         android:id="@+id/surfaceView"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:visibility="visible"
                         android:layout_margin="@dimen/margin_10" />
 
                     <androidx.appcompat.widget.AppCompatImageView
+                        android:id="@+id/ivRfidBanner"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_margin="@dimen/margin_10"
-                        android:scaleType="fitXY"
+                        android:src="@drawable/img_rfid_banner"
+                        android:layout_marginStart="@dimen/margin_15"
+                        android:layout_marginTop="@dimen/margin_10"
+                        android:layout_marginEnd="@dimen/margin_15"
+                        android:layout_marginBottom="@dimen/margin_15"
+                        app:cardBackgroundColor="@color/white"
                         android:visibility="gone"
-                        android:src="@drawable/temp_qr_scan" />
+                        android:scaleType="fitXY"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/ivTorch"/>
+
 
                 </androidx.cardview.widget.CardView>
 
@@ -187,7 +200,7 @@
                         android:orientation="vertical"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintGuide_end="@dimen/margin_15"
-                        app:layout_constraintGuide_percent="0.35" />
+                        app:layout_constraintGuide_percent="0.35"/>
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tvTotalScanned"

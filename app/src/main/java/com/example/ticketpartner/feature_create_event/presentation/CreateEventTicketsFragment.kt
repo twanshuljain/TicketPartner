@@ -62,7 +62,7 @@ class CreateEventTicketsFragment : Fragment() {
 
                 is CreateEventTicketListUIState.OnFailure -> {
                     DialogProgressUtil.dismiss()
-                    SnackBarUtil.showErrorSnackBar(binding.root, it.onFailure)
+                    SnackBarUtil.showCustomSnackBar(binding.root,it.onFailure)
                 }
             }
         }

@@ -16,4 +16,5 @@ class GetLoginWithPinUseCase @Inject constructor(private val loginScanRepository
             emit(loginScanRepository.loginScanWithPin(name, scanPin))
         }.flowOn(Dispatchers.IO)
     }
+
 }

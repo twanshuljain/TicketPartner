@@ -93,12 +93,12 @@ class AddOrganizationSocialFragment : Fragment() {
                 }
                 is  AddOrganizationSocialUIState.OnSuccess -> {
                     DialogProgressUtil.dismiss()
-                    SnackBarUtil.showSuccessSnackBar(binding.root, it.result.message.toString())
+                    SnackBarUtil.showCustomSnackBar(binding.root, it.result.message.toString(),true)
                     findNavController().navigateWithClearAllBackStack(R.id.signInFragment)
                 }
                 is  AddOrganizationSocialUIState.OnFailure -> {
                     DialogProgressUtil.dismiss()
-                    SnackBarUtil.showErrorSnackBar(binding.root, it.onFailure)
+                    SnackBarUtil.showCustomSnackBar(binding.root, it.onFailure)
                 }
             }
         }

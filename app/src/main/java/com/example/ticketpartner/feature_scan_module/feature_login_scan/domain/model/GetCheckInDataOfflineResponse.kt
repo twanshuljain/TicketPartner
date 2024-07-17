@@ -7,7 +7,7 @@ import com.example.ticketpartner.common.GET_CHECK_IN_LIST
 import com.example.ticketpartner.common.ZERO
 
 data class GetCheckInDataOfflineResponse(
-    val `data`: List<CheckInData?>?,
+    val data: List<CheckInData?>?,
     val error: Any?,
     val message: String?,
     val status_code: Int?

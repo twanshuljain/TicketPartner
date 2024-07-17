@@ -1,6 +1,5 @@
 package com.example.ticketpartner.common
 
-import android.view.ContextThemeWrapper
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -23,40 +22,40 @@ object SnackBarUtil {
      * @param message to be display
      * @param length duration to display
      */
-    fun showSuccessSnackBar(
-        view: View,
-        message: String,
-        length: Int = Snackbar.LENGTH_LONG,
-        isSuccess: Boolean = true
-    ) {
-        val style = ContextThemeWrapper(view.context, R.style.CustomSnackBarSuccessTheme)
-        val snackBar = Snackbar.make(style, view, message, Snackbar.LENGTH_LONG)
-        val snackView = snackBar.view
-        val params = snackView.layoutParams as FrameLayout.LayoutParams
-        params.gravity = Gravity.TOP
-        snackView.layoutParams = params
-        snackBar.show()
-    }
+    /*   fun showSuccessSnackBar(
+           view: View,
+           message: String,
+           length: Int = Snackbar.LENGTH_LONG,
+           isSuccess: Boolean = true
+       ) {
+           val style = ContextThemeWrapper(view.context, R.style.CustomSnackBarSuccessTheme)
+           val snackBar = Snackbar.make(style, view, message, Snackbar.LENGTH_LONG)
+           val snackView = snackBar.view
+           val params = snackView.layoutParams as FrameLayout.LayoutParams
+           params.gravity = Gravity.TOP
+           snackView.layoutParams = params
+           snackBar.show()
+       }
 
-    fun showErrorSnackBar(
-        view: View,
-        message: String,
-        length: Int = Snackbar.LENGTH_LONG,
-        isSuccess: Boolean = true
-    ) {
-        val style = ContextThemeWrapper(view.context, R.style.CustomSnackBarErrorTheme)
-        val snackBar = Snackbar.make(style, view, message, Snackbar.LENGTH_LONG)
-        val snackView = snackBar.view
-        val params = snackView.layoutParams as FrameLayout.LayoutParams
-        params.gravity = Gravity.TOP
-        snackView.layoutParams = params
-        snackBar.show()
-    }
+       fun showErrorSnackBar(
+           view: View,
+           message: String,
+           length: Int = Snackbar.LENGTH_LONG,
+           isSuccess: Boolean = true
+       ) {
+           val style = ContextThemeWrapper(view.context, R.style.CustomSnackBarErrorTheme)
+           val snackBar = Snackbar.make(style, view, message, Snackbar.LENGTH_LONG)
+           val snackView = snackBar.view
+           val params = snackView.layoutParams as FrameLayout.LayoutParams
+           params.gravity = Gravity.TOP
+           snackView.layoutParams = params
+           snackBar.show()
+       }*/
 
     fun showCustomSnackBar(
         view: View,
         message: String,
-        isSuccess: Boolean = true,
+        isSuccess: Boolean = false,
         length: Int = Snackbar.LENGTH_LONG
     ) {
         // Create the Snack bar
@@ -76,7 +75,7 @@ object SnackBarUtil {
 
         val snackIcon = customView.findViewById<AppCompatImageView>(R.id.ivIcon)
         if (isSuccess) {
-            customView.setBackgroundColor(ContextCompat.getColor(view.context, R.color.light_green))
+            customView.setBackgroundColor(ContextCompat.getColor(view.context, R.color.green))
             snackIcon.setImageResource(R.drawable.img_correct_white_circle) // Set your success icon here
         } else {
             customView.setBackgroundColor(ContextCompat.getColor(view.context, R.color.red_light))

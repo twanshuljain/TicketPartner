@@ -79,12 +79,12 @@ class ResetPasswordFragment : Fragment() {
                 }
                 is ResetPasswordUIState.OnSuccess -> {
                     DialogProgressUtil.dismiss()
-                    SnackBarUtil.showSuccessSnackBar(binding.root, it.result.message.toString())
+                    SnackBarUtil.showCustomSnackBar(binding.root,it.result.message.toString(),true)
                     findNavController().navigateWithClearAllBackStack(R.id.signInFragment)
                 }
                 is ResetPasswordUIState.OnFailure -> {
                     DialogProgressUtil.dismiss()
-                    SnackBarUtil.showErrorSnackBar(binding.root, it.onFailure)
+                    SnackBarUtil.showCustomSnackBar(binding.root,it.onFailure)
                 }
             }
         }
@@ -93,14 +93,11 @@ class ResetPasswordFragment : Fragment() {
     private fun checkValidation(): Boolean {
         var isValid = false
         if (newPassword.isEmpty()) {
-            SnackBarUtil.showErrorSnackBar(binding.root, getString(R.string.please_enter_new_pass))
+            SnackBarUtil.showCustomSnackBar(binding.root,getString(R.string.please_enter_new_pass))
         } else if (conPassword.isEmpty()) {
-            SnackBarUtil.showErrorSnackBar(binding.root, getString(R.string.please_enter_con_pass))
+            SnackBarUtil.showCustomSnackBar(binding.root,getString(R.string.please_enter_con_pass))
         } else if (newPassword != conPassword) {
-            SnackBarUtil.showErrorSnackBar(
-                binding.root,
-                getString(R.string.new_password_and_confirm_password_should_same)
-            )
+            SnackBarUtil.showCustomSnackBar(binding.root,getString(R.string.new_password_and_confirm_password_should_same))
         } else {
             isValid = true
         }

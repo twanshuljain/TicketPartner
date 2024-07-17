@@ -269,17 +269,13 @@ class SignUpDetailsFragment : Fragment(), CountdownTimerCallback {
     private fun sendEmailOtp() {
         if (etEmail.isNotEmpty()) {
             if (!ContactUsInputFieldValidator.isEmailValidPattern(etEmail)) {
-                SnackBarUtil.showErrorSnackBar(
-                    binding.root, getString(R.string.please_enter_valid_email)
-                )
+                SnackBarUtil.showCustomSnackBar(binding.root,getString(R.string.please_enter_valid_email))
             } else {
                 viewModel.sendEmailOtp(etEmail)
                 observeSendEmailOtpResponse()
             }
         } else {
-            SnackBarUtil.showErrorSnackBar(
-                binding.root, getString(R.string.please_enter_email)
-            )
+            SnackBarUtil.showCustomSnackBar(binding.root,getString(R.string.please_enter_email))
         }
     }
 
@@ -292,7 +288,7 @@ class SignUpDetailsFragment : Fragment(), CountdownTimerCallback {
 
                 is CreateUserAccountUIState.OnSuccess -> {
                     DialogProgressUtil.dismiss()
-                    SnackBarUtil.showSuccessSnackBar(binding.root, it.result.message.toString())
+                    SnackBarUtil.showCustomSnackBar(binding.root,it.result.message.toString(),true)
                     val changeLogoFragment = R.id.addOrganizationChangeLogoFragment
                     findNavController().navigateWithClearAllBackStack(changeLogoFragment)
                     // Adding a delay of 2000 milliseconds (2 seconds)
@@ -301,10 +297,9 @@ class SignUpDetailsFragment : Fragment(), CountdownTimerCallback {
                     }, DELAY_TWO_SEC)
                     binding.btnCreateAccount.isClickable = true
                 }
-
                 is CreateUserAccountUIState.OnFailure -> {
                     DialogProgressUtil.dismiss()
-                    SnackBarUtil.showErrorSnackBar(binding.root, it.onFailure)
+                    SnackBarUtil.showCustomSnackBar(binding.root,it.onFailure)
                 }
             }
         }
@@ -416,7 +411,7 @@ class SignUpDetailsFragment : Fragment(), CountdownTimerCallback {
                 is SendPhoneOtpVerifyUIState.OnSuccess -> {
                     DialogProgressUtil.dismiss()
                     invalidOtpEditTextPhone(false)
-                    SnackBarUtil.showSuccessSnackBar(binding.root, it.result.message.toString())
+                    SnackBarUtil.showCustomSnackBar(binding.root,it.result.message.toString(),true)
                     makeNonEditableEditText(binding.etPhoneNumber)
                     countdownTimerUtil.stop()
                     binding.tvVerifyMobile.visibility = View.GONE
@@ -431,7 +426,7 @@ class SignUpDetailsFragment : Fragment(), CountdownTimerCallback {
                     isPhoneVerify = false
                     invalidOtpEditTextPhone(true)
                     DialogProgressUtil.dismiss()
-                    SnackBarUtil.showErrorSnackBar(binding.root, it.onFailure)
+                    SnackBarUtil.showCustomSnackBar(binding.root,it.onFailure)
                 }
             }
         }
@@ -459,7 +454,7 @@ class SignUpDetailsFragment : Fragment(), CountdownTimerCallback {
 
                 is SendEmailOtpVerifyUIState.OnSuccess -> {
                     DialogProgressUtil.dismiss()
-                    SnackBarUtil.showSuccessSnackBar(binding.root, it.result.message.toString())
+                    SnackBarUtil.showCustomSnackBar(binding.root,it.result.message.toString(),true)
                     invalidOtpEditTextEmail(false)
                     makeNonEditableEditText(binding.etEmail)
                     countdownTimerUtil.stop()
@@ -478,7 +473,7 @@ class SignUpDetailsFragment : Fragment(), CountdownTimerCallback {
                     isEmailVerify = false
                     DialogProgressUtil.dismiss()
                     invalidOtpEditTextEmail(true)
-                    SnackBarUtil.showErrorSnackBar(binding.root, it.onFailure)
+                    SnackBarUtil.showCustomSnackBar(binding.root,it.onFailure)
                 }
             }
         }
@@ -493,7 +488,7 @@ class SignUpDetailsFragment : Fragment(), CountdownTimerCallback {
 
                 is SendPhoneOtpSignUpUIState.OnSuccess -> {
                     DialogProgressUtil.dismiss()
-                    SnackBarUtil.showSuccessSnackBar(binding.root, it.result.message.toString())
+                    SnackBarUtil.showCustomSnackBar(binding.root,it.result.message.toString(),true)
                     binding.otpLayoutPhone.visibility = View.VISIBLE
                     clickedOnEmailButton = false
                     clickedOnPhoneButton = true
@@ -505,7 +500,7 @@ class SignUpDetailsFragment : Fragment(), CountdownTimerCallback {
 
                 is SendPhoneOtpSignUpUIState.OnFailure -> {
                     DialogProgressUtil.dismiss()
-                    SnackBarUtil.showErrorSnackBar(binding.root, it.onFailure)
+                    SnackBarUtil.showCustomSnackBar(binding.root,it.onFailure)
                 }
             }
         }
@@ -520,7 +515,7 @@ class SignUpDetailsFragment : Fragment(), CountdownTimerCallback {
 
                 is SendEmailOtpSignUpUIState.OnSuccess -> {
                     DialogProgressUtil.dismiss()
-                    SnackBarUtil.showSuccessSnackBar(binding.root, it.result.message.toString())
+                    SnackBarUtil.showCustomSnackBar(binding.root,it.result.message.toString(),true)
                     binding.emailOtpLayout.visibility = View.VISIBLE
                     clickedOnEmailButton = true
                     clickedOnPhoneButton = false
@@ -540,7 +535,7 @@ class SignUpDetailsFragment : Fragment(), CountdownTimerCallback {
 
                 is SendEmailOtpSignUpUIState.OnFailure -> {
                     DialogProgressUtil.dismiss()
-                    SnackBarUtil.showErrorSnackBar(binding.root, it.onFailure)
+                    SnackBarUtil.showCustomSnackBar(binding.root,it.onFailure)
                 }
             }
         }
@@ -567,21 +562,15 @@ class SignUpDetailsFragment : Fragment(), CountdownTimerCallback {
             ContactUsInputFieldValidator.isEmailValidPattern(username) && password.isNotEmpty()
 
         if (username.isEmpty()) {
-            SnackBarUtil.showErrorSnackBar(
-                binding.root, getString(R.string.please_enter_email)
-            )
+            SnackBarUtil.showCustomSnackBar(binding.root,getString(R.string.please_enter_email))
             return false
         }
         if (!ContactUsInputFieldValidator.isEmailValidPattern(username)) {
-            SnackBarUtil.showErrorSnackBar(
-                binding.root, getString(R.string.please_enter_valid_email)
-            )
+            SnackBarUtil.showCustomSnackBar(binding.root,getString(R.string.please_enter_valid_email))
             return false
         }
         if (password.isEmpty()) {
-            SnackBarUtil.showErrorSnackBar(
-                binding.root, getString(R.string.please_enter_password)
-            )
+            SnackBarUtil.showCustomSnackBar(binding.root,getString(R.string.please_enter_password))
             return false
         }
         return isAllValid

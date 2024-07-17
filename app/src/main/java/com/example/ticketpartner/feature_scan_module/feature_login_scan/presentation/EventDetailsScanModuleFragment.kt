@@ -16,7 +16,6 @@ import com.example.ticketpartner.common.SnackBarUtil
 import com.example.ticketpartner.common.VERTICAL_POLE
 import com.example.ticketpartner.databinding.FragmentEventDetailsScanModuleBinding
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.DataItem
-import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.EventDetailsScanUIState
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.GetEventDetailsOfflineScanUIState
 import com.example.ticketpartner.feature_scan_module.feature_login_scan.domain.model.InsertEventDetailsResponse
 import com.example.ticketpartner.utils.CameraUtils.Companion.loadCircularImage
@@ -40,14 +39,12 @@ class EventDetailsScanModuleFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        //   getEventDetailsResponse()
         getEventDetailsLocalStorage()
 
         val callback: OnBackPressedCallback =
             object : OnBackPressedCallback(true) {
                 override fun handleOnBackPressed() {
                     // Leave empty do disable back press or
-                    // write your code which you want
                 }
             }
         requireActivity().onBackPressedDispatcher.addCallback(
@@ -55,7 +52,6 @@ class EventDetailsScanModuleFragment : Fragment() {
             callback
         )
         initView()
-
     }
 
     private fun getEventDetailsLocalStorage() {
@@ -68,36 +64,10 @@ class EventDetailsScanModuleFragment : Fragment() {
                 is GetEventDetailsOfflineScanUIState.OnSuccess -> {
                     DialogProgressUtil.dismiss()
                     showDetailsData(it.onSuccess)
-                 /*  it.onSuccess?.let{res ->
-                       Log.e("TAG", "getEventDetailsLocalStorage: ${res.name.toString()}", )
-                      binding.tvEventTitle.text = res.name.toString()
-                   }*/
                 }
                 is GetEventDetailsOfflineScanUIState.OnFailure -> {
                     DialogProgressUtil.dismiss()
-                    SnackBarUtil.showErrorSnackBar(binding.root, it.onFailure)
-                }
-            }
-        }
-    }
-
-    private fun getEventDetailsResponse() {
-        viewModel.getEventDetailsData()
-        viewModel.observeScanEventDetailsResponse.observe(viewLifecycleOwner) {
-            when (it) {
-                is EventDetailsScanUIState.IsLoading -> {
-                    DialogProgressUtil.show(childFragmentManager)
-                }
-
-                is EventDetailsScanUIState.OnSuccess -> {
-                    DialogProgressUtil.dismiss()
-                   // showDetailsData(it.onSuccess.data)
-                    it.onSuccess.data?.let { data -> eventDetails.add(data) }
-                }
-
-                is EventDetailsScanUIState.OnFailure -> {
-                    DialogProgressUtil.dismiss()
-                    SnackBarUtil.showErrorSnackBar(binding.root, it.onFailure)
+                    SnackBarUtil.showCustomSnackBar(binding.root,it.onFailure)
                 }
             }
         }
@@ -124,30 +94,6 @@ class EventDetailsScanModuleFragment : Fragment() {
             data?.city + COMMA + data?.state + COMMA + data?.country
         binding.tvOrganizerName.text = data?.organizationName?.toString()
     }
-
-    /*private fun showDetailsData(data: DataItem?) {
-        loadImageFromUrl(
-            binding.ivBanner,
-            BuildConfig.AWS_IMAGE_BASE_URL + data?.event?.event_cover_image
-        )
-        loadCircularImage(
-            binding.ivOrganizerLogo,
-            BuildConfig.AWS_IMAGE_BASE_URL + data?.organization?.organization_logo
-        )
-        binding.tvEventTitle.text = data?.event?.name
-        val startDate = getFormattedStartDateForEvent(data?.event_dates?.event_start_date)
-        val startEndTime =
-            getFormattedTimeForEvent(data?.event_dates?.event_start_time) + HYPHEN_CHAR + getFormattedTimeForEvent(
-                data?.event_dates?.event_end_time
-            )
-        binding.tvStartDateTime.text = startDate + VERTICAL_POLE + startEndTime
-
-        val location = data?.event_locations
-        binding.tvLocation.text =
-            location?.city + COMMA + location?.state + COMMA + location?.country
-        binding.tvOrganizerName.text = data?.organization?.name.toString()
-    }*/
-
     private fun initView() {
         binding.btnContinue.setOnClickListener {
             findNavController().navigateParentToChildFragment(

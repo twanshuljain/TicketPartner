@@ -89,9 +89,7 @@ class ForgotPasswordFragment : Fragment(), CountdownTimerCallback {
 
         binding.tvVerify.setOnClickListener {
             if (!ContactUsInputFieldValidator.isEmailValidPattern(etEmail)) {
-                SnackBarUtil.showErrorSnackBar(
-                    binding.root, getString(R.string.please_enter_valid_email)
-                )
+                SnackBarUtil.showCustomSnackBar(binding.root,getString(R.string.please_enter_valid_email))
             } else {
                 viewModel.sendEmailForgotPassword(etEmail)
                 observeSendEmailResponse()
@@ -100,9 +98,7 @@ class ForgotPasswordFragment : Fragment(), CountdownTimerCallback {
 
         binding.includeOtpEmail.tvResendBtn.setOnClickListener {
             if (!ContactUsInputFieldValidator.isEmailValidPattern(etEmail)) {
-                SnackBarUtil.showErrorSnackBar(
-                    binding.root, getString(R.string.please_enter_valid_email)
-                )
+                SnackBarUtil.showCustomSnackBar(binding.root,getString(R.string.please_enter_valid_email))
             } else {
                 viewModel.sendEmailForgotPassword(etEmail)
                 observeSendEmailResponse()
@@ -119,9 +115,7 @@ class ForgotPasswordFragment : Fragment(), CountdownTimerCallback {
 
         binding.btnContinue.setOnClickListener {
             if (!ContactUsInputFieldValidator.isEmailValidPattern(etEmail)) {
-                SnackBarUtil.showErrorSnackBar(
-                    binding.root, getString(R.string.please_enter_valid_email)
-                )
+                SnackBarUtil.showCustomSnackBar(binding.root,getString(R.string.please_enter_valid_email))
             } else {
                 viewModel.sendEmailLinkForgotPassword(etEmail)
                 observeSendEmailLinkResponse()
@@ -145,13 +139,13 @@ class ForgotPasswordFragment : Fragment(), CountdownTimerCallback {
 
                 is ForgotPasswordSendEmailLinkUIState.OnSuccess -> {
                     DialogProgressUtil.dismiss()
-                    SnackBarUtil.showSuccessSnackBar(binding.root, it.onSuccess.message.toString())
+                    SnackBarUtil.showCustomSnackBar(binding.root,it.onSuccess.message.toString(),true)
                     requireActivity().onBackPressedDispatcher.onBackPressed()
                 }
 
                 is ForgotPasswordSendEmailLinkUIState.OnFailure -> {
                     DialogProgressUtil.dismiss()
-                    SnackBarUtil.showErrorSnackBar(binding.root, it.onFailure)
+                    SnackBarUtil.showCustomSnackBar(binding.root,it.onFailure)
                 }
             }
         }
@@ -197,10 +191,8 @@ class ForgotPasswordFragment : Fragment(), CountdownTimerCallback {
                 is ForgotPassVerifyEmailUIState.OnSuccess -> {
                     token = it.result.data?.reset_token.toString()
                     isEmailVerify = true
-
                     DialogProgressUtil.dismiss()
-                    SnackBarUtil.showSuccessSnackBar(binding.root, it.result.message.toString())
-
+                    SnackBarUtil.showCustomSnackBar(binding.root,it.result.message.toString(),true)
                     val bundle = Bundle()
                     bundle.putString(RESET_TOKEN, it.result.data?.reset_token.toString())
                     findNavController().navigate(R.id.resetPasswordFragment, bundle)
@@ -215,7 +207,7 @@ class ForgotPasswordFragment : Fragment(), CountdownTimerCallback {
                 is ForgotPassVerifyEmailUIState.OnFailure -> {
                     isEmailVerify = false
                     DialogProgressUtil.dismiss()
-                    SnackBarUtil.showErrorSnackBar(binding.root, it.onFailure)
+                    SnackBarUtil.showCustomSnackBar(binding.root,it.onFailure)
                 }
             }
 
@@ -262,14 +254,13 @@ class ForgotPasswordFragment : Fragment(), CountdownTimerCallback {
                     binding.includeOtpEmail.tvResendLayout.visibility = View.GONE
                     binding.includeOtpEmail.layoutOtpCount.visibility = View.VISIBLE
                     binding.includeOtpEmail.tvCountDown.visibility = View.VISIBLE
-
-                    SnackBarUtil.showSuccessSnackBar(binding.root, it.result.message.toString())
+                    SnackBarUtil.showCustomSnackBar(binding.root,it.result.message.toString(),true)
                     binding.otpLayoutEmail.visibility = View.VISIBLE
                 }
 
                 is ForgotPassSendEmailUIState.OnFailure -> {
                     DialogProgressUtil.dismiss()
-                    SnackBarUtil.showErrorSnackBar(binding.root, it.onFailure)
+                    SnackBarUtil.showCustomSnackBar(binding.root,it.onFailure)
                 }
             }
         }

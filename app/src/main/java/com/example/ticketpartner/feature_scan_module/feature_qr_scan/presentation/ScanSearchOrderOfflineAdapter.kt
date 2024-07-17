@@ -29,7 +29,6 @@ RecyclerView.Adapter<ScanSearchOrderOfflineAdapter.ViewHolder>() {
             )
         )
     }
-
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ScanSearchOrderOfflineAdapter.ViewHolder, position: Int) {
         val view = holder.binding

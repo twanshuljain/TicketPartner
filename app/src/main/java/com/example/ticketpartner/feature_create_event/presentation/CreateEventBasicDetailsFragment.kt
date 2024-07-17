@@ -142,7 +142,7 @@ class CreateEventBasicDetailsFragment : Fragment() {
 
                 is CreateEventTypesUIState.OnFailure -> {
                     DialogProgressUtil.dismiss()
-                    SnackBarUtil.showErrorSnackBar(binding.root, it.onFailure)
+                    SnackBarUtil.showCustomSnackBar(binding.root, it.onFailure)
                 }
             }
         }
@@ -165,7 +165,7 @@ class CreateEventBasicDetailsFragment : Fragment() {
 
                 is CreateEventGetTimeZoneUIState.OnFailure -> {
                     DialogProgressUtil.dismiss()
-                    SnackBarUtil.showErrorSnackBar(binding.root, it.onFailure)
+                    SnackBarUtil.showCustomSnackBar(binding.root, it.onFailure)
                 }
             }
         }
@@ -325,7 +325,7 @@ class CreateEventBasicDetailsFragment : Fragment() {
 
     private fun isStartDateNotEmpty(eventStartDate: String): Boolean {
         return if (eventStartDate.isNullOrEmpty()) {
-            SnackBarUtil.showErrorSnackBar(binding.root, "Please select start date first")
+            SnackBarUtil.showCustomSnackBar(binding.root, "Please select start date first")
             false
         } else {
             true
@@ -347,15 +347,9 @@ class CreateEventBasicDetailsFragment : Fragment() {
         val secondTime = givenDate.atTime(LocalTime.parse(openDoorStartTime, timeFormatter))
 
         if (areTimesInOrder(firstTime, secondTime)) {
-            SnackBarUtil.showErrorSnackBar(
-                binding.root,
-                "time is bigger than event start time"
-            )
+            SnackBarUtil.showCustomSnackBar(binding.root,"time is bigger than event start time")
         } else {
-            SnackBarUtil.showErrorSnackBar(
-                binding.root,
-                "before given time"
-            )
+            SnackBarUtil.showCustomSnackBar(binding.root,"before given time")
             startTimeDoorOpen = openDoorStartTime
             binding.includeDateTime.startTimeDoorOpen.tvTime.text = openDoorStartTime
         }
@@ -378,17 +372,11 @@ class CreateEventBasicDetailsFragment : Fragment() {
         val selectedTime = givenDate.atTime(LocalTime.parse(openDoorEndTime, timeFormatter))
 
         if (isTimeInRange(selectedTime, firstTime, secondTime)) {
-            SnackBarUtil.showErrorSnackBar(
-                binding.root,
-                "The selected time is between the given first time and second time for the given date."
-            )
+            SnackBarUtil.showCustomSnackBar(binding.root,  "The selected time is between the given first time and second time for the given date.")
             binding.includeDateTime.endTimeDoorOpen.tvTime.text = openDoorEndTime
             endTimeDoorOpen = openDoorEndTime
         } else {
-            SnackBarUtil.showErrorSnackBar(
-                binding.root,
-                "Time should be after open door and before event start time."
-            )
+            SnackBarUtil.showCustomSnackBar(binding.root,"Time should be after open door and before event start time.")
         }
     }
 
@@ -400,11 +388,7 @@ class CreateEventBasicDetailsFragment : Fragment() {
                     binding.includeDateTime.endTime.tvTime.text = endTime
                     eventEndTime = endTime
                 }
-
-                comparisonResult > ZERO -> SnackBarUtil.showErrorSnackBar(
-                    binding.root,
-                    "End time can't be before start time."
-                )
+                comparisonResult > ZERO -> SnackBarUtil.showCustomSnackBar(binding.root,"End time can't be before start time.")
             }
         } else {
             binding.includeDateTime.endTime.tvTime.text = endTime
@@ -427,11 +411,7 @@ class CreateEventBasicDetailsFragment : Fragment() {
                     viewDateTime.startTime.tvTime.text = startTime
                     eventStartTime = startTime
                 }
-
-                comparisonResult > ZERO -> SnackBarUtil.showErrorSnackBar(
-                    binding.root,
-                    "time can't be before $currentTime "
-                )
+                comparisonResult > ZERO -> SnackBarUtil.showCustomSnackBar(binding.root,"time can't be before $currentTime")
             }
         } else {
             viewDateTime.startTime.tvTime.text = startTime
@@ -451,11 +431,7 @@ class CreateEventBasicDetailsFragment : Fragment() {
                     binding.includeDateTime.endDate.tvDate.text = endDate
                     eventEndDate = endDate
                 }
-
-                comparisonResult > ZERO -> SnackBarUtil.showErrorSnackBar(
-                    binding.root,
-                    "End date can't be before start date."
-                )
+                comparisonResult > ZERO -> SnackBarUtil.showCustomSnackBar(binding.root, "End date can't be before start date.")
             }
         }
     }
@@ -578,10 +554,7 @@ class CreateEventBasicDetailsFragment : Fragment() {
                                         bitImage?.let { addMoreImagesBitmapList.add(it) }
                                         setAddMoreImagesAdapter(addMoreImagesBitmapList)
                                     } else {
-                                        SnackBarUtil.showErrorSnackBar(
-                                            binding.root,
-                                            "Max image size is 10 MB "
-                                        )
+                                        SnackBarUtil.showCustomSnackBar(binding.root, "Max image size is 10 MB")
                                     }
                                 }
                             }
@@ -593,10 +566,7 @@ class CreateEventBasicDetailsFragment : Fragment() {
                                     bitImage?.let { addMoreImagesBitmapList.add(it) }
                                     setAddMoreImagesAdapter(addMoreImagesBitmapList)
                                 } else {
-                                    SnackBarUtil.showErrorSnackBar(
-                                        binding.root,
-                                        "Max image size is 10 MB "
-                                    )
+                                    SnackBarUtil.showCustomSnackBar(binding.root,"Max image size is 10 MB ")
                                 }
                             }
                         }
@@ -619,10 +589,7 @@ class CreateEventBasicDetailsFragment : Fragment() {
                                         bitImage?.let { addImagesMediaBitmapList.add(it) }
                                         setAddImagesMediaAdapter(addImagesMediaBitmapList)
                                     } else {
-                                        SnackBarUtil.showErrorSnackBar(
-                                            binding.root,
-                                            "Max image size is 10 MB "
-                                        )
+                                        SnackBarUtil.showCustomSnackBar(binding.root,"Max image size is 10 MB ")
                                     }
                                 }
                             }
@@ -634,10 +601,7 @@ class CreateEventBasicDetailsFragment : Fragment() {
                                     bitImage?.let { addImagesMediaBitmapList.add(it) }
                                     setAddImagesMediaAdapter(addImagesMediaBitmapList)
                                 } else {
-                                    SnackBarUtil.showErrorSnackBar(
-                                        binding.root,
-                                        "Max image size is 10 MB "
-                                    )
+                                    SnackBarUtil.showCustomSnackBar(binding.root,"Max image size is 10 MB ")
                                 }
                             }
                         }
