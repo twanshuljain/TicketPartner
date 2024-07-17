@@ -29,17 +29,11 @@ class TicketScannedStatusFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         currentTime = TimePickerUtility.getCurrentTimeWithAmPm()
-
-        viewModel.eventName.observe(viewLifecycleOwner) {
-            binding.tvEventName.text = it.toString()
-        }
-
+        viewModel.eventName.observe(viewLifecycleOwner) { binding.tvEventName.text = it.toString()}
         binding.tvCurrentTime.text = currentTime
-
         binding.llRootLayout.setOnClickListener {
             findNavController().popBackStack()
         }
-
         viewModel.observeQrScanResponse.observe(viewLifecycleOwner) {
             when (it) {
                 is QrScanUIState.IsLoading -> {}

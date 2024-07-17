@@ -80,6 +80,7 @@ class ScanBottomQRScanFragment : Fragment() {
         initView()
         initCameraPermission()
 
+        /** Observe - network available or not */
         viewModel.isNetworkAvailableObserver.observe(viewLifecycleOwner) {
             if (it) {
                 getScannedTicketData()
@@ -136,6 +137,36 @@ class ScanBottomQRScanFragment : Fragment() {
             val subTitle = activity?.findViewById<AppCompatTextView>(R.id.subTitle)
             subTitle?.visibility = View.VISIBLE
             subTitle?.text = it
+        }
+
+        binding.radioBtnQrCode.setOnClickListener {
+            binding.apply {
+                radioBtnRfid.isChecked = false
+                radioBtnQrCode.isChecked = true
+                ivRfidBanner.visibility = View.GONE
+                surfaceView.visibility = View.VISIBLE
+                ivTorch.visibility = View.VISIBLE
+                ivZoom.visibility = View.VISIBLE
+                rlRfid.background =
+                    requireContext().getDrawable(R.drawable.select_ticket_type_item_light_purple_design)
+                rlQrCode.background =
+                    requireContext().getDrawable(R.drawable.select_ticket_type_item_purple_design)
+            }
+        }
+
+        binding.radioBtnRfid.setOnClickListener {
+            binding.apply {
+                ivTorch.visibility = View.INVISIBLE
+                ivZoom.visibility = View.INVISIBLE
+                radioBtnQrCode.isChecked = false
+                radioBtnRfid.isChecked = true
+                surfaceView.visibility = View.GONE
+                ivRfidBanner.visibility = View.VISIBLE
+                rlRfid.background =
+                    requireContext().getDrawable(R.drawable.select_ticket_type_item_purple_design)
+                rlQrCode.background =
+                    requireContext().getDrawable(R.drawable.select_ticket_type_item_light_purple_design)
+            }
         }
 
         binding.ivTorch.setOnClickListener {
@@ -503,11 +534,9 @@ class ScanBottomQRScanFragment : Fragment() {
                 is QrScannedTicketUIState.OnSuccess -> {
                     DialogProgressUtil.dismiss()
                     val res = it.onSuccess.data
-
                     viewModel.totalScanned = res?.total_scanned ?: ZERO
                     viewModel.totalAccepted = res?.total_accepted ?: ZERO
                     viewModel.totalRejected = res?.total_rejected ?: ZERO
-
                     binding.tvTotalScanned.text =
                         getString(R.string.total_scanned) + VERTICAL_DOTS + res?.total_scanned.toString()
                     binding.tvAccepted.text =
@@ -538,7 +567,6 @@ class ScanBottomQRScanFragment : Fragment() {
         mDialog.show()
     }
 
-
     @SuppressLint("MissingPermission")
     private val requestPermission =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
@@ -549,8 +577,7 @@ class ScanBottomQRScanFragment : Fragment() {
                 }
             } else {
                 SnackBarUtil.showCustomSnackBar(
-                    binding.root,
-                    getString(R.string.cameraPermissionRequired)
+                    binding.root, getString(R.string.cameraPermissionRequired)
                 )
             }
         }
@@ -604,7 +631,6 @@ class ScanBottomQRScanFragment : Fragment() {
     private fun openScanReportBottomSheet() {
         if (isDialogVisible) return // Prevent opening multiple dialogs
         isDialogVisible = true
-
         val dialog = BottomSheetDialog(requireContext())
         val dialogView = LayoutEndScanBottomDialogBinding.inflate(layoutInflater)
         dialogView.apply {
