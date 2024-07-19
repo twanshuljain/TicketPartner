@@ -2,10 +2,14 @@ package com.example.ticketpartner.feature_scan_module.feature_qr_scan.presentati
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.hardware.Camera
+import android.nfc.NfcAdapter
 import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
+import android.util.Log
 import android.util.SparseArray
 import android.view.LayoutInflater
 import android.view.SurfaceHolder
@@ -39,8 +43,10 @@ import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.mode
 import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.QrScanUIState
 import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.QrScannedTicketUIState
 import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.ScanLog
+import com.example.ticketpartner.feature_scan_module.feature_rfid.NfcViewModel
 import com.example.ticketpartner.utils.DialogProgressUtil
 import com.example.ticketpartner.utils.DialogUtils
+import com.example.ticketpartner.utils.NavigateFragmentUtil.navigateWithClearNavGraph
 import com.example.ticketpartner.utils.TimePickerUtility
 import com.example.ticketpartner.utils.Utility
 import com.google.android.gms.vision.CameraSource
@@ -48,11 +54,14 @@ import com.google.android.gms.vision.Detector
 import com.google.android.gms.vision.barcode.Barcode
 import com.google.android.gms.vision.barcode.BarcodeDetector
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import dagger.hilt.android.AndroidEntryPoint
 import java.io.IOException
 
+@AndroidEntryPoint
 class ScanBottomQRScanFragment : Fragment() {
     private lateinit var binding: FragmentScanBottomNavQRScanBinding
     private val viewModel: QrScanViewModel by activityViewModels()
+    private val nfcViewModel: NfcViewModel by activityViewModels()
     private lateinit var cameraSource: CameraSource
     private lateinit var barcodeDetector: BarcodeDetector
     private var isTorchOn = false
@@ -66,6 +75,7 @@ class ScanBottomQRScanFragment : Fragment() {
     private var getCheckInOrderTicketIdListLocalDB = ArrayList<String>()
     private var isObserved = false
     private var isDialogVisible = false
+    private  var mNfcAdapter: NfcAdapter? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -75,6 +85,7 @@ class ScanBottomQRScanFragment : Fragment() {
         return binding.root
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initView()
@@ -86,6 +97,20 @@ class ScanBottomQRScanFragment : Fragment() {
                 getScannedTicketData()
             } else {
                 getScannedTicketDataOffline()
+            }
+        }
+            nfcViewModel.receiveNfcData.observe(viewLifecycleOwner){
+            if (it.isNotEmpty()) {
+                if (binding.radioBtnRfid.isChecked) {
+                    viewModel.isNetworkAvailableObserver.observe(viewLifecycleOwner) { isConnected ->
+                        if (!isObserved) {
+                            Log.e("TAG", "Received data in activity: $it")
+                            handleNetworkConnection(isConnected, it)
+                            isObserved = true
+                        }
+                    }
+                }
+                nfcViewModel.setNfcValur(EMPTY_STRING)
             }
         }
     }
@@ -127,7 +152,9 @@ class ScanBottomQRScanFragment : Fragment() {
         observeCheckInDataFromLocalDB()
         binding.ivZoom.isEnabled = false
         binding.ivTorch.isEnabled = false
+        binding.radioBtnQrCode.isChecked = true
 
+        mNfcAdapter = NfcAdapter.getDefaultAdapter(requireActivity())
         viewModel.eventName.observe(viewLifecycleOwner) {
             val title = activity?.findViewById<AppCompatTextView>(R.id.title)
             title?.text = it
@@ -141,32 +168,13 @@ class ScanBottomQRScanFragment : Fragment() {
 
         binding.radioBtnQrCode.setOnClickListener {
             binding.apply {
-                radioBtnRfid.isChecked = false
-                radioBtnQrCode.isChecked = true
-                ivRfidBanner.visibility = View.GONE
-                surfaceView.visibility = View.VISIBLE
-                ivTorch.visibility = View.VISIBLE
-                ivZoom.visibility = View.VISIBLE
-                rlRfid.background =
-                    requireContext().getDrawable(R.drawable.select_ticket_type_item_light_purple_design)
-                rlQrCode.background =
-                    requireContext().getDrawable(R.drawable.select_ticket_type_item_purple_design)
+                isQrButtonEnable(true)
             }
         }
 
         binding.radioBtnRfid.setOnClickListener {
-            binding.apply {
-                ivTorch.visibility = View.INVISIBLE
-                ivZoom.visibility = View.INVISIBLE
-                radioBtnQrCode.isChecked = false
-                radioBtnRfid.isChecked = true
-                surfaceView.visibility = View.GONE
-                ivRfidBanner.visibility = View.VISIBLE
-                rlRfid.background =
-                    requireContext().getDrawable(R.drawable.select_ticket_type_item_purple_design)
-                rlQrCode.background =
-                    requireContext().getDrawable(R.drawable.select_ticket_type_item_light_purple_design)
-            }
+            nfcValidation()
+            isQrButtonEnable(false)
         }
 
         binding.ivTorch.setOnClickListener {
@@ -201,6 +209,53 @@ class ScanBottomQRScanFragment : Fragment() {
             openScanReportBottomSheet()
         }
 
+    }
+
+    private fun isQrButtonEnable(isQrButtonEnable: Boolean) {
+        if (isQrButtonEnable){
+            binding.apply {
+                radioBtnRfid.isChecked = false
+                radioBtnQrCode.isChecked = true
+                ivRfidBanner.visibility = View.GONE
+                surfaceView.visibility = View.VISIBLE
+                ivTorch.visibility = View.VISIBLE
+                ivZoom.visibility = View.VISIBLE
+                rlRfid.background =
+                    requireContext().getDrawable(R.drawable.select_ticket_type_item_light_purple_design)
+                rlQrCode.background =
+                    requireContext().getDrawable(R.drawable.select_ticket_type_item_purple_design)
+            }
+        }else{
+            binding.apply {
+                binding.apply {
+                    ivTorch.visibility = View.INVISIBLE
+                    ivZoom.visibility = View.INVISIBLE
+                    radioBtnQrCode.isChecked = false
+                    radioBtnRfid.isChecked = true
+                    surfaceView.visibility = View.GONE
+                    ivRfidBanner.visibility = View.VISIBLE
+                    rlRfid.background =
+                        requireContext().getDrawable(R.drawable.select_ticket_type_item_purple_design)
+                    rlQrCode.background =
+                        requireContext().getDrawable(R.drawable.select_ticket_type_item_light_purple_design)
+                }
+            }
+        }
+    }
+
+    private fun nfcValidation() {
+        if (mNfcAdapter == null) {
+            SnackBarUtil.showCustomSnackBar(binding.root,requireContext().getString(R.string.nfc_not_available))
+            return
+        } else {
+            checkNfcEnabled()
+        }
+    }
+
+    private fun checkNfcEnabled() {
+        if (mNfcAdapter?.isEnabled != true) {
+            enableNfcSettingDialog()
+        }
     }
 
     private fun observeCheckInDataFromLocalDB() {
@@ -556,11 +611,17 @@ class ScanBottomQRScanFragment : Fragment() {
     }
 
     private fun expireSession() {
-        val builder = DialogUtils.sessionExpiredDialog(requireContext())
+        val title = requireContext().getString(R.string.session_expired)
+        val message = requireContext().getString(R.string.your_session_has_been_expired)
+        val builder = DialogUtils.customAlertDialog(requireContext(),title, message)
         builder.setPositiveButton("OK") { dialog, _ ->
             dialog.dismiss()
             Utility.clearLocalDatabase(requireActivity())
             MyPreferences.clearpref()
+            findNavController().navigateWithClearNavGraph(
+                R.id.nested_qr_scan_nav_graph,
+                R.id.loginScanModuleFragment
+            )
         }
         val mDialog = builder.create()
         mDialog.setCanceledOnTouchOutside(false)
@@ -628,6 +689,18 @@ class ScanBottomQRScanFragment : Fragment() {
         isObserved = false
     }
 
+    private fun enableNfcSettingDialog() {
+        val title = requireContext().getString(R.string.required_nfc)
+        val message = requireContext().getString(R.string.to_continue_please_enable_nfc)
+        val builder = DialogUtils.customAlertDialog(requireContext(),title, message)
+        builder.setPositiveButton("OK") { dialog, _ ->
+            startActivity(Intent(Settings.ACTION_NFC_SETTINGS))
+        }
+        val mDialog = builder.create()
+        mDialog.setCanceledOnTouchOutside(true)
+        mDialog.show()
+    }
+
     private fun openScanReportBottomSheet() {
         if (isDialogVisible) return // Prevent opening multiple dialogs
         isDialogVisible = true
@@ -656,4 +729,10 @@ class ScanBottomQRScanFragment : Fragment() {
         dialog.setContentView(dialogView.root)
         dialog.show()
     }
+
+    override fun onStart() {
+        super.onStart()
+        isQrButtonEnable(true)
+    }
+
 }

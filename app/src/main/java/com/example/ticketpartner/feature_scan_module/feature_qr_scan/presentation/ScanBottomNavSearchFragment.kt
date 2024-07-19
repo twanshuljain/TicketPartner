@@ -22,6 +22,7 @@ import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.mode
 import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.MData
 import com.example.ticketpartner.utils.DialogProgressUtil
 import com.example.ticketpartner.utils.DialogUtils
+import com.example.ticketpartner.utils.NavigateFragmentUtil.navigateWithClearNavGraph
 import com.example.ticketpartner.utils.NetworkConnectionLiveData
 import com.example.ticketpartner.utils.Utility
 import com.example.ticketpartner.utils.Utility.filterAndSortOrderList
@@ -249,11 +250,17 @@ class ScanBottomNavSearchFragment : Fragment() {
         }
     }
     private fun expireSession() {
-        val builder =   DialogUtils.sessionExpiredDialog(requireContext())
+        val title = requireContext().getString(R.string.session_expired)
+        val message = requireContext().getString(R.string.your_session_has_been_expired)
+        val builder =   DialogUtils.customAlertDialog(requireContext(),title, message)
         builder.setPositiveButton("OK") { dialog, _ ->
             dialog.dismiss()
             Utility.clearLocalDatabase(requireActivity())
             MyPreferences.clearpref()
+            findNavController().navigateWithClearNavGraph(
+                R.id.nested_qr_scan_nav_graph,
+                R.id.loginScanModuleFragment
+            )
         }
         val mDialog = builder.create()
         mDialog.setCanceledOnTouchOutside(false)

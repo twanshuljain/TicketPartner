@@ -32,16 +32,14 @@ object DialogUtils {
         return dialogView
     }
 
-    fun sessionExpiredDialog(context: Context): AlertDialog.Builder {
- val builder = AlertDialog.Builder(context)
-        builder.apply {
-            setTitle("Session Expired")
-            setMessage("Your session has expired. Please log in again to continue.")
-            setPositiveButton("OK") { dialog, _ ->
 
-            }
+    fun customAlertDialog(context: Context,title: String,message: String): AlertDialog.Builder {
+        val builder = AlertDialog.Builder(context)
+        builder.apply {
+            setTitle(title)
+            setMessage(message)
         }
-return builder
+        return builder
     }
 
 }

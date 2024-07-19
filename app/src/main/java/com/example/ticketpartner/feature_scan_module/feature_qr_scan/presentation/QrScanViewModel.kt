@@ -189,15 +189,6 @@ class QrScanViewModel @Inject constructor(
     var totalAccepted = ZERO
     var totalRejected = ZERO
 
-
-    /*  private val _onContinueClick:MutableLiveData<Boolean> = MutableLiveData()
-      val observeOnContinueClick:LiveData<Boolean> = _onContinueClick
-
-      fun onContinueClick(valueM: Boolean){
-          _onContinueClick.value = valueM
-      }*/
-
-
     fun qrScanCode(qrId: String, ticketType: ArrayList<String>) {
         _qrScanState.value = QrScanUIState.IsLoading(true)
         viewModelScope.launch {

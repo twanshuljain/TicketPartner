@@ -40,6 +40,8 @@ const val TEN = 10
 const val ONE = 1
 const val FORWARD_SLASH = " / "
 
+const val NFC_TAG_NOT_TAPPED = "Nfc Tag not tapped correctly"
+
 
 /**Key constants*/
 const val EMAIL_KEY = "email"

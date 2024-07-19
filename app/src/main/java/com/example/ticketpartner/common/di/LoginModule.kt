@@ -40,4 +40,5 @@ object LoginModule {
     @Provides
     fun providesGetPhoneLoginUseCase(loginRepository: LoginRepository): GetPhoneLoginUseCase =
         GetPhoneLoginUseCase(loginRepository)
+
 }
