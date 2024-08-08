@@ -105,5 +105,10 @@
             tools:layout="@layout/fragment_scan_q_r_landing" />
 
     </navigation>
+    <fragment
+        android:id="@+id/findPinFragment"
+        android:name="com.example.ticketpartner.feature_scan_module.feature_login_scan.presentation.WhereToFindPinFragment"
+        android:label="fragment_find_pin"
+        tools:layout="@layout/fragment_find_pin" />
 
 </navigation>

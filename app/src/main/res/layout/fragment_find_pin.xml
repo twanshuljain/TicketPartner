@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white"
+    tools:context=".feature_scan_module.feature_login_scan.presentation.WhereToFindPinFragment">
+
+    <RelativeLayout
+        android:id="@+id/titleBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_15"
+        android:orientation="horizontal">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_15"
+            android:src="@drawable/ic_back_arrow" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/ticket_partner_logo_login_scan" />
+
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_20"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Using the MyTicketPartner Scanning App"
+                style="@style/boldDarkPrimaryText18"
+                android:paddingBottom="@dimen/margin_8" />
+
+            <TextView
+                android:id="@+id/intro"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="To use the MyTicketPartner Scanning app effectively, you need a PIN. This PIN is crucial for managing ticket scanning at events."
+                android:paddingBottom="@dimen/margin_8" />
+
+            <TextView
+                android:id="@+id/steps"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="You can find the PIN by following these steps:"
+                android:textStyle="italic"
+                android:paddingBottom="@dimen/margin_4" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="1. Log into your MyTicketPartner (MTP) account."
+                android:paddingStart="@dimen/margin_16"
+                android:paddingBottom="@dimen/margin_4" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="2. Navigate to the Manage section of the event you are overseeing."
+                android:paddingStart="@dimen/margin_16"
+                android:paddingBottom="@dimen/margin_4" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="3. Locate the Scanning option in the menu. Your PIN will be displayed there."
+                android:paddingStart="@dimen/margin_16"
+                android:paddingBottom="@dimen/margin_8" />
+
+            <TextView
+                android:id="@+id/staff_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="If you are a staff member using the app, please contact your event organizer to obtain the necessary PIN. The organizer has access to this information in their MTP account under the Manage section of the event, specifically within the Scanning option."
+                android:paddingBottom="@dimen/margin_8" />
+
+            <TextView
+                android:id="@+id/security_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="This PIN ensures secure and efficient ticket scanning during the event. If you have any issues or need further assistance, please reach out to the event organizer."
+                android:paddingBottom="@dimen/margin_8" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

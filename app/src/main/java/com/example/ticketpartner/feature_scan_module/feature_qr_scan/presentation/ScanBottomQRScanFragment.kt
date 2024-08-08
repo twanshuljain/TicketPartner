@@ -104,7 +104,6 @@ class ScanBottomQRScanFragment : Fragment() {
                 if (binding.radioBtnRfid.isChecked) {
                     viewModel.isNetworkAvailableObserver.observe(viewLifecycleOwner) { isConnected ->
                         if (!isObserved) {
-                            Log.e("TAG", "Received data in activity: $it")
                             handleNetworkConnection(isConnected, it)
                             isObserved = true
                         }
@@ -714,10 +713,10 @@ class ScanBottomQRScanFragment : Fragment() {
             dialog.dismiss()
         }
         dialogView.btnYes.setOnClickListener {
-            findNavController().navigate(R.id.action_scanBottomQRScanFragment_to_qrScanReportFragment)
             cameraSource.stop()
             viewModel.onContinueClick.value = R.id.qrScanReportFragment
             dialog.dismiss()
+            findNavController().navigate(R.id.action_scanBottomQRScanFragment_to_qrScanReportFragment)
         }
         dialogView.ivClose.setOnClickListener {
             dialog.dismiss()
@@ -734,5 +733,4 @@ class ScanBottomQRScanFragment : Fragment() {
         super.onStart()
         isQrButtonEnable(true)
     }
-
 }

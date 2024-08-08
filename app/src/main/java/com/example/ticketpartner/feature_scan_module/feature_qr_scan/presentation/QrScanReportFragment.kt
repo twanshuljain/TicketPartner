@@ -52,10 +52,15 @@ class QrScanReportFragment : Fragment() {
         viewModel.isNetworkAvailableObserver.observe(viewLifecycleOwner)
         {
             if (it) {
-                viewModel.getScanReportAllData("all")
+                try {
+                    viewModel.getScanReportAllData("all")
+                }catch (e: Exception){
+                    e.printStackTrace()
+                }
                 observeScanReportAllData()
                 observeScanReportOffline()
-                binding.btnUploadDataServer.visibility = View.VISIBLE
+               if (scanLogDataOffline.size > ZERO) binding.btnUploadDataServer.visibility =
+                    View.VISIBLE else binding.btnUploadDataServer.visibility = View.GONE
             } else {
                 binding.btnUploadDataServer.visibility = View.GONE
                 observeScanReportOffline()
@@ -71,21 +76,22 @@ class QrScanReportFragment : Fragment() {
             when (it) {
                 is GetScanReportDataOfflineUIState.IsLoading -> {}
                 is GetScanReportDataOfflineUIState.OnSuccess -> {
-                    val value = it.onSuccess[ZERO]
-                    setProgressBarForAll(value)
+                        val value = it.onSuccess[ZERO]
+                        setProgressBarForAll(value)
                 }
                 is GetScanReportDataOfflineUIState.OnFailure -> {}
             }
         }
 
         viewModel.getScanReportTicketListFromLocalDB.observe(viewLifecycleOwner) {
-            when(it){
+            when (it) {
                 is GetScanReportTicketListOfflineUIState.IsLoading -> {}
                 is GetScanReportTicketListOfflineUIState.OnSuccess -> {
-                    it.onSuccess?.let {ticketList ->
+                    it.onSuccess?.let { ticketList ->
                         setAdapter(ticketList)
                     }
                 }
+
                 is GetScanReportTicketListOfflineUIState.OnFailure -> {}
             }
         }
@@ -93,8 +99,8 @@ class QrScanReportFragment : Fragment() {
 
     private fun observeScanReportOffline() {
         // viewModel.getScanLogListData()
-         scanLogDataOffline.clear()
-       viewModel.getScanLogListData()
+        scanLogDataOffline.clear()
+        viewModel.getScanLogListData()
         viewModel.getScanLogLocalDB.observe(viewLifecycleOwner) {
             when (it) {
                 is GetScanLogOfflineUIState.IsLoading -> {}
@@ -131,7 +137,7 @@ class QrScanReportFragment : Fragment() {
                                 it.total_rejected,
                                 it.total_tickets
                             )
-                             viewModel.totalScanned = it.total_scanned
+                            viewModel.totalScanned = it.total_scanned
                             viewModel.totalAccepted = it.total_accepted
                             viewModel.totalRejected = it.total_rejected
                             setProgressBarForAll(value)
@@ -142,8 +148,7 @@ class QrScanReportFragment : Fragment() {
 
                 is QrScanReportAllUIState.OnFailure -> {
                     DialogProgressUtil.dismiss()
-                    SnackBarUtil.showCustomSnackBar(binding.root,it.onFailure)
-
+                    SnackBarUtil.showCustomSnackBar(binding.root, it.onFailure)
                 }
             }
         }
@@ -172,8 +177,8 @@ class QrScanReportFragment : Fragment() {
             progressRejected.progress = data?.total_rejected ?: 0
         }
 
-       /* val acceptedRatio = data?.let { it.total_accepted } ?: 0
-        val rejectedRatio = data?.let { it.total_rejected } ?: 0*/
+        /* val acceptedRatio = data?.let { it.total_accepted } ?: 0
+         val rejectedRatio = data?.let { it.total_rejected } ?: 0*/
 
 
         val acceptedRatio = data?.let { viewModel.totalAccepted } ?: 0
@@ -218,7 +223,7 @@ class QrScanReportFragment : Fragment() {
         val title = activity?.findViewById<AppCompatTextView>(R.id.title)
         title?.text = getString(R.string.scanReport)
 
-        adapter = ScanReportTicketNameAdapter(emptyList())
+      //  adapter = ScanReportTicketNameAdapter(emptyList())
         binding.includeTitle.ivBack.visibility = View.GONE
 
         viewModel.dateTimeEventDetails.observe(viewLifecycleOwner) {
@@ -330,10 +335,16 @@ class QrScanReportFragment : Fragment() {
                     )
                     observeUploadDataOnServerResponse()
                 } else {
-                    SnackBarUtil.showCustomSnackBar(binding.root,getString(R.string.you_do_not_have_data))
+                    SnackBarUtil.showCustomSnackBar(
+                        binding.root,
+                        getString(R.string.you_do_not_have_data)
+                    )
                 }
             } else {
-                SnackBarUtil.showCustomSnackBar(binding.root,getString(R.string.check_network_availability))
+                SnackBarUtil.showCustomSnackBar(
+                    binding.root,
+                    getString(R.string.check_network_availability)
+                )
             }
         }
     }
@@ -349,7 +360,11 @@ class QrScanReportFragment : Fragment() {
                 is UploadScanDataServerUIState.OnSuccess -> {
                     scanLogDataOffline.clear()
                     viewModel.getScanLogListData()
-                    SnackBarUtil.showCustomSnackBar(binding.root,it.onSuccess.message.toString(),true)
+                    SnackBarUtil.showCustomSnackBar(
+                        binding.root,
+                        it.onSuccess.message.toString(),
+                        true
+                    )
                     viewModel.deleteScanLogDataFromLocalDB()
                     observeScanLogDeleteResponse()
                     viewModel.deleteScanLogDataFromLocalDB
@@ -359,7 +374,7 @@ class QrScanReportFragment : Fragment() {
 
                 is UploadScanDataServerUIState.OnFailure -> {
                     DialogProgressUtil.dismiss()
-                    SnackBarUtil.showCustomSnackBar(binding.root,it.onFailure)
+                    SnackBarUtil.showCustomSnackBar(binding.root, it.onFailure)
                 }
             }
         }

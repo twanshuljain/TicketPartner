@@ -76,6 +76,7 @@ val PASSWORD_REGEX = Regex("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@\$%^
 val MASTER_CARD_REGEX = Regex("^5[1-5][0-9]{14}$")
 val VISA_CARD_REGEX = Regex("^4[0-9]{12}(?:[0-9]{3})?$")
 val EXPIRY_DATE_REGEX = Regex("^(0?[1-9]|[1][0-2])/20\\d\\d")
+val EMOJI_PATTERN_REGEX = "[\\uD83C-\\uDBFF\\uDC00-\\uDFFF]+|[\\u2600-\\u27FF]"
 
 
 const val ERROR_DRAWABLE_PADDING = 6

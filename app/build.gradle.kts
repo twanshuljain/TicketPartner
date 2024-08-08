@@ -91,7 +91,7 @@ dependencies {
     //countryCode picker
     implementation("com.hbb20:ccp:2.5.2")
 
-    //glide for set image into imageview
+    //glide for set image into imageview`
     implementation("com.github.bumptech.glide:glide:4.15.0")
     annotationProcessor("com.github.bumptech.glide:compiler:4.15.0")
 

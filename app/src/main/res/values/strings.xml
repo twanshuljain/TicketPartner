@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">TicketPartner</string>
+    <string name="app_name">MTP Scanner</string>
     <string name="hello_blank_fragment">TicketPartner</string>
     <string name="sign_in">Sign In</string>
     <string name="welcome_back_sign_in">Welcome back, Sign In with your credentials below Sign In with your credentials</string>

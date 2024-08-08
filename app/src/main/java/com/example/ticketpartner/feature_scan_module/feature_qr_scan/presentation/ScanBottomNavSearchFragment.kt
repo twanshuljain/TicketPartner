@@ -186,6 +186,7 @@ class ScanBottomNavSearchFragment : Fragment() {
     }
 
     private fun isItemClicked(data: MData) {
+        viewModel.isAllChecked.value = data.is_checked_in
         viewModel.isOnlineMode.value = true
         viewModel.selectedSearchedItemEmailAdd.value = data.email.toString()
         val bundle = Bundle()
@@ -197,7 +198,6 @@ class ScanBottomNavSearchFragment : Fragment() {
     }
 
     private fun isItemClickedOffline(data: SearchData) {
-        viewModel.isAllChecked.value = data.is_checked_in
         orderNumberList.clear()
         data.order_number?.let {
             for (i in ZERO until searchOfflineDataList.size) {

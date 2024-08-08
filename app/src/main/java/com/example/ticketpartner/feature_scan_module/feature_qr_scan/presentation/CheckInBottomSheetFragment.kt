@@ -124,7 +124,11 @@ class CheckInBottomSheetFragment(
                         }
                     })
             }else{
-                SnackBarUtil.showCustomSnackBar(binding.root,getString(R.string.please_select_order_id))
+                try {
+                    SnackBarUtil.showCustomSnackBar(binding.layoutBtn,getString(R.string.please_select_order_id))
+                }catch (e: Exception){
+                    e.printStackTrace()
+                }
             }
         }
 

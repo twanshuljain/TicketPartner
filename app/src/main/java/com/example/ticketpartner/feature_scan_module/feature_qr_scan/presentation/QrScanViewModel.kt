@@ -479,8 +479,12 @@ class QrScanViewModel @Inject constructor(
                 _getScanReportDataFromLocalDB.value =
                     GetScanReportDataOfflineUIState.OnFailure(it.message.toString())
             }.collect {
-                logUtil.log(LoginScanVewModel.TAG, "onResponse: $it")
-                _getScanReportDataFromLocalDB.value = GetScanReportDataOfflineUIState.OnSuccess(it)
+                try {
+                    logUtil.log(LoginScanVewModel.TAG, "onResponse: $it")
+                    _getScanReportDataFromLocalDB.value = GetScanReportDataOfflineUIState.OnSuccess(it)
+                }catch (e:Exception){
+                    e.printStackTrace()
+                }
             }
         }
     }

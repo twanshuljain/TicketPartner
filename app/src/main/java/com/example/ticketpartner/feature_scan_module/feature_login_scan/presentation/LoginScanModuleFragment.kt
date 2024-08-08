@@ -38,6 +38,7 @@ import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.mode
 import com.example.ticketpartner.feature_scan_module.feature_qr_scan.domain.model.TicketDataList
 import com.example.ticketpartner.utils.BackPressHandler
 import com.example.ticketpartner.utils.DialogProgressUtil
+import com.example.ticketpartner.utils.EmojiFilter
 import com.example.ticketpartner.utils.NavigateFragmentUtil.navigateWithClearNavGraph
 import com.example.ticketpartner.utils.NetworkConnectionLiveData
 import com.example.ticketpartner.utils.Utility
@@ -84,7 +85,7 @@ class LoginScanModuleFragment : Fragment() {
 
         /** restrict user to enter space */
         Utility.disableSpace(binding.etPin)
-
+        binding.etName.filters = arrayOf(EmojiFilter())
         binding.etName.doAfterTextChanged {
             etName = it.toString().trim()
         }
@@ -120,6 +121,10 @@ class LoginScanModuleFragment : Fragment() {
             }
         }
 
+        binding.tvFindPin.setOnClickListener {
+            findNavController().navigate(R.id.findPinFragment)
+        }
+
         /** For delete local data forcefully! */
         /*   binding.ivTpLogo.setOnClickListener {
                SnackBarUtil.showCustomSnackBar(binding.root, "Your local data has been clear!")
@@ -139,7 +144,7 @@ class LoginScanModuleFragment : Fragment() {
                     updateUserDetailsToSession(it.onSuccess)
                     /** insert event details data in local DB */
                     insertEventsDetailLocalStorage(it.onSuccess.data?.event)
-
+                    DialogProgressUtil.dismiss()
                     /** insert ticket types list in local DB */
                     val eventTickets = it.onSuccess.data?.event?.event_tickets
                     if (!eventTickets.isNullOrEmpty()) {
@@ -209,7 +214,6 @@ class LoginScanModuleFragment : Fragment() {
         }
     }
 
-
     private fun getCheckInDataOffline() {
         viewModel.getCheckInDataForOfflineScan.observe(viewLifecycleOwner) {
             when (it) {
@@ -231,7 +235,6 @@ class LoginScanModuleFragment : Fragment() {
         }
     }
 
-
     private fun observeSearchDataOffline() {
         viewModel.observeScanSearchData.observe(viewLifecycleOwner) {
             when (it) {
@@ -240,8 +243,8 @@ class LoginScanModuleFragment : Fragment() {
                 }
 
                 is GetScanSearchDataOfflineUIState.OnSuccess -> {
+                    insertSearchDataList.clear()
                     if (it.onSuccess?.size!! > ZERO) {
-                        insertSearchDataList.clear()
                         for (i in ZERO until it.onSuccess?.size!!) {
                             it.onSuccess[i]?.let { item ->
                                 insertSearchDataList.add(item)
@@ -255,49 +258,6 @@ class LoginScanModuleFragment : Fragment() {
 
                 is GetScanSearchDataOfflineUIState.OnFailure -> {
                     DialogProgressUtil.dismiss()
-                }
-            }
-        }
-    }
-
-    private fun observeScanReportAllData() {
-        viewModel.getScanReportAllDataLogin.observe(viewLifecycleOwner) {
-            when (it) {
-                is QrScanReportAllUIState.IsLoading -> {
-                    DialogProgressUtil.show(childFragmentManager)
-                }
-
-                is QrScanReportAllUIState.OnSuccess -> {
-                    DialogProgressUtil.dismiss()
-                    val resData = it.onSuccess.data
-                    resData?.let {
-                        viewModel.insertScanReportDataOffline(
-                            InsertScanReportDataResponse(
-                                ZERO,
-                                resData.online,
-                                resData.physical,
-                                resData.total_scanned,
-                                resData.total_accepted,
-                                resData.total_rejected,
-                                resData.total_tickets,
-                            )
-                        )
-                    }
-
-                    resData?.ticket_data?.let { ticketList ->
-                        insertScanReportTicketDataList.clear()
-                        for (data in ticketList) {
-                            if (data != null) {
-                                insertScanReportTicketDataList.add(data)
-                            }
-                        }
-                        insertScanReportTicketListLocalDB(insertScanReportTicketDataList)
-                    }
-                }
-
-                is QrScanReportAllUIState.OnFailure -> {
-                    DialogProgressUtil.dismiss()
-                    SnackBarUtil.showCustomSnackBar(binding.root, it.onFailure)
                 }
             }
         }
@@ -353,9 +313,20 @@ class LoginScanModuleFragment : Fragment() {
 
     private fun insertQrCodeListDataLocalDB(insertQrDataList: ArrayList<DataItems>) {
         if (insertQrDataList.size > ZERO) {
-            viewModel.insetQrCodeListForOfflineScan(
-                insertQrDataList
-            )
+            viewModel.insetQrCodeListForOfflineScan(insertQrDataList)
+            viewModel.insertQrCodeListForOfflineScan.observe(viewLifecycleOwner) {
+                when (it) {
+                    is InsertQrCodeForOffLineScanUIState.IsLoading -> {}
+                    is InsertQrCodeForOffLineScanUIState.OnSuccess -> {
+                        viewModel.getCheckInDataForOffline()
+                        getCheckInDataOffline()
+                    }
+
+                    is InsertQrCodeForOffLineScanUIState.OnFailure -> {}
+                }
+            }
+        } else { //if there is no data, user can still login for online scan only.
+            viewModel.insetQrCodeListForOfflineScan(insertQrDataList)
             viewModel.insertQrCodeListForOfflineScan.observe(viewLifecycleOwner) {
                 when (it) {
                     is InsertQrCodeForOffLineScanUIState.IsLoading -> {}
@@ -389,9 +360,7 @@ class LoginScanModuleFragment : Fragment() {
 
     private fun insertSearchDataListLocalDB(insertSearchDataList: java.util.ArrayList<SearchData>) {
         if (insertSearchDataList.size > ZERO) {
-            viewModel.insertSearchDataOfflineScan(
-                insertSearchDataList
-            )
+            viewModel.insertSearchDataOfflineScan(insertSearchDataList)
             viewModel.insertSearchDataOfflineScan.observe(viewLifecycleOwner) {
                 when (it) {
                     is InsertSearchDataOfflineUIState.IsLoading -> {}
@@ -404,14 +373,90 @@ class LoginScanModuleFragment : Fragment() {
 
                     is InsertSearchDataOfflineUIState.OnFailure -> {}
                 }
+                observeScanReportAllData()
             }
+        } else { //if there is no data then user scan still login only for online scan.
+            viewModel.insertSearchDataOfflineScan(insertSearchDataList)
+            viewModel.insertSearchDataOfflineScan.observe(viewLifecycleOwner) {
+                when (it) {
+                    is InsertSearchDataOfflineUIState.IsLoading -> {}
+                    is InsertSearchDataOfflineUIState.OnSuccess -> {
+                        if (!hasScanReportApiCalled) {
+                            hasScanReportApiCalled = true
+                            viewModel.getScanReportAllData("all")
+                        }
+                    }
 
-            observeScanReportAllData()
+                    is InsertSearchDataOfflineUIState.OnFailure -> {}
+                }
+                observeScanReportAllData()
+            }
+        }
+    }
+
+    private fun observeScanReportAllData() {
+        viewModel.getScanReportAllDataLogin.observe(viewLifecycleOwner) {
+            when (it) {
+                is QrScanReportAllUIState.IsLoading -> {
+                    DialogProgressUtil.show(childFragmentManager)
+                }
+
+                is QrScanReportAllUIState.OnSuccess -> {
+                    DialogProgressUtil.dismiss()
+                    val resData = it.onSuccess.data
+                    resData?.let {
+                        viewModel.insertScanReportDataOffline(
+                            InsertScanReportDataResponse(
+                                ZERO,
+                                resData.online,
+                                resData.physical,
+                                resData.total_scanned,
+                                resData.total_accepted,
+                                resData.total_rejected,
+                                resData.total_tickets,
+                            )
+                        )
+                    }
+
+                    resData?.ticket_data?.let { ticketList ->
+                        insertScanReportTicketDataList.clear()
+                        for (data in ticketList) {
+                            if (data != null) {
+                                insertScanReportTicketDataList.add(data)
+                            }
+                        }
+                        insertScanReportTicketListLocalDB(insertScanReportTicketDataList)
+                    }
+
+                    //if there is no data then use can still login for online scan only.
+                    insertScanReportTicketDataList.clear()
+                    insertScanReportTicketListLocalDB(insertScanReportTicketDataList)
+                }
+
+                is QrScanReportAllUIState.OnFailure -> {
+                    DialogProgressUtil.dismiss()
+                    SnackBarUtil.showCustomSnackBar(binding.root, it.onFailure)
+                }
+            }
         }
     }
 
     private fun insertScanReportTicketListLocalDB(insertScanReportTicketDataList: java.util.ArrayList<TicketDataList>) {
         if (insertScanReportTicketDataList.size > ZERO) {
+            viewModel.insertScanReportTicketListOffline(insertScanReportTicketDataList)
+            viewModel.insertScanReportTicketListDataOffline.observe(viewLifecycleOwner) {
+                when (it) {
+                    is InsertScanReportTicketListUIState.IsLoading -> {}
+                    is InsertScanReportTicketListUIState.OnSuccess -> {
+                        findNavController().navigateWithClearNavGraph(
+                            R.id.main_nav_graph, R.id.eventDetailsScanModuleFragment
+                        )
+                    }
+
+                    is InsertScanReportTicketListUIState.OnFailure -> {}
+                }
+            }
+        } else { // if there is no data then user can still login for only scan only.
             viewModel.insertScanReportTicketListOffline(insertScanReportTicketDataList)
             viewModel.insertScanReportTicketListDataOffline.observe(viewLifecycleOwner) {
                 when (it) {

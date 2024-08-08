@@ -79,7 +79,7 @@ class SignInFragment : Fragment(), CountdownTimerCallback {
 
         /** Redirect on previous page on back icon click */
         binding.ivBack.setOnClickListener {
-            requireActivity().onBackPressedDispatcher.onBackPressed()
+            findNavController().popBackStack()
         }
 
         /** Redirect on sign-Up page */
