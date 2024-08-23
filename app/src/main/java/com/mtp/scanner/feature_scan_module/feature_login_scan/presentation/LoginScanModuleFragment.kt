@@ -108,6 +108,8 @@ class LoginScanModuleFragment : Fragment() {
             if (isAllFieldsValid()) {
                 networkConnectionLiveData.observeOnce(viewLifecycleOwner, Observer { isConnected ->
                     if (isConnected) {
+                        binding.rlContinue.isFocusable = false
+                        binding.rlContinue.isClickable = false
                         viewModel.loginWithPin(etName, etPin)
                         observeLoginResponse()
                         hasScanReportApiCalled = false
@@ -442,6 +444,8 @@ class LoginScanModuleFragment : Fragment() {
     }
 
     private fun insertScanReportTicketListLocalDB(insertScanReportTicketDataList: java.util.ArrayList<TicketDataList>) {
+        binding.rlContinue.isFocusable = false
+        binding.rlContinue.isClickable = false
         if (insertScanReportTicketDataList.size > ZERO) {
             viewModel.insertScanReportTicketListOffline(insertScanReportTicketDataList)
             viewModel.insertScanReportTicketListDataOffline.observe(viewLifecycleOwner) {
