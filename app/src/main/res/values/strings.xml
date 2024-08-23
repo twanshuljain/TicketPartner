@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">TicketPartner</string>
+    <string name="app_name">MTP Scanner</string>
     <string name="hello_blank_fragment">TicketPartner</string>
     <string name="sign_in">Sign In</string>
     <string name="welcome_back_sign_in">Welcome back, Sign In with your credentials below Sign In with your credentials</string>
@@ -191,5 +191,10 @@
     <string name="scanned_successfully">"Scanned Successfully"</string>
     <string name="you_are_offline">"You're offline."</string>
     <string name="you_are_online">"You're online."</string>
+    <string name="session_expired">"Session Expired"</string>
+    <string name="required_nfc">"Required NFC"</string>
+    <string name="nfc_not_available">"NFC is not available"</string>
+    <string name="your_session_has_been_expired">"Your session has expired. Please log in again to continue."</string>
+    <string name="to_continue_please_enable_nfc">"To continue, please enable NFC (Near Field Communication)"</string>
 
 </resources>

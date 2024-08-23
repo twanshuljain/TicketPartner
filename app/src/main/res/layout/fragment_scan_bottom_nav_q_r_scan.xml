@@ -49,10 +49,8 @@
                 android:checked="true"
                 android:paddingStart="@dimen/margin_10"
                 android:text="Bar/QR code" />
-
         </RelativeLayout>
 
-        <!--android:background="@drawable/select_ticket_type_item_disable_design"-->
         <RelativeLayout
             android:id="@+id/rlRfid"
             android:layout_width="@dimen/margin_0"
@@ -74,7 +72,6 @@
                 android:text="@string/rfid" />
 
         </RelativeLayout>
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -150,7 +147,7 @@
                         android:id="@+id/surfaceView"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:visibility="visible"
+                        android:visibility="invisible"
                         android:layout_margin="@dimen/margin_10" />
 
                     <androidx.appcompat.widget.AppCompatImageView
@@ -163,13 +160,11 @@
                         android:layout_marginEnd="@dimen/margin_15"
                         android:layout_marginBottom="@dimen/margin_15"
                         app:cardBackgroundColor="@color/white"
-                        android:visibility="gone"
-                        android:scaleType="fitXY"
+                        android:visibility="visible"
+                        android:scaleType="fitCenter"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/ivTorch"/>
-
-
                 </androidx.cardview.widget.CardView>
 
                 <androidx.constraintlayout.widget.ConstraintLayout

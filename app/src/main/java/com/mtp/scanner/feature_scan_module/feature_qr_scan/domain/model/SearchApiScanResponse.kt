@@ -1,0 +1,20 @@
+package com.mtp.scanner.feature_scan_module.feature_qr_scan.domain.model
+
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+data class SearchApiScanResponse(
+    val `data`: List<MData?>?,
+    val error: Any?,
+    val message: String?,
+    val status_code: Int?
+)
+
+@Parcelize
+data class MData(
+    var email: String?,
+    var name: String?,
+    var order_id: String = "",
+    var payment_type: String?,
+    var is_checked_in: Boolean? = false
+) : Parcelable
