@@ -21,18 +21,21 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
-   // buildConfigField("String", "API_URL", "\"https://staging-api.myticketpartner.com/\"")
     buildTypes {
         debug {
             isDebuggable = true
             isMinifyEnabled = false
-            buildConfigField("String", "API_URL", "\"https://api.myticketpartner.com/\"")
+            buildConfigField("String", "API_URL", "\"https://staging-api.myticketpartner.com/\"")
             buildConfigField("String", "AWS_IMAGE_BASE_URL", "\"https://whitelabel-staging-app.s3.ap-south-1.amazonaws.com/\"")
             buildConfigField("String", "GOOGLE_MAPS_API_KEY", "\"AIzaSyC73yaRGGiQ-W1qpni-3WlKJJ3A1vWtmUs\"")
             proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
         }
         release {
+            isDebuggable = false
             isMinifyEnabled = true
+            buildConfigField("String", "API_URL", "\"https://api.myticketpartner.com/\"")
+            buildConfigField("String", "AWS_IMAGE_BASE_URL", "\"https://whitelabel-staging-app.s3.ap-south-1.amazonaws.com/\"")
+            buildConfigField("String", "GOOGLE_MAPS_API_KEY", "\"AIzaSyC73yaRGGiQ-W1qpni-3WlKJJ3A1vWtmUs\"")
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
