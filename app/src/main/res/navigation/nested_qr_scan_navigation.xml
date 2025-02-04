@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nested_qr_scan_navigation"
+    app:startDestination="@id/scanBottomNavHomeFragment">
+
+    <fragment
+        android:id="@+id/scanBottomNavHomeFragment"
+        android:name="com.mtp.scanner.feature_scan_module.feature_qr_scan.presentation.ScanBottomNavHomeFragment"
+        android:label="fragment_scan_bottom_nav_home"
+        tools:layout="@layout/fragment_scan_bottom_nav_home" />
+
+    <fragment
+        android:id="@+id/scanBottomQRScanFragment"
+        android:name="com.mtp.scanner.feature_scan_module.feature_qr_scan.presentation.ScanBottomQRScanFragment"
+        android:label="fragment_scan_bottom_nav_q_r_scan"
+        tools:layout="@layout/fragment_scan_bottom_nav_q_r_scan" >
+        <action
+            android:id="@+id/action_scanBottomQRScanFragment_to_qrScanReportFragment"
+            app:destination="@id/qrScanReportFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/scanBottomNavSearchFragment"
+        android:name="com.mtp.scanner.feature_scan_module.feature_qr_scan.presentation.ScanBottomNavSearchFragment"
+        android:label="fragment_scan_bottom_nav_search"
+        tools:layout="@layout/fragment_scan_bottom_nav_search" >
+        <action
+            android:id="@+id/action_scanBottomNavSearchFragment_to_scanSearchedOrderDetailsFragment"
+            app:destination="@id/scanSearchedOrderDetailsFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/ticketScannedStatusFragment"
+        android:name="com.mtp.scanner.feature_scan_module.feature_qr_scan.presentation.TicketScannedStatusFragment"
+        android:label="fragment_ticket_scanned_status"
+        tools:layout="@layout/fragment_ticket_scanned_status" />
+
+    <fragment
+        android:id="@+id/qrScanReportFragment"
+        android:name="com.mtp.scanner.feature_scan_module.feature_qr_scan.presentation.QrScanReportFragment"
+        android:label="fragment_qr_scan_report"
+        tools:layout="@layout/fragment_qr_scan_report" />
+
+    <fragment
+        android:id="@+id/scanSearchedOrderDetailsFragment"
+        android:name="com.mtp.scanner.feature_scan_module.feature_qr_scan.presentation.ScanSearchedOrderDetailsFragment"
+        android:label="fragment_scan_searched_order_details"
+        tools:layout="@layout/fragment_scan_searched_order_details">
+    <argument
+        android:name="searchedItem"
+        app:argType="com.mtp.scanner.feature_scan_module.feature_qr_scan.domain.model.MData"/>
+    </fragment>
+
+</navigation>

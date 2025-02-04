@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_nav_graph"
+    app:startDestination="@id/splashLandingFragment">
+
+    <fragment
+        android:id="@+id/splashLandingFragment"
+        android:name="com.mtp.scanner.feature_login.presentation.SplashLandingFragment"
+        android:label="fragment_splash_landing"
+        tools:layout="@layout/fragment_splash_landing"/>
+
+    <fragment
+        android:id="@+id/signUpEmailFragment"
+        android:name="com.mtp.scanner.feature_signup.presentation.SignUpEmailFragment"
+        android:label="fragment_sign_up_email"
+        tools:layout="@layout/fragment_sign_up_email"/>
+
+    <fragment
+        android:id="@+id/signUpDetailsFragment"
+        android:name="com.mtp.scanner.feature_signup.presentation.SignUpDetailsFragment"
+        android:label="fragment_sign_up_details"
+        tools:layout="@layout/fragment_sign_up_details"/>
+    <fragment
+        android:id="@+id/forgotPasswordFragment"
+        android:name="com.mtp.scanner.feature_login.presentation.ForgotPasswordFragment"
+        android:label="fragment_forgot_password"
+        tools:layout="@layout/fragment_forgot_password" />
+
+    <fragment
+        android:id="@+id/resetPasswordFragment"
+        android:name="com.mtp.scanner.feature_login.presentation.ResetPasswordFragment"
+        android:label="fragment_reset_password"
+        tools:layout="@layout/fragment_reset_password" />
+
+    <fragment
+        android:id="@+id/addOrganizationSocialFragment"
+        android:name="com.mtp.scanner.feature_add_organization.presentation.AddOrganizationSocialFragment"
+        android:label="fragment_add_organization_social"
+        tools:layout="@layout/fragment_add_organization_social" />
+
+    <fragment
+        android:id="@+id/addOrganizationChangeLogoFragment"
+        android:name="com.mtp.scanner.feature_add_organization.presentation.AddOrganizationChangeLogoFragment"
+        android:label="fragment_add_organization_change_logo"
+        tools:layout="@layout/fragment_add_organization_change_logo" />
+
+    <fragment
+        android:id="@+id/addOrgCountrySearchFragment"
+        android:name="com.mtp.scanner.feature_add_organization.presentation.AddOrgCountrySearchFragment"
+        android:label="fragment_add_organization_country_search_fragment"
+        tools:layout="@layout/fragment_add_org_country_search" />
+
+    <fragment
+        android:id="@+id/createEventBasicDetaills"
+        android:name="com.mtp.scanner.feature_create_event.presentation.CreateEventBasicDetailsFragment"
+        android:label="fragment_create_event_basic_details"
+        tools:layout="@layout/fragment_create_event_basic_details" />
+
+    <fragment
+        android:id="@+id/createEventTicket"
+        android:name="com.mtp.scanner.feature_create_event.presentation.CreateEventTicketsFragment"
+        android:label="fragment_create_event_tickets"
+        tools:layout="@layout/fragment_create_event_tickets" />
+
+    <fragment
+        android:id="@+id/createEventCodesFragment"
+        android:name="com.mtp.scanner.feature_create_event.presentation.CreateEventCodesFragment"
+        android:label="fragment_create_event_codes"
+        tools:layout="@layout/fragment_create_event_codes" />
+
+    <fragment
+        android:id="@+id/signInFragment"
+        android:name="com.mtp.scanner.feature_login.presentation.SignInFragment"
+        android:label="fragment_sign_in"
+        app:popUpTo="@id/main_nav_graph"
+        app:popUpToInclusive="true"
+        tools:layout="@layout/fragment_sign_in"/>
+
+    <fragment
+        android:id="@+id/loginScanModuleFragment"
+        android:name="com.mtp.scanner.feature_scan_module.feature_login_scan.presentation.LoginScanModuleFragment"
+        android:label="fragment_login_scan_module"
+        tools:layout="@layout/fragment_login_scan_module" />
+
+    <fragment
+        android:id="@+id/eventDetailsScanModuleFragment"
+        android:name="com.mtp.scanner.feature_scan_module.feature_login_scan.presentation.EventDetailsScanModuleFragment"
+        android:label="fragment_evnet_details_scan_module"
+        tools:layout="@layout/fragment_event_details_scan_module" >
+        <action
+            android:id="@+id/action_eventDetailsScanModuleFragment_to_nested_qr_scan_nav_graph"
+            app:destination="@id/nested_qr_scan_nav_graph" />
+    </fragment>
+
+    <navigation
+        android:id="@+id/nested_qr_scan_nav_graph"
+        app:startDestination="@id/scanQRLandingFragment">
+
+        <fragment
+            android:id="@+id/scanQRLandingFragment"
+            android:name="com.mtp.scanner.feature_scan_module.ScanQRLandingFragment"
+            android:label="fragment_scan_q_r_landing"
+            tools:layout="@layout/fragment_scan_q_r_landing" />
+
+    </navigation>
+    <fragment
+        android:id="@+id/findPinFragment"
+        android:name="com.mtp.scanner.feature_scan_module.feature_login_scan.presentation.WhereToFindPinFragment"
+        android:label="fragment_find_pin"
+        tools:layout="@layout/fragment_find_pin" />
+
+</navigation>
