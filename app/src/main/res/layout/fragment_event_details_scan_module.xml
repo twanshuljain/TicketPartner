@@ -47,9 +47,20 @@
                 android:layout_marginBottom="@dimen/margin_10"
                 android:text="@string/are_you_scanning_for_this_event"
                 android:textAlignment="textStart"
-                app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
+                app:layout_constraintEnd_toEndOf="@id/ivLogOut"
                 app:layout_constraintStart_toStartOf="@id/guidelineStart"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/ivLogOut"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:padding="@dimen/margin_5"
+                android:src="@drawable/ic_logout"
+                app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
+                app:layout_constraintTop_toTopOf="@+id/tvScanning"
+                app:layout_constraintBottom_toBottomOf="@+id/tvScanning"/>
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/materialCardView"
