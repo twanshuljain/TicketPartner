@@ -8,12 +8,14 @@ import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.mtp.scanner.BuildConfig
 import com.mtp.scanner.R
 import com.mtp.scanner.common.COMMA
 import com.mtp.scanner.common.HYPHEN_CHAR
 import com.mtp.scanner.common.SnackBarUtil
 import com.mtp.scanner.common.VERTICAL_POLE
+import com.mtp.scanner.common.storage.MyPreferences
 import com.mtp.scanner.databinding.FragmentEventDetailsScanModuleBinding
 import com.mtp.scanner.feature_scan_module.feature_login_scan.domain.model.DataItem
 import com.mtp.scanner.feature_scan_module.feature_login_scan.domain.model.GetEventDetailsOfflineScanUIState
@@ -21,7 +23,10 @@ import com.mtp.scanner.feature_scan_module.feature_login_scan.domain.model.Inser
 import com.mtp.scanner.utils.CameraUtils.Companion.loadCircularImage
 import com.mtp.scanner.utils.CameraUtils.Companion.loadImageFromUrl
 import com.mtp.scanner.utils.DialogProgressUtil
+import com.mtp.scanner.utils.DialogUtils
 import com.mtp.scanner.utils.NavigateFragmentUtil.navigateParentToChildFragment
+import com.mtp.scanner.utils.NavigateFragmentUtil.navigateWithClearNavGraph
+import com.mtp.scanner.utils.Utility
 import com.mtp.scanner.utils.getFormattedStartDateForEvent
 import com.mtp.scanner.utils.getFormattedTimeForEvent
 
@@ -100,6 +105,30 @@ class EventDetailsScanModuleFragment : Fragment() {
                 R.id.eventDetailsScanModuleFragment,
                 R.id.action_eventDetailsScanModuleFragment_to_nested_qr_scan_nav_graph,
                 true
+            )
+        }
+
+
+        binding.ivLogOut.setOnClickListener {
+            logoutDialog("Are you sure you want to log out?")
+        }
+    }
+
+    private fun logoutDialog(message: String) {
+        val bottomSheetDialog = BottomSheetDialog(requireContext())
+        val dialog =  DialogUtils.showLogoutDialog(
+            context = requireContext(),
+            layoutInflater = layoutInflater,
+            dialog = bottomSheetDialog,
+            message = message
+        )
+        dialog.btnYes.setOnClickListener {
+            bottomSheetDialog.dismiss()
+            Utility.clearLocalDatabase(requireActivity())
+            MyPreferences.clearpref()
+            findNavController().navigateWithClearNavGraph(
+                R.id.splashLandingFragment,
+                R.id.signInFragment
             )
         }
     }

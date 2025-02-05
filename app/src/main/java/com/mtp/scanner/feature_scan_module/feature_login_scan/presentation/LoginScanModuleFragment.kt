@@ -1,9 +1,14 @@
 package com.mtp.scanner.feature_scan_module.feature_login_scan.presentation
 
+import android.graphics.Color
 import android.os.Bundle
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.style.ForegroundColorSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
@@ -45,6 +50,7 @@ import com.mtp.scanner.utils.Utility
 import com.mtp.scanner.utils.Utility.hideKeyboard
 import com.mtp.scanner.utils.Utility.observeOnce
 import com.google.gson.Gson
+import com.mtp.scanner.setMandatoryText
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -82,6 +88,12 @@ class LoginScanModuleFragment : Fragment() {
             }
         }
         requireActivity().onBackPressedDispatcher.addCallback(requireActivity(), callback)
+
+        /** applying mandatory asterik to yourname and pin*/
+        val yourName = getString(R.string.your_name)
+        val enterPin = getString(R.string.enter_pin)
+        binding.tvYourName.setMandatoryText(yourName)
+        binding.tvPin.setMandatoryText(enterPin)
 
         /** restrict user to enter space */
         Utility.disableSpace(binding.etPin)
@@ -164,6 +176,7 @@ class LoginScanModuleFragment : Fragment() {
                 }
 
                 is LoginWithPinUIState.OnFailure -> {
+                    binding.rlContinue.isClickable = true
                     DialogProgressUtil.dismiss()
                     SnackBarUtil.showCustomSnackBar(binding.root, it.onFailure)
                 }

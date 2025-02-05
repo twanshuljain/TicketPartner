@@ -99,7 +99,7 @@ class ScanQRLandingFragment : Fragment() {
     }
 
     private fun initBottomNavigation() {
-        binding.includeTitle.title.text = getString(R.string.select_ticket_type)
+        binding.includeTitle.title.text = getString(R.string.select_ticket)
         binding.scanBottomNav.itemIconTintList = null
 
         val navHostFragment =

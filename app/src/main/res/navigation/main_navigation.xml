@@ -82,6 +82,8 @@
         android:id="@+id/loginScanModuleFragment"
         android:name="com.mtp.scanner.feature_scan_module.feature_login_scan.presentation.LoginScanModuleFragment"
         android:label="fragment_login_scan_module"
+        app:popUpTo="@id/main_nav_graph"
+        app:popUpToInclusive="true"
         tools:layout="@layout/fragment_login_scan_module" />
 
     <fragment
