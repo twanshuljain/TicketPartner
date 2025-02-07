@@ -89,11 +89,11 @@ class ScanQRLandingFragment : Fragment() {
                 viewModel.isNetworkAvailableObserver.value = true
                 viewModel.isNetworkAvailable = true
                 observeLocalDBScanLog()
-                SnackBarUtil.showCustomSnackBar(binding.root,getString(R.string.you_are_online),true)
+                //SnackBarUtil.showCustomSnackBar(binding.root,getString(R.string.you_are_online),true)
             } else {
                 viewModel.isNetworkAvailableObserver.value = false
                 viewModel.isNetworkAvailable = false
-                SnackBarUtil.showCustomSnackBar(binding.root,getString(R.string.you_are_offline))
+                //SnackBarUtil.showCustomSnackBar(binding.root,getString(R.string.you_are_offline))
             }
         }
     }

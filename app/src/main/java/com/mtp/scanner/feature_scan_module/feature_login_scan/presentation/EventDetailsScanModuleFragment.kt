@@ -20,6 +20,7 @@ import com.mtp.scanner.databinding.FragmentEventDetailsScanModuleBinding
 import com.mtp.scanner.feature_scan_module.feature_login_scan.domain.model.DataItem
 import com.mtp.scanner.feature_scan_module.feature_login_scan.domain.model.GetEventDetailsOfflineScanUIState
 import com.mtp.scanner.feature_scan_module.feature_login_scan.domain.model.InsertEventDetailsResponse
+import com.mtp.scanner.utils.CameraUtils.Companion.loadCircularBigImage
 import com.mtp.scanner.utils.CameraUtils.Companion.loadCircularImage
 import com.mtp.scanner.utils.CameraUtils.Companion.loadImageFromUrl
 import com.mtp.scanner.utils.DialogProgressUtil
@@ -83,17 +84,17 @@ class EventDetailsScanModuleFragment : Fragment() {
             binding.ivBanner,
             BuildConfig.AWS_IMAGE_BASE_URL +data?.eventCoverImage
         )
-        loadCircularImage(
+        loadCircularBigImage(
             binding.ivOrganizerLogo,
             BuildConfig.AWS_IMAGE_BASE_URL + data?.organizationLogo
         )
         binding.tvEventTitle.text = data?.name
         val startDate = getFormattedStartDateForEvent(data?.eventStartDate)
-        val startEndTime =
-            getFormattedTimeForEvent(data?.eventStartTime) + HYPHEN_CHAR + getFormattedTimeForEvent(
-                data?.eventEndTime
-            )
-        binding.tvStartDateTime.text = startDate + VERTICAL_POLE + startEndTime
+        val startTime = getFormattedTimeForEvent(data?.eventStartTime)
+        val endDate = getFormattedStartDateForEvent(data?.eventEndDate)
+        val endTime = getFormattedTimeForEvent(data?.eventEndTime)
+        binding.tvStartDateTime.text =
+            startDate + VERTICAL_POLE + startTime + HYPHEN_CHAR + endDate + VERTICAL_POLE + endTime
 
         binding.tvLocation.text =
             data?.city + COMMA + data?.state + COMMA + data?.country
@@ -128,7 +129,7 @@ class EventDetailsScanModuleFragment : Fragment() {
             MyPreferences.clearpref()
             findNavController().navigateWithClearNavGraph(
                 R.id.splashLandingFragment,
-                R.id.signInFragment
+                R.id.loginScanModuleFragment
             )
         }
     }

@@ -98,7 +98,7 @@ class ScanBottomNavHomeFragment : Fragment() {
 
         viewModel.eventName.observe(viewLifecycleOwner) {
             val title = activity?.findViewById<AppCompatTextView>(R.id.title)
-            title?.text = getString(R.string.select_ticket_type)
+            title?.text = getString(R.string.select_ticket)
         }
 
         binding.tvSelectAll.setOnClickListener {

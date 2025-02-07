@@ -11,7 +11,7 @@ import java.util.*
 const val DELIVERY_DATE_PATTERN = "yyyy-MM-dd"
 const val EVENT_DATE_PATTERN = "MMM dd, yyyy"
 const val EVENT_END_DATE_PATTERN = "MMM dd, YYYY"
-const val EVENT_TIME_PATTERN = "H:mm aa"
+const val EVENT_TIME_PATTERN = "hh:mm aa"
 const val CURRENT_TIME_PATTERN = "hh:mm a" //01:04 AM
 const val TITLE_DISPLAY_TIME_PATTERN = "EEEE, MMMM dd"
 

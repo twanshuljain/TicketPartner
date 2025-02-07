@@ -462,6 +462,10 @@
         <item name="android:textSize">@dimen/text_14</item>
     </style>
 
+    <style name="CircleImageStyle">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item> <!-- Makes it circular -->
+    </style>
 
     <style name="OtpEditTextStyle">
         <!-- Set the width and height of the EditText -->

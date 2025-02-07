@@ -118,6 +118,19 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/ivEyePassword"
+                    android:layout_width="@dimen/size_35"
+                    android:layout_height="@dimen/margin_0"
+                    android:padding="@dimen/margin_5"
+                    android:visibility="gone"
+                    android:src="@drawable/ic_eye"
+                    android:tint="@color/para_text"
+                    app:layout_constraintBottom_toBottomOf="@id/etPin"
+                    app:layout_constraintEnd_toStartOf="@+id/ivClearText"
+                    app:layout_constraintEnd_toEndOf="@+id/etPin"
+                    app:layout_constraintTop_toTopOf="@id/etPin" />
+
+                <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/ivClearText"
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/margin_0"
