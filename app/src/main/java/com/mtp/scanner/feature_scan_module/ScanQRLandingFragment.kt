@@ -39,6 +39,7 @@ class ScanQRLandingFragment : Fragment() {
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var navController: NavController
     private lateinit var networkConnectionLiveData: NetworkConnectionLiveData
+    private var isHomeToHome: Boolean = true
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -131,6 +132,11 @@ class ScanQRLandingFragment : Fragment() {
                     }
                 }
 
+                R.id.scanBottomNavHomeFragment -> {
+                    logoutDialog(getString(R.string.logout_warning))
+                    true
+                }
+
                 else -> {
                     navController.navigate(item.itemId)
                     true
@@ -147,7 +153,9 @@ class ScanQRLandingFragment : Fragment() {
         navController.addOnDestinationChangedListener { controller, destination, arguments ->
             if (destination.id == R.id.scanBottomNavHomeFragment) {
                 binding.includeTitle.ivBack.visibility = View.GONE
+                isHomeToHome = true
             } else {
+                isHomeToHome = false
                 binding.includeTitle.ivBack.visibility = View.VISIBLE
             }
         }
@@ -175,9 +183,9 @@ class ScanQRLandingFragment : Fragment() {
         binding.includeTitle.ivLogOut.setOnClickListener {
             if (viewModel.isNetworkAvailable) {
                 if (viewModel.scanLogListSize > ZERO) {
-                    logoutDialog("Are you sure you want to log out and clear all data?")
+                    logoutDialog(getString(R.string.logout_clear_all_data_warning))
                 } else {
-                    logoutDialog("Are you sure you want to log out?")
+                    logoutDialog(getString(R.string.logout_warning))
                 }
             } else {
                 SnackBarUtil.showCustomSnackBar(binding.root,getString(R.string.check_network_availability))
@@ -241,7 +249,7 @@ class ScanQRLandingFragment : Fragment() {
 
     private fun handleOnBackPressedButton() {
         if (binding.scanBottomNav.selectedItemId == R.id.scanBottomNavHomeFragment) {
-            BackPressHandler.onBackPressed(requireActivity())
+            logoutDialog(getString(R.string.logout_warning))
         } else {
             navController.popBackStack()
         }

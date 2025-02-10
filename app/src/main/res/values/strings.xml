@@ -198,4 +198,6 @@
     <string name="your_session_has_been_expired">"Your session has expired. Please log in again to continue."</string>
     <string name="to_continue_please_enable_nfc">"To continue, please enable NFC (Near Field Communication)"</string>
 
+    <string name="logout_warning">Are you sure you want to log out?</string>
+    <string name="logout_clear_all_data_warning">Are you sure you want to log out and clear all data?</string>
 </resources>
