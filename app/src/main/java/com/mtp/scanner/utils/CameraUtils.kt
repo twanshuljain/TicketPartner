@@ -94,6 +94,12 @@ class CameraUtils {
                 .into(imageView)
         }
 
+        fun loadCircularBigImage(imageView: AppCompatImageView, imageUrl: String) {
+            Glide.with(imageView.context)
+                .load(imageUrl)
+                .into(imageView)
+        }
+
         // Convert File to Uri and return the Uri
         fun fileToUri(context: Context, file: File): Uri {
             return FileProvider.getUriForFile(

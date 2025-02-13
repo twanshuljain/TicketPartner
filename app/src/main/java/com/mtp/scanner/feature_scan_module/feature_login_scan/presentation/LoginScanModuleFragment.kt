@@ -2,6 +2,7 @@ package com.mtp.scanner.feature_scan_module.feature_login_scan.presentation
 
 import android.graphics.Color
 import android.os.Bundle
+import android.text.InputType
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
@@ -106,14 +107,31 @@ class LoginScanModuleFragment : Fragment() {
             if (it.toString().length > ZERO) {
                 etPin = it.toString().trim()
                 binding.ivClearText.visibility = View.VISIBLE
+                binding.ivEyePassword.visibility = View.VISIBLE
             } else {
                 binding.ivClearText.visibility = View.GONE
+                binding.ivEyePassword.visibility = View.GONE
             }
         }
 
         binding.ivClearText.setOnClickListener {
             binding.etPin.setText(EMPTY_STRING)
             etPin = EMPTY_STRING
+        }
+
+        binding.ivEyePassword.setOnClickListener {
+            // Toggle password visibility
+            if (binding.etPin.inputType == InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_VARIATION_PASSWORD) {
+                // Show the PIN
+                binding.etPin.inputType = InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_VARIATION_NORMAL
+                binding.ivEyePassword.setImageResource(R.drawable.ic_eye)  // Change to open eye icon
+            } else {
+                // Hide the PIN
+                binding.etPin.inputType = InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_VARIATION_PASSWORD
+                binding.ivEyePassword.setImageResource(R.drawable.ic_eye_off)  // Change to closed eye icon
+            }
+            // Ensure the cursor stays at the end of the text
+            binding.etPin.text?.let { it1 -> binding.etPin.setSelection(it1.length) }
         }
 
         binding.rlContinue.setOnClickListener {
