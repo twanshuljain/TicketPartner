@@ -26,7 +26,7 @@
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/ivProjectName"
-            android:layout_width="wrap_content"
+            android:layout_width="@dimen/size_300"
             android:layout_height="@dimen/size_60"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/margin_15"
@@ -61,10 +61,11 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvElevateYourEvents"
-            style="@style/BoldParaHeadingText14"
+            style="@style/BoldParaHeadingText28"
             android:layout_width="@dimen/margin_0"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
+            android:text="@string/streamline_your_event_entry"
             android:layout_marginBottom="@dimen/margin_20"
             app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
             app:layout_constraintStart_toStartOf="@id/guidelineStart"
@@ -77,7 +78,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/margin_25"
             android:gravity="center_horizontal"
-            android:text="@string/lorem_ipsum_dolor"
+            android:text="@string/quickly_scan_tickets_and_ensure"
             app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
             app:layout_constraintStart_toStartOf="@id/guidelineStart"
             app:layout_constraintBottom_toTopOf="@id/btnNext" />
@@ -91,7 +92,7 @@
             android:layout_marginTop="@dimen/margin_25"
             android:layout_marginBottom="@dimen/margin_25"
             android:background="@drawable/btn_design_sign_in"
-            android:text="@string/next"
+            android:text="@string/get_started"
             android:textAllCaps="false"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@id/guidelineEnd"

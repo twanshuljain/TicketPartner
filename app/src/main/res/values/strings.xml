@@ -16,7 +16,7 @@
     <string name="or_sign_in_with">Or Sign in with</string>
     <string name="or_sign_up_with">Or Sign up with</string>
     <string name="google">Google</string>
-    <string name="welcome_to_event_com">Welcome to event.com</string>
+    <string name="welcome_to_event_com">Welcome to MyTicketPartner.com</string>
     <string name="apple">Apple</string>
     <string name="verify">Verify</string>
     <string name="send_otp">sendOTP</string>
@@ -162,7 +162,7 @@
     <string name="end_scan">End Scan</string>
     <string name="end_scan_with_mark">End Scan</string>
     <string name="rfid">RFID</string>
-    <string name="are_you_sure_end_scan">Are you sure you want to scan for this event?</string>
+    <string name="are_you_sure_end_scan">Are you sure you want to end the scanning for this event?</string>
     <string name="no">No</string>
     <string name="yes">Yes</string>
     <string name="all">All</string>
@@ -197,5 +197,9 @@
     <string name="nfc_not_available">"NFC is not available"</string>
     <string name="your_session_has_been_expired">"Your session has expired. Please log in again to continue."</string>
     <string name="to_continue_please_enable_nfc">"To continue, please enable NFC (Near Field Communication)"</string>
+
+    <string name="streamline_your_event_entry">"Streamline Your Event Entry with Ease!"</string>
+    <string name="quickly_scan_tickets_and_ensure">"Quickly scan tickets and ensure a seamless check-in experience—all in one place."</string>
+    <string name="get_started">"Get Started"</string>
 
 </resources>

@@ -210,14 +210,17 @@ class ScanQRLandingFragment : Fragment() {
 
     private fun showDateTimeOnAppBar() {
         val userLoginDetails = MyPreferences.getUserDetails()
-        val startDate =
-            getFormattedStartDateForEvent(userLoginDetails?.data?.event?.event_start_date) + VERTICAL_POLE
 
-        val startEndTime =
-            getFormattedTimeForEvent(userLoginDetails?.data?.event?.event_start_time) + HYPHEN_CHAR + getFormattedTimeForEvent(
-                userLoginDetails?.data?.event?.event_end_time
-            )
-        binding.includeTitle.subTitle.text = startDate + VERTICAL_POLE + startEndTime
+        val startDate =
+            getFormattedStartDateForEvent(userLoginDetails?.data?.event?.event_start_date)
+        val startTime = getFormattedTimeForEvent(userLoginDetails?.data?.event?.event_start_time)
+        val endDate = getFormattedStartDateForEvent(userLoginDetails?.data?.event?.event_end_date)
+        val endTime = getFormattedTimeForEvent(userLoginDetails?.data?.event?.event_end_time)
+
+        binding.includeTitle.subTitle.text =
+            startDate + VERTICAL_POLE + startTime + HYPHEN_CHAR + endDate + VERTICAL_POLE + endTime
+
+      //  binding.includeTitle.subTitle.text = startDate + VERTICAL_POLE + startEndTime
     }
 
     private fun logoutDialog(message: String) {

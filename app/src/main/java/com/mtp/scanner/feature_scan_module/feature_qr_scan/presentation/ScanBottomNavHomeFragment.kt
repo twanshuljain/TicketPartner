@@ -26,7 +26,8 @@ class ScanBottomNavHomeFragment : Fragment() {
     private val viewModel: QrScanViewModel by activityViewModels()
     private lateinit var adapter: SelectTicketTypeScanAdapter
     private val ticketTypesList = ArrayList<InsertTicketTypeListResponse>()
-
+    var isSelected = false
+    var allSelected = false
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -40,10 +41,11 @@ class ScanBottomNavHomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.btnContinue.isEnabled = false
         setDetailsOnCard()
-        initView()
 
         viewModel.getTicketTypesListFromLocal()
         observeTicketTypesListFromLocalDB()
+
+        initView()
         viewModel.selectedTicketTypeArrayList.value = null
         viewModel.listSize = ZERO
     }
@@ -66,14 +68,23 @@ class ScanBottomNavHomeFragment : Fragment() {
         val userLoginDetails = MyPreferences.getUserDetails()
         viewModel.eventName.value = userLoginDetails?.data?.event?.name
         binding.tvTitle.text = userLoginDetails?.data?.event?.name
-        val startDate =
+        /*val startDate =
             getFormattedStartDateForEvent(userLoginDetails?.data?.event?.event_start_date) + VERTICAL_POLE
 
         val startEndTime =
             getFormattedTimeForEvent(userLoginDetails?.data?.event?.event_start_time) + HYPHEN_CHAR + getFormattedTimeForEvent(
                 userLoginDetails?.data?.event?.event_end_time
-            )
-        viewModel.dateTimeEventDetails.value = startDate + startEndTime
+            )*/
+        val startDate =
+            getFormattedStartDateForEvent(userLoginDetails?.data?.event?.event_start_date)
+        val startTime = getFormattedTimeForEvent(userLoginDetails?.data?.event?.event_start_time)
+        val endDate = getFormattedStartDateForEvent(userLoginDetails?.data?.event?.event_end_date)
+        val endTime = getFormattedTimeForEvent(userLoginDetails?.data?.event?.event_end_time)
+
+        viewModel.dateTimeEventDetails.value =
+            startDate + VERTICAL_POLE + startTime
+
+       // viewModel.dateTimeEventDetails.value = startDate + startEndTime
     }
 
 
@@ -101,9 +112,22 @@ class ScanBottomNavHomeFragment : Fragment() {
             title?.text = getString(R.string.select_ticket)
         }
 
-        binding.tvSelectAll.setOnClickListener {
-            adapter.selectAll()
+        isSelected = allSelected
+        binding.llSelectAll.setOnClickListener {
+            if (isSelected) {
+                isSelected = false
+                adapter.unselectAll()
+                binding.ivSelectAllChecked.visibility = View.GONE
+                binding.ivSelectAllUnChecked.visibility = View.VISIBLE
+            } else {
+                isSelected = true
+                adapter.selectAll()
+                binding.ivSelectAllChecked.visibility = View.VISIBLE
+                binding.ivSelectAllUnChecked.visibility = View.GONE
+            }
+
         }
+
         binding.rvSelectTicketType.setHasFixedSize(true)
 
         binding.btnContinue.setOnClickListener {
@@ -133,7 +157,17 @@ class ScanBottomNavHomeFragment : Fragment() {
                             ticketTypesList[i].isSelected = true
                         }
                     }
+
+                    allSelected = ticketTypesList.all { it.isSelected == true }
+                    if (allSelected){
+                        binding.ivSelectAllChecked.visibility = View.VISIBLE
+                        binding.ivSelectAllUnChecked.visibility = View.GONE
+                    } else{
+                        binding.ivSelectAllChecked.visibility = View.GONE
+                        binding.ivSelectAllUnChecked.visibility = View.VISIBLE
+                    }
                     setTicketTypesAdapter(ticketTypesList)
+                    initView()
                 }
 
                 is GetTicketTypesListOfflineUIState.OnFailure -> {}

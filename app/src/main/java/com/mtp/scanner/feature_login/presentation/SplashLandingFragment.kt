@@ -36,7 +36,7 @@ class SplashLandingFragment : Fragment() {
     }
 
     private fun initView() {
-        changeTextColor()
+       // changeTextColor()
         binding.btnNext.setOnClickListener {
             findNavController().navigate(R.id.loginScanModuleFragment)
         }
