@@ -11,7 +11,7 @@ import java.util.*
 const val DELIVERY_DATE_PATTERN = "yyyy-MM-dd"
 const val EVENT_DATE_PATTERN = "MMM dd, yyyy"
 const val EVENT_END_DATE_PATTERN = "MMM dd, YYYY"
-const val EVENT_TIME_PATTERN = "hh:mm aa"
+const val EVENT_TIME_PATTERN = "hh:mm a"
 const val CURRENT_TIME_PATTERN = "hh:mm a" //01:04 AM
 const val TITLE_DISPLAY_TIME_PATTERN = "EEEE, MMMM dd"
 
@@ -66,7 +66,7 @@ fun getFormattedTimeForEvent(serverDate: String?): String {
         val sdf: DateFormat = SimpleDateFormat("HH:mm:ss", Locale.getDefault())
         val date: Date? = sdf.parse(it)
         date?.let { dateToConvert ->
-            outputDate = SimpleDateFormat(EVENT_TIME_PATTERN, Locale.getDefault()).format(dateToConvert)
+            outputDate = SimpleDateFormat(EVENT_TIME_PATTERN, Locale.getDefault()).format(dateToConvert).uppercase(Locale.ENGLISH)
         }
     }
     return outputDate

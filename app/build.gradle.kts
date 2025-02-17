@@ -1,11 +1,12 @@
 plugins {
     id("com.android.application")
     id("kotlin-android")
-    id("org.jetbrains.kotlin.android")
     kotlin("kapt")
     id("com.google.dagger.hilt.android")
     id("kotlin-parcelize")
     id("androidx.navigation.safeargs.kotlin")
+    id("com.google.devtools.ksp") version "2.0.0-1.0.22" apply false
+    id("org.jetbrains.kotlin.android")
 }
 
 android {
@@ -73,8 +74,8 @@ dependencies {
     implementation ("androidx.activity:activity-ktx:1.3.0")
 
     //dagger - hilt
-    implementation("com.google.dagger:hilt-android:2.45")
-    kapt("com.google.dagger:hilt-android-compiler:2.45")
+    implementation("com.google.dagger:hilt-android:2.48.1")
+    kapt("com.google.dagger:hilt-android-compiler:2.48.1") 
 
     //coroutines
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")

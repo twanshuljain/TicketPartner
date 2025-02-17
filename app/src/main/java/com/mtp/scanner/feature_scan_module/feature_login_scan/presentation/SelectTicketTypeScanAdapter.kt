@@ -98,4 +98,21 @@ class SelectTicketTypeScanAdapter(
             e.printStackTrace()
         }
     }
+
+    fun unselectAll() {
+        try {
+            if (!eventTickets.isNullOrEmpty()) {
+                for (i in eventTickets.indices) {
+                    eventTickets[i].isSelected = false
+                    if (!selectedNameList.contains(eventTickets[i].ticketName)) {
+                        selectedNameList.remove(eventTickets[i].ticketName.toString())
+                    }
+                }
+                selectedTicketName(selectedNameList)
+            }
+            notifyDataSetChanged()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
 }
