@@ -9,15 +9,19 @@ import com.mtp.scanner.common.ZERO
 import com.mtp.scanner.common.localDatabase.TPLocalDatabase
 import com.mtp.scanner.common.remote.apis.UNAUTHORIZED_USER
 import com.mtp.scanner.feature_local_storage.domain.usecase.GetQrCodeListFromLocalDBUseCase
+import com.mtp.scanner.feature_local_storage.domain.usecase.InsertTicketTypesOfflineUseCase
 import com.mtp.scanner.feature_scan_module.feature_login_scan.domain.model.CheckInData
 import com.mtp.scanner.feature_scan_module.feature_login_scan.domain.model.EventDetailsScanUIState
 import com.mtp.scanner.feature_scan_module.feature_login_scan.domain.model.InsertCheckInDataOfflineUIState
 import com.mtp.scanner.feature_scan_module.feature_login_scan.domain.model.InsertSearchDataOfflineUIState
+import com.mtp.scanner.feature_scan_module.feature_login_scan.domain.model.InsertTicketTypeListResponse
+import com.mtp.scanner.feature_scan_module.feature_login_scan.domain.model.InsertTicketTypesOfflineScanUIState
 import com.mtp.scanner.feature_scan_module.feature_login_scan.domain.model.QrScanSearchItemUIState
 import com.mtp.scanner.feature_scan_module.feature_login_scan.domain.model.SearchData
 import com.mtp.scanner.feature_scan_module.feature_login_scan.domain.usecase.InsertCheckInDataOfflineUseCase
 import com.mtp.scanner.feature_scan_module.feature_login_scan.domain.usecase.InsertSearchDataOfflineUseCase
 import com.mtp.scanner.feature_scan_module.feature_login_scan.presentation.LoginScanVewModel
+import com.mtp.scanner.feature_scan_module.feature_login_scan.presentation.LoginScanVewModel.Companion
 import com.mtp.scanner.feature_scan_module.feature_qr_scan.domain.model.DeleteScanLogDataUIState
 import com.mtp.scanner.feature_scan_module.feature_qr_scan.domain.model.GetCheckInDataLocalDBUIState
 import com.mtp.scanner.feature_scan_module.feature_qr_scan.domain.model.GetScanLogOfflineUIState
@@ -78,6 +82,7 @@ class QrScanViewModel @Inject constructor(
     private val deleteScanLogDataOfflineUseCase: DeleteScanLogDataOfflineUseCase,
     private val getScanReportDataOfflineUseCase: GetScanReportDataOfflineUseCase,
     private val getScanReportTicketListOfflineUseCase: GetScanReportTicketListOfflineUseCase,
+    private val insertTicketTypesOfflineUseCase: InsertTicketTypesOfflineUseCase,
     private val logUtil: LogUtil,
     private val database: TPLocalDatabase
 ) : ViewModel() {
@@ -151,6 +156,11 @@ class QrScanViewModel @Inject constructor(
         MutableLiveData()
     val getScanReportTicketListFromLocalDB: LiveData<GetScanReportTicketListOfflineUIState> =
         _getScanReportTicketListFromLocalDB
+
+    private val _insertTicketTypesOfflineScan: MutableLiveData<InsertTicketTypesOfflineScanUIState> =
+        MutableLiveData()
+    val observeInsertTicketTypesOfflineScan: LiveData<InsertTicketTypesOfflineScanUIState> =
+        _insertTicketTypesOfflineScan
 
     fun putSelectedOrderList(searchFilterData: List<SearchData>) {
         _selectedSearchOrderListData.value = searchFilterData
@@ -505,6 +515,21 @@ class QrScanViewModel @Inject constructor(
                 logUtil.log(LoginScanVewModel.TAG, "onResponse: $it")
                 _getScanReportTicketListFromLocalDB.value =
                     GetScanReportTicketListOfflineUIState.OnSuccess(it)
+            }
+        }
+    }
+
+    fun insertTicketTypesOfflineScan(ticketTypeList: ArrayList<InsertTicketTypeListResponse>) {
+        _insertTicketTypesOfflineScan.value = InsertTicketTypesOfflineScanUIState.IsLoading(true)
+        viewModelScope.launch {
+            insertTicketTypesOfflineUseCase.invoke(ticketTypeList).catch {
+                logUtil.log(LoginScanVewModel.TAG, "onError${it.message.toString()}")
+                _insertTicketTypesOfflineScan.value =
+                    InsertTicketTypesOfflineScanUIState.OnFailure(it.message.toString())
+            }.collect {
+                logUtil.log(LoginScanVewModel.TAG, "onResponse: $it")
+                _insertTicketTypesOfflineScan.value =
+                    InsertTicketTypesOfflineScanUIState.OnSuccess("Data inserted successfully!")
             }
         }
     }

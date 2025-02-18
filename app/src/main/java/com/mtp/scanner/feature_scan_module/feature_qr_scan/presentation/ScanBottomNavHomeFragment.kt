@@ -26,6 +26,7 @@ class ScanBottomNavHomeFragment : Fragment() {
     private val viewModel: QrScanViewModel by activityViewModels()
     private lateinit var adapter: SelectTicketTypeScanAdapter
     private val ticketTypesList = ArrayList<InsertTicketTypeListResponse>()
+    private var _ticketTypesList = ArrayList<InsertTicketTypeListResponse>()
     var isSelected = false
     var allSelected = false
     override fun onCreateView(
@@ -127,7 +128,6 @@ class ScanBottomNavHomeFragment : Fragment() {
                 binding.ivSelectAllChecked.visibility = View.VISIBLE
                 binding.ivSelectAllUnChecked.visibility = View.GONE
             }
-
         }
 
         binding.rvSelectTicketType.setHasFixedSize(true)
@@ -180,6 +180,7 @@ class ScanBottomNavHomeFragment : Fragment() {
     }
 
     private fun setTicketTypesAdapter(data: ArrayList<InsertTicketTypeListResponse>?) {
+        _ticketTypesList = data ?: ArrayList()
         adapter = SelectTicketTypeScanAdapter(
             requireActivity(),
             data,
@@ -200,8 +201,15 @@ class ScanBottomNavHomeFragment : Fragment() {
 
         if (selectedTicketTypeListSize.size > ZERO) {
             isContinueButtonEnable(true)
+           // binding.tvSelectAll.text = getString(R.string.unselect_all)
+            binding.ivSelectAllChecked.visibility = View.VISIBLE
+            binding.ivSelectAllUnChecked.visibility = View.GONE
         } else {
             MyPreferences.clearArrayList(SCAN_SELECTED_TICKET_TYPES_LIST)
+            binding.tvSelectAll.text = getString(R.string.select_all)
+            binding.ivSelectAllChecked.visibility = View.GONE
+            binding.ivSelectAllUnChecked.visibility = View.VISIBLE
+
             isContinueButtonEnable(false)
         }
 
