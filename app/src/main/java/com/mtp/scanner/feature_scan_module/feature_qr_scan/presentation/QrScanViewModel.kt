@@ -196,7 +196,11 @@ class QrScanViewModel @Inject constructor(
                 logUtil.log(TAG, "onError${it.message.toString()}")
                 val error = ErrorResponseHandler(it)
                 logUtil.log(TAG, "onErrorQrResponse${error.getErrors().data}")
-                _qrScanState.value = QrScanUIState.OnFailure(error.getErrors().message.toString())
+
+                val dataMap = error.getErrors()?.data as? Map<String, Any>
+                val customerName = dataMap?.get("customer_name") as? String
+
+                _qrScanState.value = QrScanUIState.OnFailure(error.getErrors().message.toString(), customerName ?: "")
             }.collect {
                 logUtil.log(TAG, "onResponse: $it")
                 _qrScanState.value = QrScanUIState.OnSuccess(it)

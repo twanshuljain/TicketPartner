@@ -48,6 +48,8 @@ class TicketScannedStatusFragment : Fragment() {
                 is QrScanUIState.OnFailure -> {
                     binding.ivStatusIcon.setImageResource(R.drawable.ic_white_invalid)
                     binding.tvTicketStatusMessage.text = it.onFailure.toString()
+                    binding.tvName.text = it.customerName
+
                     binding.llRootLayout.background =
                         requireContext().getDrawable(R.drawable.red_corner_curve_layout)
                 }

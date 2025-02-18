@@ -428,7 +428,7 @@ class ScanBottomQRScanFragment : Fragment() {
                                 )
                                 viewModel._qrScanState.value = QrScanUIState.IsLoading(false)
                                 viewModel._qrScanState.value =
-                                    QrScanUIState.OnFailure("Already scanned")
+                                    QrScanUIState.OnFailure("Already scanned", userLoginDetails?.data?.event?.name ?: "")
                                 navigateToStatusTicket()
 
                             } else {
@@ -533,7 +533,7 @@ class ScanBottomQRScanFragment : Fragment() {
                             ""
                         )
                     )
-                    viewModel._qrScanState.value = QrScanUIState.OnFailure("Invalid Ticket")
+                    viewModel._qrScanState.value = QrScanUIState.OnFailure("Invalid Ticket", userLoginDetails?.data?.event?.name ?: "")
                     navigateToStatusTicket()
                 }
             }

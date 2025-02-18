@@ -117,11 +117,13 @@ class ScanBottomNavHomeFragment : Fragment() {
             if (isSelected) {
                 isSelected = false
                 adapter.unselectAll()
+                binding.tvSelectAll.text = getString(R.string.select_all)
                 binding.ivSelectAllChecked.visibility = View.GONE
                 binding.ivSelectAllUnChecked.visibility = View.VISIBLE
             } else {
                 isSelected = true
                 adapter.selectAll()
+                binding.tvSelectAll.text = getString(R.string.unselect_all)
                 binding.ivSelectAllChecked.visibility = View.VISIBLE
                 binding.ivSelectAllUnChecked.visibility = View.GONE
             }
@@ -160,9 +162,11 @@ class ScanBottomNavHomeFragment : Fragment() {
 
                     allSelected = ticketTypesList.all { it.isSelected == true }
                     if (allSelected){
+                        binding.tvSelectAll.text = getString(R.string.unselect_all)
                         binding.ivSelectAllChecked.visibility = View.VISIBLE
                         binding.ivSelectAllUnChecked.visibility = View.GONE
                     } else{
+                        binding.tvSelectAll.text = getString(R.string.select_all)
                         binding.ivSelectAllChecked.visibility = View.GONE
                         binding.ivSelectAllUnChecked.visibility = View.VISIBLE
                     }

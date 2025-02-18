@@ -60,7 +60,7 @@ class QrScanReportFragment : Fragment() {
                 observeScanReportOffline()
 
             } else {
-                binding.btnUploadDataServer.visibility = View.GONE
+                //binding.btnUploadDataServer.visibility = View.GONE
                 observeScanReportOffline()
             }
         }
@@ -108,8 +108,8 @@ class QrScanReportFragment : Fragment() {
                     for (i in it.onSuccess) {
                         scanLogDataOffline.add(i)
                     }
-                    if (scanLogDataOffline.size > ZERO) binding.btnUploadDataServer.visibility =
-                        View.VISIBLE else binding.btnUploadDataServer.visibility = View.GONE
+                    /*if (scanLogDataOffline.size > ZERO) binding.btnUploadDataServer.visibility =
+                        View.VISIBLE else binding.btnUploadDataServer.visibility = View.GONE*/
                 }
 
                 is GetScanLogOfflineUIState.OnFailure -> {}
@@ -392,7 +392,7 @@ class QrScanReportFragment : Fragment() {
                 is DeleteScanLogDataUIState.OnSuccess -> {
                     DialogProgressUtil.dismiss()
                     viewModel.scanLogListSize = ZERO
-                    binding.btnUploadDataServer.visibility = View.GONE
+                   // binding.btnUploadDataServer.visibility = View.GONE
                 }
 
                 is DeleteScanLogDataUIState.OnFailure -> {

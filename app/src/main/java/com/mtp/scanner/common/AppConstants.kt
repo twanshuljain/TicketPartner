@@ -86,4 +86,4 @@ const val ERROR_DRAWABLE_PADDING = 6
  */
 const val FONT_12: Int = 12
 const val INTENT_TEL = "tel:%s"
-
+const val DELAY_MILLISECONDS: Long = 2000

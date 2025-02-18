@@ -156,6 +156,7 @@
     <string name="select_ticket_type">Select Ticket Type</string>
     <string name="select_ticket">Select Ticket</string>
     <string name="select_all">Select All</string>
+    <string name="unselect_all">Unselect All</string>
     <string name="search">Search</string>
     <string name="home">Home</string>
     <string name="go_offline">Go Offline</string>
