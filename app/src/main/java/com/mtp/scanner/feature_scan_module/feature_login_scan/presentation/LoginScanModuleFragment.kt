@@ -1,21 +1,18 @@
 package com.mtp.scanner.feature_scan_module.feature_login_scan.presentation
 
-import android.graphics.Color
+import android.R.attr.password
 import android.os.Bundle
 import android.text.InputType
-import android.text.Spannable
-import android.text.SpannableString
-import android.text.style.ForegroundColorSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.activity.OnBackPressedCallback
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import com.google.gson.Gson
 import com.mtp.scanner.R
 import com.mtp.scanner.common.EMPTY_STRING
 import com.mtp.scanner.common.SnackBarUtil
@@ -42,6 +39,7 @@ import com.mtp.scanner.feature_scan_module.feature_login_scan.domain.model.Searc
 import com.mtp.scanner.feature_scan_module.feature_qr_scan.domain.model.GetScanSearchDataOfflineUIState
 import com.mtp.scanner.feature_scan_module.feature_qr_scan.domain.model.QrScanReportAllUIState
 import com.mtp.scanner.feature_scan_module.feature_qr_scan.domain.model.TicketDataList
+import com.mtp.scanner.setMandatoryText
 import com.mtp.scanner.utils.BackPressHandler
 import com.mtp.scanner.utils.DialogProgressUtil
 import com.mtp.scanner.utils.EmojiFilter
@@ -50,8 +48,6 @@ import com.mtp.scanner.utils.NetworkConnectionLiveData
 import com.mtp.scanner.utils.Utility
 import com.mtp.scanner.utils.Utility.hideKeyboard
 import com.mtp.scanner.utils.Utility.observeOnce
-import com.google.gson.Gson
-import com.mtp.scanner.setMandatoryText
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -176,7 +172,7 @@ class LoginScanModuleFragment : Fragment() {
                     updateUserDetailsToSession(it.onSuccess)
                     /** insert event details data in local DB */
                     insertEventsDetailLocalStorage(it.onSuccess.data?.event)
-                    DialogProgressUtil.dismiss()
+                    //DialogProgressUtil.dismiss()
                     /** insert ticket types list in local DB */
                     val eventTickets = it.onSuccess.data?.event?.event_tickets
                     if (!eventTickets.isNullOrEmpty()) {
@@ -352,7 +348,14 @@ class LoginScanModuleFragment : Fragment() {
                     is InsertQrCodeForOffLineScanUIState.IsLoading -> {}
                     is InsertQrCodeForOffLineScanUIState.OnSuccess -> {
                         viewModel.getCheckInDataForOffline()
-                        getCheckInDataOffline()
+                        //getCheckInDataOffline()
+
+                        //Local
+                        binding.rlContinue.isFocusable = false
+                        binding.rlContinue.isClickable = false
+                        findNavController().navigateWithClearNavGraph(
+                            R.id.main_nav_graph, R.id.eventDetailsScanModuleFragment
+                        )
                     }
 
                     is InsertQrCodeForOffLineScanUIState.OnFailure -> {}
