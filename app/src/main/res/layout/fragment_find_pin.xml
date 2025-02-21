@@ -71,7 +71,6 @@
                 android:layout_height="wrap_content"
                 style="@style/regularDarkPrimary14"
                 android:text="You can find the PIN by following these steps:"
-                android:textStyle="italic"
                 android:paddingBottom="@dimen/margin_4" />
 
             <TextView

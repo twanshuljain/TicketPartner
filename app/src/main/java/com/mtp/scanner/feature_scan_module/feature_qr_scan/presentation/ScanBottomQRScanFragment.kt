@@ -171,7 +171,8 @@ class ScanBottomQRScanFragment : Fragment() {
         }
 
         binding.radioBtnRfid.setOnClickListener {
-            nfcValidation()
+           // nfcValidation() //Open this for NFC functionality
+            binding.radioBtnRfid.isChecked = false //remove this for NFC functionality
             isQrButtonEnable(false)
         }
 
@@ -224,7 +225,9 @@ class ScanBottomQRScanFragment : Fragment() {
                     requireContext().getDrawable(R.drawable.select_ticket_type_item_purple_design)
             }
         }else{
-            binding.apply {
+
+            /** Open this for Rfid functionality */
+            /*binding.apply {
                 binding.apply {
                     ivTorch.visibility = View.INVISIBLE
                     ivZoom.visibility = View.INVISIBLE
@@ -237,7 +240,7 @@ class ScanBottomQRScanFragment : Fragment() {
                     rlQrCode.background =
                         requireContext().getDrawable(R.drawable.select_ticket_type_item_light_purple_design)
                 }
-            }
+            }*/
         }
     }
 

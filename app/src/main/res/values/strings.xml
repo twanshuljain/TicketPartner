@@ -182,10 +182,11 @@
     <string name="scanReport">Scan Report</string>
     <string name="cameraPermissionRequired">Camera permission is required to use the camera.</string>
     <string name="checked">Checked</string>
+    <string name="already_checked_in">Already Checked In</string>
     <string name="okay">Okay</string>
     <string name="allowed_orders">Allowed Orders</string>
     <string name="people_are_allowed_to_enter">People are allowed to enter this event.</string>
-    <string name="pleases_select_ticket_types">Please select ticket types</string>
+    <string name="pleases_select_ticket_types">Please select atleast 1 ticket</string>
     <string name="upload_on_live_server">Upload on live server</string>
     <string name="check_network_availability">Please check you network availability</string>
     <string name="you_do_not_have_data">"You don't have data to upload on server"</string>
@@ -202,5 +203,7 @@
     <string name="streamline_your_event_entry">"Streamline Your Event Entry with Ease!"</string>
     <string name="quickly_scan_tickets_and_ensure">"Quickly scan tickets and ensure a seamless check-in experience—all in one place."</string>
     <string name="get_started">"Get Started"</string>
+
+    <string name="your_payment_has_not_been_completed">"Your payment has not been completed for this order"</string>
 
 </resources>

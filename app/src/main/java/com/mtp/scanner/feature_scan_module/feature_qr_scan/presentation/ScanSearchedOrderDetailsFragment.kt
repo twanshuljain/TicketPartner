@@ -169,7 +169,7 @@ class ScanSearchedOrderDetailsFragment : Fragment() {
         if (value) {
             binding.btnCheckIn.apply {
                 isEnabled = false
-                text = requireContext().getString(R.string.checked)
+                text = requireContext().getString(R.string.already_checked_in)
             }
         } else {
             binding.btnCheckIn.apply {

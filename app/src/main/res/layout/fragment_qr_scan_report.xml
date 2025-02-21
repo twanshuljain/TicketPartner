@@ -449,6 +449,7 @@
         android:layout_height="@dimen/size_48"
         android:layout_marginTop="@dimen/margin_20"
         android:background="@drawable/btn_design_dark_primary"
+        android:backgroundTint="@color/border_grey"
         android:gravity="center_horizontal"
         android:layout_marginStart="@dimen/margin_15"
         android:layout_marginEnd="@dimen/margin_15"

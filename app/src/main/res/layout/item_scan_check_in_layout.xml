@@ -5,6 +5,7 @@
     android:layout_height="wrap_content"
     android:layout_marginStart="@dimen/margin_15"
     android:layout_marginEnd="@dimen/margin_15"
+    android:id="@+id/clSnackBarRootLayout"
     android:background="@color/white">
 
     <androidx.appcompat.widget.AppCompatTextView

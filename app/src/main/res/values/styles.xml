@@ -349,6 +349,13 @@
         <item name="android:fontFamily" tools:targetApi="o">@font/lato_regular</item>
     </style>
 
+    <style name="regularDarkGrey14" parent="Widget.AppCompat.TextView">
+        <item name="android:textColor">@color/dark_grey</item>
+        <item name="android:textSize">@dimen/text_14</item>
+        <item name="hintTextColor">@color/placeholder</item>
+        <item name="android:fontFamily" tools:targetApi="o">@font/lato_regular</item>
+    </style>
+
 
     <style name="regularSecondary9" parent="Widget.AppCompat.TextView">
         <item name="android:textColor">@color/secondary</item>

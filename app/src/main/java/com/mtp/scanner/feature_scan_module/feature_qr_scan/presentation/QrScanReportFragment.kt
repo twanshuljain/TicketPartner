@@ -326,7 +326,8 @@ class QrScanReportFragment : Fragment() {
         }
 
         /** upload store locally scan data to server */
-        binding.btnUploadDataServer.setOnClickListener {
+        /** Open this for btnUploadDataServer functionality */
+        /*binding.btnUploadDataServer.setOnClickListener {
             if (viewModel.isNetworkAvailable) {
                 if (scanLogDataOffline.size > ZERO) {
                     viewModel.uploadScanLogDataOnServer(
@@ -347,7 +348,7 @@ class QrScanReportFragment : Fragment() {
                     getString(R.string.check_network_availability)
                 )
             }
-        }
+        }*/
     }
 
     /** Observe response of upload store locally scan data to server */

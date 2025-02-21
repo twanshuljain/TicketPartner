@@ -127,6 +127,7 @@ class ScanQRLandingFragment : Fragment() {
                         true
                     } else {
                         SnackBarUtil.showCustomSnackBar(binding.root,getString(R.string.pleases_select_ticket_types))
+                        navController.navigate(R.id.scanBottomNavHomeFragment)
                         false
                     }
                 }

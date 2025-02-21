@@ -40,14 +40,14 @@
         android:id="@+id/llCount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
+        android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvOutOfAmount"
-            style="@style/boldParaText12"
+            style="@style/boldParaText14"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
@@ -56,11 +56,10 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvTotalAmount"
-            style="@style/regularDarkGrey12"
+            style="@style/regularDarkGrey14"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
-            android:paddingStart="@dimen/margin_10"
             android:textAlignment="textEnd" />
 
     </LinearLayout>
