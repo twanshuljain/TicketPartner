@@ -118,7 +118,7 @@ class LoginScanModuleFragment : Fragment() {
         binding.ivEyePassword.setOnClickListener {
             // Toggle password visibility
             if (binding.etPin.inputType == InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_VARIATION_PASSWORD) {
-                // Show the PIN
+                //dgdg Show the PIN
                 binding.etPin.inputType = InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_VARIATION_NORMAL
                 binding.ivEyePassword.setImageResource(R.drawable.ic_eye)  // Change to open eye icon
             } else {
@@ -216,7 +216,8 @@ class LoginScanModuleFragment : Fragment() {
                     event.organization_country_name,
                     event.organization_logo,
                     event.organization_name,
-                    event.state
+                    event.state,
+                    event.is_virtual ?: false
                 )
             )
         }

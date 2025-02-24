@@ -162,6 +162,7 @@
 
         <RelativeLayout
             android:id="@+id/rlCheckUncheck"
+            android:visibility="gone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
@@ -183,7 +184,7 @@
                 android:layout_width="@dimen/size_20"
                 android:layout_height="@dimen/size_20"
                 android:scaleType="fitXY"
-                android:visibility="visible"
+                android:visibility="gone"
                 android:layout_marginTop="@dimen/margin_2"
                 android:layout_marginStart="@dimen/margin_5"
                 android:src="@drawable/temp_img_unselected"

@@ -169,8 +169,8 @@ class QrScanReportFragment : Fragment() {
 
             tvTotalValue.text = data?.total_tickets.toString()
             tvOutOfValueRejected.text = data?.total_rejected.toString()
-            tvTotalValueRejected.text = "/" + data?.total_tickets.toString()
-            tvTotalValueAccepted.text = "/" + data?.total_tickets.toString()
+            //tvTotalValueRejected.text = "/" + data?.total_tickets.toString()
+           // tvTotalValueAccepted.text = "/" + data?.total_tickets.toString()
             tvOutOfValueAccepted.text = data?.total_accepted.toString()
 
 

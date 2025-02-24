@@ -54,6 +54,7 @@
             android:paddingStart="@dimen/margin_10"
             android:textAlignment="textEnd" />
 
+<!--
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvTotalAmount"
             style="@style/regularDarkGrey14"
@@ -61,6 +62,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="end"
             android:textAlignment="textEnd" />
+-->
 
     </LinearLayout>
 

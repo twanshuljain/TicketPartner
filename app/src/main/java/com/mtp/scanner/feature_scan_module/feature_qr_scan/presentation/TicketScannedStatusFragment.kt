@@ -47,7 +47,15 @@ class TicketScannedStatusFragment : Fragment() {
 
                 is QrScanUIState.OnFailure -> {
                     binding.ivStatusIcon.setImageResource(R.drawable.ic_white_invalid)
-                    binding.tvTicketStatusMessage.text = it.onFailure.toString()
+
+                    if (it.isTransfer){
+                        binding.tvTicketStatusMessage.text = requireContext().getString(R.string.ticket_transferred_error)
+                    } else if (it.isRefunded){
+                        binding.tvTicketStatusMessage.text = requireContext().getString(R.string.ticket_refunded_error)
+                    } else {
+                        binding.tvTicketStatusMessage.text = it.onFailure.toString()
+                    }
+
                     binding.tvName.text = it.customerName
 
                     binding.llRootLayout.background =

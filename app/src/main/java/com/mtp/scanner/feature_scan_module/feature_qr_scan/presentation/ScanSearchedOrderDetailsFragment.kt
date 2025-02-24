@@ -170,6 +170,8 @@ class ScanSearchedOrderDetailsFragment : Fragment() {
             binding.btnCheckIn.apply {
                 isEnabled = false
                 text = requireContext().getString(R.string.already_checked_in)
+                //binding.btnCheckIn.setBackgroundColor(requireContext().getColor(R.color.light_grey))
+                binding.btnCheckIn.background = requireContext().getDrawable(R.drawable.disable_continue_btn_design)
             }
         } else {
             binding.btnCheckIn.apply {

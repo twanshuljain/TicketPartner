@@ -205,5 +205,9 @@
     <string name="get_started">"Get Started"</string>
 
     <string name="your_payment_has_not_been_completed">"Your payment has not been completed for this order"</string>
+    <string name="no_data_found">No data found</string>
+    <string name="search_here">Search here</string>
 
+    <string name="ticket_refunded_error">Ticket Refunded</string>
+    <string name="ticket_transferred_error">Ticket Transferred</string>
 </resources>

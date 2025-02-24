@@ -3,6 +3,7 @@ package com.mtp.scanner.common.di
 import android.content.Context
 import androidx.room.Room
 import com.mtp.scanner.common.TP_LOCAL_DATABASE
+import com.mtp.scanner.common.localDatabase.MIGRATION_1_2
 import com.mtp.scanner.common.localDatabase.TPLocalDatabase
 import com.mtp.scanner.common.localDatabase.TpScanDao
 import com.mtp.scanner.feature_local_storage.data.datasource.LocalStorageDataSourceImpl
@@ -28,7 +29,7 @@ object LocalDatabaseModule {
             appContext,
             TPLocalDatabase::class.java,
             TP_LOCAL_DATABASE
-        ).build()
+        ).fallbackToDestructiveMigration().build()
 
     @Provides
     fun providesRandomQuotesDao(tpLocalDatabase: TPLocalDatabase): TpScanDao =
