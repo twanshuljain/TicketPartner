@@ -267,6 +267,7 @@ class QrScanReportFragment : Fragment() {
         }
 
         binding.btnAccepted.setOnClickListener {
+            viewModel.getScanReportAllData("accepted")
             binding.apply {
                 progressAccepted.visibility = View.VISIBLE
                 progress.visibility = View.GONE
@@ -296,6 +297,7 @@ class QrScanReportFragment : Fragment() {
             }
         }
         binding.btnRejected.setOnClickListener {
+            viewModel.getScanReportAllData("rejected")
             binding.apply {
                 progressAccepted.visibility = View.GONE
                 progress.visibility = View.GONE

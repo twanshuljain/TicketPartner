@@ -30,6 +30,7 @@ import com.mtp.scanner.feature_scan_module.feature_qr_scan.domain.model.GetScanR
 import com.mtp.scanner.feature_scan_module.feature_qr_scan.domain.model.GetScanSearchDataOfflineUIState
 import com.mtp.scanner.feature_scan_module.feature_qr_scan.domain.model.GetTicketTypesListOfflineUIState
 import com.mtp.scanner.feature_scan_module.feature_qr_scan.domain.model.InsertScanLogOfflineUIState
+import com.mtp.scanner.feature_scan_module.feature_qr_scan.domain.model.QRScanDetails
 import com.mtp.scanner.feature_scan_module.feature_qr_scan.domain.model.QrCodeListFromLocalDBUIState
 import com.mtp.scanner.feature_scan_module.feature_qr_scan.domain.model.QrScanCheckedInUIState
 import com.mtp.scanner.feature_scan_module.feature_qr_scan.domain.model.QrScanOrderDetailsUIState
@@ -211,9 +212,18 @@ class QrScanViewModel @Inject constructor(
                 val customerName = dataMap?.get("customer_name") as? String
                 val isTransferred = dataMap?.get("is_transfer") as? Boolean
                 val isRefunded = dataMap?.get("is_refund_request") as? Boolean
+                val isValidQr = dataMap?.get("is_valid_qr") as? Boolean
+                val isValid = dataMap?.get("is_valid") as? Boolean
+                val isTransferredTo = dataMap?.get("is_transferred_to") as? String
 
                 _qrScanState.value = QrScanUIState.OnFailure(error.getErrors().message.toString(),
-                    customerName ?: "", isTransfer= isTransferred ?: false, isRefunded = isRefunded?: false)
+                    QRScanDetails(
+                        customerName = customerName ?: "",
+                        isTransfer = isTransferred ?: false,
+                        isRefunded = isRefunded ?: false,
+                        isValidQr = isValidQr ?: false, isValid = isValid ?: false,
+                        isTransferredTo = isTransferredTo ?: ""
+                    ))
             }.collect {
                 logUtil.log(TAG, "onResponse: $it")
                 _qrScanState.value = QrScanUIState.OnSuccess(it)

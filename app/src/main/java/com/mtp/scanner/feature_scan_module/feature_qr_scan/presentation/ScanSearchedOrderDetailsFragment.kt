@@ -109,6 +109,10 @@ class ScanSearchedOrderDetailsFragment : Fragment() {
         }
     }
 
+    private fun setListData(){
+
+    }
+
     @SuppressLint("SetTextI18n")
     private fun initView() {
         val subTitle = activity?.findViewById<AppCompatTextView>(R.id.subTitle)
@@ -190,6 +194,7 @@ class ScanSearchedOrderDetailsFragment : Fragment() {
 
                 is QrScanOrderDetailsUIState.OnSuccess -> {
                     DialogProgressUtil.dismiss()
+                    binding.btnCheckIn.isEnabled = true
                     if (it.onSuccess.data?.size!! > ZERO) {
                         for (i in ZERO until it.onSuccess.data?.size!!)
                             it.onSuccess.data[i]?.let { it1 -> searchDetailsResponse.add(it1) }
@@ -198,7 +203,10 @@ class ScanSearchedOrderDetailsFragment : Fragment() {
 
                 is QrScanOrderDetailsUIState.OnFailure -> {
                     DialogProgressUtil.dismiss()
-                    SnackBarUtil.showCustomSnackBar(binding.root,it.onFailure)
+                    //SnackBarUtil.showCustomSnackBar(binding.root,it.onFailure)
+                   /* binding.btnCheckIn.text = it.onFailure
+                    binding.btnCheckIn.isEnabled = false
+                    binding.btnCheckIn.background = requireContext().getDrawable(R.drawable.disable_continue_btn_design)*/
                 }
             }
         }
