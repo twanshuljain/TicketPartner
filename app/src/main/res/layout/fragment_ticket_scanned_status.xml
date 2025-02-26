@@ -52,7 +52,7 @@
 
               <androidx.appcompat.widget.AppCompatTextView
                   android:id="@+id/tvEvent"
-                  style="@style/mediumWhiteText18"
+                  style="@style/mediumWhiteText16"
                   android:layout_width="match_parent"
                   android:layout_height="wrap_content"
                   android:textAlignment="center"

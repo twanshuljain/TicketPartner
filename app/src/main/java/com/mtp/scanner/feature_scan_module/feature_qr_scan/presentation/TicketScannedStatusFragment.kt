@@ -74,6 +74,10 @@ class TicketScannedStatusFragment : Fragment() {
             binding.tvEvent.visibility = View.VISIBLE
 
         } else if (!qrScanDetails.isValidQr){
+            binding.tvEvent.visibility = View.VISIBLE
+            binding.tvEvent.text = "This ticket doesn't belong to"
+            binding.tvEventName.visibility = View.VISIBLE
+            
             binding.tvTicketStatusMessage.text = failureMessage
             binding.ivStatusIcon.setBackgroundResource(R.drawable.ic_white_invalid)
             binding.viewStatus.visibility = View.GONE
