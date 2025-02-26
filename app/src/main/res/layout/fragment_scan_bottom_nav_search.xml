@@ -88,10 +88,11 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvNoRecordFound"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         style="@style/mediumDarkPrimaryText14"
-        android:text="No data found"
+        android:text="@string/search_here"
         android:layout_marginTop="@dimen/margin_15"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/clSearchBar"

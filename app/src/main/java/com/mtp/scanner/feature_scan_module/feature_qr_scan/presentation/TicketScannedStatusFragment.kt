@@ -9,6 +9,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.mtp.scanner.R
 import com.mtp.scanner.databinding.FragmentTicketScannedStatusBinding
+import com.mtp.scanner.feature_scan_module.feature_qr_scan.domain.model.QRScanDetails
 import com.mtp.scanner.feature_scan_module.feature_qr_scan.domain.model.QrScanUIState
 import com.mtp.scanner.utils.TimePickerUtility
 
@@ -46,14 +47,44 @@ class TicketScannedStatusFragment : Fragment() {
                 }
 
                 is QrScanUIState.OnFailure -> {
-                    binding.ivStatusIcon.setImageResource(R.drawable.ic_white_invalid)
-                    binding.tvTicketStatusMessage.text = it.onFailure.toString()
-                    binding.tvName.text = it.customerName
+                    setFailureCasesUI(it.qrScanDetails, it.onFailure.toString())
 
                     binding.llRootLayout.background =
                         requireContext().getDrawable(R.drawable.red_corner_curve_layout)
                 }
             }
         }
+    }
+
+    fun setFailureCasesUI(qrScanDetails: QRScanDetails, failureMessage: String){
+        if (qrScanDetails.isTransfer){
+            binding.tvTicketStatusMessage.text = requireContext().getString(R.string.ticket_transferred_error)
+            binding.ivStatusIcon.setBackgroundResource(R.drawable.ic_transfer)
+            binding.tvName.text = qrScanDetails.customerName
+            binding.llDetails.visibility = View.GONE
+            binding.llTicketTransfer.visibility = View.VISIBLE
+            binding.tvTransferredTo.text = qrScanDetails.isTransferredTo
+            binding.tvEvent.visibility = View.VISIBLE
+
+        } else if (qrScanDetails.isRefunded){
+            binding.tvTicketStatusMessage.text = requireContext().getString(R.string.ticket_refunded_error)
+            binding.ivStatusIcon.setBackgroundResource(R.drawable.ic_transfer)
+            binding.llDetails.visibility = View.GONE
+            binding.llTicketTransfer.visibility = View.GONE
+            binding.tvEvent.visibility = View.VISIBLE
+
+        } else if (!qrScanDetails.isValidQr){
+            binding.tvTicketStatusMessage.text = failureMessage
+            binding.ivStatusIcon.setBackgroundResource(R.drawable.ic_white_invalid)
+            binding.viewStatus.visibility = View.GONE
+            binding.llDetails.visibility = View.GONE
+            binding.llTicketTransfer.visibility = View.GONE
+        } else {
+            binding.tvTicketStatusMessage.text = failureMessage
+            binding.ivStatusIcon.setBackgroundResource(R.drawable.ic_white_invalid)
+        }
+
+        binding.tvName.text = qrScanDetails.customerName
+
     }
 }

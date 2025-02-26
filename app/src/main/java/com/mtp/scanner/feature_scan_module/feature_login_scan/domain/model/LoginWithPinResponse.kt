@@ -30,7 +30,8 @@ data class EventDetails(
     val organization_country_name: String?,
     val organization_logo: String?,
     val organization_name: String?,
-    val state: String?
+    val state: String?,
+    val is_virtual: Boolean?
 )
 
 data class EventTicketList(

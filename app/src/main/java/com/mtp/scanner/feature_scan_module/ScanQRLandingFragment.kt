@@ -118,12 +118,12 @@ class ScanQRLandingFragment : Fragment() {
 
         binding.scanBottomNav.setOnItemSelectedListener { item ->
             when (item.itemId) {
-                R.id.scanBottomQRScanFragment -> {
+                R.id.scanBottomQRScanFragment, R.id.scanBottomNavSearchFragment -> {
                     // Apply the condition only for the QR Scan tab
                     val selectedTicketTypeListSize =
                         MyPreferences.getArrayList(PrefConstants.SCAN_SELECTED_TICKET_TYPES_LIST)
                     if (selectedTicketTypeListSize.size > ZERO) {
-                        navController.navigate(R.id.scanBottomQRScanFragment)
+                        navController.navigate(item.itemId)
                         true
                     } else {
                         SnackBarUtil.showCustomSnackBar(binding.root,getString(R.string.pleases_select_ticket_types))

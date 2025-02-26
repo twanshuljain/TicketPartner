@@ -113,7 +113,7 @@
                     android:gravity="center_vertical"
                     android:paddingStart="@dimen/margin_10"
                     android:singleLine="true"
-                    app:layout_constraintEnd_toStartOf="@id/ivClearText"
+                    app:layout_constraintEnd_toStartOf="@id/ivEyePassword"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -123,7 +123,7 @@
                     android:layout_height="@dimen/margin_0"
                     android:padding="@dimen/margin_5"
                     android:visibility="gone"
-                    android:src="@drawable/ic_eye"
+                    android:src="@drawable/ic_eye_off"
                     android:tint="@color/para_text"
                     app:layout_constraintBottom_toBottomOf="@id/etPin"
                     app:layout_constraintEnd_toStartOf="@+id/ivClearText"

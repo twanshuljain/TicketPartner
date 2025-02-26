@@ -22,4 +22,5 @@ data class InsertEventDetailsResponse(
     val organizationLogo: String?,
     val organizationName: String?,
     val state: String?,
+    val isVirtual: Boolean
 )

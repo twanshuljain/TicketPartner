@@ -169,8 +169,8 @@ class QrScanReportFragment : Fragment() {
 
             tvTotalValue.text = data?.total_tickets.toString()
             tvOutOfValueRejected.text = data?.total_rejected.toString()
-            tvTotalValueRejected.text = "/" + data?.total_tickets.toString()
-            tvTotalValueAccepted.text = "/" + data?.total_tickets.toString()
+            //tvTotalValueRejected.text = "/" + data?.total_tickets.toString()
+           // tvTotalValueAccepted.text = "/" + data?.total_tickets.toString()
             tvOutOfValueAccepted.text = data?.total_accepted.toString()
 
 
@@ -267,6 +267,7 @@ class QrScanReportFragment : Fragment() {
         }
 
         binding.btnAccepted.setOnClickListener {
+            viewModel.getScanReportAllData("accepted")
             binding.apply {
                 progressAccepted.visibility = View.VISIBLE
                 progress.visibility = View.GONE
@@ -296,6 +297,7 @@ class QrScanReportFragment : Fragment() {
             }
         }
         binding.btnRejected.setOnClickListener {
+            viewModel.getScanReportAllData("rejected")
             binding.apply {
                 progressAccepted.visibility = View.GONE
                 progress.visibility = View.GONE

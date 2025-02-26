@@ -96,8 +96,12 @@ class EventDetailsScanModuleFragment : Fragment() {
         binding.tvStartDateTime.text =
             startDate + VERTICAL_POLE + startTime + HYPHEN_CHAR + endDate + VERTICAL_POLE + endTime
 
-        binding.tvLocation.text =
-            data?.city + COMMA + data?.state + COMMA + data?.country
+        if (data?.isVirtual == true){
+            binding.tvLocation.text = getString(R.string.online)
+        } else{
+            binding.tvLocation.text =
+                data?.city + COMMA + data?.state + COMMA + data?.country
+        }
         binding.tvOrganizerName.text = data?.organizationName?.toString()
     }
     private fun initView() {

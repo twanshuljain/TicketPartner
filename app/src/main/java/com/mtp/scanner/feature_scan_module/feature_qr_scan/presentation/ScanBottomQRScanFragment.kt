@@ -53,6 +53,7 @@ import com.google.android.gms.vision.Detector
 import com.google.android.gms.vision.barcode.Barcode
 import com.google.android.gms.vision.barcode.BarcodeDetector
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.mtp.scanner.feature_scan_module.feature_qr_scan.domain.model.QRScanDetails
 import dagger.hilt.android.AndroidEntryPoint
 import java.io.IOException
 
@@ -431,9 +432,16 @@ class ScanBottomQRScanFragment : Fragment() {
                                 )
                                 viewModel._qrScanState.value = QrScanUIState.IsLoading(false)
                                 viewModel._qrScanState.value =
-                                    QrScanUIState.OnFailure("Already scanned", userLoginDetails?.data?.event?.name ?: "")
+                                    QrScanUIState.OnFailure("Already scanned",
+                                        QRScanDetails(
+                                            customerName = userLoginDetails?.data?.event?.name ?: "",
+                                            isTransfer = false,
+                                            isRefunded = false,
+                                            isValidQr = false,
+                                            isTransferredTo = "",
+                                            isValid = false
+                                        ))
                                 navigateToStatusTicket()
-
                             } else {
                                 getCheckInItemListLocalDB[indexOfCheckInListWithTicketId].is_checked_in =
                                     true
@@ -536,7 +544,15 @@ class ScanBottomQRScanFragment : Fragment() {
                             ""
                         )
                     )
-                    viewModel._qrScanState.value = QrScanUIState.OnFailure("Invalid Ticket", userLoginDetails?.data?.event?.name ?: "")
+                    viewModel._qrScanState.value = QrScanUIState.OnFailure("Invalid Ticket",
+                        QRScanDetails(
+                            customerName = userLoginDetails?.data?.event?.name ?: "",
+                            isTransfer = false,
+                            isRefunded = false,
+                            isValidQr = false,
+                            isTransferredTo = "",
+                            isValid = false
+                        ))
                     navigateToStatusTicket()
                 }
             }

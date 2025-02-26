@@ -30,7 +30,7 @@ class ScanReportTicketNameAdapter(private val res: List<TicketDataList?>?) :
         view.apply {
             tvTicketName.text = res?.get(position)?.ticket_name.toString()
             tvOutOfAmount.text =  res?.get(position)?.total_scanned.toString()
-            tvTotalAmount.text = FORWARD_SLASH+ res?.get(position)?.total_ticket.toString()
+            //tvTotalAmount.text = FORWARD_SLASH + res?.get(position)?.total_ticket.toString()
             progressBar.progress = res?.get(position)?.total_scanned!!?: ZERO
         }
     }

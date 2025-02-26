@@ -15,6 +15,7 @@ import com.mtp.scanner.common.SCAN_SEARCHED_DATA
 import com.mtp.scanner.common.ZERO
 import com.mtp.scanner.common.remote.apis.UNAUTHORIZED_USER
 import com.mtp.scanner.common.storage.MyPreferences
+import com.mtp.scanner.common.storage.PrefConstants
 import com.mtp.scanner.databinding.FragmentScanBottomNavSearchBinding
 import com.mtp.scanner.feature_scan_module.feature_login_scan.domain.model.QrScanSearchItemUIState
 import com.mtp.scanner.feature_scan_module.feature_login_scan.domain.model.SearchData
@@ -87,7 +88,7 @@ class ScanBottomNavSearchFragment : Fragment() {
 
 
         binding.etSearch.addTextChangedListener {
-            if (it.toString().length > 2) {
+            if (it.toString().isNotEmpty()) {
                 binding.rvSearchOrder.visibility = View.VISIBLE
                 binding.etSearchLayout.setBackgroundResource(R.drawable.edit_text_design_search_bar_puple)
                 binding.icClear.visibility = View.VISIBLE
@@ -97,6 +98,7 @@ class ScanBottomNavSearchFragment : Fragment() {
                 binding.etSearchLayout.setBackgroundResource(R.drawable.edit_text_design_search_bar)
                 binding.rvSearchOrder.visibility = View.GONE
                 binding.rvSearchOrderOffline.visibility = View.GONE
+                binding.tvNoRecordFound.text = getString(R.string.search_here)
             }
         }
         binding.icClear.setOnClickListener {
@@ -124,7 +126,17 @@ class ScanBottomNavSearchFragment : Fragment() {
                         is QrScanSearchItemUIState.OnSuccess -> {
                             DialogProgressUtil.dismiss()
                             it.onSuccess.data?.let { list ->
-                                setAdapter(list)
+                              //  val filteredList = list.filter { it?.ticket_name in selectedTicketTypeList }
+
+                                if (list.isNotEmpty()){
+                                    binding.tvNoRecordFound.visibility = View.GONE
+                                    setAdapter(list)
+                                } else {
+                                    binding.tvNoRecordFound.visibility = View.VISIBLE
+                                    binding.tvNoRecordFound.text = getString(R.string.no_data_found)
+                                    binding.rvSearchOrder.visibility = View.GONE
+                                }
+
                             }
                         }
 
