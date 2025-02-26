@@ -75,14 +75,18 @@ class TicketScannedStatusFragment : Fragment() {
 
         } else if (!qrScanDetails.isValidQr){
             binding.tvEvent.visibility = View.VISIBLE
-            binding.tvEvent.text = "This ticket doesn't belong to"
+            binding.tvEvent.text = getString(R.string.this_ticket_doesnt_belong_to)
             binding.tvEventName.visibility = View.VISIBLE
-            
             binding.tvTicketStatusMessage.text = failureMessage
             binding.ivStatusIcon.setBackgroundResource(R.drawable.ic_white_invalid)
             binding.viewStatus.visibility = View.GONE
             binding.llDetails.visibility = View.GONE
             binding.llTicketTransfer.visibility = View.GONE
+
+            // when llDetail is not visible than add this
+            val params = binding.rlSideCurve.layoutParams as ViewGroup.MarginLayoutParams
+            params.topMargin = resources.getDimensionPixelSize(R.dimen.size_60)
+            binding.rlSideCurve.layoutParams = params
         } else {
             binding.tvTicketStatusMessage.text = failureMessage
             binding.ivStatusIcon.setBackgroundResource(R.drawable.ic_white_invalid)

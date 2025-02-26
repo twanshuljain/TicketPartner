@@ -213,4 +213,6 @@
     <string name="ticket_refunded_error">Ticket Refunded</string>
     <string name="ticket_transferred_error">Ticket Transferred</string>
     <string name="this_ticket_has_been_transferred_to">This ticket has been transferred to</string>
+
+    <string name="this_ticket_doesnt_belong_to">This ticket doesn\'t belong to</string>
 </resources>
