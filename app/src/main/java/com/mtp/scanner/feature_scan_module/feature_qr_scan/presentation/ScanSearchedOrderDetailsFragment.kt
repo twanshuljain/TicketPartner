@@ -15,6 +15,8 @@ import com.mtp.scanner.common.SCAN_SEARCHED_DATA
 import com.mtp.scanner.common.SnackBarUtil
 import androidx.lifecycle.Observer
 import com.mtp.scanner.common.ZERO
+import com.mtp.scanner.common.storage.MyPreferences
+import com.mtp.scanner.common.storage.PrefConstants
 import com.mtp.scanner.databinding.FragmentScanSearchedOrderDetailsBinding
 import com.mtp.scanner.feature_scan_module.feature_login_scan.domain.model.SearchData
 import com.mtp.scanner.feature_scan_module.feature_qr_scan.domain.model.Item
@@ -32,6 +34,8 @@ class ScanSearchedOrderDetailsFragment : Fragment() {
     private var searchDetails: MData? = null
     private var searchDetailsOffline: SearchData? = null
     private val searchDetailsResponse = ArrayList<Item>()
+    private var isInvalid = false
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -43,6 +47,8 @@ class ScanSearchedOrderDetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         networkConnectionLiveData = NetworkConnectionLiveData(requireContext())
+        val selectedTicketTypeList =
+            MyPreferences.getArrayList(PrefConstants.SCAN_SELECTED_TICKET_TYPES_LIST)
 
         viewModel.isOnlineMode.observe(viewLifecycleOwner) {
             if (it) {
@@ -62,7 +68,15 @@ class ScanSearchedOrderDetailsFragment : Fragment() {
                 }
 
                 viewModel.isAllChecked.observe(viewLifecycleOwner) { isChecked ->
-                    visibleCheckedInButton(isChecked)
+                    val ticketTypeAvailable = searchDetails?.ticket_name in selectedTicketTypeList
+
+                    if (ticketTypeAvailable){
+                        isInvalid = false
+                        visibleCheckedInButton(isChecked)
+                    } else {
+                        isInvalid = true
+                        visibleCheckedInButton(true, getString(R.string.invalid_ticket))
+                    }
                 }
                 networkConnectionLiveData.observeOnce(
                     viewLifecycleOwner,
@@ -107,10 +121,6 @@ class ScanSearchedOrderDetailsFragment : Fragment() {
             val title = activity?.findViewById<AppCompatTextView>(R.id.title)
             title?.text = it
         }
-    }
-
-    private fun setListData(){
-
     }
 
     @SuppressLint("SetTextI18n")
@@ -169,11 +179,16 @@ class ScanSearchedOrderDetailsFragment : Fragment() {
         }
     }
 
-    private fun visibleCheckedInButton(value: Boolean) {
+    private fun visibleCheckedInButton(value: Boolean, message: String? = "") {
         if (value) {
             binding.btnCheckIn.apply {
+                isInvalid = true
                 isEnabled = false
-                text = requireContext().getString(R.string.already_checked_in)
+                if (message?.isNotEmpty() == true){
+                    text = message
+                } else {
+                    text = requireContext().getString(R.string.already_checked_in)
+                }
                 //binding.btnCheckIn.setBackgroundColor(requireContext().getColor(R.color.light_grey))
                 binding.btnCheckIn.background = requireContext().getDrawable(R.drawable.disable_continue_btn_design)
             }
@@ -194,7 +209,9 @@ class ScanSearchedOrderDetailsFragment : Fragment() {
 
                 is QrScanOrderDetailsUIState.OnSuccess -> {
                     DialogProgressUtil.dismiss()
-                    binding.btnCheckIn.isEnabled = true
+
+                    if (isInvalid) binding.btnCheckIn.isEnabled = false else binding.btnCheckIn.isEnabled = true
+
                     if (it.onSuccess.data?.size!! > ZERO) {
                         for (i in ZERO until it.onSuccess.data?.size!!)
                             it.onSuccess.data[i]?.let { it1 -> searchDetailsResponse.add(it1) }

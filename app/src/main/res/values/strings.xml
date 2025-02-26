@@ -208,6 +208,8 @@
     <string name="no_data_found">No data found</string>
     <string name="search_here">Search here</string>
 
+    <string name="invalid_ticket">Invalid Ticket</string>
+
     <string name="ticket_refunded_error">Ticket Refunded</string>
     <string name="ticket_transferred_error">Ticket Transferred</string>
     <string name="this_ticket_has_been_transferred_to">This ticket has been transferred to</string>

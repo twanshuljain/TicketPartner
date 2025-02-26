@@ -61,7 +61,7 @@ class TicketScannedStatusFragment : Fragment() {
             binding.tvTicketStatusMessage.text = requireContext().getString(R.string.ticket_transferred_error)
             binding.ivStatusIcon.setBackgroundResource(R.drawable.ic_transfer)
             binding.tvName.text = qrScanDetails.customerName
-            binding.llTimeLayout.visibility = View.GONE
+            binding.llDetails.visibility = View.GONE
             binding.llTicketTransfer.visibility = View.VISIBLE
             binding.tvTransferredTo.text = qrScanDetails.isTransferredTo
             binding.tvEvent.visibility = View.VISIBLE
@@ -69,7 +69,7 @@ class TicketScannedStatusFragment : Fragment() {
         } else if (qrScanDetails.isRefunded){
             binding.tvTicketStatusMessage.text = requireContext().getString(R.string.ticket_refunded_error)
             binding.ivStatusIcon.setBackgroundResource(R.drawable.ic_transfer)
-            binding.llTimeLayout.visibility = View.GONE
+            binding.llDetails.visibility = View.GONE
             binding.llTicketTransfer.visibility = View.GONE
             binding.tvEvent.visibility = View.VISIBLE
 
@@ -77,7 +77,7 @@ class TicketScannedStatusFragment : Fragment() {
             binding.tvTicketStatusMessage.text = failureMessage
             binding.ivStatusIcon.setBackgroundResource(R.drawable.ic_white_invalid)
             binding.viewStatus.visibility = View.GONE
-            binding.llTimeLayout.visibility = View.GONE
+            binding.llDetails.visibility = View.GONE
             binding.llTicketTransfer.visibility = View.GONE
         } else {
             binding.tvTicketStatusMessage.text = failureMessage

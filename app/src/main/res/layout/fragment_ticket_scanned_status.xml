@@ -39,8 +39,7 @@
           android:layout_marginTop="@dimen/size_40"
           app:layout_constraintStart_toStartOf="parent"
           app:layout_constraintEnd_toEndOf="parent"
-          app:layout_constraintTop_toTopOf="parent"
-          app:layout_constraintBottom_toTopOf="@+id/llDetails">
+          app:layout_constraintTop_toTopOf="parent">
 
           <LinearLayout
               android:id="@+id/llEvent"

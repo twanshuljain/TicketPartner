@@ -107,6 +107,8 @@ class LoginScanModuleFragment : Fragment() {
             } else {
                 binding.ivClearText.visibility = View.GONE
                 binding.ivEyePassword.visibility = View.GONE
+                binding.etPin.inputType = InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_VARIATION_PASSWORD
+                binding.ivEyePassword.setImageResource(R.drawable.ic_eye_off)  // Change to closed eye icon
             }
         }
 
