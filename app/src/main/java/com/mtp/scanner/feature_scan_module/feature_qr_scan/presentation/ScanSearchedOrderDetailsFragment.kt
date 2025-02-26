@@ -160,7 +160,7 @@ class ScanSearchedOrderDetailsFragment : Fragment() {
                                 Item(
                                     i.is_checked_in,
                                     i.order_ticket_id,
-                                    i.order_number
+                                    i.order_number,
                                 )
                             )
                         }
@@ -212,6 +212,7 @@ class ScanSearchedOrderDetailsFragment : Fragment() {
 
                     if (isInvalid) binding.btnCheckIn.isEnabled = false else binding.btnCheckIn.isEnabled = true
 
+                    visibleCheckedInButton(true)
                     if (it.onSuccess.data?.size!! > ZERO) {
                         for (i in ZERO until it.onSuccess.data?.size!!)
                             it.onSuccess.data[i]?.let { it1 -> searchDetailsResponse.add(it1) }

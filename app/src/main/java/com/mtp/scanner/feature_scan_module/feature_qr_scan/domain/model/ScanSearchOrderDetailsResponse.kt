@@ -11,7 +11,9 @@ data class Item(
     var is_checked_in: Boolean?,
     val order_id: Int?,
     val order_number: String?,
-    val stripe_obj: StripeObj ?= null
+    val stripe_obj: StripeObj ?= null,
+    var is_transferred: Boolean?= false,
+    var is_refunded: Boolean?= false,
 )
 
 data class StripeObj(

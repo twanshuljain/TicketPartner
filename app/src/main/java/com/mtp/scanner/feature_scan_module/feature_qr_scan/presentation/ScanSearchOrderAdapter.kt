@@ -37,6 +37,19 @@ class ScanSearchOrderAdapter(
         view.tvEmail.text = searchResponse[position]?.email.toString()
         view.tvOrderId.text = context.getString(R.string.order_id)+": "+searchResponse[position]?.order_id.toString()
         view.tvPaymentMethod.text = context.getString(R.string.payment_method)+": "+searchResponse[position]?.payment_type.toString()
+
+        if (searchResponse[position]?.is_checkin_allowed == true){
+            view.btnViewDetails.isEnabled = true
+        } else if (searchResponse[position]?.is_refunded == true) {
+            view.btnViewDetails.isEnabled = false
+            view.btnViewDetails.text = context.getString(R.string.ticket_refunded)
+            view.btnViewDetails.background = context.getDrawable(R.drawable.disable_continue_btn_design)
+        } else {
+            view.btnViewDetails.isEnabled = false
+            view.btnViewDetails.text = context.getString(R.string.payment_incomplete)
+            view.btnViewDetails.background = context.getDrawable(R.drawable.disable_continue_btn_design)
+        }
+
         view.btnViewDetails.setOnClickListener {
             searchResponse[position]?.let { it1 -> isItemClicked(it1) }
         }

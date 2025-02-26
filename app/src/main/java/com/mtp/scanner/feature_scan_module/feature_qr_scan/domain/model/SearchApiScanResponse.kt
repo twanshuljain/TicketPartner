@@ -17,5 +17,7 @@ data class MData(
     var order_id: String = "",
     var payment_type: String?,
     var is_checked_in: Boolean? = false,
-    var ticket_name: String = ""
+    var ticket_name: String = "",
+    var is_checkin_allowed: Boolean,
+    var is_refunded: Boolean,
 ) : Parcelable
