@@ -61,7 +61,7 @@ class TicketScannedStatusFragment : Fragment() {
             binding.tvTicketStatusMessage.text = requireContext().getString(R.string.ticket_transferred_error)
             binding.ivStatusIcon.setBackgroundResource(R.drawable.ic_transfer)
             binding.tvName.text = qrScanDetails.customerName
-            binding.llDetails.visibility = View.GONE
+            binding.llTimeLayout.visibility = View.GONE
             binding.llTicketTransfer.visibility = View.VISIBLE
             binding.tvTransferredTo.text = qrScanDetails.isTransferredTo
             binding.tvEvent.visibility = View.VISIBLE

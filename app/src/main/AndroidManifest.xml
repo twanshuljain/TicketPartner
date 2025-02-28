@@ -37,6 +37,7 @@
         <activity
             android:name=".feature_splash.SplashActivity"
             android:exported="true"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan">
 
             <intent-filter>
@@ -54,6 +55,7 @@
         <activity
             android:name=".feature_login.presentation.LoginActivity"
             android:exported="true"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan"/>
 
         <!-- google map key -->

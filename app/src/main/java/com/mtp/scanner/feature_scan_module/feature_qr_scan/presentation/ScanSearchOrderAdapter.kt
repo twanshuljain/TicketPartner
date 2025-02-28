@@ -7,6 +7,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.mtp.scanner.R
 import com.mtp.scanner.common.ZERO
+import com.mtp.scanner.common.storage.MyPreferences
+import com.mtp.scanner.common.storage.PrefConstants
 import com.mtp.scanner.databinding.ItemScanOrderSearchBinding
 import com.mtp.scanner.feature_scan_module.feature_qr_scan.domain.model.MData
 
@@ -38,7 +40,7 @@ class ScanSearchOrderAdapter(
         view.tvOrderId.text = context.getString(R.string.order_id)+": "+searchResponse[position]?.order_id.toString()
         view.tvPaymentMethod.text = context.getString(R.string.payment_method)+": "+searchResponse[position]?.payment_type.toString()
 
-        if (searchResponse[position]?.is_checkin_allowed == true){
+        /*if (searchResponse[position]?.is_checkin_allowed == true){
             view.btnViewDetails.isEnabled = true
         } else if (searchResponse[position]?.is_refunded == true) {
             view.btnViewDetails.isEnabled = false
@@ -48,10 +50,38 @@ class ScanSearchOrderAdapter(
             view.btnViewDetails.isEnabled = false
             view.btnViewDetails.text = context.getString(R.string.payment_incomplete)
             view.btnViewDetails.background = context.getDrawable(R.drawable.disable_continue_btn_design)
-        }
-
+        }*/
+        checkInvalid(searchResponse[position], view)
         view.btnViewDetails.setOnClickListener {
             searchResponse[position]?.let { it1 -> isItemClicked(it1) }
+        }
+    }
+
+    private fun checkInvalid(data: MData?, view: ItemScanOrderSearchBinding){
+        val selectedTicketTypeList =
+            MyPreferences.getArrayList(PrefConstants.SCAN_SELECTED_TICKET_TYPES_LIST)
+
+        val ticketTypeAvailable = data?.ticket_name in selectedTicketTypeList
+
+        if (ticketTypeAvailable){
+            if (data?.is_checkin_allowed == true){
+                view.btnViewDetails.isEnabled = true
+            } else if (data?.is_refunded == true) {
+                view.btnViewDetails.isEnabled = false
+                view.btnViewDetails.text = context.getString(R.string.ticket_refunded)
+                view.btnViewDetails.background = context.getDrawable(R.drawable.disable_continue_btn_design)
+            } else {
+                view.btnViewDetails.isEnabled = false
+                view.btnViewDetails.text = context.getString(R.string.payment_incomplete)
+                view.btnViewDetails.background = context.getDrawable(R.drawable.disable_continue_btn_design)
+            }
+        } else {
+            view.btnViewDetails.isEnabled = false
+            view.btnViewDetails.text = context.getString(R.string.invalid_ticket)
+            view.btnViewDetails.background = context.getDrawable(R.drawable.disable_continue_btn_design)
+
+            // isInvalid = true
+           // visibleCheckedInButton(true, getString(R.string.invalid_ticket))
         }
     }
 

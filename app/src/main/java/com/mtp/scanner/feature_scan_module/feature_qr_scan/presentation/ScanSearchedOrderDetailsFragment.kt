@@ -47,8 +47,6 @@ class ScanSearchedOrderDetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         networkConnectionLiveData = NetworkConnectionLiveData(requireContext())
-        val selectedTicketTypeList =
-            MyPreferences.getArrayList(PrefConstants.SCAN_SELECTED_TICKET_TYPES_LIST)
 
         viewModel.isOnlineMode.observe(viewLifecycleOwner) {
             if (it) {
@@ -68,15 +66,8 @@ class ScanSearchedOrderDetailsFragment : Fragment() {
                 }
 
                 viewModel.isAllChecked.observe(viewLifecycleOwner) { isChecked ->
-                    val ticketTypeAvailable = searchDetails?.ticket_name in selectedTicketTypeList
+                    checkInvalid(isChecked)
 
-                    if (ticketTypeAvailable){
-                        isInvalid = false
-                        visibleCheckedInButton(isChecked)
-                    } else {
-                        isInvalid = true
-                        visibleCheckedInButton(true, getString(R.string.invalid_ticket))
-                    }
                 }
                 networkConnectionLiveData.observeOnce(
                     viewLifecycleOwner,
@@ -123,6 +114,20 @@ class ScanSearchedOrderDetailsFragment : Fragment() {
         }
     }
 
+    private fun checkInvalid(isChecked: Boolean){
+        val selectedTicketTypeList =
+            MyPreferences.getArrayList(PrefConstants.SCAN_SELECTED_TICKET_TYPES_LIST)
+
+        val ticketTypeAvailable = searchDetails?.ticket_name in selectedTicketTypeList
+
+        if (ticketTypeAvailable){
+            isInvalid = false
+            visibleCheckedInButton(isChecked)
+        } else {
+            isInvalid = true
+            visibleCheckedInButton(true, getString(R.string.invalid_ticket))
+        }
+    }
     @SuppressLint("SetTextI18n")
     private fun initView() {
         val subTitle = activity?.findViewById<AppCompatTextView>(R.id.subTitle)
@@ -212,7 +217,7 @@ class ScanSearchedOrderDetailsFragment : Fragment() {
 
                     if (isInvalid) binding.btnCheckIn.isEnabled = false else binding.btnCheckIn.isEnabled = true
 
-                    visibleCheckedInButton(true)
+                    //visibleCheckedInButton(false)
                     if (it.onSuccess.data?.size!! > ZERO) {
                         for (i in ZERO until it.onSuccess.data?.size!!)
                             it.onSuccess.data[i]?.let { it1 -> searchDetailsResponse.add(it1) }
