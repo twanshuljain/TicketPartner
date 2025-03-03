@@ -70,9 +70,13 @@ class ScanSearchOrderAdapter(
                 view.btnViewDetails.isEnabled = false
                 view.btnViewDetails.text = context.getString(R.string.ticket_refunded)
                 view.btnViewDetails.background = context.getDrawable(R.drawable.disable_continue_btn_design)
-            } else {
+            } else if(data?.is_partial_payment == true){
                 view.btnViewDetails.isEnabled = false
                 view.btnViewDetails.text = context.getString(R.string.payment_incomplete)
+                view.btnViewDetails.background = context.getDrawable(R.drawable.disable_continue_btn_design)
+            } else {
+                view.btnViewDetails.isEnabled = false
+                view.btnViewDetails.text = context.getString(R.string.invalid_ticket)
                 view.btnViewDetails.background = context.getDrawable(R.drawable.disable_continue_btn_design)
             }
         } else {

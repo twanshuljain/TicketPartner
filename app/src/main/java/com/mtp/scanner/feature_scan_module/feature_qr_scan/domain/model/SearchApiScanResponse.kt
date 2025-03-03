@@ -20,4 +20,6 @@ data class MData(
     var ticket_name: String = "",
     var is_checkin_allowed: Boolean,
     var is_refunded: Boolean,
+    var is_partial_payment: Boolean,
+    var all_emi_collected: Boolean,
 ) : Parcelable
