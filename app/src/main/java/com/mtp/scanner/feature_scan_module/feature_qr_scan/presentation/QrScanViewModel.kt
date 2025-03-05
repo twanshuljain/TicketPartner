@@ -284,6 +284,8 @@ class QrScanViewModel @Inject constructor(
 
     fun getSearchData(orderId: String) {
         viewModelScope.launch {
+            _getScanSearchData.value = QrScanSearchItemUIState.IsLoading(true)
+
             getQrScanSearchUseCase.invoke(orderId).catch {
                 logUtil.log(TAG, "onError${it.message.toString()}")
                 val error = ErrorResponseHandler(it)

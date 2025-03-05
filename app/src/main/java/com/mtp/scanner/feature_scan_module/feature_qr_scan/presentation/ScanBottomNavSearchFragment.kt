@@ -117,6 +117,7 @@ class ScanBottomNavSearchFragment : Fragment() {
                 binding.rvSearchOrderOffline.visibility = View.GONE
 
                 viewModel.getSearchData(orderId)
+
                 viewModel.observeScanSearchData.observe(viewLifecycleOwner) {
                     when (it) {
                         is QrScanSearchItemUIState.IsLoading -> {
