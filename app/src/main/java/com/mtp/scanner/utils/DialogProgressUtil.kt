@@ -63,7 +63,7 @@ class DialogProgressUtil {
                 fragmentManager?.let { fm ->
                     if (!fm.isDestroyed && dialog.isAdded) {
                         if (fm is FragmentManager) {
-                            dialog.dismiss()
+                            dialog.dismissAllowingStateLoss()
                         }
                     }
                 }

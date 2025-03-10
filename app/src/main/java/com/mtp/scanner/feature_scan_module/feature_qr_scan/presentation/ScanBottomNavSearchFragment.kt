@@ -1,9 +1,11 @@
 package com.mtp.scanner.feature_scan_module.feature_qr_scan.presentation
 
+import android.content.SharedPreferences.Editor
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
@@ -92,13 +94,24 @@ class ScanBottomNavSearchFragment : Fragment() {
                 binding.rvSearchOrder.visibility = View.VISIBLE
                 binding.etSearchLayout.setBackgroundResource(R.drawable.edit_text_design_search_bar_puple)
                 binding.icClear.visibility = View.VISIBLE
-                observeSearchItemResponse(it.toString())
+                //observeSearchItemResponse(it.toString())
             } else {
                 binding.icClear.visibility = View.GONE
                 binding.etSearchLayout.setBackgroundResource(R.drawable.edit_text_design_search_bar)
+                setAdapter(ArrayList())
                 binding.rvSearchOrder.visibility = View.GONE
                 binding.rvSearchOrderOffline.visibility = View.GONE
+                binding.tvNoRecordFound.visibility = View.VISIBLE
                 binding.tvNoRecordFound.text = getString(R.string.search_here)
+            }
+        }
+
+        binding.etSearch.setOnEditorActionListener { textView, actionId, keyEvent ->
+            if (actionId == EditorInfo.IME_ACTION_DONE){
+                observeSearchItemResponse(binding.etSearch.text.toString())
+                true
+            } else {
+                false
             }
         }
         binding.icClear.setOnClickListener {
