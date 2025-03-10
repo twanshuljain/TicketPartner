@@ -22,7 +22,8 @@ object NFCUtil {
         } else {
             PendingIntent.getActivity(
                 activity, 0,
-                Intent(activity, classType).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0
+                Intent(activity, classType).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP),
+                PendingIntent.FLAG_IMMUTABLE
             )
         }
         nfcAdapter.enableForegroundDispatch(activity, pendingIntent, null, null)
