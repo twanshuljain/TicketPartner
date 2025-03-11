@@ -236,6 +236,7 @@ class QrScanReportFragment : Fragment() {
         }
 
         binding.btnAll.setOnClickListener {
+            viewModel.getScanReportAllData("all")
             binding.apply {
                 progress.visibility = View.VISIBLE
                 progressAccepted.visibility = View.GONE

@@ -196,6 +196,13 @@ class ScanBottomNavHomeFragment : Fragment() {
         viewModel.listSize = list.size
         MyPreferences.putArrayList(SCAN_SELECTED_TICKET_TYPES_LIST, list)
 
+        // Convert List<String> to List<InsertTicketTypeListResponse>
+        _ticketTypesList.forEach { item ->
+            item.isSelected = list.contains(item.ticketName)
+        }
+
+        viewModel.insertTicketTypesOfflineScan(_ticketTypesList)
+
         val selectedTicketTypeListSize =
             MyPreferences.getArrayList(SCAN_SELECTED_TICKET_TYPES_LIST)
 
