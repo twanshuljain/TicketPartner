@@ -388,8 +388,12 @@ class LoginScanModuleFragment : Fragment() {
             when (it) {
                 is InsertCheckInDataOfflineUIState.IsLoading -> {}
                 is InsertCheckInDataOfflineUIState.OnSuccess -> {
-                    viewModel.getSearchData()
-                    observeSearchDataOffline()
+                    //viewModel.getSearchData()
+                   // observeSearchDataOffline()
+
+                    findNavController().navigateWithClearNavGraph(
+                        R.id.main_nav_graph, R.id.eventDetailsScanModuleFragment
+                    )
                 }
 
                 is InsertCheckInDataOfflineUIState.OnFailure -> {}
