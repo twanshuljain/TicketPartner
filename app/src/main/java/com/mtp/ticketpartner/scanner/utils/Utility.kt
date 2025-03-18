@@ -1,0 +1,274 @@
+package com.mtp.ticketpartner.scanner.utils
+
+import android.app.Activity
+import android.content.Context
+import android.graphics.Color
+import android.net.Uri
+import android.nfc.tech.MifareClassic.BLOCK_SIZE
+import android.os.Build
+import android.text.InputFilter
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.Spanned
+import android.text.style.ForegroundColorSpan
+import android.util.Log
+import android.view.inputmethod.InputMethodManager
+import androidx.annotation.RequiresApi
+import androidx.appcompat.widget.AppCompatEditText
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.Observer
+import androidx.room.Room
+import com.mtp.ticketpartner.scanner.common.TP_LOCAL_DATABASE
+import com.mtp.ticketpartner.scanner.common.ZERO
+import com.mtp.ticketpartner.scanner.common.localDatabase.TPLocalDatabase
+import com.mtp.ticketpartner.scanner.feature_scan_module.feature_login_scan.domain.model.SearchData
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import java.io.File
+import java.io.FileOutputStream
+import java.io.IOException
+import java.io.OutputStream
+import java.text.SimpleDateFormat
+import java.time.LocalDateTime
+import java.util.Calendar
+import java.util.Locale
+import java.util.UUID
+
+object Utility {
+
+    fun changeStringColor(
+        originalText: String,
+        wantToChangeColorOf: List<String>
+    ): SpannableString {
+        val asOriginalText = SpannableString(originalText)
+        val spannableString = SpannableString(originalText)
+        if (wantToChangeColorOf.size > 0) {
+            // Create a SpannableString
+            // Set color for each specified word
+            for (word in wantToChangeColorOf) {
+                val startIndex = originalText.indexOf(word)
+                val endIndex = startIndex + word.length
+
+                spannableString.setSpan(
+                    ForegroundColorSpan(getColorForWord(word)),
+                    startIndex,
+                    endIndex,
+                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+                )
+            }
+            return spannableString
+        } else {
+            return asOriginalText
+        }
+    }
+
+    private fun getColorForWord(word: String): Int {
+        return when (word) {
+            word -> Color.parseColor("#7559F8")
+            else -> Color.BLACK
+        }
+    }
+
+    fun getFile(context: Context, uri: Uri, fileExtension: String): File? {
+        val contentResolver = context.contentResolver
+        val filePath =
+            context.applicationInfo.dataDir + File.separator + System.currentTimeMillis() + fileExtension
+        val file = File(filePath)
+        file.createNewFile()
+        try {
+            val inputStream = contentResolver.openInputStream(uri) ?: return null
+            val outputStream: OutputStream = FileOutputStream(file)
+            val buf = ByteArray(BLOCK_SIZE)
+            var len: Int
+            while (inputStream.read(buf).also { len = it } > 0) outputStream.write(buf, ZERO, len)
+            outputStream.close()
+            inputStream.close()
+        } catch (ignore: IOException) {
+            return null
+        }
+        return file
+    }
+
+    fun formatTime(hourOfDay: Int, minute: Int): String {
+        val calendar = Calendar.getInstance()
+        calendar.set(Calendar.HOUR_OF_DAY, hourOfDay)
+        calendar.set(Calendar.MINUTE, minute)
+        val amPm = if (calendar.get(Calendar.AM_PM) == Calendar.AM) "AM" else "PM"
+        return String.format("%02d:%02d %s", hourOfDay % 12, minute, amPm)
+    }
+
+    fun formatDate(year: Int, month: Int, day: Int): String {
+        val calendar = Calendar.getInstance()
+        calendar.set(year, month + 1, day)
+
+        // Change the date format to "yyyy-MM-dd"
+        val dateFormat = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
+        return dateFormat.format(calendar.time)
+    }
+
+    fun compareTimes(currentTime: String, selectedTime: String): Int {
+        return currentTime.compareTo(selectedTime)
+    }
+
+    fun compareDates(currentDate: String, selectedDate: String): Int {
+        return currentDate.compareTo(selectedDate)
+    }
+
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun areTimesInOrder(firstTime: LocalDateTime, secondTime: LocalDateTime): Boolean {
+        return if (firstTime.toLocalDate() == secondTime.toLocalDate()) {
+            firstTime.isBefore(secondTime)
+        } else {
+            true // If dates are different, return true
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun isTimeInRange(
+        selectedTime: LocalDateTime,
+        firstTime: LocalDateTime,
+        secondTime: LocalDateTime
+    ): Boolean {
+        // Ensure the selected time falls on the same date as the given times
+        if (selectedTime.toLocalDate() != firstTime.toLocalDate() || selectedTime.toLocalDate() != secondTime.toLocalDate()) {
+            return false
+        }
+
+        // Check if the selected time is after the first time and before the second time
+        return selectedTime.isAfter(firstTime) && selectedTime.isBefore(secondTime)
+    }
+
+
+    // Function to disable space in EditText
+    fun disableSpace(editText: AppCompatEditText) {
+        val filter = object : InputFilter {
+            override fun filter(
+                source: CharSequence?,
+                start: Int,
+                end: Int,
+                dest: Spanned?,
+                dstart: Int,
+                dend: Int
+            ): CharSequence? {
+                if (source != null && source.contains(" ")) {
+                    return ""
+                }
+                return null
+            }
+        }
+        editText.filters = arrayOf(filter)
+    }
+
+    // allow characters only
+    fun allowCharactersOnly(editText: AppCompatEditText) {
+        val filter = object : InputFilter {
+            override fun filter(
+                source: CharSequence?,
+                start: Int,
+                end: Int,
+                dest: Spanned?,
+                dstart: Int,
+                dend: Int
+            ): CharSequence? {
+                // Allow only alphanumeric characters and spaces
+                //  val regex = Regex("[a-zA-Z0-9 ]")
+                val regex = Regex("[a-zA-Z]")
+                if (source != null && !source.matches(regex)) {
+                    return ""
+                }
+                return null
+            }
+        }
+        editText.filters = arrayOf(filter)
+    }
+
+    // Extension function to observe LiveData only once
+    fun <T> LiveData<T>.observeOnce(lifecycleOwner: LifecycleOwner, observer: Observer<T>) {
+        val wrappedObserver = object : Observer<T> {
+            private var isObserved = false
+            override fun onChanged(t: T) {
+                if (!isObserved) {
+                    t?.let {
+                        observer.onChanged(it)
+                        isObserved = true
+                        removeObserver(this)
+                    }
+                }
+            }
+        }
+        observe(lifecycleOwner, wrappedObserver)
+    }
+
+    /*  fun filterAndSortOrderList(
+          orderList: List<SearchData>,
+          searchQuery: String
+      ): List<SearchData> {
+          // Filter the list based on the search query
+          val filteredList = orderList.filter { item ->
+              item.name?.contains(searchQuery, ignoreCase = true) ?: false ||
+                      item.order_number.toString().contains(searchQuery, ignoreCase = true) ||
+                      item.email?.contains(searchQuery, ignoreCase = true) ?: false
+          }
+
+          // Rank each item based on the search query
+          return filteredList.sortedByDescending { item ->
+              val nameMatch = if (item.name?.contains(searchQuery, ignoreCase = true) == true) 1 else 0
+              val orderIdMatch = if (item.order_ticket_id.toString().contains(searchQuery, ignoreCase = true)) 1 else 0
+              val emailMatch = if (item.email?.contains(searchQuery, ignoreCase = true) == true) 1 else 0
+              nameMatch + orderIdMatch + emailMatch
+          }
+      }*/
+
+    fun filterAndSortOrderList(
+        orderList: List<SearchData>,
+        searchQuery: String
+    ): List<SearchData> {
+        // Filter the list based on the search query
+        val filteredList = orderList.filter { item ->
+            item.name?.contains(searchQuery, ignoreCase = true) ?: false ||
+                    item.order_number.toString().contains(searchQuery, ignoreCase = true) ||
+                    item.email?.contains(searchQuery, ignoreCase = true) ?: false
+        }
+
+        // Rank each item based on the search query
+        val sortedList = filteredList.sortedByDescending { item ->
+            val nameMatch =
+                if (item.name?.contains(searchQuery, ignoreCase = true) == true) 1 else 0
+            val orderIdMatch =
+                if (item.order_number.toString().contains(searchQuery, ignoreCase = true)) 1 else 0
+            val emailMatch =
+                if (item.email?.contains(searchQuery, ignoreCase = true) == true) 1 else 0
+            nameMatch + orderIdMatch + emailMatch
+        }
+
+        // Return a list containing the single top-ranked item, or an empty list if sortedList is empty
+        return sortedList.takeIf { it.isNotEmpty() }?.let { listOf(it.first()) } ?: emptyList()
+    }
+
+    fun getDeviceUUID(): String {
+            return UUID.randomUUID().toString()
+    }
+
+    fun hideKeyboard(activity: Activity) {
+        val imm = activity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        val currentFocus = activity.currentFocus
+        if (currentFocus != null) {
+            imm.hideSoftInputFromWindow(currentFocus.windowToken, 0)
+        }
+    }
+
+    // Function to clear all tables
+    fun clearLocalDatabase(context: Context) {
+        CoroutineScope(Dispatchers.IO).launch {
+            val db = Room.databaseBuilder(
+                context.applicationContext,
+                TPLocalDatabase::class.java, TP_LOCAL_DATABASE
+            ).build()
+            db.clearAllTables()
+            Log.d("TAG", "database has been cleared")
+        }
+    }
+}
