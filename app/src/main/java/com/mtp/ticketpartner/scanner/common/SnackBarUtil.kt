@@ -9,8 +9,8 @@ import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.content.ContextCompat
-import com.mtp.scanner.R
 import com.google.android.material.snackbar.Snackbar
+import com.mtp.ticketpartner.scanner.R
 
 
 /**

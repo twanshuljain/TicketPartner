@@ -7,8 +7,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
-import com.mtp.scanner.R
-import com.mtp.scanner.databinding.FragmentTicketScannedStatusBinding
+import com.mtp.ticketpartner.scanner.R
+import com.mtp.ticketpartner.scanner.databinding.FragmentTicketScannedStatusBinding
 import com.mtp.ticketpartner.scanner.feature_scan_module.feature_qr_scan.domain.model.QRScanDetails
 import com.mtp.ticketpartner.scanner.feature_scan_module.feature_qr_scan.domain.model.QrScanUIState
 import com.mtp.ticketpartner.scanner.utils.TimePickerUtility

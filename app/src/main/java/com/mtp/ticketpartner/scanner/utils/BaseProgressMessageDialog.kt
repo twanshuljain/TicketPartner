@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
-import com.mtp.scanner.R
+import com.mtp.ticketpartner.scanner.R
 
 class BaseProgressMessageDialog(private val message:String) : DialogFragment() {
 

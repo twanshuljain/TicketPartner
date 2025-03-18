@@ -10,7 +10,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.mtp.ticketpartner.scanner.common.SnackBarUtil
-import com.mtp.scanner.databinding.FragmentAddOrgCountrySearchBinding
+import com.mtp.ticketpartner.scanner.databinding.FragmentAddOrgCountrySearchBinding
 import com.mtp.ticketpartner.scanner.feature_add_organization.domain.model.SearchCountryUIState
 import com.mtp.ticketpartner.scanner.feature_add_organization.domain.model.SearchItem
 import com.mtp.ticketpartner.scanner.feature_add_organization.presentation.adapter.SearchCountryAdapter

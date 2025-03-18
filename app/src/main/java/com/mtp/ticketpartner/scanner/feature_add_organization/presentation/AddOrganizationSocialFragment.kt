@@ -9,11 +9,11 @@ import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
-import com.mtp.scanner.R
+import com.mtp.ticketpartner.scanner.R
 import com.mtp.ticketpartner.scanner.common.ORGANIZATION_ID
 import com.mtp.ticketpartner.scanner.common.SnackBarUtil
 import com.mtp.ticketpartner.scanner.common.remote.apis.SessionHandlerInterceptor
-import com.mtp.scanner.databinding.FragmentAddOrganizationSocialBinding
+import com.mtp.ticketpartner.scanner.databinding.FragmentAddOrganizationSocialBinding
 import com.mtp.ticketpartner.scanner.feature_add_organization.domain.model.AddOrganizationSocialUIState
 import com.mtp.ticketpartner.scanner.utils.DialogProgressUtil
 import com.mtp.ticketpartner.scanner.utils.NavigateFragmentUtil.navigateWithClearAllBackStack

@@ -131,7 +131,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="@dimen/margin_20">
 
-                    <com.mtp.scanner.utils.CircularProgressBar
+                    <com.mtp.ticketpartner.scanner.utils.CircularProgressBar
                         android:id="@+id/progress"
                         android:layout_width="@dimen/size_140"
                         android:layout_height="@dimen/size_140"

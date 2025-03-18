@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.mtp.ticketpartner.scanner.common.ZERO
-import com.mtp.scanner.databinding.ItemScanReportTicketNameBinding
+import com.mtp.ticketpartner.scanner.databinding.ItemScanReportTicketNameBinding
 import com.mtp.ticketpartner.scanner.feature_scan_module.feature_qr_scan.domain.model.TicketDataList
 
 class ScanReportTicketNameAdapter(private val res: List<TicketDataList?>?) :

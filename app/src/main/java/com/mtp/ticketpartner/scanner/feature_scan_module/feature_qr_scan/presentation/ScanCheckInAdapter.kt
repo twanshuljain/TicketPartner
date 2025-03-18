@@ -7,9 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
-import com.mtp.scanner.R
+import com.mtp.ticketpartner.scanner.R
 import com.mtp.ticketpartner.scanner.common.VERTICAL_DOTS
-import com.mtp.scanner.databinding.ItemScanCheckInLayoutBinding
+import com.mtp.ticketpartner.scanner.databinding.ItemScanCheckInLayoutBinding
 import com.mtp.ticketpartner.scanner.feature_scan_module.feature_qr_scan.domain.model.Item
 
 

@@ -3,7 +3,7 @@ package com.mtp.ticketpartner.scanner.common.di
 import android.app.Application
 import android.content.Context
 import android.net.ConnectivityManager
-import com.mtp.scanner.BuildConfig
+import com.mtp.ticketpartner.scanner.BuildConfig
 import com.mtp.ticketpartner.scanner.common.LogUtil
 import com.mtp.ticketpartner.scanner.common.remote.apis.RestApiService
 import com.mtp.ticketpartner.scanner.common.remote.apis.SessionHandlerInterceptor

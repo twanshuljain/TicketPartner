@@ -7,15 +7,15 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import com.mtp.scanner.R
+import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.mtp.ticketpartner.scanner.R
 import com.mtp.ticketpartner.scanner.common.SnackBarUtil
-import com.mtp.scanner.databinding.FragmentCreateEventTicketsBinding
-import com.mtp.scanner.databinding.LayoutBottomSheetEditDeleteBinding
+import com.mtp.ticketpartner.scanner.databinding.FragmentCreateEventTicketsBinding
+import com.mtp.ticketpartner.scanner.databinding.LayoutBottomSheetEditDeleteBinding
 import com.mtp.ticketpartner.scanner.feature_create_event.domain.model.CreateEventTicketListResponse
 import com.mtp.ticketpartner.scanner.feature_create_event.domain.model.CreateEventTicketListUIState
 import com.mtp.ticketpartner.scanner.feature_create_event.presentation.adapter.CreateEventTicketListAdapter
 import com.mtp.ticketpartner.scanner.utils.DialogProgressUtil
-import com.google.android.material.bottomsheet.BottomSheetDialog
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

@@ -11,13 +11,13 @@ import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
-import com.mtp.scanner.R
+import com.mtp.ticketpartner.scanner.R
 import com.mtp.ticketpartner.scanner.common.ContactUsInputFieldValidator
 import com.mtp.ticketpartner.scanner.common.IndianCountryCode
 import com.mtp.ticketpartner.scanner.common.PLUS
 import com.mtp.ticketpartner.scanner.common.SnackBarUtil
-import com.mtp.scanner.databinding.FragmentSignInBinding
-import com.mtp.scanner.databinding.LoginMobileNumberBinding
+import com.mtp.ticketpartner.scanner.databinding.FragmentSignInBinding
+import com.mtp.ticketpartner.scanner.databinding.LoginMobileNumberBinding
 import com.mtp.ticketpartner.scanner.feature_login.domain.model.EmailLoginUIState
 import com.mtp.ticketpartner.scanner.feature_login.domain.model.MobileLoginUIState
 import com.mtp.ticketpartner.scanner.feature_login.domain.model.SendMobileOtpUIState

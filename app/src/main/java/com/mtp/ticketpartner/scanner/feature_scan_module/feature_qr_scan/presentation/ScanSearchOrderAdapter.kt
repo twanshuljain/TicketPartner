@@ -5,11 +5,11 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.mtp.scanner.R
+import com.mtp.ticketpartner.scanner.R
 import com.mtp.ticketpartner.scanner.common.ZERO
 import com.mtp.ticketpartner.scanner.common.storage.MyPreferences
 import com.mtp.ticketpartner.scanner.common.storage.PrefConstants
-import com.mtp.scanner.databinding.ItemScanOrderSearchBinding
+import com.mtp.ticketpartner.scanner.databinding.ItemScanOrderSearchBinding
 import com.mtp.ticketpartner.scanner.feature_scan_module.feature_qr_scan.domain.model.MData
 
 class ScanSearchOrderAdapter(

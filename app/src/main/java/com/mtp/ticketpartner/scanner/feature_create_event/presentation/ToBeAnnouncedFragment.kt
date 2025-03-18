@@ -1,18 +1,18 @@
 package com.mtp.ticketpartner.scanner.feature_create_event.presentation
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.mtp.scanner.R
-import com.mtp.scanner.databinding.FragmentToBeAnnouncedBinding
+import androidx.fragment.app.Fragment
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import com.mtp.ticketpartner.scanner.R
+import com.mtp.ticketpartner.scanner.databinding.FragmentToBeAnnouncedBinding
 
 class ToBeAnnouncedFragment : Fragment(), OnMapReadyCallback {
     private lateinit var binding: FragmentToBeAnnouncedBinding

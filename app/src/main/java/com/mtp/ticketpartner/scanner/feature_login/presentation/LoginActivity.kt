@@ -8,10 +8,9 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
-
+import com.mtp.ticketpartner.scanner.R
 import com.mtp.ticketpartner.scanner.feature_scan_module.feature_rfid.NfcViewModel
 import com.mtp.ticketpartner.scanner.utils.NFCUtil
-import com.mtp.scanner.R
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

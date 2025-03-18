@@ -9,7 +9,7 @@ import com.mtp.ticketpartner.scanner.common.EMPTY_STRING
 import com.mtp.ticketpartner.scanner.common.FORWARD_SLASH
 import com.mtp.ticketpartner.scanner.common.ONE
 import com.mtp.ticketpartner.scanner.common.ZERO
-import com.mtp.scanner.databinding.ItemTicketListCreateEventBinding
+import com.mtp.ticketpartner.scanner.databinding.ItemTicketListCreateEventBinding
 import com.mtp.ticketpartner.scanner.feature_create_event.domain.model.CreateEventTicketListResponse
 
 class CreateEventTicketListAdapter(

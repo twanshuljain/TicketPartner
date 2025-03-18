@@ -5,11 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.mtp.scanner.R
+import com.mtp.ticketpartner.scanner.R
 import com.mtp.ticketpartner.scanner.common.ZERO
 import com.mtp.ticketpartner.scanner.common.storage.MyPreferences
 import com.mtp.ticketpartner.scanner.common.storage.PrefConstants.SCAN_SELECTED_TICKET_TYPES_LIST
-import com.mtp.scanner.databinding.LayoutScanSelectTicketTypeBinding
+import com.mtp.ticketpartner.scanner.databinding.LayoutScanSelectTicketTypeBinding
 import com.mtp.ticketpartner.scanner.feature_scan_module.feature_login_scan.domain.model.InsertTicketTypeListResponse
 
 class SelectTicketTypeScanAdapter(

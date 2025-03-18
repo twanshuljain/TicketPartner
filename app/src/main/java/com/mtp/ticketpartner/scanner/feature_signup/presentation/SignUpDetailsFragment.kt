@@ -15,7 +15,7 @@ import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
-import com.mtp.scanner.R
+import com.mtp.ticketpartner.scanner.R
 import com.mtp.ticketpartner.scanner.common.ContactUsInputFieldValidator
 import com.mtp.ticketpartner.scanner.common.DELAY_TWO_SEC
 import com.mtp.ticketpartner.scanner.common.EMAIL_KEY
@@ -23,7 +23,7 @@ import com.mtp.ticketpartner.scanner.common.EMPTY_STRING
 import com.mtp.ticketpartner.scanner.common.IndianCountryCode
 import com.mtp.ticketpartner.scanner.common.PLUS
 import com.mtp.ticketpartner.scanner.common.SnackBarUtil
-import com.mtp.scanner.databinding.FragmentSignUpDetailsBinding
+import com.mtp.ticketpartner.scanner.databinding.FragmentSignUpDetailsBinding
 import com.mtp.ticketpartner.scanner.feature_signup.domain.model.CreateUserAccountRequest
 import com.mtp.ticketpartner.scanner.feature_signup.domain.model.CreateUserAccountUIState
 import com.mtp.ticketpartner.scanner.feature_signup.domain.model.SendEmailOtpSignUpUIState

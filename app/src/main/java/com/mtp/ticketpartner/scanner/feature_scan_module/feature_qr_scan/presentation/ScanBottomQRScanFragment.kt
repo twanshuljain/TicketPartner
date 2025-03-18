@@ -22,7 +22,12 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
-import com.mtp.scanner.R
+import com.google.android.gms.vision.CameraSource
+import com.google.android.gms.vision.Detector
+import com.google.android.gms.vision.barcode.Barcode
+import com.google.android.gms.vision.barcode.BarcodeDetector
+import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.mtp.ticketpartner.scanner.R
 import com.mtp.ticketpartner.scanner.common.EMPTY_STRING
 import com.mtp.ticketpartner.scanner.common.SnackBarUtil
 import com.mtp.ticketpartner.scanner.common.VERTICAL_DOTS
@@ -30,13 +35,14 @@ import com.mtp.ticketpartner.scanner.common.ZERO
 import com.mtp.ticketpartner.scanner.common.remote.apis.UNAUTHORIZED_USER
 import com.mtp.ticketpartner.scanner.common.storage.MyPreferences
 import com.mtp.ticketpartner.scanner.common.storage.PrefConstants.SCAN_SELECTED_TICKET_TYPES_LIST
-import com.mtp.scanner.databinding.FragmentScanBottomNavQRScanBinding
-import com.mtp.scanner.databinding.LayoutEndScanBottomDialogBinding
+import com.mtp.ticketpartner.scanner.databinding.FragmentScanBottomNavQRScanBinding
+import com.mtp.ticketpartner.scanner.databinding.LayoutEndScanBottomDialogBinding
 import com.mtp.ticketpartner.scanner.feature_scan_module.feature_login_scan.domain.model.CheckInData
 import com.mtp.ticketpartner.scanner.feature_scan_module.feature_login_scan.domain.model.DataItems
 import com.mtp.ticketpartner.scanner.feature_scan_module.feature_qr_scan.domain.model.GetCheckInDataLocalDBUIState
 import com.mtp.ticketpartner.scanner.feature_scan_module.feature_qr_scan.domain.model.GetScanReportDataOfflineUIState
 import com.mtp.ticketpartner.scanner.feature_scan_module.feature_qr_scan.domain.model.NameData
+import com.mtp.ticketpartner.scanner.feature_scan_module.feature_qr_scan.domain.model.QRScanDetails
 import com.mtp.ticketpartner.scanner.feature_scan_module.feature_qr_scan.domain.model.QrCodeListFromLocalDBUIState
 import com.mtp.ticketpartner.scanner.feature_scan_module.feature_qr_scan.domain.model.QrScanResponse
 import com.mtp.ticketpartner.scanner.feature_scan_module.feature_qr_scan.domain.model.QrScanUIState
@@ -48,12 +54,6 @@ import com.mtp.ticketpartner.scanner.utils.DialogUtils
 import com.mtp.ticketpartner.scanner.utils.NavigateFragmentUtil.navigateWithClearNavGraph
 import com.mtp.ticketpartner.scanner.utils.TimePickerUtility
 import com.mtp.ticketpartner.scanner.utils.Utility
-import com.google.android.gms.vision.CameraSource
-import com.google.android.gms.vision.Detector
-import com.google.android.gms.vision.barcode.Barcode
-import com.google.android.gms.vision.barcode.BarcodeDetector
-import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.mtp.ticketpartner.scanner.feature_scan_module.feature_qr_scan.domain.model.QRScanDetails
 import dagger.hilt.android.AndroidEntryPoint
 import java.io.IOException
 

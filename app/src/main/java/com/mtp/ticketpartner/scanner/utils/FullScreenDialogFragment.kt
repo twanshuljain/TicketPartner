@@ -10,8 +10,8 @@ import android.view.Window
 import android.view.WindowManager
 import androidx.fragment.app.DialogFragment
 import androidx.navigation.fragment.findNavController
-import com.mtp.scanner.R
-import com.mtp.scanner.databinding.FragmentFullScreenDialogBinding
+import com.mtp.ticketpartner.scanner.R
+import com.mtp.ticketpartner.scanner.databinding.FragmentFullScreenDialogBinding
 
 class FullScreenDialogFragment : DialogFragment() {
     private lateinit var binding: FragmentFullScreenDialogBinding

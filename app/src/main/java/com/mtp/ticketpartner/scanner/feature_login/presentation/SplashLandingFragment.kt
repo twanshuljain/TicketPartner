@@ -6,10 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import com.mtp.scanner.R
+import com.mtp.ticketpartner.scanner.R
 import com.mtp.ticketpartner.scanner.common.storage.MyPreferences
 import com.mtp.ticketpartner.scanner.common.storage.PrefConstants
-import com.mtp.scanner.databinding.FragmentSplashLandingBinding
+import com.mtp.ticketpartner.scanner.databinding.FragmentSplashLandingBinding
 import com.mtp.ticketpartner.scanner.utils.NavigateFragmentUtil.navigateWithClearNavGraph
 import com.mtp.ticketpartner.scanner.utils.Utility.changeStringColor
 import dagger.hilt.android.AndroidEntryPoint

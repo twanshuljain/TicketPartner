@@ -12,14 +12,15 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
-import com.mtp.scanner.R
+import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.mtp.ticketpartner.scanner.R
 import com.mtp.ticketpartner.scanner.common.HYPHEN_CHAR
 import com.mtp.ticketpartner.scanner.common.SnackBarUtil
 import com.mtp.ticketpartner.scanner.common.VERTICAL_POLE
 import com.mtp.ticketpartner.scanner.common.ZERO
 import com.mtp.ticketpartner.scanner.common.storage.MyPreferences
 import com.mtp.ticketpartner.scanner.common.storage.PrefConstants
-import com.mtp.scanner.databinding.FragmentScanQRLandingBinding
+import com.mtp.ticketpartner.scanner.databinding.FragmentScanQRLandingBinding
 import com.mtp.ticketpartner.scanner.feature_scan_module.feature_login_scan.domain.model.EventDetailsScanUIState
 import com.mtp.ticketpartner.scanner.feature_scan_module.feature_qr_scan.domain.model.GetScanLogOfflineUIState
 import com.mtp.ticketpartner.scanner.feature_scan_module.feature_qr_scan.presentation.QrScanViewModel
@@ -31,7 +32,6 @@ import com.mtp.ticketpartner.scanner.utils.NetworkConnectionLiveData
 import com.mtp.ticketpartner.scanner.utils.Utility
 import com.mtp.ticketpartner.scanner.utils.getFormattedStartDateForEvent
 import com.mtp.ticketpartner.scanner.utils.getFormattedTimeForEvent
-import com.google.android.material.bottomsheet.BottomSheetDialog
 
 class ScanQRLandingFragment : Fragment() {
     private lateinit var binding: FragmentScanQRLandingBinding

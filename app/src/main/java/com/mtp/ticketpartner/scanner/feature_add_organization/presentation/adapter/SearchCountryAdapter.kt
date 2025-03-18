@@ -3,7 +3,7 @@ package com.mtp.ticketpartner.scanner.feature_add_organization.presentation.adap
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.mtp.scanner.databinding.ItemCountrySearchBinding
+import com.mtp.ticketpartner.scanner.databinding.ItemCountrySearchBinding
 import com.mtp.ticketpartner.scanner.feature_add_organization.domain.model.SearchItem
 
 class SearchCountryAdapter(

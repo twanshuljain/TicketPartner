@@ -7,13 +7,13 @@ import android.view.ViewGroup
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import com.mtp.scanner.R
+import com.mtp.ticketpartner.scanner.R
 import com.mtp.ticketpartner.scanner.common.VERTICAL_POLE
 import com.mtp.ticketpartner.scanner.common.ZERO
 import com.mtp.ticketpartner.scanner.common.storage.MyPreferences
 import com.mtp.ticketpartner.scanner.common.storage.PrefConstants
 import com.mtp.ticketpartner.scanner.common.storage.PrefConstants.SCAN_SELECTED_TICKET_TYPES_LIST
-import com.mtp.scanner.databinding.FragmentScanBottomNavHomeBinding
+import com.mtp.ticketpartner.scanner.databinding.FragmentScanBottomNavHomeBinding
 import com.mtp.ticketpartner.scanner.feature_scan_module.feature_login_scan.domain.model.InsertTicketTypeListResponse
 import com.mtp.ticketpartner.scanner.feature_scan_module.feature_login_scan.presentation.SelectTicketTypeScanAdapter
 import com.mtp.ticketpartner.scanner.feature_scan_module.feature_qr_scan.domain.model.GetTicketTypesListOfflineUIState

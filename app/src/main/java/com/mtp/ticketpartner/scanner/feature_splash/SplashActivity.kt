@@ -6,7 +6,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import androidx.appcompat.app.AppCompatActivity
-import com.mtp.scanner.databinding.ActivitySplashBinding
+import com.mtp.ticketpartner.scanner.databinding.ActivitySplashBinding
 import com.mtp.ticketpartner.scanner.feature_login.presentation.LoginActivity
 
 @SuppressLint("CustomSplashScreen")

@@ -7,9 +7,15 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import com.mtp.scanner.R
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.OnMapReadyCallback
+import com.google.android.gms.maps.model.BitmapDescriptorFactory
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
+import com.mtp.ticketpartner.scanner.R
 import com.mtp.ticketpartner.scanner.common.SnackBarUtil
-import com.mtp.scanner.databinding.FragmentVenueBinding
+import com.mtp.ticketpartner.scanner.databinding.FragmentVenueBinding
 import com.mtp.ticketpartner.scanner.feature_add_organization.domain.model.SearchCountryResponse
 import com.mtp.ticketpartner.scanner.feature_add_organization.domain.model.SearchCountryUIState
 import com.mtp.ticketpartner.scanner.feature_create_event.domain.model.CreateEventVenueStateResponse
@@ -17,12 +23,6 @@ import com.mtp.ticketpartner.scanner.feature_create_event.domain.model.CreateEve
 import com.mtp.ticketpartner.scanner.feature_create_event.presentation.adapter.CreateEventVenueStateAdapter
 import com.mtp.ticketpartner.scanner.feature_create_event.presentation.adapter.VenueCountryAdapter
 import com.mtp.ticketpartner.scanner.utils.DialogProgressUtil
-import com.google.android.gms.maps.CameraUpdateFactory
-import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.OnMapReadyCallback
-import com.google.android.gms.maps.model.BitmapDescriptorFactory
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MarkerOptions
 
 class VenueFragment : Fragment(), OnMapReadyCallback {
     private val viewModel: CreateEventViewModel by activityViewModels()

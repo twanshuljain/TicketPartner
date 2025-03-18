@@ -12,13 +12,13 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.google.gson.Gson
-import com.mtp.scanner.R
+import com.mtp.ticketpartner.scanner.R
 import com.mtp.ticketpartner.scanner.common.EMPTY_STRING
 import com.mtp.ticketpartner.scanner.common.SnackBarUtil
 import com.mtp.ticketpartner.scanner.common.ZERO
 import com.mtp.ticketpartner.scanner.common.storage.MyPreferences
 import com.mtp.ticketpartner.scanner.common.storage.PrefConstants
-import com.mtp.scanner.databinding.FragmentLoginScanModuleBinding
+import com.mtp.ticketpartner.scanner.databinding.FragmentLoginScanModuleBinding
 import com.mtp.ticketpartner.scanner.feature_scan_module.feature_login_scan.domain.model.CheckInData
 import com.mtp.ticketpartner.scanner.feature_scan_module.feature_login_scan.domain.model.DataItems
 import com.mtp.ticketpartner.scanner.feature_scan_module.feature_login_scan.domain.model.EventDetails

@@ -1,7 +1,7 @@
 package com.mtp.ticketpartner.scanner.common
 
 import android.util.Log
-import com.mtp.scanner.BuildConfig
+import com.mtp.ticketpartner.scanner.BuildConfig
 import javax.inject.Inject
 
 /**

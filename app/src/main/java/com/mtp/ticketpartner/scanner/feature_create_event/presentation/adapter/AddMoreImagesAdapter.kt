@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.mtp.ticketpartner.scanner.common.ZERO
-import com.mtp.scanner.databinding.ItemImageListCreateEventBinding
+import com.mtp.ticketpartner.scanner.databinding.ItemImageListCreateEventBinding
 
 class AddMoreImagesAdapter(private val context: Context, private val imageList: List<Bitmap>, private val onDeleteClick:(Int)-> Unit) :
     RecyclerView.Adapter<AddMoreImagesAdapter.ImageViewHolder>() {

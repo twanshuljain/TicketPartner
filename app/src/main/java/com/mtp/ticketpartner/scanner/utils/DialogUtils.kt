@@ -3,9 +3,9 @@ package com.mtp.ticketpartner.scanner.utils
 import android.app.AlertDialog
 import android.content.Context
 import android.view.LayoutInflater
-import com.mtp.scanner.R
-import com.mtp.scanner.databinding.LayoutEndScanBottomDialogBinding
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.mtp.ticketpartner.scanner.R
+import com.mtp.ticketpartner.scanner.databinding.LayoutEndScanBottomDialogBinding
 
 object DialogUtils {
     fun showLogoutDialog(

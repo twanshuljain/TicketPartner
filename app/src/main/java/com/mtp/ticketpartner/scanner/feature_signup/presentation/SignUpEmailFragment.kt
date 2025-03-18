@@ -7,11 +7,11 @@ import android.view.ViewGroup
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import com.mtp.scanner.R
+import com.mtp.ticketpartner.scanner.R
 import com.mtp.ticketpartner.scanner.common.ContactUsInputFieldValidator
 import com.mtp.ticketpartner.scanner.common.EMAIL_KEY
 import com.mtp.ticketpartner.scanner.common.SnackBarUtil
-import com.mtp.scanner.databinding.FragmentSignUpEmailBinding
+import com.mtp.ticketpartner.scanner.databinding.FragmentSignUpEmailBinding
 import com.mtp.ticketpartner.scanner.utils.NavigateFragmentUtil.navigateWithClearAllBackStack
 import com.mtp.ticketpartner.scanner.utils.Utility
 import dagger.hilt.android.AndroidEntryPoint

@@ -10,13 +10,13 @@ import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
-import com.mtp.scanner.R
+import com.mtp.ticketpartner.scanner.R
 import com.mtp.ticketpartner.scanner.common.EMPTY_STRING
 import com.mtp.ticketpartner.scanner.common.SCAN_SEARCHED_DATA
 import com.mtp.ticketpartner.scanner.common.ZERO
 import com.mtp.ticketpartner.scanner.common.remote.apis.UNAUTHORIZED_USER
 import com.mtp.ticketpartner.scanner.common.storage.MyPreferences
-import com.mtp.scanner.databinding.FragmentScanBottomNavSearchBinding
+import com.mtp.ticketpartner.scanner.databinding.FragmentScanBottomNavSearchBinding
 import com.mtp.ticketpartner.scanner.feature_scan_module.feature_login_scan.domain.model.QrScanSearchItemUIState
 import com.mtp.ticketpartner.scanner.feature_scan_module.feature_login_scan.domain.model.SearchData
 import com.mtp.ticketpartner.scanner.feature_scan_module.feature_qr_scan.domain.model.GetScanSearchDataOfflineUIState

@@ -21,17 +21,17 @@ import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
-import com.mtp.scanner.R
+import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.mtp.ticketpartner.scanner.R
 import com.mtp.ticketpartner.scanner.common.LogUtil
 import com.mtp.ticketpartner.scanner.common.ORGANIZATION_ID
 import com.mtp.ticketpartner.scanner.common.PICK_IMAGE_INTENT_TYPE
 import com.mtp.ticketpartner.scanner.common.SnackBarUtil
-import com.mtp.scanner.databinding.FragmentAddOrganizationChangeLogoBinding
-import com.mtp.scanner.databinding.LayoutBottomSheetImagePickerBinding
+import com.mtp.ticketpartner.scanner.databinding.FragmentAddOrganizationChangeLogoBinding
+import com.mtp.ticketpartner.scanner.databinding.LayoutBottomSheetImagePickerBinding
 import com.mtp.ticketpartner.scanner.feature_add_organization.domain.model.AddOrganizationUIState
 import com.mtp.ticketpartner.scanner.utils.CameraUtils
 import com.mtp.ticketpartner.scanner.utils.DialogProgressUtil
-import com.google.android.material.bottomsheet.BottomSheetDialog
 import java.io.File
 import javax.inject.Inject
 

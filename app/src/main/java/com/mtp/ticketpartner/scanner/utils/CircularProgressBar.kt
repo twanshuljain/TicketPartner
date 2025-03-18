@@ -6,7 +6,7 @@ import android.graphics.Paint
 import android.graphics.RectF
 import android.util.AttributeSet
 import android.view.View
-import com.mtp.scanner.R
+import com.mtp.ticketpartner.scanner.R
 
 class CircularProgressBar @JvmOverloads constructor(
     context: Context,

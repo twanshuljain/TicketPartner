@@ -1,7 +1,7 @@
 package com.mtp.ticketpartner.scanner.common.remote.apis
 
 import android.content.Context
-import com.mtp.scanner.BuildConfig
+import com.mtp.ticketpartner.scanner.BuildConfig
 import com.mtp.ticketpartner.scanner.common.remote.model.TokenResponse
 import com.technotoil.ticket.common.storage.UserPreference
 import dagger.hilt.android.qualifiers.ApplicationContext

@@ -5,8 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.mtp.scanner.R
-import com.mtp.scanner.databinding.FragmentCreateEventCodesBinding
+import com.mtp.ticketpartner.scanner.R
+import com.mtp.ticketpartner.scanner.databinding.FragmentCreateEventCodesBinding
 
 
 class CreateEventCodesFragment : Fragment() {

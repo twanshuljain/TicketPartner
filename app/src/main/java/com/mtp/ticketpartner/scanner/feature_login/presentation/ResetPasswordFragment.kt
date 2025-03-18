@@ -1,17 +1,17 @@
 package com.mtp.ticketpartner.scanner.feature_login.presentation
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.doAfterTextChanged
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
-import com.mtp.scanner.R
+import com.mtp.ticketpartner.scanner.R
 import com.mtp.ticketpartner.scanner.common.RESET_TOKEN
 import com.mtp.ticketpartner.scanner.common.SnackBarUtil
-import com.mtp.scanner.databinding.FragmentResetPasswordBinding
+import com.mtp.ticketpartner.scanner.databinding.FragmentResetPasswordBinding
 import com.mtp.ticketpartner.scanner.feature_login.domain.model.ResetPasswordUIState
 import com.mtp.ticketpartner.scanner.utils.DialogProgressUtil
 import com.mtp.ticketpartner.scanner.utils.NavigateFragmentUtil.navigateWithClearAllBackStack

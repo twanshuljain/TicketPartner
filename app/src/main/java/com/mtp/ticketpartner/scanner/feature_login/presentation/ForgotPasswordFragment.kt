@@ -11,11 +11,11 @@ import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
-import com.mtp.scanner.R
+import com.mtp.ticketpartner.scanner.R
 import com.mtp.ticketpartner.scanner.common.ContactUsInputFieldValidator
 import com.mtp.ticketpartner.scanner.common.RESET_TOKEN
 import com.mtp.ticketpartner.scanner.common.SnackBarUtil
-import com.mtp.scanner.databinding.FragmentForgotPasswordBinding
+import com.mtp.ticketpartner.scanner.databinding.FragmentForgotPasswordBinding
 import com.mtp.ticketpartner.scanner.feature_login.domain.model.ForgotPassSendEmailUIState
 import com.mtp.ticketpartner.scanner.feature_login.domain.model.ForgotPassVerifyEmailUIState
 import com.mtp.ticketpartner.scanner.feature_login.domain.model.ForgotPasswordSendEmailLinkUIState

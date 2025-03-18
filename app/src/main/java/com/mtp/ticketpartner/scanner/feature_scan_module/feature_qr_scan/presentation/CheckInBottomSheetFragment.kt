@@ -11,12 +11,14 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
-import com.mtp.scanner.R
+import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.mtp.ticketpartner.scanner.R
 import com.mtp.ticketpartner.scanner.common.SnackBarUtil
 import com.mtp.ticketpartner.scanner.common.ZERO
 import com.mtp.ticketpartner.scanner.common.storage.MyPreferences
-import com.mtp.scanner.databinding.FragmentCheckInBottomSheetBinding
-import com.mtp.scanner.databinding.LayoutScanCheckinAllowedOrdersDialogBinding
+import com.mtp.ticketpartner.scanner.databinding.FragmentCheckInBottomSheetBinding
+import com.mtp.ticketpartner.scanner.databinding.LayoutScanCheckinAllowedOrdersDialogBinding
 import com.mtp.ticketpartner.scanner.feature_scan_module.feature_login_scan.domain.model.SearchData
 import com.mtp.ticketpartner.scanner.feature_scan_module.feature_qr_scan.domain.model.Item
 import com.mtp.ticketpartner.scanner.feature_scan_module.feature_qr_scan.domain.model.QrScanCheckedInUIState
@@ -26,8 +28,6 @@ import com.mtp.ticketpartner.scanner.utils.NetworkConnectionLiveData
 import com.mtp.ticketpartner.scanner.utils.TimePickerUtility
 import com.mtp.ticketpartner.scanner.utils.Utility
 import com.mtp.ticketpartner.scanner.utils.Utility.observeOnce
-import com.google.android.material.bottomsheet.BottomSheetDialog
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 class CheckInBottomSheetFragment(
     rootContext: ConstraintLayout,
