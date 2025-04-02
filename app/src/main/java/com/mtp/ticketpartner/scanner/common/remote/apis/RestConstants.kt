@@ -59,6 +59,7 @@ const val HTTP_SERVICE_UNAVAILABLE = 503
 const val HTTP_PARSE_RESPONSE = 505
 const val TIMEOUT_30_SEC = 30L
 const val TIMEOUT_60_SEC = 60L
+const val TIMEOUT_60 = 60000
 
 /**
  * Rest JSON Keys

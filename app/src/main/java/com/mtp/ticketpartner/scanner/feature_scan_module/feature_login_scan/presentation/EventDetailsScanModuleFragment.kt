@@ -21,6 +21,7 @@ import com.mtp.ticketpartner.scanner.feature_scan_module.feature_login_scan.doma
 import com.mtp.ticketpartner.scanner.feature_scan_module.feature_login_scan.domain.model.GetEventDetailsOfflineScanUIState
 import com.mtp.ticketpartner.scanner.feature_scan_module.feature_login_scan.domain.model.InsertEventDetailsResponse
 import com.mtp.ticketpartner.scanner.utils.CameraUtils.Companion.loadCircularBigImage
+import com.mtp.ticketpartner.scanner.utils.CameraUtils.Companion.loadHeavyImage
 import com.mtp.ticketpartner.scanner.utils.CameraUtils.Companion.loadImageFromUrl
 import com.mtp.ticketpartner.scanner.utils.DialogProgressUtil
 import com.mtp.ticketpartner.scanner.utils.DialogUtils
@@ -79,9 +80,10 @@ class EventDetailsScanModuleFragment : Fragment() {
     }
 
     private fun showDetailsData(data: InsertEventDetailsResponse?) {
-        loadImageFromUrl(
+        loadHeavyImage(
             binding.ivBanner,
-            BuildConfig.AWS_IMAGE_BASE_URL +data?.eventCoverImage
+            BuildConfig.AWS_IMAGE_BASE_URL +data?.eventCoverImage,
+            binding.tvLoading
         )
         loadCircularBigImage(
             binding.ivOrganizerLogo,

@@ -85,6 +85,21 @@
                     app:shapeAppearanceOverlay="@style/ImageView.Corner" />
 
                 <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvLoading"
+                    style="@style/boldParaHeading14"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_20"
+                    android:layout_marginBottom="@dimen/margin_10"
+                    android:text="Loading"
+                    android:visibility="gone"
+                    android:textAlignment="textStart"
+                    app:layout_constraintEnd_toEndOf="@id/materialCardView"
+                    app:layout_constraintStart_toStartOf="@id/materialCardView"
+                    app:layout_constraintTop_toTopOf="@id/ivBanner"
+                    app:layout_constraintBottom_toBottomOf="@id/ivBanner"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tvEventTitle"
                     style="@style/boldDarkPrimaryText16"
                     android:layout_width="@dimen/margin_0"

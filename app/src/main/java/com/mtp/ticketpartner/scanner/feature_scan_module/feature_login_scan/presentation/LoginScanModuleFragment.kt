@@ -2,6 +2,8 @@ package com.mtp.ticketpartner.scanner.feature_scan_module.feature_login_scan.pre
 
 import android.os.Bundle
 import android.text.InputType
+import android.text.method.HideReturnsTransformationMethod
+import android.text.method.PasswordTransformationMethod
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -118,15 +120,16 @@ class LoginScanModuleFragment : Fragment() {
 
         binding.ivEyePassword.setOnClickListener {
             // Toggle password visibility
-            if (binding.etPin.inputType == InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_VARIATION_PASSWORD) {
-                //dgdg Show the PIN
-                binding.etPin.inputType = InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_VARIATION_NORMAL
-                binding.ivEyePassword.setImageResource(R.drawable.ic_eye)  // Change to open eye icon
+            if (binding.etPin.transformationMethod is PasswordTransformationMethod) {
+                // Show the PIN without changing the keyboard
+                binding.etPin.transformationMethod = HideReturnsTransformationMethod.getInstance()
+                binding.ivEyePassword.setImageResource(R.drawable.ic_eye)  // Open eye icon
             } else {
-                // Hide the PIN
-                binding.etPin.inputType = InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_VARIATION_PASSWORD
-                binding.ivEyePassword.setImageResource(R.drawable.ic_eye_off)  // Change to closed eye icon
-            }
+            // Hide the PIN without changing the keyboard
+            binding.etPin.transformationMethod = PasswordTransformationMethod.getInstance()
+            binding.ivEyePassword.setImageResource(R.drawable.ic_eye_off)  // Closed eye icon
+         }
+
             // Ensure the cursor stays at the end of the text
             binding.etPin.text?.let { it1 -> binding.etPin.setSelection(it1.length) }
         }

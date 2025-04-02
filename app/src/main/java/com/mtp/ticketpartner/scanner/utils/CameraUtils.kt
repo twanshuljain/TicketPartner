@@ -6,13 +6,24 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Environment
+import android.view.View
 import androidx.appcompat.widget.AppCompatImageView
+import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.FileProvider
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CircleCrop
+import com.bumptech.glide.request.RequestOptions
+import com.mtp.ticketpartner.scanner.R
 import com.mtp.ticketpartner.scanner.common.APP_NAME
 import com.mtp.ticketpartner.scanner.common.APP_PACKAGE_NANE
 import com.mtp.ticketpartner.scanner.common.IMAGE_EXTENSION
+import com.mtp.ticketpartner.scanner.common.remote.apis.TIMEOUT_60
+import com.mtp.ticketpartner.scanner.common.remote.apis.TIMEOUT_60_SEC
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import kotlinx.coroutines.withTimeoutOrNull
 import java.io.File
 import java.io.FileNotFoundException
 import java.io.FileOutputStream
@@ -86,6 +97,37 @@ class CameraUtils {
                 .into(imageView)
         }
 
+        fun loadHeavyImage(imageView: AppCompatImageView, imageUrl: String, textView: AppCompatTextView) {
+            textView.text = "Loading image..."
+            textView.visibility = View.VISIBLE
+            val requestOptions = RequestOptions()
+                .timeout(TIMEOUT_60)
+
+
+            CoroutineScope(Dispatchers.Main).launch {
+                val result = withContext(Dispatchers.IO) { // Move to background thread
+                    try {
+                        Glide.with(imageView.context)
+                            .load(imageUrl)
+                            .apply(requestOptions)
+                            .submit()
+                            .get() // This now runs in background
+                    } catch (e: Exception) {
+                        null // Handle errors
+                    }
+                }
+
+                if (result != null) {
+                    imageView.setImageDrawable(result)
+                    textView.visibility = View.GONE
+                } else {
+                    textView.text = "Taking longer than expected..."
+                }
+            }
+
+
+        }
+
 
         fun loadCircularImage(imageView: AppCompatImageView, imageUrl: String) {
             Glide.with(imageView.context)
@@ -95,8 +137,13 @@ class CameraUtils {
         }
 
         fun loadCircularBigImage(imageView: AppCompatImageView, imageUrl: String) {
+            val requestOptions = RequestOptions()
+                .timeout(TIMEOUT_60)
+
             Glide.with(imageView.context)
                 .load(imageUrl)
+                .apply(requestOptions)
+                .placeholder(R.drawable.ic_placeholder_gallery)
                 .into(imageView)
         }
 

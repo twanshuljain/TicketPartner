@@ -171,7 +171,7 @@
                         android:layout_width="@dimen/size_180"
                         android:layout_height="@dimen/size_180"
                         android:indeterminateOnly="false"
-                        android:progressDrawable="@drawable/progress_accepted_circle"
+                        android:progressDrawable="@drawable/circle"
                         android:layout_marginTop="@dimen/margin_20"
                         android:rotation="0"
                         android:visibility="gone"
