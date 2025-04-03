@@ -246,10 +246,10 @@ class QrScanReportFragment : Fragment() {
                 tvTotalValue.visibility = View.VISIBLE
 
                 tvTotalTicketAccepted.visibility = View.GONE
-                tvTotalValueAccepted.visibility = View.GONE
+                //tvTotalValueAccepted.visibility = View.GONE
 
                 tvTotalTicketRejected.visibility = View.GONE
-                tvTotalValueRejected.visibility = View.GONE
+                //tvTotalValueRejected.visibility = View.GONE
                 tvOutOfValueRejected.visibility = View.GONE
 
                 btnAll.background =
@@ -277,11 +277,11 @@ class QrScanReportFragment : Fragment() {
                 tvTotalValue.visibility = View.GONE
 
                 tvTotalTicketAccepted.visibility = View.VISIBLE
-                tvTotalValueAccepted.visibility = View.VISIBLE
+                //tvTotalValueAccepted.visibility = View.VISIBLE
                 tvOutOfValueAccepted.visibility = View.VISIBLE
 
                 tvTotalTicketRejected.visibility = View.GONE
-                tvTotalValueRejected.visibility = View.GONE
+                //tvTotalValueRejected.visibility = View.GONE
                 tvOutOfValueRejected.visibility = View.GONE
 
                 btnAll.background =
@@ -308,10 +308,10 @@ class QrScanReportFragment : Fragment() {
                 tvTotalValue.visibility = View.GONE
 
                 tvTotalTicketAccepted.visibility = View.GONE
-                tvTotalValueAccepted.visibility = View.GONE
+                //tvTotalValueAccepted.visibility = View.GONE
 
                 tvTotalTicketRejected.visibility = View.VISIBLE
-                tvTotalValueRejected.visibility = View.VISIBLE
+               // tvTotalValueRejected.visibility = View.VISIBLE
                 tvOutOfValueRejected.visibility = View.VISIBLE
 
                 btnAll.background =
