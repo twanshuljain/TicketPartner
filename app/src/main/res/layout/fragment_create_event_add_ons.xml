@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".feature_create_event.presentation.CreateEventAddOnsFragment">
+    tools:context="com.mtp.ticketpartner.scanner.feature_create_event.presentation.CreateEventAddOnsFragment">
 
     <TextView
         android:layout_width="match_parent"

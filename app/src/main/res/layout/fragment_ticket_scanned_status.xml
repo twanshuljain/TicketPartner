@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/purple_bg"
-    tools:context=".feature_scan_module.feature_qr_scan.presentation.TicketScannedStatusFragment">
+    tools:context="com.mtp.ticketpartner.scanner.feature_scan_module.feature_qr_scan.presentation.TicketScannedStatusFragment">
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"

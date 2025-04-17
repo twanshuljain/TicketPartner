@@ -10,11 +10,11 @@ plugins {
 }
 
 android {
-    namespace = "com.mtp.scanner"
+    namespace = "com.mtp.ticketpartner.scanner"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.mtp.scanner"
+        applicationId = "com.mtp.ticketpartner.scanner"
         minSdk = 24
         targetSdk = 34
         versionCode = 1

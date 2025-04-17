@@ -6,7 +6,7 @@
     android:background="@color/white"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".feature_create_event.presentation.CreateEventBasicDetailsFragment">
+    tools:context="com.mtp.ticketpartner.scanner.feature_create_event.presentation.CreateEventBasicDetailsFragment">
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"

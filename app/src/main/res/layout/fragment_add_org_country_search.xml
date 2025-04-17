@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".feature_add_organization.presentation.AddOrgCountrySearchFragment">
+    tools:context="com.mtp.ticketpartner.scanner.feature_add_organization.presentation.AddOrgCountrySearchFragment">
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guidelineStart"
