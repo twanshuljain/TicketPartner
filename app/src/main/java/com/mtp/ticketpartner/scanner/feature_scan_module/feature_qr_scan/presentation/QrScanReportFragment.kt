@@ -132,6 +132,8 @@ class QrScanReportFragment : Fragment() {
                                 0,
                                 it.online,
                                 it.physical,
+                                it.offline,
+                                it.complimentary,
                                 it.total_scanned,
                                 it.total_accepted,
                                 it.total_rejected,
@@ -164,6 +166,8 @@ class QrScanReportFragment : Fragment() {
             tvRejectedCount.text = data?.total_rejected.toString()
             tvOnlineCount.text = data?.online.toString()
             tvPhysicalCount.text = data?.physical.toString()
+            tvOfflineCount.text = data?.offline.toString()
+            tvComplimentaryCount.text = data?.complimentary.toString()
             tvTotalValue.text = data?.total_tickets.toString()
 
             tvTotalValue.text = data?.total_tickets.toString()
@@ -185,6 +189,8 @@ class QrScanReportFragment : Fragment() {
         val rejectedRatio = data?.let { viewModel.totalRejected } ?: 0
 
         val onlineRatio = data?.let { it.online } ?: 0
+        val offlineRatio = data?.let { it.offline } ?: 0
+        val complimentaryRatio = data?.let { it.complimentary } ?: 0
         val physicalRation = data?.let { it.physical } ?: 0
         val totalTickets = data?.let { it.total_tickets }
 
@@ -192,8 +198,10 @@ class QrScanReportFragment : Fragment() {
 
         val progressValues = listOf(
             acceptedRatio to requireContext().getColor(R.color.green_progress_bar),
-            rejectedRatio to requireContext().getColor(R.color.orange_progress_bar),
+            rejectedRatio to requireContext().getColor(R.color.red_light),
             onlineRatio to requireContext().getColor(R.color.yellow_progress_bar),
+            offlineRatio to requireContext().getColor(R.color.dark_grey),
+            complimentaryRatio to requireContext().getColor(R.color.orange_progress_bar),
             physicalRation to requireContext().getColor(R.color.light_blue_progress_bar)
         )
 

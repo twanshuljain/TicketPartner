@@ -111,6 +111,7 @@
     <string name="create_event">"Create Event"</string>
     <string name="venue">"Venue"</string>
     <string name="online">"Online"</string>
+    <string name="offline">"Offline"</string>
     <string name="to_be_announced">"To be announced"</string>
     <string name="street_address">"Street Address"</string>
     <string name="city">"City"</string>
@@ -170,6 +171,7 @@
     <string name="accepted">Accepted</string>
     <string name="rejected">Rejected</string>
     <string name="physical">Physical</string>
+    <string name="complimentary">Complimentary</string>
     <string name="total_tickets">Total Tickets</string>
     <string name="logout">Log Out</string>
     <string name="are_you_sure_logout">Are you sure you want to log out?</string>
