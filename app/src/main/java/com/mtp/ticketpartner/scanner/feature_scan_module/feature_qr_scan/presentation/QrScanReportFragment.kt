@@ -194,15 +194,12 @@ class QrScanReportFragment : Fragment() {
         val physicalRation = data?.let { it.physical } ?: 0
         val totalTickets = data?.let { it.total_tickets }
 
-        data?.let { }
-
         val progressValues = listOf(
-            acceptedRatio to requireContext().getColor(R.color.green_progress_bar),
-            rejectedRatio to requireContext().getColor(R.color.red_light),
+            physicalRation to requireContext().getColor(R.color.light_blue_progress_bar),
+            rejectedRatio to requireContext().getColor(R.color.red),
             onlineRatio to requireContext().getColor(R.color.yellow_progress_bar),
             offlineRatio to requireContext().getColor(R.color.dark_grey),
             complimentaryRatio to requireContext().getColor(R.color.orange_progress_bar),
-            physicalRation to requireContext().getColor(R.color.light_blue_progress_bar)
         )
 
         binding.progress.setProgressValues(progressValues, totalTickets ?: ZERO)
