@@ -14,6 +14,10 @@ data class InsertScanReportDataResponse(
     val online: Int,
     @ColumnInfo(name = "physical")
     val physical: Int,
+    @ColumnInfo(name = "offline")
+    val offline: Int,
+    @ColumnInfo(name = "complimentary")
+    val complimentary: Int,
     @ColumnInfo(name = "totalScanned")
     var total_scanned: Int,
     @ColumnInfo(name = "totalAccepted")

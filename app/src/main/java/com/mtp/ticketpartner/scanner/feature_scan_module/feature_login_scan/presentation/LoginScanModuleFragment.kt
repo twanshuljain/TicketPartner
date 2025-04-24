@@ -455,6 +455,8 @@ class LoginScanModuleFragment : Fragment() {
                                 ZERO,
                                 resData.online,
                                 resData.physical,
+                                resData.offline,
+                                resData.complimentary,
                                 resData.total_scanned,
                                 resData.total_accepted,
                                 resData.total_rejected,

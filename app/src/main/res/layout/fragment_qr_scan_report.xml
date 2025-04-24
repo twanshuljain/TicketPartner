@@ -339,6 +339,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/margin_15"
                             android:drawableStart="@drawable/ic_rejected_circle"
+                            android:drawableTint="@color/red_light"
                             android:drawablePadding="@dimen/size_10"
                             android:text="@string/rejected"
                             app:layout_constraintStart_toStartOf="@id/guidelineVerticalCenter"
@@ -352,7 +353,7 @@
                             android:layout_marginEnd="@dimen/margin_15"
                             android:paddingStart="@dimen/margin_5"
                             android:paddingEnd="@dimen/margin_5"
-                            android:textAlignment="center"
+                            android:textAlignment="textEnd"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="@id/guidelineVerticalRight"
                             app:layout_constraintTop_toTopOf="parent"  />
@@ -400,10 +401,60 @@
                             android:layout_marginEnd="@dimen/margin_15"
                             android:paddingStart="@dimen/margin_5"
                             android:paddingEnd="@dimen/margin_5"
-                            android:textAlignment="center"
+                            android:textAlignment="textEnd"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="@id/guidelineVerticalRight"
                             app:layout_constraintTop_toBottomOf="@id/tvRejectedCount" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvOffline"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="@dimen/margin_15"
+                            android:layout_marginTop="@dimen/margin_15"
+                            android:drawableStart="@drawable/ic_online_circle"
+                            android:drawableTint="@color/dark_grey"
+                            android:drawablePadding="@dimen/size_10"
+                            android:text="@string/offline"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toBottomOf="@id/tvOnlineCount" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvOfflineCount"
+                            android:layout_width="@dimen/margin_0"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/margin_15"
+                            android:paddingStart="@dimen/margin_5"
+                            android:paddingEnd="@dimen/margin_5"
+                            android:textAlignment="center"
+                            app:layout_constraintEnd_toEndOf="@id/guidelineVerticalCenter"
+                            app:layout_constraintStart_toStartOf="@id/guidelineVerticalLeft"
+                            app:layout_constraintTop_toBottomOf="@id/tvOnlineCount" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvComplimentary"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/margin_15"
+                            android:drawableStart="@drawable/ic_physical_circle"
+                            android:drawableTint="@color/orange_progress_bar"
+                            android:drawablePadding="@dimen/size_10"
+                            android:text="@string/complimentary"
+                            app:layout_constraintStart_toStartOf="@id/guidelineVerticalCenter"
+                            app:layout_constraintTop_toBottomOf="@id/tvPhysical" />
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvComplimentaryCount"
+                            android:layout_width="@dimen/margin_0"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/margin_15"
+                            android:layout_marginEnd="@dimen/margin_15"
+                            android:paddingStart="@dimen/margin_5"
+                            android:paddingEnd="@dimen/margin_5"
+                            android:textAlignment="textEnd"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="@id/guidelineVerticalRight"
+                            app:layout_constraintTop_toBottomOf="@id/tvPhysicalCount" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -33,13 +33,47 @@ class CircularProgressBar @JvmOverloads constructor(
         backgroundPaint.color = context.getColor(R.color.grey_disable) // Using Android's default darker gray
     }
 
-    fun setProgressValues(values: List<Pair<Int, Int>>, totalAmount: Int) {
+    /*fun setProgressValues(values: List<Pair<Int, Int>>, totalAmount: Int) {
         progressValues = values.map { (value, color) ->
             val proportion = value.toFloat() / totalAmount.toFloat() * 100
             proportion.toInt() to color
         }
         invalidate()
+    }*/
+
+    fun setProgressValues(values: List<Pair<Int, Int>>, totalAmount: Int) {
+        if (totalAmount == 0 || values.isEmpty()) {
+            progressValues = emptyList()
+            invalidate()
+            return
+        }
+
+        val proportions = mutableListOf<Pair<Int, Int>>()
+        var sum = 0
+
+        for ((index, pair) in values.withIndex()) {
+            val (value, color) = pair
+            val proportion = (value.toFloat() / totalAmount * 100).toInt()
+            proportions.add(proportion to color)
+            sum += proportion
+        }
+
+        // Adjust last non-zero proportion to make total 100
+        val difference = 100 - sum
+        if (difference != 0) {
+            for (i in proportions.indices.reversed()) {
+                if (proportions[i].first > 0) {
+                    val (p, c) = proportions[i]
+                    proportions[i] = (p + difference) to c
+                    break
+                }
+            }
+        }
+
+        progressValues = proportions
+        invalidate()
     }
+
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)

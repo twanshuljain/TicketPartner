@@ -15,6 +15,8 @@ data class QrScanReportAllResponse(
 data class DataList(
     val online: Int,
     val physical: Int,
+    val offline: Int,
+    val complimentary: Int,
     val ticket_data: List<TicketDataList?>?,
     val total_accepted: Int,
     val total_scanned: Int,
